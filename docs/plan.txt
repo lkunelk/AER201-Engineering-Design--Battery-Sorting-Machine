@@ -1,0 +1,2 @@
+print - prints on line
+println - print and go to the next line
