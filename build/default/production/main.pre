@@ -3788,7 +3788,7 @@ extern char * strichr(const char *, int);
 extern char * strrchr(const char *, int);
 extern char * strrichr(const char *, int);
 
-# 11 "lcd.h"
+# 11 "LCD/lcd.h"
 void lcdInst(char data);
 void lcdNibble(char data);
 void initLCD(void);
@@ -3811,8 +3811,6 @@ ADCON1 = 0xFF;
 while(1){
 initLCD();
 printf("111\n");
-lcdNewline();
-lcdNewline();
 printf("223");
 
 while(PORTBbits.RB1 == 0){

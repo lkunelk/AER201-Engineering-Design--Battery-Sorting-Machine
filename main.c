@@ -32,8 +32,6 @@ void main(void) {
     while(1){
         initLCD();
         printf("111\n");
-        lcdNewline();
-        lcdNewline();
         printf("223");
         
         while(PORTBbits.RB1 == 0){ 
