@@ -3701,9 +3701,9 @@ extern int sprintf(char *, const char *, ...);
 extern int printf(const char *, ...);
 
 
-# 12 "configBits.h"
-#pragma config OSC = INTIO7
-#pragma config FCMEN = ON
+# 9 "configBits.h"
+#pragma config OSC = HS
+#pragma config FCMEN = OFF
 #pragma config IESO = OFF
 
 
@@ -3756,12 +3756,46 @@ extern int printf(const char *, ...);
 
 #pragma config EBTRB = OFF
 
+# 14 "C:\Program Files (x86)\Microchip\xc8\v1.40\include\string.h"
+extern void * memcpy(void *, const void *, size_t);
+extern void * memmove(void *, const void *, size_t);
+extern void * memset(void *, int, size_t);
+
+# 34
+extern char * strcat(char *, const char *);
+extern char * strcpy(char *, const char *);
+extern char * strncat(char *, const char *, size_t);
+extern char * strncpy(char *, const char *, size_t);
+extern char * strdup(const char *);
+extern char * strtok(char *, const char *);
+
+
+extern int memcmp(const void *, const void *, size_t);
+extern int strcmp(const char *, const char *);
+extern int stricmp(const char *, const char *);
+extern int strncmp(const char *, const char *, size_t);
+extern int strnicmp(const char *, const char *, size_t);
+extern void * memchr(const void *, int, size_t);
+extern size_t strcspn(const char *, const char *);
+extern char * strpbrk(const char *, const char *);
+extern size_t strspn(const char *, const char *);
+extern char * strstr(const char *, const char *);
+extern char * stristr(const char *, const char *);
+extern char * strerror(int);
+extern size_t strlen(const char *);
+extern char * strchr(const char *, int);
+extern char * strichr(const char *, int);
+extern char * strrchr(const char *, int);
+extern char * strrichr(const char *, int);
+
 # 11 "lcd.h"
 void lcdInst(char data);
 void lcdNibble(char data);
 void initLCD(void);
+void lcdClear(void);
+void lcdNewline(void);
 
-# 23 "main.c"
+# 20 "main.c"
 const char keys[] = "123A456B789C*0#D";
 
 void main(void) {
@@ -3776,9 +3810,10 @@ ADCON1 = 0xFF;
 
 while(1){
 initLCD();
-printf("Choose Option:");
-lcdInst(0b11000000);;
-printf("A:show data B:start");
+printf("111\n");
+lcdNewline();
+lcdNewline();
+printf("223");
 
 while(PORTBbits.RB1 == 0){
 

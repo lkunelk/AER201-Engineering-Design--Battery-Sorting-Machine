@@ -1,23 +1,18 @@
 /* 
  * File:   constants.h
- * Author: Nam
+ * Author: Administrator
  *
- * Created on February 18, 2017, 11:43 AM
+ * Created on August 11, 2016, 2:41 PM
  */
 
 #ifndef CONSTANTS_H
-#define	CONSTANTS_H
+#define	CONSTANTS_H         //Prevent multiple inclusion 
 
-#ifdef	__cplusplus
-extern "C" {
-#endif
+//LCD Control Registers
+#define RS          LATDbits.LATD2          
+#define E           LATDbits.LATD3
+#define	LCD_PORT    LATD   //On LATD[4,7] to be specific
+#define LCD_DELAY   25
 
-
-
-
-#ifdef	__cplusplus
-}
-#endif
 
 #endif	/* CONSTANTS_H */
-
