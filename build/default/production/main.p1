@@ -14,12 +14,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _ADCON0 `Vuc ~T0 @X0 0 e@4034 ]
 "4390
 [v _ADCON1 `Vuc ~T0 @X0 0 e@4033 ]
-"13 lcd.h
-[v _initLCD `(v ~T0 @X0 0 ef ]
+"33 main.c
+[v _initLCD `(i ~T0 @X0 0 ef ]
 "195 C:\Program Files (x86)\Microchip\xc8\v1.40\include\stdio.h
 [v _printf `(i ~T0 @X0 0 ev`*Cuc ]
-"15 lcd.h
-[v _lcdNewline `(v ~T0 @X0 0 ef ]
 "191 C:\Program Files (x86)\Microchip\xc8\v1.40\include\pic18f4620.h
 [s S11 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
 [n S11 . RB0 RB1 RB2 RB3 RB4 RB5 RB6 RB7 ]
@@ -2851,12 +2849,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;string.h: 56: extern char * strichr(const char *, int);
 [; ;string.h: 57: extern char * strrchr(const char *, int);
 [; ;string.h: 58: extern char * strrichr(const char *, int);
-[; ;lcd.h: 11: void lcdInst(char data);
-[; ;lcd.h: 12: void lcdNibble(char data);
-[; ;lcd.h: 13: void initLCD(void);
-[; ;lcd.h: 14: void lcdClear(void);
-[; ;lcd.h: 15: void lcdNewline(void);
-"20 main.c
+"19 main.c
 [v _keys `Cuc ~T0 @X0 -> 0 `x e ]
 [i _keys
 :U ..
@@ -2879,99 +2872,97 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-[; ;main.c: 20: const char keys[] = "123A456B789C*0#D";
-"22
+[; ;main.c: 19: const char keys[] = "123A456B789C*0#D";
+"21
 [v _main `(v ~T0 @X0 1 ef ]
 {
-[; ;main.c: 22: void main(void) {
+[; ;main.c: 21: void main(void) {
 [e :U _main ]
 [f ]
-[; ;main.c: 23: TRISC = 0x00;
-"23
+[; ;main.c: 22: TRISC = 0x00;
+"22
 [e = _TRISC -> -> 0 `i `uc ]
-[; ;main.c: 24: TRISD = 0x00;
-"24
+[; ;main.c: 23: TRISD = 0x00;
+"23
 [e = _TRISD -> -> 0 `i `uc ]
-[; ;main.c: 25: TRISB = 0xFF;
-"25
+[; ;main.c: 24: TRISB = 0xFF;
+"24
 [e = _TRISB -> -> 255 `i `uc ]
-[; ;main.c: 26: LATB = 0x00;
-"26
+[; ;main.c: 25: LATB = 0x00;
+"25
 [e = _LATB -> -> 0 `i `uc ]
-[; ;main.c: 27: LATC = 0x00;
-"27
+[; ;main.c: 26: LATC = 0x00;
+"26
 [e = _LATC -> -> 0 `i `uc ]
-[; ;main.c: 28: ADCON0 = 0x00;
-"28
+[; ;main.c: 27: ADCON0 = 0x00;
+"27
 [e = _ADCON0 -> -> 0 `i `uc ]
-[; ;main.c: 29: ADCON1 = 0xFF;
-"29
+[; ;main.c: 28: ADCON1 = 0xFF;
+"28
 [e = _ADCON1 -> -> 255 `i `uc ]
-[; ;main.c: 32: while(1){
-"32
+[; ;main.c: 31: while(1){
+"31
 [e :U 268 ]
 {
+"32
+[v _f `i ~T0 @X0 1 a ]
+[; ;main.c: 32: int f = 5;
+[e = _f -> 5 `i ]
 [; ;main.c: 33: initLCD();
 "33
 [e ( _initLCD ..  ]
-[; ;main.c: 34: printf("111\n");
+[; ;main.c: 34: printf("%d\n",f);
 "34
-[e ( _printf :s 1C ]
-[; ;main.c: 35: lcdNewline();
+[e ( _printf , (. :s 1C _f ]
+[; ;main.c: 35: printf("223");
 "35
-[e ( _lcdNewline ..  ]
-[; ;main.c: 36: lcdNewline();
-"36
-[e ( _lcdNewline ..  ]
-[; ;main.c: 37: printf("223");
-"37
 [e ( _printf :s 2C ]
-[; ;main.c: 39: while(PORTBbits.RB1 == 0){
-"39
+[; ;main.c: 37: while(PORTBbits.RB1 == 0){
+"37
 [e $U 270  ]
 [e :U 271 ]
 {
-"42
+"40
 }
 [e :U 270 ]
-"39
+"37
 [e $ == -> . . _PORTBbits 0 1 `i -> 0 `i 271  ]
 [e :U 272 ]
-"43
+"41
 [v _keypress `uc ~T0 @X0 1 a ]
-[; ;main.c: 42: }
-[; ;main.c: 43: unsigned char keypress = (PORTB & 0xF0)>>4;
+[; ;main.c: 40: }
+[; ;main.c: 41: unsigned char keypress = (PORTB & 0xF0)>>4;
 [e = _keypress -> >> & -> _PORTB `i -> 240 `i -> 4 `i `uc ]
-[; ;main.c: 45: while(PORTBbits.RB1 == 1){
-"45
+[; ;main.c: 43: while(PORTBbits.RB1 == 1){
+"43
 [e $U 273  ]
 [e :U 274 ]
 {
-"47
+"45
 }
 [e :U 273 ]
-"45
+"43
 [e $ == -> . . _PORTBbits 0 1 `i -> 1 `i 274  ]
 [e :U 275 ]
-[; ;main.c: 47: }
-[; ;main.c: 49: initLCD();
-"49
+[; ;main.c: 45: }
+[; ;main.c: 47: initLCD();
+"47
 [e ( _initLCD ..  ]
-[; ;main.c: 51: __nop();
+[; ;main.c: 49: __nop();
+"49
+[e ( ___nop ..  ]
+[; ;main.c: 50: __nop();
+"50
+[e ( ___nop ..  ]
 "51
-[e ( ___nop ..  ]
-[; ;main.c: 52: __nop();
-"52
-[e ( ___nop ..  ]
-"53
 [v _temp `uc ~T0 @X0 1 a ]
-[; ;main.c: 53: unsigned char temp = keys[keypress];
+[; ;main.c: 51: unsigned char temp = keys[keypress];
 [e = _temp *U + &U _keys * -> _keypress `ux -> -> # *U &U _keys `ui `ux ]
-[; ;main.c: 54: putch(temp);
-"54
+[; ;main.c: 52: putch(temp);
+"52
 [e ( _putch (1 _temp ]
-[; ;main.c: 56: for(char i=0;i<100;i++){_delay((unsigned long)((10)*(8000000/4000.0)));};
-"56
+[; ;main.c: 54: for(char i=0;i<100;i++){_delay((unsigned long)((10)*(8000000/4000.0)));};
+"54
 {
 [v _i `uc ~T0 @X0 1 a ]
 [e = _i -> -> 0 `i `uc ]
@@ -2985,20 +2976,20 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e $ < -> _i `i -> 100 `i 276  ]
 [e :U 277 ]
 }
-"57
+"55
 }
 [e :U 267 ]
-"32
+"31
 [e $U 268  ]
 [e :U 269 ]
-[; ;main.c: 57: }
-[; ;main.c: 59: return;
-"59
+[; ;main.c: 55: }
+[; ;main.c: 57: return;
+"57
 [e $UE 266  ]
-[; ;main.c: 60: }
-"60
+[; ;main.c: 58: }
+"58
 [e :UE 266 ]
 }
-[p f _printf 8388608 ]
+[p f _printf 8388736 ]
 [a 2C 50 50 51 0 ]
-[a 1C 49 49 49 10 0 ]
+[a 1C 37 100 10 0 ]

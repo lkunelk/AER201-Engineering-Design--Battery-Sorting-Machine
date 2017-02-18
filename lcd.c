@@ -8,13 +8,19 @@
 #include <xc.h>
 #include "configBits.h"
 #include <stdio.h>
-#include "lcd.h"
 #include "constants.h"
+
+//define functions
+void lcdInst(char data);
+void lcdNibble(char data);
+void initLCD(void);
+void lcdClear(void);
+void lcdNewline(void);
 
 void initLCD(void) {
     __delay_ms(15);
     lcdInst(0b00110011); //set to 8 bit mode
-    lcdInst(0b00110010); //
+    lcdInst(0b00110010); //set to 8 then 4 bit mode
     lcdInst(0b00101000); //set to 4 bit, set 2 display lines
     lcdInst(0b00001111);//display on, cursor on, blink cursor on
     lcdInst(0b00000110);//increment cursor after writing byte, don't shift display after writing
@@ -23,7 +29,7 @@ void initLCD(void) {
 }
 
 void lcdInst(char data) {
-    RS = 0;
+    RS = 0; //we are sending command
     lcdNibble(data);
 }
 
@@ -32,29 +38,31 @@ void putch(char data){
     if(data == '\n')lcdNewline();
     else
     {
-        RS = 1;
+        RS = 1; //send character data
         lcdNibble(data);
     }
 }
 
+//function that sends 8 bit data i 2 halves
 void lcdNibble(char data){
-    // Send of 4 most sig bits, then the 4 least sig bits (MSD,LSD)
+    // Send of 4 most sig bits
     char temp = data & 0xF0;
     LATD = LATD & 0x0F;
     LATD = temp | LATD;
 
-    E = 0;
+    E = 0; //send
     __delay_us(LCD_DELAY);
     E = 1;    
     __delay_us(LCD_DELAY);
     
+    //send 4 least sig bits
     data = data << 4;
     
     temp = data & 0xF0;
     LATD = LATD & 0x0F;
     LATD = temp | LATD;
 
-    E = 0;
+    E = 0; //send
     __delay_us(LCD_DELAY);
     E = 1;
     __delay_us(LCD_DELAY);
@@ -64,7 +72,6 @@ void lcdClear(void){
     lcdInst(0b00000001);
 }
 
-//goes to the next line, if cursor is on the last line then it will stay where it is
 void lcdNewline(void){
     lcdInst(0b11000000);
 }

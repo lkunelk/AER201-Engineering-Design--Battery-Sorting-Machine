@@ -3788,14 +3788,13 @@ extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupport
 extern int sprintf(char *, const char *, ...);
 extern int printf(const char *, ...);
 
-# 11 "lcd.h"
+# 14 "lcd.c"
 void lcdInst(char data);
 void lcdNibble(char data);
 void initLCD(void);
 void lcdClear(void);
 void lcdNewline(void);
 
-# 14 "lcd.c"
 void initLCD(void) {
 _delay((unsigned long)((15)*(8000000/4000.0)));
 lcdInst(0b00110011);
@@ -3822,6 +3821,7 @@ lcdNibble(data);
 }
 }
 
+
 void lcdNibble(char data){
 
 char temp = data & 0xF0;
@@ -3832,6 +3832,7 @@ LATDbits.LATD3 = 0;
 _delay((unsigned long)((25)*(8000000/4000000.0)));
 LATDbits.LATD3 = 1;
 _delay((unsigned long)((25)*(8000000/4000000.0)));
+
 
 data = data << 4;
 
@@ -3848,7 +3849,6 @@ _delay((unsigned long)((25)*(8000000/4000000.0)));
 void lcdClear(void){
 lcdInst(0b00000001);
 }
-
 
 void lcdNewline(void){
 lcdInst(0b11000000);

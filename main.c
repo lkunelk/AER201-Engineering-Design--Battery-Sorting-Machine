@@ -13,7 +13,6 @@
 #include <stdio.h>
 #include "configBits.h"
 #include "constants.h"
-#include "lcd.h"
 
 #define __delay_1s() for(char i=0;i<100;i++){__delay_ms(10);}
 
@@ -30,10 +29,9 @@ void main(void) {
     
     
     while(1){
+        int f = 5;
         initLCD();
-        printf("111\n");
-        lcdNewline();
-        lcdNewline();
+        printf("%d\n",f);
         printf("223");
         
         while(PORTBbits.RB1 == 0){ 
