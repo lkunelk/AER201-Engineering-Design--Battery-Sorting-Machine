@@ -7,17 +7,16 @@
 
 #include <xc.h>
 #include "configBits.h"
-#include <stdio.h>
 #include "constants.h"
+#include "lcd.h"
 
 //define functions
-void lcdInst(char data);
-void lcdNibble(char data);
-void initLCD(void);
-void lcdClear(void);
-void lcdNewline(void);
+
 
 void initLCD(void) {
+    
+    TRISD = 0x00;   //All output mode
+    
     __delay_ms(15);
     lcdInst(0b00110011); //set to 8 bit mode
     lcdInst(0b00110010); //set to 8 then 4 bit mode
@@ -31,6 +30,7 @@ void initLCD(void) {
 void lcdInst(char data) {
     RS = 0; //we are sending command
     lcdNibble(data);
+    __delay_ms(10);
 }
 
 //note printf() uses this to write to screen)

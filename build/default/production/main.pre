@@ -3788,43 +3788,32 @@ extern char * strichr(const char *, int);
 extern char * strrchr(const char *, int);
 extern char * strrichr(const char *, int);
 
-# 19 "main.c"
-const char keys[] = "123A456B789C*0#D";
+# 11 "keypad.h"
+void initKeypad(void);
+char read(void);
 
+# 11 "lcd.h"
+void lcdInst(char data);
+void lcdNibble(char data);
+void initLCD(void);
+void lcdClear(void);
+void lcdNewline(void);
+
+# 20 "main.c"
 void main(void) {
-TRISC = 0x00;
-TRISD = 0x00;
-TRISB = 0xFF;
-LATB = 0x00;
-LATC = 0x00;
-ADCON0 = 0x00;
-ADCON1 = 0xFF;
+
+initLCD();
+initKeypad();
 
 
 while(1){
-int f = 5;
-initLCD();
-printf("%d\n",f);
-printf("223");
+lcdClear();
+printf("Hello world!\n");
+char c = read();
+lcdClear();
+printf("%c was pressed",c);
 
-while(PORTBbits.RB1 == 0){
-
-
-}
-unsigned char keypress = (PORTB & 0xF0)>>4;
-
-while(PORTBbits.RB1 == 1){
-
-}
-
-initLCD();
-
-__nop();
-__nop();
-unsigned char temp = keys[keypress];
-putch(temp);
-
-for(char i=0;i<100;i++){_delay((unsigned long)((10)*(8000000/4000.0)));};
+_delay((unsigned long)((1000)*(8000000/4000.0)));
 }
 
 return;

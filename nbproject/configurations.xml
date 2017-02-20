@@ -6,6 +6,7 @@
                    projectFiles="true">
       <itemPath>configBits.h</itemPath>
       <itemPath>constants.h</itemPath>
+      <itemPath>keypad.h</itemPath>
       <itemPath>lcd.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"

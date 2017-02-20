@@ -3637,9 +3637,26 @@ extern __nonreentrant void _delaywdt(unsigned long);
 #pragma intrinsic(_delay3)
 extern __nonreentrant void _delay3(unsigned char);
 
-# 3 "keypad.c"
+# 11 "keypad.h"
+void initKeypad(void);
 char read(void);
 
+# 22 "keypad.c"
+const char keys[] = "123A456B789C*0#D";
+
+
+
+void initKeypad(void){
+TRISB = 0xFF;
+LATB = 0x00;
+ADCON0 = 0x00;
+ADCON1 = 0xFF;
+}
+
+
 char read(){
-return 0;
+while(PORTBbits.RB1 == 0);
+char key = (PORTB & 0xF0) >> 4;
+while(PORTBbits.RB1 == 1);
+return keys[key];
 }

@@ -1,4 +1,31 @@
 Version 3.2 HI-TECH Software Intermediate Code
+"1588 C:\Program Files (x86)\Microchip\xc8\v1.40\include\pic18f4620.h
+[v _TRISB `Vuc ~T0 @X0 0 e@3987 ]
+"983
+[v _LATB `Vuc ~T0 @X0 0 e@3978 ]
+"4474
+[v _ADCON0 `Vuc ~T0 @X0 0 e@4034 ]
+"4390
+[v _ADCON1 `Vuc ~T0 @X0 0 e@4033 ]
+"191
+[s S11 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S11 . RB0 RB1 RB2 RB3 RB4 RB5 RB6 RB7 ]
+"201
+[s S12 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S12 . INT0 INT1 INT2 CCP2 KBI0 KBI1 KBI2 KBI3 ]
+"211
+[s S13 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S13 . AN12 AN10 AN8 AN9 AN11 PGM PGC PGD ]
+"221
+[s S14 :3 `uc 1 :1 `uc 1 ]
+[n S14 . . CCP2_PA2 ]
+"190
+[u S10 `S11 1 `S12 1 `S13 1 `S14 1 ]
+[n S10 . . . . . ]
+"226
+[v _PORTBbits `VS10 ~T0 @X0 0 e@3969 ]
+"185
+[v _PORTB `Vuc ~T0 @X0 0 e@3969 ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -2680,18 +2707,83 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic18.h: 159: extern __nonreentrant void _delay(unsigned long);
 [; ;pic18.h: 161: extern __nonreentrant void _delaywdt(unsigned long);
 [; ;pic18.h: 163: extern __nonreentrant void _delay3(unsigned char);
-[; ;keypad.c: 3: char read(void);
-"5 keypad.c
+[; ;keypad.h: 11: void initKeypad(void);
+[; ;keypad.h: 12: char read(void);
+"22 keypad.c
+[v _keys `Cuc ~T0 @X0 -> 0 `x e ]
+[i _keys
+:U ..
+-> 49 `c
+-> 50 `c
+-> 51 `c
+-> 65 `c
+-> 52 `c
+-> 53 `c
+-> 54 `c
+-> 66 `c
+-> 55 `c
+-> 56 `c
+-> 57 `c
+-> 67 `c
+-> 42 `c
+-> 48 `c
+-> 35 `c
+-> 68 `c
+-> 0 `c
+..
+]
+[; ;keypad.c: 22: const char keys[] = "123A456B789C*0#D";
+"26
+[v _initKeypad `(v ~T0 @X0 1 ef ]
+{
+[; ;keypad.c: 26: void initKeypad(void){
+[e :U _initKeypad ]
+[f ]
+[; ;keypad.c: 27: TRISB = 0xFF;
+"27
+[e = _TRISB -> -> 255 `i `uc ]
+[; ;keypad.c: 28: LATB = 0x00;
+"28
+[e = _LATB -> -> 0 `i `uc ]
+[; ;keypad.c: 29: ADCON0 = 0x00;
+"29
+[e = _ADCON0 -> -> 0 `i `uc ]
+[; ;keypad.c: 30: ADCON1 = 0xFF;
+"30
+[e = _ADCON1 -> -> 255 `i `uc ]
+[; ;keypad.c: 31: }
+"31
+[e :UE 265 ]
+}
+"34
 [v _read `(uc ~T0 @X0 1 ef ]
 {
-[; ;keypad.c: 5: char read(){
+[; ;keypad.c: 34: char read(){
 [e :U _read ]
 [f ]
-[; ;keypad.c: 6: return 0;
-"6
-[e ) -> -> 0 `i `uc ]
-[e $UE 265  ]
-[; ;keypad.c: 7: }
-"7
-[e :UE 265 ]
+[; ;keypad.c: 35: while(PORTBbits.RB1 == 0);
+"35
+[e $U 267  ]
+[e :U 268 ]
+[e :U 267 ]
+[e $ == -> . . _PORTBbits 0 1 `i -> 0 `i 268  ]
+[e :U 269 ]
+"36
+[v _key `uc ~T0 @X0 1 a ]
+[; ;keypad.c: 36: char key = (PORTB & 0xF0) >> 4;
+[e = _key -> >> & -> _PORTB `i -> 240 `i -> 4 `i `uc ]
+[; ;keypad.c: 37: while(PORTBbits.RB1 == 1);
+"37
+[e $U 270  ]
+[e :U 271 ]
+[e :U 270 ]
+[e $ == -> . . _PORTBbits 0 1 `i -> 1 `i 271  ]
+[e :U 272 ]
+[; ;keypad.c: 38: return keys[key];
+"38
+[e ) *U + &U _keys * -> _key `ux -> -> # *U &U _keys `ui `ux ]
+[e $UE 266  ]
+[; ;keypad.c: 39: }
+"39
+[e :UE 266 ]
 }

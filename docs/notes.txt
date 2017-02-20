@@ -1,0 +1,29 @@
+20 feb [sun]
+------------
+I forgot that I should document problems as I work. So anyway first problem of the day was I was getting the variable redefined error when I compiled my project. Through a bit of googling, it turns out that when I want to include c files in my main.c file, I must include their header files and not the c file. The header file declares the interface of the module. So the peculiar problem had to do with me not knowing the C language thouroughly.
+
+Second problem, I'm getting some timing issues. When I send multiple instructions to the lcd it doesn't do the last instruction. I think it has to do with timing of signals, like the lcd needs more time to process the first command before processing the second one.
+
+18 feb [sat]
+------------
+
+(A/D module)
+-analog to digital converter
+-13 analog inputs for pic18F4620
+-converts analog to 10bit digital number
+-the voltage reference can be programmed
+-4 registers in common:
+	- ADRESH - contain high bits of conversion result
+	- ADRESL - contain low bits of conversion result
+	- ADCON0 - control operation of A/D module
+	- ADCON1 - configures functions of port pins (A and E)
+1 extra register for pic18
+	- ADCON2 - configures the A/D clodk source, acquisition time and justification
+
+(Operation steps)
+1.configure the A/D module
+2.configure interrupt (optional)
+3.wait the required acquisition time
+4.start conversion
+5.wait for conversion to finish
+6.read A/D result from registers

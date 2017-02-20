@@ -1,47 +1,15 @@
 Version 3.2 HI-TECH Software Intermediate Code
 [p mainexit ]
-"1809 C:\Program Files (x86)\Microchip\xc8\v1.40\include\pic18f4620.h
-[v _TRISC `Vuc ~T0 @X0 0 e@3988 ]
-"2030
-[v _TRISD `Vuc ~T0 @X0 0 e@3989 ]
-"1588
-[v _TRISB `Vuc ~T0 @X0 0 e@3987 ]
-"983
-[v _LATB `Vuc ~T0 @X0 0 e@3978 ]
-"1094
-[v _LATC `Vuc ~T0 @X0 0 e@3979 ]
-"4474
-[v _ADCON0 `Vuc ~T0 @X0 0 e@4034 ]
-"4390
-[v _ADCON1 `Vuc ~T0 @X0 0 e@4033 ]
-"33 main.c
-[v _initLCD `(i ~T0 @X0 0 ef ]
+"13 lcd.h
+[v _initLCD `(v ~T0 @X0 0 ef ]
+"11 keypad.h
+[v _initKeypad `(v ~T0 @X0 0 ef ]
+"14 lcd.h
+[v _lcdClear `(v ~T0 @X0 0 ef ]
 "195 C:\Program Files (x86)\Microchip\xc8\v1.40\include\stdio.h
 [v _printf `(i ~T0 @X0 0 ev`*Cuc ]
-"191 C:\Program Files (x86)\Microchip\xc8\v1.40\include\pic18f4620.h
-[s S11 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S11 . RB0 RB1 RB2 RB3 RB4 RB5 RB6 RB7 ]
-"201
-[s S12 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S12 . INT0 INT1 INT2 CCP2 KBI0 KBI1 KBI2 KBI3 ]
-"211
-[s S13 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S13 . AN12 AN10 AN8 AN9 AN11 PGM PGC PGD ]
-"221
-[s S14 :3 `uc 1 :1 `uc 1 ]
-[n S14 . . CCP2_PA2 ]
-"190
-[u S10 `S11 1 `S12 1 `S13 1 `S14 1 ]
-[n S10 . . . . . ]
-"226
-[v _PORTBbits `VS10 ~T0 @X0 0 e@3969 ]
-"185
-[v _PORTB `Vuc ~T0 @X0 0 e@3969 ]
-"43 C:\Program Files (x86)\Microchip\xc8\v1.40\include\pic18.h
-[v ___nop `(v ~T0 @X0 0 ef ]
-[p i ___nop ]
-"16 C:\Program Files (x86)\Microchip\xc8\v1.40\include\conio.h
-[v _putch `(v ~T0 @X0 0 ef1`uc ]
+"12 keypad.h
+[v _read `(uc ~T0 @X0 0 ef ]
 [v F2878 `(v ~T0 @X0 1 tf1`ul ]
 "159 C:\Program Files (x86)\Microchip\xc8\v1.40\include\pic18.h
 [v __delay `JF2878 ~T0 @X0 0 e ]
@@ -2849,147 +2817,62 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;string.h: 56: extern char * strichr(const char *, int);
 [; ;string.h: 57: extern char * strrchr(const char *, int);
 [; ;string.h: 58: extern char * strrichr(const char *, int);
-"19 main.c
-[v _keys `Cuc ~T0 @X0 -> 0 `x e ]
-[i _keys
-:U ..
--> 49 `c
--> 50 `c
--> 51 `c
--> 65 `c
--> 52 `c
--> 53 `c
--> 54 `c
--> 66 `c
--> 55 `c
--> 56 `c
--> 57 `c
--> 67 `c
--> 42 `c
--> 48 `c
--> 35 `c
--> 68 `c
--> 0 `c
-..
-]
-[; ;main.c: 19: const char keys[] = "123A456B789C*0#D";
-"21
+[; ;keypad.h: 11: void initKeypad(void);
+[; ;keypad.h: 12: char read(void);
+[; ;lcd.h: 11: void lcdInst(char data);
+[; ;lcd.h: 12: void lcdNibble(char data);
+[; ;lcd.h: 13: void initLCD(void);
+[; ;lcd.h: 14: void lcdClear(void);
+[; ;lcd.h: 15: void lcdNewline(void);
+"20 main.c
 [v _main `(v ~T0 @X0 1 ef ]
 {
-[; ;main.c: 21: void main(void) {
+[; ;main.c: 20: void main(void) {
 [e :U _main ]
 [f ]
-[; ;main.c: 22: TRISC = 0x00;
+[; ;main.c: 22: initLCD();
 "22
-[e = _TRISC -> -> 0 `i `uc ]
-[; ;main.c: 23: TRISD = 0x00;
+[e ( _initLCD ..  ]
+[; ;main.c: 23: initKeypad();
 "23
-[e = _TRISD -> -> 0 `i `uc ]
-[; ;main.c: 24: TRISB = 0xFF;
-"24
-[e = _TRISB -> -> 255 `i `uc ]
-[; ;main.c: 25: LATB = 0x00;
-"25
-[e = _LATB -> -> 0 `i `uc ]
-[; ;main.c: 26: LATC = 0x00;
+[e ( _initKeypad ..  ]
+[; ;main.c: 26: while(1){
 "26
-[e = _LATC -> -> 0 `i `uc ]
-[; ;main.c: 27: ADCON0 = 0x00;
-"27
-[e = _ADCON0 -> -> 0 `i `uc ]
-[; ;main.c: 28: ADCON1 = 0xFF;
-"28
-[e = _ADCON1 -> -> 255 `i `uc ]
-[; ;main.c: 31: while(1){
-"31
 [e :U 268 ]
 {
-"32
-[v _f `i ~T0 @X0 1 a ]
-[; ;main.c: 32: int f = 5;
-[e = _f -> 5 `i ]
-[; ;main.c: 33: initLCD();
+[; ;main.c: 27: lcdClear();
+"27
+[e ( _lcdClear ..  ]
+[; ;main.c: 28: printf("Hello world!\n");
+"28
+[e ( _printf :s 1C ]
+"29
+[v _c `uc ~T0 @X0 1 a ]
+[; ;main.c: 29: char c = read();
+[e = _c ( _read ..  ]
+[; ;main.c: 30: lcdClear();
+"30
+[e ( _lcdClear ..  ]
+[; ;main.c: 31: printf("%c was pressed",c);
+"31
+[e ( _printf , (. :s 2C -> _c `i ]
+[; ;main.c: 33: _delay((unsigned long)((1000)*(8000000/4000.0)));
 "33
-[e ( _initLCD ..  ]
-[; ;main.c: 34: printf("%d\n",f);
+[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
 "34
-[e ( _printf , (. :s 1C _f ]
-[; ;main.c: 35: printf("223");
-"35
-[e ( _printf :s 2C ]
-[; ;main.c: 37: while(PORTBbits.RB1 == 0){
-"37
-[e $U 270  ]
-[e :U 271 ]
-{
-"40
-}
-[e :U 270 ]
-"37
-[e $ == -> . . _PORTBbits 0 1 `i -> 0 `i 271  ]
-[e :U 272 ]
-"41
-[v _keypress `uc ~T0 @X0 1 a ]
-[; ;main.c: 40: }
-[; ;main.c: 41: unsigned char keypress = (PORTB & 0xF0)>>4;
-[e = _keypress -> >> & -> _PORTB `i -> 240 `i -> 4 `i `uc ]
-[; ;main.c: 43: while(PORTBbits.RB1 == 1){
-"43
-[e $U 273  ]
-[e :U 274 ]
-{
-"45
-}
-[e :U 273 ]
-"43
-[e $ == -> . . _PORTBbits 0 1 `i -> 1 `i 274  ]
-[e :U 275 ]
-[; ;main.c: 45: }
-[; ;main.c: 47: initLCD();
-"47
-[e ( _initLCD ..  ]
-[; ;main.c: 49: __nop();
-"49
-[e ( ___nop ..  ]
-[; ;main.c: 50: __nop();
-"50
-[e ( ___nop ..  ]
-"51
-[v _temp `uc ~T0 @X0 1 a ]
-[; ;main.c: 51: unsigned char temp = keys[keypress];
-[e = _temp *U + &U _keys * -> _keypress `ux -> -> # *U &U _keys `ui `ux ]
-[; ;main.c: 52: putch(temp);
-"52
-[e ( _putch (1 _temp ]
-[; ;main.c: 54: for(char i=0;i<100;i++){_delay((unsigned long)((10)*(8000000/4000.0)));};
-"54
-{
-[v _i `uc ~T0 @X0 1 a ]
-[e = _i -> -> 0 `i `uc ]
-[e $ < -> _i `i -> 100 `i 276  ]
-[e $U 277  ]
-[e :U 276 ]
-{
-[e ( __delay (1 -> * -> -> 10 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
-}
-[e ++ _i -> -> 1 `i `uc ]
-[e $ < -> _i `i -> 100 `i 276  ]
-[e :U 277 ]
-}
-"55
 }
 [e :U 267 ]
-"31
+"26
 [e $U 268  ]
 [e :U 269 ]
-[; ;main.c: 55: }
-[; ;main.c: 57: return;
-"57
+[; ;main.c: 34: }
+[; ;main.c: 36: return;
+"36
 [e $UE 266  ]
-[; ;main.c: 58: }
-"58
+[; ;main.c: 37: }
+"37
 [e :UE 266 ]
 }
-[p f _printf 8388736 ]
-[a 2C 50 50 51 0 ]
-[a 1C 37 100 10 0 ]
+[p f _printf 8912896 ]
+[a 2C 37 99 32 119 97 115 32 112 114 101 115 115 101 100 0 ]
+[a 1C 72 101 108 108 111 32 119 111 114 108 100 33 10 0 ]
