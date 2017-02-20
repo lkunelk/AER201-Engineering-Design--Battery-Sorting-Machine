@@ -29,8 +29,9 @@ void initLCD(void) {
 
 void lcdInst(char data) {
     RS = 0; //we are sending command
+    __delay_us(140);
     lcdNibble(data);
-    __delay_ms(10);
+    __delay_us(1000);//wait to let LCD process instruction
 }
 
 //note printf() uses this to write to screen)
@@ -39,6 +40,7 @@ void putch(char data){
     else
     {
         RS = 1; //send character data
+        __delay_us(140);
         lcdNibble(data);
     }
 }

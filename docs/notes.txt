@@ -2,7 +2,7 @@
 ------------
 I forgot that I should document problems as I work. So anyway first problem of the day was I was getting the variable redefined error when I compiled my project. Through a bit of googling, it turns out that when I want to include c files in my main.c file, I must include their header files and not the c file. The header file declares the interface of the module. So the peculiar problem had to do with me not knowing the C language thouroughly.
 
-Second problem, I'm getting some timing issues. When I send multiple instructions to the lcd it doesn't do the last instruction. I think it has to do with timing of signals, like the lcd needs more time to process the first command before processing the second one.
+Second problem, I'm getting some timing issues. When I send multiple instructions to the lcd it doesn't do the last instruction. I think it has to do with timing of signals, like the lcd needs more time to process the first command before processing the second one. So I looked up the timing diagram for the lcd module and found that the after you set the enable pin to send data you have to hold it for at least 500us (microseconds). This seemed to make it work better, but I the text still came out as gibberish on the screen which told me there was another issue. To solve it I added a 1ms delay after an instruction was sent to let lcd process it, and now everything seems to work well.
 
 18 feb [sat]
 ------------

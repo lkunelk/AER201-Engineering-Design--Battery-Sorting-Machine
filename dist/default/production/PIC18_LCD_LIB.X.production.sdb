@@ -33,13 +33,13 @@
 [v _initLCD initLCD `(v  1 e 1 0 ]
 "30
 [v _lcdInst lcdInst `(v  1 e 1 0 ]
-"37
+"38
 [v _putch putch `(v  1 e 1 0 ]
-"47
+"49
 [v _lcdNibble lcdNibble `(v  1 e 1 0 ]
-"71
+"73
 [v _lcdClear lcdClear `(v  1 e 1 0 ]
-"75
+"77
 [v _lcdNewline lcdNewline `(v  1 e 1 0 ]
 "20 C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
 [v _main main `(v  1 e 1 0 ]
@@ -140,23 +140,23 @@
 [v printf@f f `*.25Cuc  1 p 2 5 ]
 "1541
 } 0
-"37 C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
+"38 C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
 [v _putch putch `(v  1 e 1 0 ]
 {
 [v putch@data data `uc  1 a 1 wreg ]
 [v putch@data data `uc  1 a 1 wreg ]
 [v putch@data data `uc  1 a 1 4 ]
-"44
+"46
 } 0
-"75
+"77
 [v _lcdNewline lcdNewline `(v  1 e 1 0 ]
 {
-"77
+"79
 } 0
-"71
+"73
 [v _lcdClear lcdClear `(v  1 e 1 0 ]
 {
-"73
+"75
 } 0
 "16
 [v _initLCD initLCD `(v  1 e 1 0 ]
@@ -169,19 +169,19 @@
 [v lcdInst@data data `uc  1 a 1 wreg ]
 [v lcdInst@data data `uc  1 a 1 wreg ]
 [v lcdInst@data data `uc  1 a 1 3 ]
-"34
+"35
 } 0
-"47
+"49
 [v _lcdNibble lcdNibble `(v  1 e 1 0 ]
 {
 [v lcdNibble@data data `uc  1 a 1 wreg ]
-"49
+"51
 [v lcdNibble@temp temp `uc  1 a 1 0 ]
-"47
-[v lcdNibble@data data `uc  1 a 1 wreg ]
 "49
+[v lcdNibble@data data `uc  1 a 1 wreg ]
+"51
 [v lcdNibble@data data `uc  1 a 1 1 ]
-"69
+"71
 } 0
 "26 C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\keypad.c
 [v _initKeypad initKeypad `(v  1 e 1 0 ]

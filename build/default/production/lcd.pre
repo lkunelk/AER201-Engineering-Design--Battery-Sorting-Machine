@@ -3752,8 +3752,9 @@ _delay((unsigned long)((15)*(8000000/4000.0)));
 
 void lcdInst(char data) {
 LATDbits.LATD2 = 0;
+_delay((unsigned long)((140)*(8000000/4000000.0)));
 lcdNibble(data);
-_delay((unsigned long)((10)*(8000000/4000.0)));
+_delay((unsigned long)((1000)*(8000000/4000000.0)));
 }
 
 
@@ -3762,6 +3763,7 @@ if(data == '\n')lcdNewline();
 else
 {
 LATDbits.LATD2 = 1;
+_delay((unsigned long)((140)*(8000000/4000000.0)));
 lcdNibble(data);
 }
 }
@@ -3774,9 +3776,9 @@ LATD = LATD & 0x0F;
 LATD = temp | LATD;
 
 LATDbits.LATD3 = 0;
-_delay((unsigned long)((25)*(8000000/4000000.0)));
+_delay((unsigned long)((600)*(8000000/4000000.0)));
 LATDbits.LATD3 = 1;
-_delay((unsigned long)((25)*(8000000/4000000.0)));
+_delay((unsigned long)((600)*(8000000/4000000.0)));
 
 
 data = data << 4;
@@ -3786,9 +3788,9 @@ LATD = LATD & 0x0F;
 LATD = temp | LATD;
 
 LATDbits.LATD3 = 0;
-_delay((unsigned long)((25)*(8000000/4000000.0)));
+_delay((unsigned long)((600)*(8000000/4000000.0)));
 LATDbits.LATD3 = 1;
-_delay((unsigned long)((25)*(8000000/4000000.0)));
+_delay((unsigned long)((600)*(8000000/4000000.0)));
 }
 
 void lcdClear(void){
