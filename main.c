@@ -12,26 +12,22 @@
 #include <xc.h>
 #include <stdio.h>
 #include "configBits.h"
-#include "keypad.h"
+//#include "keypad.h"
 #include "lcd.h"
+#include "iopin.h"
 
 
 void main(void) {
     
     initLCD();
-    initKeypad();
-    
-    int time = 0;
-    while(1){
-        int min = time/60;
-        int sec = time%60;
-        printf("%d:%d",min,sec);
-        
-        __delay_ms(1000);
-        lcdClear();
-        time++;
+    TRISA=0;
+    pinMode(A,1,OUTPUT);
+    for(int a = 1<<8; a > 0; a>>=1){
+        if(a&TRISA)printf("1");
+        else printf("0");
     }
     
+    while(1);
     return;
 }
  

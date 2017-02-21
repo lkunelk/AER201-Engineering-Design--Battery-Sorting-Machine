@@ -1,6 +1,12 @@
 Version 3.2 HI-TECH Software Intermediate Code
 "1367 C:\Program Files (x86)\Microchip\xc8\v1.40\include\pic18f4620.h
 [v _TRISA `Vuc ~T0 @X0 0 e@3986 ]
+"1588
+[v _TRISB `Vuc ~T0 @X0 0 e@3987 ]
+"1809
+[v _TRISC `Vuc ~T0 @X0 0 e@3988 ]
+"2030
+[v _TRISD `Vuc ~T0 @X0 0 e@3989 ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -2682,123 +2688,126 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic18.h: 159: extern __nonreentrant void _delay(unsigned long);
 [; ;pic18.h: 161: extern __nonreentrant void _delaywdt(unsigned long);
 [; ;pic18.h: 163: extern __nonreentrant void _delay3(unsigned char);
-"12 iopin.c
-[v _pinModeA `(v ~T0 @X0 1 ef2`i`i ]
+[; ;iopin.h: 19: void pinMode(int port, int pin, int type);
+[; ;iopin.h: 20: int digitalRead(void);
+[; ;iopin.h: 21: int digitalWrite(void);
+"13 iopin.c
+[v _pinMode `(v ~T0 @X0 1 ef3`i`i`i ]
 {
-[; ;iopin.c: 12: void pinModeA(int pin, int type){
-[e :U _pinModeA ]
-[v _pin `i ~T0 @X0 1 r1 ]
-[v _type `i ~T0 @X0 1 r2 ]
+[; ;iopin.c: 13: void pinMode(int port, int pin, int type){
+[e :U _pinMode ]
+[v _port `i ~T0 @X0 1 r1 ]
+[v _pin `i ~T0 @X0 1 r2 ]
+[v _type `i ~T0 @X0 1 r3 ]
 [f ]
-[; ;iopin.c: 13: pin = 1 << pin;
-"13
-[e = _pin << -> 1 `i _pin ]
-[; ;iopin.c: 14: if(type == 1){
+[; ;iopin.c: 14: pin = 1 << pin;
 "14
+[e = _pin << -> 1 `i _pin ]
+[; ;iopin.c: 15: if(type == 1){
+"15
 [e $ ! == _type -> 1 `i 266  ]
 {
-[; ;iopin.c: 15: pin ^= 0xff;
-"15
-[e =^ _pin -> 255 `i ]
-[; ;iopin.c: 16: TRISA &= pin;
+[; ;iopin.c: 16: pin ^= 0xff;
 "16
-[e =& _TRISA -> _pin `uc ]
+[e =^ _pin -> 255 `i ]
 "17
 }
-[; ;iopin.c: 17: }
-[e $U 267  ]
-"18
 [e :U 266 ]
-[; ;iopin.c: 18: else TRISA |= pin;
-[e =| _TRISA -> _pin `uc ]
-[e :U 267 ]
-[; ;iopin.c: 19: }
+[; ;iopin.c: 17: }
+[; ;iopin.c: 19: switch(port){
 "19
+[e $U 268  ]
+{
+[; ;iopin.c: 20: case 0: if(type == 0)TRISA |= pin;
+"20
+[e :U 269 ]
+[e $ ! == _type -> 0 `i 270  ]
+[e =| _TRISA -> _pin `uc ]
+[e $U 271  ]
+"21
+[e :U 270 ]
+[; ;iopin.c: 21: else TRISA &= pin;
+[e =& _TRISA -> _pin `uc ]
+[e :U 271 ]
+[; ;iopin.c: 22: break;
+"22
+[e $U 267  ]
+[; ;iopin.c: 24: case 1: if(type == 0)TRISB |= pin;
+"24
+[e :U 272 ]
+[e $ ! == _type -> 0 `i 273  ]
+[e =| _TRISB -> _pin `uc ]
+[e $U 274  ]
+"25
+[e :U 273 ]
+[; ;iopin.c: 25: else TRISB &= pin;
+[e =& _TRISB -> _pin `uc ]
+[e :U 274 ]
+[; ;iopin.c: 26: break;
+"26
+[e $U 267  ]
+[; ;iopin.c: 28: case 2: if(type == 0)TRISC |= pin;
+"28
+[e :U 275 ]
+[e $ ! == _type -> 0 `i 276  ]
+[e =| _TRISC -> _pin `uc ]
+[e $U 277  ]
+"29
+[e :U 276 ]
+[; ;iopin.c: 29: else TRISC &= pin;
+[e =& _TRISC -> _pin `uc ]
+[e :U 277 ]
+[; ;iopin.c: 30: break;
+"30
+[e $U 267  ]
+[; ;iopin.c: 32: case 3: if(type == 0)TRISD |= pin;
+"32
+[e :U 278 ]
+[e $ ! == _type -> 0 `i 279  ]
+[e =| _TRISD -> _pin `uc ]
+[e $U 280  ]
+"33
+[e :U 279 ]
+[; ;iopin.c: 33: else TRISD &= pin;
+[e =& _TRISD -> _pin `uc ]
+[e :U 280 ]
+[; ;iopin.c: 34: break;
+"34
+[e $U 267  ]
+"35
+}
+[; ;iopin.c: 35: }
+[e $U 267  ]
+"19
+[e :U 268 ]
+[e [\ _port , $ -> 0 `i 269
+ , $ -> 1 `i 272
+ , $ -> 2 `i 275
+ , $ -> 3 `i 278
+ 267 ]
+"35
+[e :U 267 ]
+[; ;iopin.c: 36: }
+"36
 [e :UE 265 ]
 }
-"21
-[v _pinModeB `(v ~T0 @X0 1 ef2`i`i ]
+"38
+[v _digitalRead `(i ~T0 @X0 1 ef ]
 {
-[; ;iopin.c: 21: void pinModeB(int pin, int type){
-[e :U _pinModeB ]
-[v _pin `i ~T0 @X0 1 r1 ]
-[v _type `i ~T0 @X0 1 r2 ]
+[; ;iopin.c: 38: int digitalRead(){
+[e :U _digitalRead ]
 [f ]
-[; ;iopin.c: 23: }
-"23
-[e :UE 268 ]
+[; ;iopin.c: 40: }
+"40
+[e :UE 281 ]
 }
-"25
-[v _pinModeC `(v ~T0 @X0 1 ef2`i`i ]
-{
-[; ;iopin.c: 25: void pinModeC(int pin, int type){
-[e :U _pinModeC ]
-[v _pin `i ~T0 @X0 1 r1 ]
-[v _type `i ~T0 @X0 1 r2 ]
-[f ]
-[; ;iopin.c: 27: }
-"27
-[e :UE 269 ]
-}
-"29
-[v _pinModeD `(v ~T0 @X0 1 ef2`i`i ]
-{
-[; ;iopin.c: 29: void pinModeD(int pin, int type){
-[e :U _pinModeD ]
-[v _pin `i ~T0 @X0 1 r1 ]
-[v _type `i ~T0 @X0 1 r2 ]
-[f ]
-[; ;iopin.c: 31: }
-"31
-[e :UE 270 ]
-}
-"33
-[v _digitalReadA `(i ~T0 @X0 1 ef ]
-{
-[; ;iopin.c: 33: int digitalReadA(){
-[e :U _digitalReadA ]
-[f ]
-[; ;iopin.c: 35: }
-"35
-[e :UE 271 ]
-}
-"37
-[v _digitalReadB `(i ~T0 @X0 1 ef ]
-{
-[; ;iopin.c: 37: int digitalReadB(){
-[e :U _digitalReadB ]
-[f ]
-[; ;iopin.c: 39: }
-"39
-[e :UE 272 ]
-}
-"41
-[v _digitalReadC `(i ~T0 @X0 1 ef ]
-{
-[; ;iopin.c: 41: int digitalReadC(){
-[e :U _digitalReadC ]
-[f ]
-[; ;iopin.c: 43: }
-"43
-[e :UE 273 ]
-}
-"45
-[v _digitalReadD `(i ~T0 @X0 1 ef ]
-{
-[; ;iopin.c: 45: int digitalReadD(){
-[e :U _digitalReadD ]
-[f ]
-[; ;iopin.c: 47: }
-"47
-[e :UE 274 ]
-}
-"49
+"42
 [v _digitalWrite `(i ~T0 @X0 1 ef ]
 {
-[; ;iopin.c: 49: int digitalWrite(){
+[; ;iopin.c: 42: int digitalWrite(){
 [e :U _digitalWrite ]
 [f ]
-[; ;iopin.c: 51: }
-"51
-[e :UE 275 ]
+[; ;iopin.c: 44: }
+"44
+[e :UE 282 ]
 }

@@ -3788,10 +3788,6 @@ extern char * strichr(const char *, int);
 extern char * strrchr(const char *, int);
 extern char * strrichr(const char *, int);
 
-# 11 "keypad.h"
-void initKeypad(void);
-char read(void);
-
 # 16 "lcd.h"
 void lcdInst(char data);
 void lcdNibble(char data);
@@ -3799,23 +3795,23 @@ void initLCD(void);
 void lcdClear(void);
 void lcdNewline(void);
 
-# 19 "main.c"
+# 19 "iopin.h"
+void pinMode(int port, int pin, int type);
+int digitalRead(void);
+int digitalWrite(void);
+
+# 20 "main.c"
 void main(void) {
 
 initLCD();
-initKeypad();
-
-int time = 0;
-while(1){
-int min = time/60;
-int sec = time%60;
-printf("%d:%d",min,sec);
-
-_delay((unsigned long)((1000)*(8000000/4000.0)));
-lcdClear();
-time++;
+TRISA=0;
+pinMode(0,1,0);
+for(int a = 1<<8; a > 0; a>>=1){
+if(a&TRISA)printf("1");
+else printf("0");
 }
 
+while(1);
 return;
 }
 

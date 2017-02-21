@@ -3645,7 +3645,6 @@ char read(void);
 const char keys[] = "123A456B789C*0#D";
 
 
-
 void initKeypad(void){
 TRISB = 0xFF;
 LATB = 0x00;

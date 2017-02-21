@@ -3,10 +3,6 @@
 [d edition pro ]
 [d chip 18F4620 ]
 [d frameptr 4065 ]
-"8 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\awdiv.c
-[v ___awdiv __awdiv `(i  1 e 2 0 ]
-"8 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\awmod.c
-[v ___awmod __awmod `(i  1 e 2 0 ]
 "464 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\doprnt.c
 [v _printf printf `(i  1 e 2 0 ]
 "62 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\float.c
@@ -19,10 +15,6 @@
 [v ___ftmul __ftmul `(f  1 e 3 0 ]
 "20 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\ftsub.c
 [v ___ftsub __ftsub `(f  1 e 3 0 ]
-"8 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\lwdiv.c
-[v ___lwdiv __lwdiv `(ui  1 e 2 0 ]
-"8 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\lwmod.c
-[v ___lwmod __lwmod `(ui  1 e 2 0 ]
 "10 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\sprcadd.c
 [v ___fladd __fladd `(d  1 e 3 0 ]
 "245
@@ -33,8 +25,8 @@
 [v ___flmul __flmul `(d  1 e 3 0 ]
 "15 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\Umul32.c
 [v ___lmul __lmul `(ul  1 e 4 0 ]
-"26 C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\keypad.c
-[v _initKeypad initKeypad `(v  1 e 1 0 ]
+"13 C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\iopin.c
+[v _pinMode pinMode `(v  1 e 1 0 ]
 "15 C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
 [v _initLCD initLCD `(v  1 e 1 0 ]
 "29
@@ -43,15 +35,13 @@
 [v _putch putch `(v  1 e 1 0 ]
 "48
 [v _lcdNibble lcdNibble `(v  1 e 1 0 ]
-"72
-[v _lcdClear lcdClear `(v  1 e 1 0 ]
 "76
 [v _lcdNewline lcdNewline `(v  1 e 1 0 ]
-"19 C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
+"20 C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
 [v _main main `(v  1 e 1 0 ]
 "185 C:\Program Files (x86)\Microchip\xc8\v1.40\include\pic18f4620.h
 [v _PORTB PORTB `VEuc  1 e 1 @3969 ]
-[s S129 . 1 `uc 1 RB0 1 0 :1:0 
+[s S126 . 1 `uc 1 RB0 1 0 :1:0 
 `uc 1 RB1 1 0 :1:1 
 `uc 1 RB2 1 0 :1:2 
 `uc 1 RB3 1 0 :1:3 
@@ -61,7 +51,7 @@
 `uc 1 RB7 1 0 :1:7 
 ]
 "226
-[s S138 . 1 `uc 1 INT0 1 0 :1:0 
+[s S135 . 1 `uc 1 INT0 1 0 :1:0 
 `uc 1 INT1 1 0 :1:1 
 `uc 1 INT2 1 0 :1:2 
 `uc 1 CCP2 1 0 :1:3 
@@ -70,7 +60,7 @@
 `uc 1 KBI2 1 0 :1:6 
 `uc 1 KBI3 1 0 :1:7 
 ]
-[s S147 . 1 `uc 1 AN12 1 0 :1:0 
+[s S144 . 1 `uc 1 AN12 1 0 :1:0 
 `uc 1 AN10 1 0 :1:1 
 `uc 1 AN8 1 0 :1:2 
 `uc 1 AN9 1 0 :1:3 
@@ -79,16 +69,16 @@
 `uc 1 PGC 1 0 :1:6 
 `uc 1 PGD 1 0 :1:7 
 ]
-[s S156 . 1 `uc 1 . 1 0 :3:0 
+[s S153 . 1 `uc 1 . 1 0 :3:0 
 `uc 1 CCP2_PA2 1 0 :1:3 
 ]
-[u S159 . 1 `S129 1 . 1 0 `S138 1 . 1 0 `S147 1 . 1 0 `S156 1 . 1 0 ]
-[v _PORTBbits PORTBbits `VES159  1 e 1 @3969 ]
+[u S156 . 1 `S126 1 . 1 0 `S135 1 . 1 0 `S144 1 . 1 0 `S153 1 . 1 0 ]
+[v _PORTBbits PORTBbits `VES156  1 e 1 @3969 ]
 "983
 [v _LATB LATB `VEuc  1 e 1 @3978 ]
 "1205
 [v _LATD LATD `VEuc  1 e 1 @3980 ]
-[s S57 . 1 `uc 1 LATD0 1 0 :1:0 
+[s S54 . 1 `uc 1 LATD0 1 0 :1:0 
 `uc 1 LATD1 1 0 :1:1 
 `uc 1 LATD2 1 0 :1:2 
 `uc 1 LATD3 1 0 :1:3 
@@ -98,7 +88,7 @@
 `uc 1 LATD7 1 0 :1:7 
 ]
 "1232
-[s S66 . 1 `uc 1 LD0 1 0 :1:0 
+[s S63 . 1 `uc 1 LD0 1 0 :1:0 
 `uc 1 LD1 1 0 :1:1 
 `uc 1 LD2 1 0 :1:2 
 `uc 1 LD3 1 0 :1:3 
@@ -107,46 +97,36 @@
 `uc 1 LD6 1 0 :1:6 
 `uc 1 LD7 1 0 :1:7 
 ]
-[u S75 . 1 `S57 1 . 1 0 `S66 1 . 1 0 ]
-[v _LATDbits LATDbits `VES75  1 e 1 @3980 ]
+[u S72 . 1 `S54 1 . 1 0 `S63 1 . 1 0 ]
+[v _LATDbits LATDbits `VES72  1 e 1 @3980 ]
 "1367
 [v _TRISA TRISA `VEuc  1 e 1 @3986 ]
 "1588
 [v _TRISB TRISB `VEuc  1 e 1 @3987 ]
+"1809
+[v _TRISC TRISC `VEuc  1 e 1 @3988 ]
 "2030
 [v _TRISD TRISD `VEuc  1 e 1 @3989 ]
 "4390
 [v _ADCON1 ADCON1 `VEuc  1 e 1 @4033 ]
 "4474
 [v _ADCON0 ADCON0 `VEuc  1 e 1 @4034 ]
-"354 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\doprnt.c
-[v _dpowers dpowers `C[5]ui  1 s 10 dpowers ]
-"19 C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
+"20 C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
 [v _main main `(v  1 e 1 0 ]
 {
-"27
-[v main@sec sec `i  1 a 2 30 ]
-"26
-[v main@min min `i  1 a 2 28 ]
-"24
-[v main@time time `i  1 a 2 32 ]
-"36
+"25
+[v main@a a `i  1 a 2 10 ]
+"32
 } 0
 "464 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\doprnt.c
 [v _printf printf `(i  1 e 2 0 ]
 {
-"528
-[v printf@val val `ui  1 a 2 23 ]
 "466
-[v printf@ap ap `[1]*.39v  1 a 2 19 ]
+[v printf@ap ap `[1]*.39v  1 a 2 7 ]
 "499
-[v printf@c c `c  1 a 1 25 ]
-"506
-[v printf@prec prec `c  1 a 1 22 ]
-"508
-[v printf@flag flag `uc  1 a 1 21 ]
+[v printf@c c `c  1 a 1 9 ]
 "464
-[v printf@f f `*.25Cuc  1 p 2 12 ]
+[v printf@f f `*.25Cuc  1 p 2 5 ]
 "1541
 } 0
 "37 C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
@@ -162,34 +142,15 @@
 {
 "78
 } 0
-"8 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\lwmod.c
-[v ___lwmod __lwmod `(ui  1 e 2 0 ]
+"13 C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\iopin.c
+[v _pinMode pinMode `(v  1 e 1 0 ]
 {
-"11
-[v ___lwmod@counter counter `uc  1 a 1 11 ]
-"8
-[v ___lwmod@dividend dividend `ui  1 p 2 7 ]
-[v ___lwmod@divisor divisor `ui  1 p 2 9 ]
-"26
+[v pinMode@port port `i  1 p 2 0 ]
+[v pinMode@pin pin `i  1 p 2 2 ]
+[v pinMode@type type `i  1 p 2 4 ]
+"36
 } 0
-"8 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\lwdiv.c
-[v ___lwdiv __lwdiv `(ui  1 e 2 0 ]
-{
-"11
-[v ___lwdiv@quotient quotient `ui  1 a 2 4 ]
-"12
-[v ___lwdiv@counter counter `uc  1 a 1 6 ]
-"8
-[v ___lwdiv@dividend dividend `ui  1 p 2 0 ]
-[v ___lwdiv@divisor divisor `ui  1 p 2 2 ]
-"31
-} 0
-"72 C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
-[v _lcdClear lcdClear `(v  1 e 1 0 ]
-{
-"74
-} 0
-"15
+"15 C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
 [v _initLCD initLCD `(v  1 e 1 0 ]
 {
 "27
@@ -213,33 +174,4 @@
 "50
 [v lcdNibble@data data `uc  1 a 1 1 ]
 "70
-} 0
-"26 C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\keypad.c
-[v _initKeypad initKeypad `(v  1 e 1 0 ]
-{
-"31
-} 0
-"8 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\awmod.c
-[v ___awmod __awmod `(i  1 e 2 0 ]
-{
-"11
-[v ___awmod@sign sign `uc  1 a 1 5 ]
-[v ___awmod@counter counter `uc  1 a 1 4 ]
-"8
-[v ___awmod@dividend dividend `i  1 p 2 0 ]
-[v ___awmod@divisor divisor `i  1 p 2 2 ]
-"35
-} 0
-"8 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\awdiv.c
-[v ___awdiv __awdiv `(i  1 e 2 0 ]
-{
-"11
-[v ___awdiv@quotient quotient `i  1 a 2 6 ]
-"12
-[v ___awdiv@sign sign `uc  1 a 1 5 ]
-[v ___awdiv@counter counter `uc  1 a 1 4 ]
-"8
-[v ___awdiv@dividend dividend `i  1 p 2 0 ]
-[v ___awdiv@divisor divisor `i  1 p 2 2 ]
-"42
 } 0

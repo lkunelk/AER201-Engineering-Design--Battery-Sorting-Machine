@@ -7,42 +7,35 @@
  */
 
 #include <xc.h>
+#include "iopin.h"
 
 //pin is chosen from constants
-void pinModeA(int pin, int type){
+void pinMode(int port, int pin, int type){
     pin = 1 << pin;
     if(type == 1){ //input
         pin ^= 0xff;
-        TRISA &= pin;
     } 
-    else TRISA |= pin; //output
-}
-
-void pinModeB(int pin, int type){
     
+    switch(port){
+        case A: if(type == OUTPUT)TRISA |= pin;
+                else TRISA &= pin;
+                break;
+        
+        case B: if(type == OUTPUT)TRISB |= pin;
+                else TRISB &= pin;
+                break;
+              
+        case C: if(type == OUTPUT)TRISC |= pin;
+                else TRISC &= pin;
+                break;
+                
+        case D: if(type == OUTPUT)TRISD |= pin;
+                else TRISD &= pin;
+                break;
+    }
 }
 
-void pinModeC(int pin, int type){
-    
-}
-
-void pinModeD(int pin, int type){
-    
-}
-
-int digitalReadA(){
-    
-}
-
-int digitalReadB(){
-    
-}
-
-int digitalReadC(){
-    
-}
-
-int digitalReadD(){
+int digitalRead(){
     
 }
 
