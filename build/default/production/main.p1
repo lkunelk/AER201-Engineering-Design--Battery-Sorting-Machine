@@ -1,19 +1,17 @@
 Version 3.2 HI-TECH Software Intermediate Code
 [p mainexit ]
-"13 lcd.h
+"18 lcd.h
 [v _initLCD `(v ~T0 @X0 0 ef ]
 "11 keypad.h
 [v _initKeypad `(v ~T0 @X0 0 ef ]
-"14 lcd.h
-[v _lcdClear `(v ~T0 @X0 0 ef ]
 "195 C:\Program Files (x86)\Microchip\xc8\v1.40\include\stdio.h
 [v _printf `(i ~T0 @X0 0 ev`*Cuc ]
-"12 keypad.h
-[v _read `(uc ~T0 @X0 0 ef ]
 [v F2878 `(v ~T0 @X0 1 tf1`ul ]
 "159 C:\Program Files (x86)\Microchip\xc8\v1.40\include\pic18.h
 [v __delay `JF2878 ~T0 @X0 0 e ]
 [p i __delay ]
+"19 lcd.h
+[v _lcdClear `(v ~T0 @X0 0 ef ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -2819,60 +2817,65 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;string.h: 58: extern char * strrichr(const char *, int);
 [; ;keypad.h: 11: void initKeypad(void);
 [; ;keypad.h: 12: char read(void);
-[; ;lcd.h: 11: void lcdInst(char data);
-[; ;lcd.h: 12: void lcdNibble(char data);
-[; ;lcd.h: 13: void initLCD(void);
-[; ;lcd.h: 14: void lcdClear(void);
-[; ;lcd.h: 15: void lcdNewline(void);
-"20 main.c
+[; ;lcd.h: 16: void lcdInst(char data);
+[; ;lcd.h: 17: void lcdNibble(char data);
+[; ;lcd.h: 18: void initLCD(void);
+[; ;lcd.h: 19: void lcdClear(void);
+[; ;lcd.h: 20: void lcdNewline(void);
+"19 main.c
 [v _main `(v ~T0 @X0 1 ef ]
 {
-[; ;main.c: 20: void main(void) {
+[; ;main.c: 19: void main(void) {
 [e :U _main ]
 [f ]
-[; ;main.c: 22: initLCD();
-"22
+[; ;main.c: 21: initLCD();
+"21
 [e ( _initLCD ..  ]
-[; ;main.c: 23: initKeypad();
-"23
+[; ;main.c: 22: initKeypad();
+"22
 [e ( _initKeypad ..  ]
-[; ;main.c: 26: while(1){
-"26
+"24
+[v _time `i ~T0 @X0 1 a ]
+[; ;main.c: 24: int time = 0;
+[e = _time -> 0 `i ]
+[; ;main.c: 25: while(1){
+"25
 [e :U 268 ]
 {
-[; ;main.c: 27: lcdClear();
+"26
+[v _min `i ~T0 @X0 1 a ]
+[; ;main.c: 26: int min = time/60;
+[e = _min / _time -> 60 `i ]
 "27
-[e ( _lcdClear ..  ]
-[; ;main.c: 28: printf("Hello world!\n");
+[v _sec `i ~T0 @X0 1 a ]
+[; ;main.c: 27: int sec = time%60;
+[e = _sec % _time -> 60 `i ]
+[; ;main.c: 28: printf("%d:%d",min,sec);
 "28
-[e ( _printf :s 1C ]
-"29
-[v _c `uc ~T0 @X0 1 a ]
-[; ;main.c: 29: char c = read();
-[e = _c ( _read ..  ]
-[; ;main.c: 30: lcdClear();
+[e ( _printf , , (. :s 1C _min _sec ]
+[; ;main.c: 30: _delay((unsigned long)((1000)*(8000000/4000.0)));
 "30
-[e ( _lcdClear ..  ]
-[; ;main.c: 31: printf("%c was pressed",c);
-"31
-[e ( _printf , (. :s 2C -> _c `i ]
-[; ;main.c: 33: _delay((unsigned long)((1000)*(8000000/4000.0)));
-"33
 [e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
-"34
+[; ;main.c: 31: lcdClear();
+"31
+[e ( _lcdClear ..  ]
+[; ;main.c: 32: time++;
+"32
+[e ++ _time -> 1 `i ]
+"33
 }
 [e :U 267 ]
-"26
+"25
 [e $U 268  ]
 [e :U 269 ]
-[; ;main.c: 34: }
-[; ;main.c: 36: return;
-"36
+[; ;main.c: 33: }
+[; ;main.c: 35: return;
+"35
 [e $UE 266  ]
-[; ;main.c: 37: }
-"37
+[; ;main.c: 36: }
+"36
 [e :UE 266 ]
 }
-[p f _printf 8912896 ]
-[a 2C 37 99 32 119 97 115 32 112 114 101 115 115 101 100 0 ]
-[a 1C 72 101 108 108 111 32 119 111 114 108 100 33 10 0 ]
+[p f _printf 8388736 ]
+[a 1C 37 100 58 37 100 0 ]
+

@@ -3728,14 +3728,14 @@ extern char * strichr(const char *, int);
 extern char * strrchr(const char *, int);
 extern char * strrichr(const char *, int);
 
-# 11 "lcd.h"
+# 16 "lcd.h"
 void lcdInst(char data);
 void lcdNibble(char data);
 void initLCD(void);
 void lcdClear(void);
 void lcdNewline(void);
 
-# 16 "lcd.c"
+# 15 "lcd.c"
 void initLCD(void) {
 
 TRISD = 0x00;

@@ -3792,28 +3792,28 @@ extern char * strrichr(const char *, int);
 void initKeypad(void);
 char read(void);
 
-# 11 "lcd.h"
+# 16 "lcd.h"
 void lcdInst(char data);
 void lcdNibble(char data);
 void initLCD(void);
 void lcdClear(void);
 void lcdNewline(void);
 
-# 20 "main.c"
+# 19 "main.c"
 void main(void) {
 
 initLCD();
 initKeypad();
 
-
+int time = 0;
 while(1){
-lcdClear();
-printf("Hello world!\n");
-char c = read();
-lcdClear();
-printf("%c was pressed",c);
+int min = time/60;
+int sec = time%60;
+printf("%d:%d",min,sec);
 
 _delay((unsigned long)((1000)*(8000000/4000.0)));
+lcdClear();
+time++;
 }
 
 return;

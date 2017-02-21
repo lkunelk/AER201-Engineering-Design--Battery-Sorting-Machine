@@ -7,7 +7,6 @@
 
 #include <xc.h>
 #include "configBits.h"
-#include "constants.h"
 #include "lcd.h"
 
 //define functions
@@ -45,7 +44,7 @@ void putch(char data){
     }
 }
 
-//function that sends 8 bit data i 2 halves
+//function that sends 8 bit data in 2 halves
 void lcdNibble(char data){
     // Send of 4 most sig bits
     char temp = data & 0xF0;
