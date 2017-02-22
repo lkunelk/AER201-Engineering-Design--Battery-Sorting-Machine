@@ -35,8 +35,14 @@ void pinMode(int port, int pin, int type){
     }
 }
 
-int digitalRead(){
-    
+int digitalRead(int port, int pin){
+    switch(port){
+        case A: return (PORTA>>pin)&1;
+        case B: return (PORTB>>pin)&1;
+        case C: return (PORTC>>pin)&1;
+        case D: return (PORTD>>pin)&1;
+    }
+    return -1;
 }
 
 int digitalWrite(){

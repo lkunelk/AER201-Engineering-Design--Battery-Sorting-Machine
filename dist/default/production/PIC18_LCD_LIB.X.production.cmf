@@ -12,18 +12,19 @@
 # in delta units.  Any other numeric values are decimal.
 %PSECTS
 $dist/default/production\PIC18_LCD_LIB.X.production.obj
-cinit CODE 0 123A 123A A 1
-text0 CODE 0 10C4 10C4 68 1
-text1 CODE 0 11CC 11CC 2A 1
-text2 CODE 0 11F6 11F6 22 1
-text3 CODE 0 1244 1244 8 1
-text4 CODE 0 1018 1018 AC 1
-text5 CODE 0 1182 1182 4A 1
-text6 CODE 0 1218 1218 22 1
-text7 CODE 0 112C 112C 56 1
-cstackCOMRAM COMRAM 1 1 1 C 1
-smallconst SMALLCONST 0 1000 1000 18 1
-$C:\Users\Nam\AppData\Local\Temp\sg3k.obj
+cinit CODE 0 127C 127C A 1
+text0 CODE 0 10C6 10C6 5C 1
+text1 CODE 0 1178 1178 4C 1
+text2 CODE 0 120E 120E 2A 1
+text3 CODE 0 1238 1238 22 1
+text4 CODE 0 1286 1286 8 1
+text5 CODE 0 101A 101A AC 1
+text6 CODE 0 11C4 11C4 4A 1
+text7 CODE 0 125A 125A 22 1
+text8 CODE 0 1122 1122 56 1
+cstackCOMRAM COMRAM 1 1 1 12 1
+smallconst SMALLCONST 0 1000 1000 1A 1
+$C:\Users\Nam\AppData\Local\Temp\s4e0.obj
 idloc IDLOC 0 200000 200000 8 1
 init CODE 0 0 0 4 1
 config CONFIG 0 300000 300000 E 1
@@ -46,21 +47,21 @@ BANK7 700-7FF 1
 BANK8 800-8FF 1
 BANK9 900-9FF 1
 CONST 4-FFF 1
-CONST 124C-FFFF 1
+CONST 128E-FFFF 1
 STACK 80-F7F 1
-SMALLCONST 124C-FFFF 1
+SMALLCONST 128E-FFFF 1
 CODE 4-FFF 1
-CODE 124C-FFFF 1
+CODE 128E-FFFF 1
 BANK10 A00-AFF 1
 BANK11 B00-BFF 1
 BANK12 C00-CFF 1
 BANK13 D00-DFF 1
 BANK14 E00-EFF 1
 BANK15 F00-F7F 1
-BIGRAM D-F7F 1
-COMRAM D-7F 1
+BIGRAM 13-F7F 1
+COMRAM 13-7F 1
 EEDATA F00000-F003FF 1
-MEDIUMCONST 124C-FFFF 1
+MEDIUMCONST 128E-FFFF 1
 # %LINETAB Section
 # This section enumerates the file/line to address mappings.
 # The beginning of the section is indicated by %LINETAB.
@@ -75,89 +76,94 @@ MEDIUMCONST 124C-FFFF 1
 # All other numeric values are in decimal.
 %LINETAB
 $dist/default/production\PIC18_LCD_LIB.X.production.obj
-112C text7 CODE >48:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
-112E text7 CODE >50:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
-1134 text7 CODE >51:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
-113A text7 CODE >52:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
-1140 text7 CODE >54:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
-1142 text7 CODE >55:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
-114A text7 CODE >56:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
-114C text7 CODE >57:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
-1154 text7 CODE >60:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
-115A text7 CODE >62:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
-1160 text7 CODE >63:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
-1166 text7 CODE >64:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
-116C text7 CODE >66:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
-116E text7 CODE >67:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
-1176 text7 CODE >68:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
-1178 text7 CODE >69:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
-1180 text7 CODE >70:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
-1218 text6 CODE >29:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
-121A text6 CODE >30:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
-121C text6 CODE >31:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
-1224 text6 CODE >32:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
-122A text6 CODE >33:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
-1238 text6 CODE >34:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
-1182 text5 CODE >15:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
-1182 text5 CODE >17:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
-1186 text5 CODE >19:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
-1196 text5 CODE >20:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
-119C text5 CODE >21:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
-11A2 text5 CODE >22:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
-11A8 text5 CODE >23:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
-11AE text5 CODE >24:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
-11B4 text5 CODE >25:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
-11BA text5 CODE >26:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
-11CA text5 CODE >27:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
-1018 text4 CODE >13:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\iopin.c
-1018 text4 CODE >14:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\iopin.c
-103A text4 CODE >15:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\iopin.c
-1042 text4 CODE >16:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\iopin.c
-1046 text4 CODE >19:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\iopin.c
-1048 text4 CODE >20:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\iopin.c
-1056 text4 CODE >21:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\iopin.c
-105A text4 CODE >22:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\iopin.c
-105C text4 CODE >24:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\iopin.c
-106A text4 CODE >25:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\iopin.c
-106E text4 CODE >26:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\iopin.c
-1070 text4 CODE >28:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\iopin.c
-107E text4 CODE >29:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\iopin.c
-1082 text4 CODE >30:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\iopin.c
-1084 text4 CODE >32:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\iopin.c
-1092 text4 CODE >33:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\iopin.c
-1096 text4 CODE >35:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\iopin.c
-1098 text4 CODE >19:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\iopin.c
-1244 text3 CODE >76:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
-1244 text3 CODE >77:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
-124A text3 CODE >78:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
-11F6 text2 CODE >37:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
-11F8 text2 CODE >38:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
-1206 text2 CODE >39:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
-1206 text2 CODE >41:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
-1208 text2 CODE >42:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
-1210 text2 CODE >43:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
-11CC text1 CODE >464:C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\doprnt.c
-11CC text1 CODE >533:C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\doprnt.c
-11D4 text1 CODE >536:C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\doprnt.c
-11D6 text1 CODE >541:C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\doprnt.c
-11DC text1 CODE >536:C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\doprnt.c
-10C4 text0 CODE >20:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
-10C4 text0 CODE >22:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
-10C8 text0 CODE >23:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
-10CC text0 CODE >24:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
-10E8 text0 CODE >25:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
-10FE text0 CODE >26:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
-1116 text0 CODE >27:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
-1122 text0 CODE >25:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
-112A text0 CODE >30:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
-123A cinit CODE >1278:C:\Users\Nam\AppData\Local\Temp\sg3k.
-123A cinit CODE >1280:C:\Users\Nam\AppData\Local\Temp\sg3k.
-123A cinit CODE >1283:C:\Users\Nam\AppData\Local\Temp\sg3k.
-123A cinit CODE >1289:C:\Users\Nam\AppData\Local\Temp\sg3k.
-123A cinit CODE >1292:C:\Users\Nam\AppData\Local\Temp\sg3k.
-123C cinit CODE >1293:C:\Users\Nam\AppData\Local\Temp\sg3k.
-123E cinit CODE >1294:C:\Users\Nam\AppData\Local\Temp\sg3k.
-1240 cinit CODE >1295:C:\Users\Nam\AppData\Local\Temp\sg3k.
+1122 text8 CODE >48:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
+1124 text8 CODE >50:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
+112A text8 CODE >51:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
+1130 text8 CODE >52:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
+1136 text8 CODE >54:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
+1138 text8 CODE >55:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
+1140 text8 CODE >56:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
+1142 text8 CODE >57:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
+114A text8 CODE >60:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
+1150 text8 CODE >62:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
+1156 text8 CODE >63:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
+115C text8 CODE >64:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
+1162 text8 CODE >66:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
+1164 text8 CODE >67:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
+116C text8 CODE >68:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
+116E text8 CODE >69:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
+1176 text8 CODE >70:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
+125A text7 CODE >29:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
+125C text7 CODE >30:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
+125E text7 CODE >31:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
+1266 text7 CODE >32:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
+126C text7 CODE >33:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
+127A text7 CODE >34:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
+11C4 text6 CODE >15:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
+11C4 text6 CODE >17:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
+11C8 text6 CODE >19:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
+11D8 text6 CODE >20:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
+11DE text6 CODE >21:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
+11E4 text6 CODE >22:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
+11EA text6 CODE >23:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
+11F0 text6 CODE >24:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
+11F6 text6 CODE >25:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
+11FC text6 CODE >26:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
+120C text6 CODE >27:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
+101A text5 CODE >13:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\iopin.c
+101A text5 CODE >14:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\iopin.c
+103C text5 CODE >15:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\iopin.c
+1044 text5 CODE >16:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\iopin.c
+1048 text5 CODE >19:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\iopin.c
+104A text5 CODE >20:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\iopin.c
+1058 text5 CODE >21:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\iopin.c
+105C text5 CODE >22:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\iopin.c
+105E text5 CODE >24:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\iopin.c
+106C text5 CODE >25:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\iopin.c
+1070 text5 CODE >26:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\iopin.c
+1072 text5 CODE >28:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\iopin.c
+1080 text5 CODE >29:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\iopin.c
+1084 text5 CODE >30:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\iopin.c
+1086 text5 CODE >32:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\iopin.c
+1094 text5 CODE >33:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\iopin.c
+1098 text5 CODE >35:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\iopin.c
+109A text5 CODE >19:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\iopin.c
+1286 text4 CODE >76:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
+1286 text4 CODE >77:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
+128C text4 CODE >78:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
+1238 text3 CODE >37:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
+123A text3 CODE >38:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
+1248 text3 CODE >39:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
+1248 text3 CODE >41:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
+124A text3 CODE >42:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
+1252 text3 CODE >43:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
+120E text2 CODE >464:C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\doprnt.c
+120E text2 CODE >533:C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\doprnt.c
+1216 text2 CODE >536:C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\doprnt.c
+1218 text2 CODE >541:C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\doprnt.c
+121E text2 CODE >536:C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\doprnt.c
+1178 text1 CODE >21:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
+1178 text1 CODE >22:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
+118E text1 CODE >23:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
+11B0 text1 CODE >24:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
+11BC text1 CODE >22:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
+10C6 text0 CODE >28:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
+10C6 text0 CODE >30:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
+10CA text0 CODE >31:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
+10CE text0 CODE >32:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
+10D8 text0 CODE >33:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
+10F4 text0 CODE >34:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
+1100 text0 CODE >35:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
+110A text0 CODE >37:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
+1120 text0 CODE >36:C:\Users\Nam\Documents\Uni\year 2\term2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
+127C cinit CODE >1290:C:\Users\Nam\AppData\Local\Temp\s4e0.
+127C cinit CODE >1292:C:\Users\Nam\AppData\Local\Temp\s4e0.
+127C cinit CODE >1295:C:\Users\Nam\AppData\Local\Temp\s4e0.
+127C cinit CODE >1301:C:\Users\Nam\AppData\Local\Temp\s4e0.
+127C cinit CODE >1304:C:\Users\Nam\AppData\Local\Temp\s4e0.
+127E cinit CODE >1305:C:\Users\Nam\AppData\Local\Temp\s4e0.
+1280 cinit CODE >1306:C:\Users\Nam\AppData\Local\Temp\s4e0.
+1282 cinit CODE >1307:C:\Users\Nam\AppData\Local\Temp\s4e0.
 # %SYMTAB Section
 # An enumeration of all symbols in the program.
 # The beginning of the section is indicated by %SYMTAB.
@@ -173,31 +179,32 @@ $dist/default/production\PIC18_LCD_LIB.X.production.obj
 putch@data 5 0 COMRAM 1 cstackCOMRAM dist/default/production\PIC18_LCD_LIB.X.production.obj
 __Lmediumconst 0 0 MEDIUMCONST 0 mediumconst dist/default/production\PIC18_LCD_LIB.X.production.obj
 __Hspace_0 30000E 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
-__Hspace_1 D 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
+__Hspace_1 13 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
 __Hspace_2 0 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
 __CFG_IESO$OFF 0 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
 __size_of_lcdInst 0 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
-_lcdNibble 112C 0 CODE 0 text7 dist/default/production\PIC18_LCD_LIB.X.production.obj
+_lcdNibble 1122 0 CODE 0 text8 dist/default/production\PIC18_LCD_LIB.X.production.obj
 __Hibigdata 0 0 CODE 0 ibigdata dist/default/production\PIC18_LCD_LIB.X.production.obj
-__mediumconst 0 0 MEDIUMCONST 0 mediumconst C:\Users\Nam\AppData\Local\Temp\sg3k.obj
+__mediumconst 0 0 MEDIUMCONST 0 mediumconst C:\Users\Nam\AppData\Local\Temp\s4e0.obj
 __Heeprom_data 0 0 EEDATA 0 eeprom_data dist/default/production\PIC18_LCD_LIB.X.production.obj
 __CFG_MCLRE$ON 0 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
-main@a B 0 COMRAM 1 cstackCOMRAM dist/default/production\PIC18_LCD_LIB.X.production.obj
 __Lsmallconst 1000 0 SMALLCONST 0 smallconst dist/default/production\PIC18_LCD_LIB.X.production.obj
 _LATB F8A 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
 _LATD F8C 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
-___sp 0 0 STACK 2 stack C:\Users\Nam\AppData\Local\Temp\sg3k.obj
-_main 10C4 0 CODE 0 text0 dist/default/production\PIC18_LCD_LIB.X.production.obj
-start 0 0 CODE 0 init C:\Users\Nam\AppData\Local\Temp\sg3k.obj
+___sp 0 0 STACK 2 stack C:\Users\Nam\AppData\Local\Temp\s4e0.obj
+_main 10C6 0 CODE 0 text0 dist/default/production\PIC18_LCD_LIB.X.production.obj
+start 0 0 CODE 0 init C:\Users\Nam\AppData\Local\Temp\s4e0.obj
 __size_of_main 0 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
 __Hpowerup 0 0 CODE 0 powerup dist/default/production\PIC18_LCD_LIB.X.production.obj
+printb@a F 0 COMRAM 1 cstackCOMRAM dist/default/production\PIC18_LCD_LIB.X.production.obj
+printb@n B 0 COMRAM 1 cstackCOMRAM dist/default/production\PIC18_LCD_LIB.X.production.obj
 printf@c A 0 COMRAM 1 cstackCOMRAM dist/default/production\PIC18_LCD_LIB.X.production.obj
 printf@f 6 0 COMRAM 1 cstackCOMRAM dist/default/production\PIC18_LCD_LIB.X.production.obj
-__accesstop 80 0 ABS 0 - C:\Users\Nam\AppData\Local\Temp\sg3k.obj
-intlevel0 0 0 CODE 0 text C:\Users\Nam\AppData\Local\Temp\sg3k.obj
-intlevel1 0 0 CODE 0 text C:\Users\Nam\AppData\Local\Temp\sg3k.obj
-intlevel2 0 0 CODE 0 text C:\Users\Nam\AppData\Local\Temp\sg3k.obj
-intlevel3 0 0 CODE 0 text C:\Users\Nam\AppData\Local\Temp\sg3k.obj
+__accesstop 80 0 ABS 0 - C:\Users\Nam\AppData\Local\Temp\s4e0.obj
+intlevel0 0 0 CODE 0 text C:\Users\Nam\AppData\Local\Temp\s4e0.obj
+intlevel1 0 0 CODE 0 text C:\Users\Nam\AppData\Local\Temp\s4e0.obj
+intlevel2 0 0 CODE 0 text C:\Users\Nam\AppData\Local\Temp\s4e0.obj
+intlevel3 0 0 CODE 0 text C:\Users\Nam\AppData\Local\Temp\s4e0.obj
 __LnvFARRAM 0 0 FARRAM 0 nvFARRAM dist/default/production\PIC18_LCD_LIB.X.production.obj
 __CFG_EBTR0$OFF 0 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
 __CFG_EBTR1$OFF 0 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
@@ -208,9 +215,9 @@ __Hifardata 0 0 CODE 0 ifardata dist/default/production\PIC18_LCD_LIB.X.producti
 __Hclrtext 0 0 ABS 0 clrtext dist/default/production\PIC18_LCD_LIB.X.production.obj
 _ADCON0 FC2 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
 _ADCON1 FC1 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
-__end_of_lcdInst 123A 0 CODE 0 text6 dist/default/production\PIC18_LCD_LIB.X.production.obj
-___inthi_sp 0 0 STACK 2 stack C:\Users\Nam\AppData\Local\Temp\sg3k.obj
-___intlo_sp 0 0 STACK 2 stack C:\Users\Nam\AppData\Local\Temp\sg3k.obj
+__end_of_lcdInst 127C 0 CODE 0 text7 dist/default/production\PIC18_LCD_LIB.X.production.obj
+___inthi_sp 0 0 STACK 2 stack C:\Users\Nam\AppData\Local\Temp\s4e0.obj
+___intlo_sp 0 0 STACK 2 stack C:\Users\Nam\AppData\Local\Temp\s4e0.obj
 __size_of_initLCD 0 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
 __Hintcode_body 0 0 ABS 0 intcode_body dist/default/production\PIC18_LCD_LIB.X.production.obj
 __Lintsave_regs 0 0 BIGRAM 1 intsave_regs dist/default/production\PIC18_LCD_LIB.X.production.obj
@@ -222,14 +229,15 @@ __size_of_putch 0 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.o
 __size_of_lcdNewline 0 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
 __Lintcodelo 0 0 CODE 0 intcodelo dist/default/production\PIC18_LCD_LIB.X.production.obj
 __CFG_FCMEN$OFF 0 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
-start_initialization 123A 0 CODE 0 cinit dist/default/production\PIC18_LCD_LIB.X.production.obj
+start_initialization 127C 0 CODE 0 cinit dist/default/production\PIC18_LCD_LIB.X.production.obj
 __CFG_PBADEN$ON 0 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
 __HnvFARRAM 0 0 FARRAM 0 nvFARRAM dist/default/production\PIC18_LCD_LIB.X.production.obj
 ___rparam_used 1 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
 __CFG_WDTPS$32768 0 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
 pinMode@pin 3 0 COMRAM 1 cstackCOMRAM dist/default/production\PIC18_LCD_LIB.X.production.obj
-__end_of_printf 11F6 0 CODE 0 text1 dist/default/production\PIC18_LCD_LIB.X.production.obj
-__end_of_initLCD 11CC 0 CODE 0 text5 dist/default/production\PIC18_LCD_LIB.X.production.obj
+__end_of_printb 11C4 0 CODE 0 text1 dist/default/production\PIC18_LCD_LIB.X.production.obj
+__end_of_printf 1238 0 CODE 0 text2 dist/default/production\PIC18_LCD_LIB.X.production.obj
+__end_of_initLCD 120E 0 CODE 0 text6 dist/default/production\PIC18_LCD_LIB.X.production.obj
 __Hbank0 0 0 ABS 0 bank0 dist/default/production\PIC18_LCD_LIB.X.production.obj
 __Hbank1 0 0 ABS 0 bank1 dist/default/production\PIC18_LCD_LIB.X.production.obj
 __Hbank2 0 0 ABS 0 bank2 dist/default/production\PIC18_LCD_LIB.X.production.obj
@@ -256,6 +264,7 @@ __Htext4 0 0 ABS 0 text4 dist/default/production\PIC18_LCD_LIB.X.production.obj
 __Htext5 0 0 ABS 0 text5 dist/default/production\PIC18_LCD_LIB.X.production.obj
 __Htext6 0 0 ABS 0 text6 dist/default/production\PIC18_LCD_LIB.X.production.obj
 __Htext7 0 0 ABS 0 text7 dist/default/production\PIC18_LCD_LIB.X.production.obj
+__Htext8 0 0 ABS 0 text8 dist/default/production\PIC18_LCD_LIB.X.production.obj
 __Hbank10 0 0 ABS 0 bank10 dist/default/production\PIC18_LCD_LIB.X.production.obj
 __Hbank11 0 0 ABS 0 bank11 dist/default/production\PIC18_LCD_LIB.X.production.obj
 __Hbank12 0 0 ABS 0 bank12 dist/default/production\PIC18_LCD_LIB.X.production.obj
@@ -264,7 +273,7 @@ __Hbank14 0 0 ABS 0 bank14 dist/default/production\PIC18_LCD_LIB.X.production.ob
 __Hbank15 0 0 ABS 0 bank15 dist/default/production\PIC18_LCD_LIB.X.production.obj
 __Hbigbss 0 0 BIGRAM 1 bigbss dist/default/production\PIC18_LCD_LIB.X.production.obj
 __Hbigram 0 0 ABS 0 bigram dist/default/production\PIC18_LCD_LIB.X.production.obj
-__smallconst 1000 0 SMALLCONST 0 smallconst C:\Users\Nam\AppData\Local\Temp\sg3k.obj
+__smallconst 1000 0 SMALLCONST 0 smallconst C:\Users\Nam\AppData\Local\Temp\s4e0.obj
 __Hcomram 0 0 ABS 0 comram dist/default/production\PIC18_LCD_LIB.X.production.obj
 __Hconfig 30000E 0 CONFIG 0 config dist/default/production\PIC18_LCD_LIB.X.production.obj
 __CFG_LPT1OSC$OFF 0 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
@@ -294,9 +303,10 @@ __Ltext4 0 0 ABS 0 text4 dist/default/production\PIC18_LCD_LIB.X.production.obj
 __Ltext5 0 0 ABS 0 text5 dist/default/production\PIC18_LCD_LIB.X.production.obj
 __Ltext6 0 0 ABS 0 text6 dist/default/production\PIC18_LCD_LIB.X.production.obj
 __Ltext7 0 0 ABS 0 text7 dist/default/production\PIC18_LCD_LIB.X.production.obj
+__Ltext8 0 0 ABS 0 text8 dist/default/production\PIC18_LCD_LIB.X.production.obj
 __Hfarbss 0 0 FARRAM 0 farbss dist/default/production\PIC18_LCD_LIB.X.production.obj
 __Lintcode_body 0 0 ABS 0 intcode_body dist/default/production\PIC18_LCD_LIB.X.production.obj
-__end_of_pinMode 10C4 0 CODE 0 text4 dist/default/production\PIC18_LCD_LIB.X.production.obj
+__end_of_pinMode 10C6 0 CODE 0 text5 dist/default/production\PIC18_LCD_LIB.X.production.obj
 _PORTBbits F81 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
 __Habs1 0 0 ABS 0 abs1 dist/default/production\PIC18_LCD_LIB.X.production.obj
 __Hdata 0 0 ABS 0 data dist/default/production\PIC18_LCD_LIB.X.production.obj
@@ -317,14 +327,14 @@ __HcstackCOMRAM 0 0 ABS 0 cstackCOMRAM dist/default/production\PIC18_LCD_LIB.X.p
 __Hintret 0 0 ABS 0 intret dist/default/production\PIC18_LCD_LIB.X.production.obj
 __Hirdata 0 0 CODE 0 irdata dist/default/production\PIC18_LCD_LIB.X.production.obj
 __S0 30000E 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
-__S1 D 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
+__S1 13 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
 __S2 0 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
 __Lbigdata 0 0 BIGRAM 1 bigdata dist/default/production\PIC18_LCD_LIB.X.production.obj
 __Hnvrram 0 0 COMRAM 1 nvrram dist/default/production\PIC18_LCD_LIB.X.production.obj
 lcdInst@data 4 0 COMRAM 1 cstackCOMRAM dist/default/production\PIC18_LCD_LIB.X.production.obj
 __CFG_CCP2MX$PORTC 0 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
 __Lintentry 0 0 ABS 0 intentry dist/default/production\PIC18_LCD_LIB.X.production.obj
-_lcdInst 1218 0 CODE 0 text6 dist/default/production\PIC18_LCD_LIB.X.production.obj
+_lcdInst 125A 0 CODE 0 text7 dist/default/production\PIC18_LCD_LIB.X.production.obj
 __Hramtop 1000 0 RAM 0 ramtop dist/default/production\PIC18_LCD_LIB.X.production.obj
 __Hrparam 0 0 COMRAM 1 rparam dist/default/production\PIC18_LCD_LIB.X.production.obj
 __activetblptr 2 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
@@ -342,12 +352,13 @@ __Lbigram 0 0 ABS 0 bigram dist/default/production\PIC18_LCD_LIB.X.production.ob
 __CFG_BORV$3 0 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
 __Lcomram 0 0 ABS 0 comram dist/default/production\PIC18_LCD_LIB.X.production.obj
 __Lconfig 300000 0 CONFIG 0 config dist/default/production\PIC18_LCD_LIB.X.production.obj
-_printf 11CC 0 CODE 0 text1 dist/default/production\PIC18_LCD_LIB.X.production.obj
+_printb 1178 0 CODE 0 text1 dist/default/production\PIC18_LCD_LIB.X.production.obj
+_printf 120E 0 CODE 0 text2 dist/default/production\PIC18_LCD_LIB.X.production.obj
 _LATDbits F8C 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
 __Lfarbss 0 0 FARRAM 0 farbss dist/default/production\PIC18_LCD_LIB.X.production.obj
 __Lfardata 0 0 FARRAM 0 fardata dist/default/production\PIC18_LCD_LIB.X.production.obj
-stackhi F7F 0 ABS 0 - C:\Users\Nam\AppData\Local\Temp\sg3k.obj
-stacklo 80 0 ABS 0 - C:\Users\Nam\AppData\Local\Temp\sg3k.obj
+stackhi F7F 0 ABS 0 - C:\Users\Nam\AppData\Local\Temp\s4e0.obj
+stacklo 80 0 ABS 0 - C:\Users\Nam\AppData\Local\Temp\s4e0.obj
 pinMode@port 1 0 COMRAM 1 cstackCOMRAM dist/default/production\PIC18_LCD_LIB.X.production.obj
 pinMode@type 5 0 COMRAM 1 cstackCOMRAM dist/default/production\PIC18_LCD_LIB.X.production.obj
 __Lintcode 0 0 CODE 0 intcode dist/default/production\PIC18_LCD_LIB.X.production.obj
@@ -359,36 +370,38 @@ __Lspace_1 0 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
 __Lspace_2 0 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
 __LcstackCOMRAM 0 0 ABS 0 cstackCOMRAM dist/default/production\PIC18_LCD_LIB.X.production.obj
 printf@ap 8 0 COMRAM 1 cstackCOMRAM dist/default/production\PIC18_LCD_LIB.X.production.obj
-end_of_initialization 123A 0 CODE 0 cinit dist/default/production\PIC18_LCD_LIB.X.production.obj
+end_of_initialization 127C 0 CODE 0 cinit dist/default/production\PIC18_LCD_LIB.X.production.obj
 __Lnvrram 0 0 COMRAM 1 nvrram dist/default/production\PIC18_LCD_LIB.X.production.obj
 __Hintentry 0 0 ABS 0 intentry dist/default/production\PIC18_LCD_LIB.X.production.obj
 __CFG_STVREN$ON 0 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
+__size_of_printb 0 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
 __size_of_printf 0 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
 __CFG_OSC$HS 0 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
 __Hreset_vec 0 0 CODE 0 reset_vec dist/default/production\PIC18_LCD_LIB.X.production.obj
-_initLCD 1182 0 CODE 0 text5 dist/default/production\PIC18_LCD_LIB.X.production.obj
+_initLCD 11C4 0 CODE 0 text6 dist/default/production\PIC18_LCD_LIB.X.production.obj
 __Lramtop 1000 0 RAM 0 ramtop dist/default/production\PIC18_LCD_LIB.X.production.obj
 __Lrparam 0 0 COMRAM 1 rparam dist/default/production\PIC18_LCD_LIB.X.production.obj
-__pcinit 123A 0 CODE 0 cinit dist/default/production\PIC18_LCD_LIB.X.production.obj
-__ptext0 10C4 0 CODE 0 text0 dist/default/production\PIC18_LCD_LIB.X.production.obj
-__ptext1 11CC 0 CODE 0 text1 dist/default/production\PIC18_LCD_LIB.X.production.obj
-__ptext2 11F6 0 CODE 0 text2 dist/default/production\PIC18_LCD_LIB.X.production.obj
-__ptext3 1244 0 CODE 0 text3 dist/default/production\PIC18_LCD_LIB.X.production.obj
-__ptext4 1018 0 CODE 0 text4 dist/default/production\PIC18_LCD_LIB.X.production.obj
-__ptext5 1182 0 CODE 0 text5 dist/default/production\PIC18_LCD_LIB.X.production.obj
-__ptext6 1218 0 CODE 0 text6 dist/default/production\PIC18_LCD_LIB.X.production.obj
-__ptext7 112C 0 CODE 0 text7 dist/default/production\PIC18_LCD_LIB.X.production.obj
+__pcinit 127C 0 CODE 0 cinit dist/default/production\PIC18_LCD_LIB.X.production.obj
+__ptext0 10C6 0 CODE 0 text0 dist/default/production\PIC18_LCD_LIB.X.production.obj
+__ptext1 1178 0 CODE 0 text1 dist/default/production\PIC18_LCD_LIB.X.production.obj
+__ptext2 120E 0 CODE 0 text2 dist/default/production\PIC18_LCD_LIB.X.production.obj
+__ptext3 1238 0 CODE 0 text3 dist/default/production\PIC18_LCD_LIB.X.production.obj
+__ptext4 1286 0 CODE 0 text4 dist/default/production\PIC18_LCD_LIB.X.production.obj
+__ptext5 101A 0 CODE 0 text5 dist/default/production\PIC18_LCD_LIB.X.production.obj
+__ptext6 11C4 0 CODE 0 text6 dist/default/production\PIC18_LCD_LIB.X.production.obj
+__ptext7 125A 0 CODE 0 text7 dist/default/production\PIC18_LCD_LIB.X.production.obj
+__ptext8 1122 0 CODE 0 text8 dist/default/production\PIC18_LCD_LIB.X.production.obj
 __Lstruct 0 0 COMRAM 1 struct dist/default/production\PIC18_LCD_LIB.X.production.obj
-__ramtop 1000 0 RAM 0 ramtop C:\Users\Nam\AppData\Local\Temp\sg3k.obj
+__ramtop 1000 0 RAM 0 ramtop C:\Users\Nam\AppData\Local\Temp\s4e0.obj
 __Lpowerup 0 0 CODE 0 powerup dist/default/production\PIC18_LCD_LIB.X.production.obj
 __Leeprom_data 0 0 EEDATA 0 eeprom_data dist/default/production\PIC18_LCD_LIB.X.production.obj
 __psmallconst 1000 0 SMALLCONST 0 smallconst dist/default/production\PIC18_LCD_LIB.X.production.obj
 __Lreset_vec 0 0 CODE 0 reset_vec dist/default/production\PIC18_LCD_LIB.X.production.obj
-_pinMode 1018 0 CODE 0 text4 dist/default/production\PIC18_LCD_LIB.X.production.obj
+_pinMode 101A 0 CODE 0 text5 dist/default/production\PIC18_LCD_LIB.X.production.obj
 ___param_bank 0 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
 __CFG_WDT$OFF 0 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
 __Hbigdata 0 0 BIGRAM 1 bigdata dist/default/production\PIC18_LCD_LIB.X.production.obj
-__end_of__initialization 123A 0 CODE 0 cinit dist/default/production\PIC18_LCD_LIB.X.production.obj
+__end_of__initialization 127C 0 CODE 0 cinit dist/default/production\PIC18_LCD_LIB.X.production.obj
 __CFG_WRT0$OFF 0 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
 __CFG_WRT1$OFF 0 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
 __CFG_WRT2$OFF 0 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
@@ -397,19 +410,22 @@ __CFG_WRTB$OFF 0 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.ob
 __Libigdata 0 0 CODE 0 ibigdata dist/default/production\PIC18_LCD_LIB.X.production.obj
 __CFG_WRTC$OFF 0 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
 __CFG_WRTD$OFF 0 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
-_lcdNewline 1244 0 CODE 0 text3 dist/default/production\PIC18_LCD_LIB.X.production.obj
+_lcdNewline 1286 0 CODE 0 text4 dist/default/production\PIC18_LCD_LIB.X.production.obj
 __Lclrtext 0 0 ABS 0 clrtext dist/default/production\PIC18_LCD_LIB.X.production.obj
 __CFG_PWRT$OFF 0 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
 __pcstackCOMRAM 1 0 COMRAM 1 cstackCOMRAM dist/default/production\PIC18_LCD_LIB.X.production.obj
 __CFG_BOREN$SBORDIS 0 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
 __end_of_keys 1012 0 SMALLCONST 0 smallconst dist/default/production\PIC18_LCD_LIB.X.production.obj
-__end_of_main 112C 0 CODE 0 text0 dist/default/production\PIC18_LCD_LIB.X.production.obj
+__end_of_main 1122 0 CODE 0 text0 dist/default/production\PIC18_LCD_LIB.X.production.obj
+_PORTA F80 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
 _PORTB F81 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
+_PORTC F82 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
+_PORTD F83 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
 _TRISA F92 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
 _TRISB F93 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
 _TRISC F94 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
 _TRISD F95 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
-__end_of_putch 1218 0 CODE 0 text2 dist/default/production\PIC18_LCD_LIB.X.production.obj
+__end_of_putch 125A 0 CODE 0 text3 dist/default/production\PIC18_LCD_LIB.X.production.obj
 __CFG_CP0$OFF 0 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
 __CFG_CP1$OFF 0 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
 __HRAM 0 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
@@ -423,16 +439,16 @@ __Lsfr 0 0 ABS 0 sfr dist/default/production\PIC18_LCD_LIB.X.production.obj
 __CFG_CP2$OFF 0 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
 __CFG_CP3$OFF 0 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
 __CFG_CPB$OFF 0 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
-_putch 11F6 0 CODE 0 text2 dist/default/production\PIC18_LCD_LIB.X.production.obj
+_putch 1238 0 CODE 0 text3 dist/default/production\PIC18_LCD_LIB.X.production.obj
 __CFG_CPD$OFF 0 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
-__initialization 123A 0 CODE 0 cinit dist/default/production\PIC18_LCD_LIB.X.production.obj
-__end_of_lcdNibble 1182 0 CODE 0 text7 dist/default/production\PIC18_LCD_LIB.X.production.obj
+__initialization 127C 0 CODE 0 cinit dist/default/production\PIC18_LCD_LIB.X.production.obj
+__end_of_lcdNibble 1178 0 CODE 0 text8 dist/default/production\PIC18_LCD_LIB.X.production.obj
 __Hfardata 0 0 FARRAM 0 fardata dist/default/production\PIC18_LCD_LIB.X.production.obj
-__Hsmallconst 1018 0 SMALLCONST 0 smallconst dist/default/production\PIC18_LCD_LIB.X.production.obj
+__Hsmallconst 101A 0 SMALLCONST 0 smallconst dist/default/production\PIC18_LCD_LIB.X.production.obj
 __size_of_lcdNibble 0 0 ABS 0 - dist/default/production\PIC18_LCD_LIB.X.production.obj
 __Lifardata 0 0 CODE 0 ifardata dist/default/production\PIC18_LCD_LIB.X.production.obj
 __Hintsave_regs 0 0 BIGRAM 1 intsave_regs dist/default/production\PIC18_LCD_LIB.X.production.obj
-__end_of_lcdNewline 124C 0 CODE 0 text3 dist/default/production\PIC18_LCD_LIB.X.production.obj
+__end_of_lcdNewline 128E 0 CODE 0 text4 dist/default/production\PIC18_LCD_LIB.X.production.obj
 __Hintcode 0 0 CODE 0 intcode dist/default/production\PIC18_LCD_LIB.X.production.obj
 # %SPLITSTAB Section
 # This section enumerates all the psect splits performed by the assembler.
@@ -459,8 +475,8 @@ __Hintcode 0 0 CODE 0 intcode dist/default/production\PIC18_LCD_LIB.X.production
 # All other numeric quantities are in decimal.
 %SEGMENTS
 idloc 0 200000 200000 8 1
-text4 0 1018 1018 234 1
-cstackCOMRAM 1 1 1 C 1
+text5 0 101A 101A 274 1
+cstackCOMRAM 1 1 1 12 1
 reset_vec 0 0 0 4 1
-smallconst 0 1000 1000 18 1
+smallconst 0 1000 1000 1A 1
 config 0 300000 300000 E 1

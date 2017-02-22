@@ -2756,10 +2756,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :UE 265 ]
 }
 "33
-[v _read `(uc ~T0 @X0 1 ef ]
+[v _readKeypad `(uc ~T0 @X0 1 ef ]
 {
-[; ;keypad.c: 33: char read(){
-[e :U _read ]
+[; ;keypad.c: 33: char readKeypad(){
+[e :U _readKeypad ]
 [f ]
 [; ;keypad.c: 34: while(PORTBbits.RB1 == 0);
 "34

@@ -7,6 +7,14 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _TRISC `Vuc ~T0 @X0 0 e@3988 ]
 "2030
 [v _TRISD `Vuc ~T0 @X0 0 e@3989 ]
+"49
+[v _PORTA `Vuc ~T0 @X0 0 e@3968 ]
+"185
+[v _PORTB `Vuc ~T0 @X0 0 e@3969 ]
+"355
+[v _PORTC `Vuc ~T0 @X0 0 e@3970 ]
+"529
+[v _PORTD `Vuc ~T0 @X0 0 e@3971 ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -2689,7 +2697,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic18.h: 161: extern __nonreentrant void _delaywdt(unsigned long);
 [; ;pic18.h: 163: extern __nonreentrant void _delay3(unsigned char);
 [; ;iopin.h: 19: void pinMode(int port, int pin, int type);
-[; ;iopin.h: 20: int digitalRead(void);
+[; ;iopin.h: 20: int digitalRead(int port, int pin);
 [; ;iopin.h: 21: int digitalWrite(void);
 "13 iopin.c
 [v _pinMode `(v ~T0 @X0 1 ef3`i`i`i ]
@@ -2792,22 +2800,65 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :UE 265 ]
 }
 "38
-[v _digitalRead `(i ~T0 @X0 1 ef ]
+[v _digitalRead `(i ~T0 @X0 1 ef2`i`i ]
 {
-[; ;iopin.c: 38: int digitalRead(){
+[; ;iopin.c: 38: int digitalRead(int port, int pin){
 [e :U _digitalRead ]
+[v _port `i ~T0 @X0 1 r1 ]
+[v _pin `i ~T0 @X0 1 r2 ]
 [f ]
-[; ;iopin.c: 40: }
+[; ;iopin.c: 39: switch(port){
+"39
+[e $U 283  ]
+{
+[; ;iopin.c: 40: case 0: return (PORTA>>pin)&1;
 "40
+[e :U 284 ]
+[e ) & >> -> _PORTA `i _pin -> 1 `i ]
+[e $UE 281  ]
+[; ;iopin.c: 41: case 1: return (PORTB>>pin)&1;
+"41
+[e :U 285 ]
+[e ) & >> -> _PORTB `i _pin -> 1 `i ]
+[e $UE 281  ]
+[; ;iopin.c: 42: case 2: return (PORTC>>pin)&1;
+"42
+[e :U 286 ]
+[e ) & >> -> _PORTC `i _pin -> 1 `i ]
+[e $UE 281  ]
+[; ;iopin.c: 43: case 3: return (PORTD>>pin)&1;
+"43
+[e :U 287 ]
+[e ) & >> -> _PORTD `i _pin -> 1 `i ]
+[e $UE 281  ]
+"44
+}
+[; ;iopin.c: 44: }
+[e $U 282  ]
+"39
+[e :U 283 ]
+[e [\ _port , $ -> 0 `i 284
+ , $ -> 1 `i 285
+ , $ -> 2 `i 286
+ , $ -> 3 `i 287
+ 282 ]
+"44
+[e :U 282 ]
+[; ;iopin.c: 45: return -1;
+"45
+[e ) -U -> 1 `i ]
+[e $UE 281  ]
+[; ;iopin.c: 46: }
+"46
 [e :UE 281 ]
 }
-"42
+"48
 [v _digitalWrite `(i ~T0 @X0 1 ef ]
 {
-[; ;iopin.c: 42: int digitalWrite(){
+[; ;iopin.c: 48: int digitalWrite(){
 [e :U _digitalWrite ]
 [f ]
-[; ;iopin.c: 44: }
-"44
-[e :UE 282 ]
+[; ;iopin.c: 50: }
+"50
+[e :UE 288 ]
 }

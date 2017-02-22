@@ -3653,7 +3653,7 @@ ADCON1 = 0xFF;
 }
 
 
-char read(){
+char readKeypad(){
 while(PORTBbits.RB1 == 0);
 char key = (PORTB & 0xF0) >> 4;
 while(PORTBbits.RB1 == 1);

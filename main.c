@@ -16,18 +16,27 @@
 #include "lcd.h"
 #include "iopin.h"
 
+void printb(int n);
+
+void printb(int n) {
+    for(int a = 1<<8; a > 0; a>>=1){
+        if(n & a)printf("1");
+        else printf("0");
+    }
+}
 
 void main(void) {
     
     initLCD();
     TRISA=0;
-    pinMode(A,1,OUTPUT);
-    for(int a = 1<<8; a > 0; a>>=1){
-        if(a&TRISA)printf("1");
-        else printf("0");
+    printb(TRISB);
+    pinMode(B,1,INPUT);
+    printf("\n");
+    printb(TRISB);
+    while(1){
+        __delay_ms(1000);
     }
     
-    while(1);
     return;
 }
  

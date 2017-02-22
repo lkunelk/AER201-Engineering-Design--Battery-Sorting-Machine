@@ -17,7 +17,7 @@
 #define INPUT 1
 
 void pinMode(int port, int pin, int type);
-int digitalRead(void);
+int digitalRead(int port, int pin);
 int digitalWrite(void);
 
 #endif	/* IOPIN_H */

@@ -1,13 +1,19 @@
 Version 3.2 HI-TECH Software Intermediate Code
+"195 C:\Program Files (x86)\Microchip\xc8\v1.40\include\stdio.h
+[v _printf `(i ~T0 @X0 0 ev`*Cuc ]
 [p mainexit ]
 "18 lcd.h
 [v _initLCD `(v ~T0 @X0 0 ef ]
 "1367 C:\Program Files (x86)\Microchip\xc8\v1.40\include\pic18f4620.h
 [v _TRISA `Vuc ~T0 @X0 0 e@3986 ]
+"1588
+[v _TRISB `Vuc ~T0 @X0 0 e@3987 ]
 "19 iopin.h
 [v _pinMode `(v ~T0 @X0 0 ef3`i`i`i ]
-"195 C:\Program Files (x86)\Microchip\xc8\v1.40\include\stdio.h
-[v _printf `(i ~T0 @X0 0 ev`*Cuc ]
+[v F2878 `(v ~T0 @X0 1 tf1`ul ]
+"159 C:\Program Files (x86)\Microchip\xc8\v1.40\include\pic18.h
+[v __delay `JF2878 ~T0 @X0 0 e ]
+[p i __delay ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -2817,25 +2823,18 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;lcd.h: 19: void lcdClear(void);
 [; ;lcd.h: 20: void lcdNewline(void);
 [; ;iopin.h: 19: void pinMode(int port, int pin, int type);
-[; ;iopin.h: 20: int digitalRead(void);
+[; ;iopin.h: 20: int digitalRead(int port, int pin);
 [; ;iopin.h: 21: int digitalWrite(void);
-"20 main.c
-[v _main `(v ~T0 @X0 1 ef ]
+[; ;main.c: 19: void printb(int n);
+"21 main.c
+[v _printb `(v ~T0 @X0 1 ef1`i ]
 {
-[; ;main.c: 20: void main(void) {
-[e :U _main ]
+[; ;main.c: 21: void printb(int n) {
+[e :U _printb ]
+[v _n `i ~T0 @X0 1 r1 ]
 [f ]
-[; ;main.c: 22: initLCD();
+[; ;main.c: 22: for(int a = 1<<8; a > 0; a>>=1){
 "22
-[e ( _initLCD ..  ]
-[; ;main.c: 23: TRISA=0;
-"23
-[e = _TRISA -> -> 0 `i `uc ]
-[; ;main.c: 24: pinMode(0,1,0);
-"24
-[e ( _pinMode (3 , , -> 0 `i -> 1 `i -> 0 `i ]
-[; ;main.c: 25: for(int a = 1<<8; a > 0; a>>=1){
-"25
 {
 [v _a `i ~T0 @X0 1 a ]
 [e = _a << -> 1 `i -> 8 `i ]
@@ -2843,38 +2842,75 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e $U 268  ]
 [e :U 267 ]
 {
-[; ;main.c: 26: if(a&TRISA)printf("1");
-"26
-[e $ ! != & _a -> _TRISA `i -> 0 `i 270  ]
+[; ;main.c: 23: if(n & a)printf("1");
+"23
+[e $ ! != & _n _a -> 0 `i 270  ]
 [e ( _printf :s 1C ]
 [e $U 271  ]
-"27
+"24
 [e :U 270 ]
-[; ;main.c: 27: else printf("0");
+[; ;main.c: 24: else printf("0");
 [e ( _printf :s 2C ]
 [e :U 271 ]
-"28
-}
 "25
+}
+"22
 [e =>> _a -> 1 `i ]
 [e $ > _a -> 0 `i 267  ]
 [e :U 268 ]
-"28
+"25
 }
-[; ;main.c: 28: }
-[; ;main.c: 30: while(1);
-"30
-[e :U 273 ]
-[e :U 272 ]
-[e $U 273  ]
-[e :U 274 ]
-[; ;main.c: 31: return;
-"31
-[e $UE 266  ]
-[; ;main.c: 32: }
-"32
+[; ;main.c: 25: }
+[; ;main.c: 26: }
+"26
 [e :UE 266 ]
+}
+"28
+[v _main `(v ~T0 @X0 1 ef ]
+{
+[; ;main.c: 28: void main(void) {
+[e :U _main ]
+[f ]
+[; ;main.c: 30: initLCD();
+"30
+[e ( _initLCD ..  ]
+[; ;main.c: 31: TRISA=0;
+"31
+[e = _TRISA -> -> 0 `i `uc ]
+[; ;main.c: 32: printb(TRISB);
+"32
+[e ( _printb (1 -> _TRISB `i ]
+[; ;main.c: 33: pinMode(1,1,1);
+"33
+[e ( _pinMode (3 , , -> 1 `i -> 1 `i -> 1 `i ]
+[; ;main.c: 34: printf("\n");
+"34
+[e ( _printf :s 3C ]
+[; ;main.c: 35: printb(TRISB);
+"35
+[e ( _printb (1 -> _TRISB `i ]
+[; ;main.c: 36: while(1){
+"36
+[e :U 274 ]
+{
+[; ;main.c: 37: _delay((unsigned long)((1000)*(8000000/4000.0)));
+"37
+[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
+"38
+}
+[e :U 273 ]
+"36
+[e $U 274  ]
+[e :U 275 ]
+[; ;main.c: 38: }
+[; ;main.c: 40: return;
+"40
+[e $UE 272  ]
+[; ;main.c: 41: }
+"41
+[e :UE 272 ]
 }
 [p f _printf 8388608 ]
 [a 1C 49 0 ]
 [a 2C 48 0 ]
+[a 3C 10 0 ]

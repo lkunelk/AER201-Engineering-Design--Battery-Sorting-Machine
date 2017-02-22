@@ -3639,7 +3639,7 @@ extern __nonreentrant void _delay3(unsigned char);
 
 # 19 "iopin.h"
 void pinMode(int port, int pin, int type);
-int digitalRead(void);
+int digitalRead(int port, int pin);
 int digitalWrite(void);
 
 # 13 "iopin.c"
@@ -3668,8 +3668,14 @@ break;
 }
 }
 
-int digitalRead(){
-
+int digitalRead(int port, int pin){
+switch(port){
+case 0: return (PORTA>>pin)&1;
+case 1: return (PORTB>>pin)&1;
+case 2: return (PORTC>>pin)&1;
+case 3: return (PORTD>>pin)&1;
+}
+return -1;
 }
 
 int digitalWrite(){

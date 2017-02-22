@@ -30,7 +30,7 @@ void initKeypad(void){
 }
 
 //blocking function, waits until key is pressed
-char read(){
+char readKeypad(){
     while(PORTBbits.RB1 == 0); //wait for press
     char key = (PORTB & 0xF0) >> 4; //read the keypress
     while(PORTBbits.RB1 == 1); //wait for release
