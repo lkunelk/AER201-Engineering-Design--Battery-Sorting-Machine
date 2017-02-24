@@ -8,6 +8,7 @@
       <itemPath>keypad.h</itemPath>
       <itemPath>lcd.h</itemPath>
       <itemPath>iopin.h</itemPath>
+      <itemPath>eeprom.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -20,6 +21,7 @@
       <itemPath>lcd.c</itemPath>
       <itemPath>keypad.c</itemPath>
       <itemPath>iopin.c</itemPath>
+      <itemPath>eeprom.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

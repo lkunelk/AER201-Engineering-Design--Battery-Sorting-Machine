@@ -15,6 +15,8 @@
 //#include "keypad.h"
 #include "lcd.h"
 #include "iopin.h"
+#include "eeprom.h"
+#include "eeprom_routines.h"
 
 void printb(int n);
 
@@ -52,11 +54,15 @@ void main(void) {
     
     initLCD();
     
+    if(eepromRead(0b1111111111) == 255){
+        printf("wrintin");
+        eepromWrite(7,0b1111111111);
+    }
+    
+    
     while(1){
-        lcdClear();
-        long voltage = analogRead(0);
-        printf("%f\n",(float)voltage*(5.0/0x3ff));
-        __delay_ms(1000);
+        readKeypad();
+        printf("%d",eepromRead(0b1111111111));
     }
     
     return;

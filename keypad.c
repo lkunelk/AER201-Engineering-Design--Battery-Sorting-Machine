@@ -24,7 +24,7 @@
 const char keys[] = "123A456B789C*0#D";
 
 //sets up ports for input
-void initKeypad(void){
+void initKeypad(){
     TRISB = 0xFF; //set all B ports as input
     LATB = 0x00;
     ADCON0 = 0x00;  //Disable ADC

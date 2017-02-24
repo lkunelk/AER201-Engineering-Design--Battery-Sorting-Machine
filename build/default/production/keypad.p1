@@ -2736,7 +2736,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 "27
 [v _initKeypad `(v ~T0 @X0 1 ef ]
 {
-[; ;keypad.c: 27: void initKeypad(void){
+[; ;keypad.c: 27: void initKeypad(){
 [e :U _initKeypad ]
 [f ]
 [; ;keypad.c: 28: TRISB = 0xFF;

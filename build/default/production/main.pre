@@ -3802,7 +3802,11 @@ void digitalWrite(int port, int pin, int val);
 void analogPinMode(void);
 long analogRead(int channel);
 
-# 19 "main.c"
+# 11 "eeprom.h"
+void eepromWrite(int data, long address);
+int eepromRead(long address);
+
+# 21 "main.c"
 void printb(int n);
 
 void printb(int n) {
@@ -3839,11 +3843,15 @@ ADCON2 |= 1<<7;
 
 initLCD();
 
+if(eepromRead(0b1111111111) == 255){
+printf("wrintin");
+eepromWrite(7,0b1111111111);
+}
+
+
 while(1){
-lcdClear();
-long voltage = analogRead(0);
-printf("%f\n",(float)voltage*(5.0/0x3ff));
-_delay((unsigned long)((1000)*(8000000/4000.0)));
+readKeypad();
+printf("%d",eepromRead(0b1111111111));
 }
 
 return;

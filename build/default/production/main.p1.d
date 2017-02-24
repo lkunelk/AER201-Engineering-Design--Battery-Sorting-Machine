@@ -3,4 +3,5 @@
  main.c  \
 iopin.h  \
 lcd.h  \
+eeprom.h  \
 configBits.h 

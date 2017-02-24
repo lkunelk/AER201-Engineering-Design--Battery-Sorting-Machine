@@ -1,5 +1,5 @@
 
-# 1 "keypad.c"
+# 1 "eeprom.c"
 
 # 26 "C:\Program Files (x86)\Microchip\xc8\v1.40\include\htc.h"
 extern const char __xc8_OPTIM_SPEED;
@@ -3637,25 +3637,40 @@ extern __nonreentrant void _delaywdt(unsigned long);
 #pragma intrinsic(_delay3)
 extern __nonreentrant void _delay3(unsigned char);
 
-# 11 "keypad.h"
-void initKeypad(void);
-char readKeypad(void);
+# 11 "eeprom.h"
+void eepromWrite(int data, long address);
+int eepromRead(long address);
 
-# 24 "keypad.c"
-const char keys[] = "123A456B789C*0#D";
+# 22 "eeprom.c"
+void eepromWrite(int data, long address){
+
+while(EECON1 & 0b10);
+
+int ien = INTCONbits.GIE;
+(INTCONbits.GIE = 0);
+EEADR = address;
+EEADRH = (address>>8) & 0b11;
+EEDATA = data;
+EECON1 = 0b100;
+
+EECON2 = 0x55;
+EECON2 = 0xaa;
 
 
-void initKeypad(){
-TRISB = 0xFF;
-LATB = 0x00;
-ADCON0 = 0x00;
-ADCON1 = 0xFF;
+
+EECON1 |= 0b10;
+
+while(EECON1 & 0b10);
+EEIF = 0;
+
+EECON1 = 0;
+INTCONbits.GIE = ien;
 }
 
-
-char readKeypad(){
-while(PORTBbits.RB1 == 0);
-char key = (PORTB & 0xF0) >> 4;
-while(PORTBbits.RB1 == 1);
-return keys[key];
+int eepromRead(long address){
+EEADR = address;
+EEADRH = (address>>8) & 0b11;
+EECON1 = 0;
+EECON1 = 1;
+return EEDATA;
 }
