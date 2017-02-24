@@ -3795,16 +3795,18 @@ void initLCD(void);
 void lcdClear(void);
 void lcdNewline(void);
 
-# 19 "iopin.h"
-void pinMode(int port, int pin, int type);
+# 28 "iopin.h"
+void digitalPinMode(int port, int pin, int type);
 int digitalRead(int port, int pin);
-int digitalWrite(void);
+void digitalWrite(int port, int pin, int val);
+void analogPinMode(void);
+long analogRead(int channel);
 
 # 19 "main.c"
 void printb(int n);
 
 void printb(int n) {
-for(int a = 1<<8; a > 0; a>>=1){
+for(int a = 1<<7+0; a > 0; a>>=1){
 if(n & a)printf("1");
 else printf("0");
 }
@@ -3812,16 +3814,37 @@ else printf("0");
 
 void main(void) {
 
+
+TRISA = 0xFF;
+TRISB = 0xFF;
+TRISC = 0x00;
+TRISD = 0x00;
+TRISE = 0x00;
+
+LATA = 0x00;
+LATB = 0x00;
+LATC = 0x00;
+LATD = 0x00;
+LATE = 0x00;
+
+ADCON0 = 0x00;
+ADCON1 |= 0x0A;
+ADCON1 |= 0b11<<4;
+
+
+ADCON2 = 0;
+ADCON2 |= 0b001;
+ADCON2 |= 0b110<<3;
+ADCON2 |= 1<<7;
+
 initLCD();
-TRISA=0;
-printb(TRISB);
-pinMode(1,1,1);
-printf("\n");
-printb(TRISB);
+
 while(1){
+lcdClear();
+long voltage = analogRead(0);
+printf("%f\n",(float)voltage*(5.0/0x3ff));
 _delay((unsigned long)((1000)*(8000000/4000.0)));
 }
 
 return;
 }
-

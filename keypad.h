@@ -9,7 +9,9 @@
 #define	KEYPAD_H
 
 void initKeypad(void);
-char read(void);
+char readKeypad(void);
+
+
 
 #endif	/* KEYPAD_H */
 

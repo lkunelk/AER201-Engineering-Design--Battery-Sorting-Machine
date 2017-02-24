@@ -3639,9 +3639,9 @@ extern __nonreentrant void _delay3(unsigned char);
 
 # 11 "keypad.h"
 void initKeypad(void);
-char read(void);
+char readKeypad(void);
 
-# 22 "keypad.c"
+# 24 "keypad.c"
 const char keys[] = "123A456B789C*0#D";
 
 

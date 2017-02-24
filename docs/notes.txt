@@ -1,4 +1,10 @@
-20 feb [sun]
+22 feb [wed]
+------------
+I'm having problems with getting my pins to read input. The problem is that the pins are multiplexed with other functions and there are tons of registers that I need to modify. This makes it impossible to have a simple interface for setting pins and reading values, since I would have to consider the option that maybe I might want to use these special functions. I think for the io pin I'll just turn of the special functions and care only about making the pins digital input
+
+I just solved a problem with the ide, for some reason the buttons for uploading the code were grey, so I couldn't click on them. it turns out that in the project protperties the picit3 option for programming the microcontroller wasn't selected, but the simulator option was.
+
+21 feb [sun]
 ------------
 I forgot that I should document problems as I work. So anyway first problem of the day was I was getting the variable redefined error when I compiled my project. Through a bit of googling, it turns out that when I want to include c files in my main.c file, I must include their header files and not the c file. The header file declares the interface of the module. So the peculiar problem had to do with me not knowing the C language thouroughly.
 

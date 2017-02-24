@@ -14,6 +14,8 @@
  * a button is pressed. Ports B4-7 maintain the value of last pressed button.
  * Each button is assigned a binary number from 0 to 15 going from left to right
  * Port 4 holds lowest bit while port 7 holds the highest bit.
+ * 
+ * 
  */
 
 #include <xc.h>

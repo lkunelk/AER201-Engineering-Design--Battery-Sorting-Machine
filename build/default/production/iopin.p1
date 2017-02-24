@@ -15,6 +15,24 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _PORTC `Vuc ~T0 @X0 0 e@3970 ]
 "529
 [v _PORTD `Vuc ~T0 @X0 0 e@3971 ]
+"872
+[v _LATA `Vuc ~T0 @X0 0 e@3977 ]
+"983
+[v _LATB `Vuc ~T0 @X0 0 e@3978 ]
+"1094
+[v _LATC `Vuc ~T0 @X0 0 e@3979 ]
+"1205
+[v _LATD `Vuc ~T0 @X0 0 e@3980 ]
+"4474
+[v _ADCON0 `Vuc ~T0 @X0 0 e@4034 ]
+"4390
+[v _ADCON1 `Vuc ~T0 @X0 0 e@4033 ]
+"4320
+[v _ADCON2 `Vuc ~T0 @X0 0 e@4032 ]
+"4604
+[v _ADRESH `Vuc ~T0 @X0 0 e@4036 ]
+"4598
+[v _ADRESL `Vuc ~T0 @X0 0 e@4035 ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -2696,169 +2714,320 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic18.h: 159: extern __nonreentrant void _delay(unsigned long);
 [; ;pic18.h: 161: extern __nonreentrant void _delaywdt(unsigned long);
 [; ;pic18.h: 163: extern __nonreentrant void _delay3(unsigned char);
-[; ;iopin.h: 19: void pinMode(int port, int pin, int type);
-[; ;iopin.h: 20: int digitalRead(int port, int pin);
-[; ;iopin.h: 21: int digitalWrite(void);
-"13 iopin.c
-[v _pinMode `(v ~T0 @X0 1 ef3`i`i`i ]
+[; ;iopin.h: 28: void digitalPinMode(int port, int pin, int type);
+[; ;iopin.h: 29: int digitalRead(int port, int pin);
+[; ;iopin.h: 30: void digitalWrite(int port, int pin, int val);
+[; ;iopin.h: 31: void analogPinMode(void);
+[; ;iopin.h: 32: long analogRead(int channel);
+"18 iopin.c
+[v _digitalPinMode `(v ~T0 @X0 1 ef3`i`i`i ]
 {
-[; ;iopin.c: 13: void pinMode(int port, int pin, int type){
-[e :U _pinMode ]
+[; ;iopin.c: 18: void digitalPinMode(int port, int pin, int type){
+[e :U _digitalPinMode ]
 [v _port `i ~T0 @X0 1 r1 ]
 [v _pin `i ~T0 @X0 1 r2 ]
 [v _type `i ~T0 @X0 1 r3 ]
 [f ]
-[; ;iopin.c: 14: pin = 1 << pin;
-"14
+[; ;iopin.c: 19: pin = 1 << pin;
+"19
 [e = _pin << -> 1 `i _pin ]
-[; ;iopin.c: 15: if(type == 1){
-"15
-[e $ ! == _type -> 1 `i 266  ]
+[; ;iopin.c: 20: if(type == 0){
+"20
+[e $ ! == _type -> 0 `i 266  ]
 {
-[; ;iopin.c: 16: pin ^= 0xff;
-"16
+[; ;iopin.c: 21: pin ^= 0xff;
+"21
 [e =^ _pin -> 255 `i ]
-"17
+"22
 }
 [e :U 266 ]
-[; ;iopin.c: 17: }
-[; ;iopin.c: 19: switch(port){
-"19
+[; ;iopin.c: 22: }
+[; ;iopin.c: 24: switch(port){
+"24
 [e $U 268  ]
 {
-[; ;iopin.c: 20: case 0: if(type == 0)TRISA |= pin;
-"20
+[; ;iopin.c: 25: case 0: if(type == 1)TRISA |= pin;
+"25
 [e :U 269 ]
-[e $ ! == _type -> 0 `i 270  ]
+[e $ ! == _type -> 1 `i 270  ]
 [e =| _TRISA -> _pin `uc ]
 [e $U 271  ]
-"21
+"26
 [e :U 270 ]
-[; ;iopin.c: 21: else TRISA &= pin;
+[; ;iopin.c: 26: else TRISA &= pin;
 [e =& _TRISA -> _pin `uc ]
 [e :U 271 ]
-[; ;iopin.c: 22: break;
-"22
+[; ;iopin.c: 27: break;
+"27
 [e $U 267  ]
-[; ;iopin.c: 24: case 1: if(type == 0)TRISB |= pin;
-"24
+[; ;iopin.c: 29: case 1: if(type == 1)TRISB |= pin;
+"29
 [e :U 272 ]
-[e $ ! == _type -> 0 `i 273  ]
+[e $ ! == _type -> 1 `i 273  ]
 [e =| _TRISB -> _pin `uc ]
 [e $U 274  ]
-"25
+"30
 [e :U 273 ]
-[; ;iopin.c: 25: else TRISB &= pin;
+[; ;iopin.c: 30: else TRISB &= pin;
 [e =& _TRISB -> _pin `uc ]
 [e :U 274 ]
-[; ;iopin.c: 26: break;
-"26
+[; ;iopin.c: 31: break;
+"31
 [e $U 267  ]
-[; ;iopin.c: 28: case 2: if(type == 0)TRISC |= pin;
-"28
+[; ;iopin.c: 33: case 2: if(type == 1)TRISC |= pin;
+"33
 [e :U 275 ]
-[e $ ! == _type -> 0 `i 276  ]
+[e $ ! == _type -> 1 `i 276  ]
 [e =| _TRISC -> _pin `uc ]
 [e $U 277  ]
-"29
+"34
 [e :U 276 ]
-[; ;iopin.c: 29: else TRISC &= pin;
+[; ;iopin.c: 34: else TRISC &= pin;
 [e =& _TRISC -> _pin `uc ]
 [e :U 277 ]
-[; ;iopin.c: 30: break;
-"30
+[; ;iopin.c: 35: break;
+"35
 [e $U 267  ]
-[; ;iopin.c: 32: case 3: if(type == 0)TRISD |= pin;
-"32
+[; ;iopin.c: 37: case 3: if(type == 1)TRISD |= pin;
+"37
 [e :U 278 ]
-[e $ ! == _type -> 0 `i 279  ]
+[e $ ! == _type -> 1 `i 279  ]
 [e =| _TRISD -> _pin `uc ]
 [e $U 280  ]
-"33
+"38
 [e :U 279 ]
-[; ;iopin.c: 33: else TRISD &= pin;
+[; ;iopin.c: 38: else TRISD &= pin;
 [e =& _TRISD -> _pin `uc ]
 [e :U 280 ]
-[; ;iopin.c: 34: break;
-"34
+[; ;iopin.c: 39: break;
+"39
 [e $U 267  ]
-"35
+"40
 }
-[; ;iopin.c: 35: }
+[; ;iopin.c: 40: }
 [e $U 267  ]
-"19
+"24
 [e :U 268 ]
 [e [\ _port , $ -> 0 `i 269
  , $ -> 1 `i 272
  , $ -> 2 `i 275
  , $ -> 3 `i 278
  267 ]
-"35
+"40
 [e :U 267 ]
-[; ;iopin.c: 36: }
-"36
+[; ;iopin.c: 41: }
+"41
 [e :UE 265 ]
 }
-"38
+"43
 [v _digitalRead `(i ~T0 @X0 1 ef2`i`i ]
 {
-[; ;iopin.c: 38: int digitalRead(int port, int pin){
+[; ;iopin.c: 43: int digitalRead(int port, int pin){
 [e :U _digitalRead ]
 [v _port `i ~T0 @X0 1 r1 ]
 [v _pin `i ~T0 @X0 1 r2 ]
 [f ]
-[; ;iopin.c: 39: switch(port){
-"39
+[; ;iopin.c: 44: switch(port){
+"44
 [e $U 283  ]
 {
-[; ;iopin.c: 40: case 0: return (PORTA>>pin)&1;
-"40
+[; ;iopin.c: 45: case 0: return (PORTA>>pin)&1;
+"45
 [e :U 284 ]
 [e ) & >> -> _PORTA `i _pin -> 1 `i ]
 [e $UE 281  ]
-[; ;iopin.c: 41: case 1: return (PORTB>>pin)&1;
-"41
+[; ;iopin.c: 46: case 1: return (PORTB>>pin)&1;
+"46
 [e :U 285 ]
 [e ) & >> -> _PORTB `i _pin -> 1 `i ]
 [e $UE 281  ]
-[; ;iopin.c: 42: case 2: return (PORTC>>pin)&1;
-"42
+[; ;iopin.c: 47: case 2: return (PORTC>>pin)&1;
+"47
 [e :U 286 ]
 [e ) & >> -> _PORTC `i _pin -> 1 `i ]
 [e $UE 281  ]
-[; ;iopin.c: 43: case 3: return (PORTD>>pin)&1;
-"43
+[; ;iopin.c: 48: case 3: return (PORTD>>pin)&1;
+"48
 [e :U 287 ]
 [e ) & >> -> _PORTD `i _pin -> 1 `i ]
 [e $UE 281  ]
-"44
+"49
 }
-[; ;iopin.c: 44: }
+[; ;iopin.c: 49: }
 [e $U 282  ]
-"39
+"44
 [e :U 283 ]
 [e [\ _port , $ -> 0 `i 284
  , $ -> 1 `i 285
  , $ -> 2 `i 286
  , $ -> 3 `i 287
  282 ]
-"44
+"49
 [e :U 282 ]
-[; ;iopin.c: 45: return -1;
-"45
+[; ;iopin.c: 50: return -1;
+"50
 [e ) -U -> 1 `i ]
 [e $UE 281  ]
-[; ;iopin.c: 46: }
-"46
+[; ;iopin.c: 51: }
+"51
 [e :UE 281 ]
 }
-"48
-[v _digitalWrite `(i ~T0 @X0 1 ef ]
+"53
+[v _digitalWrite `(v ~T0 @X0 1 ef3`i`i`i ]
 {
-[; ;iopin.c: 48: int digitalWrite(){
+[; ;iopin.c: 53: void digitalWrite(int port, int pin, int val){
 [e :U _digitalWrite ]
+[v _port `i ~T0 @X0 1 r1 ]
+[v _pin `i ~T0 @X0 1 r2 ]
+[v _val `i ~T0 @X0 1 r3 ]
 [f ]
-[; ;iopin.c: 50: }
-"50
+[; ;iopin.c: 54: pin = 1 << pin;
+"54
+[e = _pin << -> 1 `i _pin ]
+[; ;iopin.c: 55: if(val == 0){
+"55
+[e $ ! == _val -> 0 `i 289  ]
+{
+[; ;iopin.c: 56: pin ^= 0xff;
+"56
+[e =^ _pin -> 255 `i ]
+"57
+}
+[e :U 289 ]
+[; ;iopin.c: 57: }
+[; ;iopin.c: 59: switch(port){
+"59
+[e $U 291  ]
+{
+[; ;iopin.c: 60: case 0: if(val == 1) LATA |= pin;
+"60
+[e :U 292 ]
+[e $ ! == _val -> 1 `i 293  ]
+[e =| _LATA -> _pin `uc ]
+[e $U 294  ]
+"61
+[e :U 293 ]
+[; ;iopin.c: 61: else LATA &= pin;
+[e =& _LATA -> _pin `uc ]
+[e :U 294 ]
+[; ;iopin.c: 62: break;
+"62
+[e $U 290  ]
+[; ;iopin.c: 63: case 1: if(val == 1) LATB |= pin;
+"63
+[e :U 295 ]
+[e $ ! == _val -> 1 `i 296  ]
+[e =| _LATB -> _pin `uc ]
+[e $U 297  ]
+"64
+[e :U 296 ]
+[; ;iopin.c: 64: else LATB &= pin;
+[e =& _LATB -> _pin `uc ]
+[e :U 297 ]
+[; ;iopin.c: 65: break;
+"65
+[e $U 290  ]
+[; ;iopin.c: 66: case 2: if(val == 1) LATC |= pin;
+"66
+[e :U 298 ]
+[e $ ! == _val -> 1 `i 299  ]
+[e =| _LATC -> _pin `uc ]
+[e $U 300  ]
+"67
+[e :U 299 ]
+[; ;iopin.c: 67: else LATC &= pin;
+[e =& _LATC -> _pin `uc ]
+[e :U 300 ]
+[; ;iopin.c: 68: break;
+"68
+[e $U 290  ]
+[; ;iopin.c: 69: case 3: if(val == 1) LATD |= pin;
+"69
+[e :U 301 ]
+[e $ ! == _val -> 1 `i 302  ]
+[e =| _LATD -> _pin `uc ]
+[e $U 303  ]
+"70
+[e :U 302 ]
+[; ;iopin.c: 70: else LATD &= pin;
+[e =& _LATD -> _pin `uc ]
+[e :U 303 ]
+"71
+}
+[; ;iopin.c: 71: }
+[e $U 290  ]
+"59
+[e :U 291 ]
+[e [\ _port , $ -> 0 `i 292
+ , $ -> 1 `i 295
+ , $ -> 2 `i 298
+ , $ -> 3 `i 301
+ 290 ]
+"71
+[e :U 290 ]
+[; ;iopin.c: 72: }
+"72
 [e :UE 288 ]
+}
+"75
+[v _analogPinMode `(v ~T0 @X0 1 ef ]
+{
+[; ;iopin.c: 75: void analogPinMode(){
+[e :U _analogPinMode ]
+[f ]
+[; ;iopin.c: 76: ADCON0 = 0;
+"76
+[e = _ADCON0 -> -> 0 `i `uc ]
+[; ;iopin.c: 78: ADCON1 |= 0b11<<4;
+"78
+[e =| _ADCON1 -> << -> 3 `i -> 4 `i `uc ]
+[; ;iopin.c: 80: ADCON1 |= 0x0A;
+"80
+[e =| _ADCON1 -> -> 10 `i `uc ]
+[; ;iopin.c: 82: ADCON2 = 0;
+"82
+[e = _ADCON2 -> -> 0 `i `uc ]
+[; ;iopin.c: 83: ADCON2 |= 0b001;
+"83
+[e =| _ADCON2 -> -> 1 `i `uc ]
+[; ;iopin.c: 84: ADCON2 |= 0b110<<3;
+"84
+[e =| _ADCON2 -> << -> 6 `i -> 3 `i `uc ]
+[; ;iopin.c: 85: ADCON2 |= 1<<7;
+"85
+[e =| _ADCON2 -> << -> 1 `i -> 7 `i `uc ]
+[; ;iopin.c: 86: }
+"86
+[e :UE 304 ]
+}
+"88
+[v _analogRead `(l ~T0 @X0 1 ef1`i ]
+{
+[; ;iopin.c: 88: long analogRead(int channel){
+[e :U _analogRead ]
+[v _channel `i ~T0 @X0 1 r1 ]
+[f ]
+[; ;iopin.c: 89: ADCON0 = channel<<2;
+"89
+[e = _ADCON0 -> << _channel -> 2 `i `uc ]
+[; ;iopin.c: 90: ADCON0 |= 0b01;
+"90
+[e =| _ADCON0 -> -> 1 `i `uc ]
+[; ;iopin.c: 91: ADCON0 |= 0b10;
+"91
+[e =| _ADCON0 -> -> 2 `i `uc ]
+[; ;iopin.c: 93: while(ADCON0 & 0b10);
+"93
+[e $U 306  ]
+[e :U 307 ]
+[e :U 306 ]
+[e $ != & -> _ADCON0 `i -> 2 `i -> 0 `i 307  ]
+[e :U 308 ]
+[; ;iopin.c: 95: return (ADRESH<<8) + ADRESL;
+"95
+[e ) -> + << -> _ADRESH `i -> 8 `i -> _ADRESL `i `l ]
+[e $UE 305  ]
+[; ;iopin.c: 96: }
+"96
+[e :UE 305 ]
 }

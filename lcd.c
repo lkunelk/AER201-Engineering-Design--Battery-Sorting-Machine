@@ -14,8 +14,6 @@
 
 void initLCD(void) {
     
-    TRISD = 0x00;   //All output mode
-    
     __delay_ms(15);
     lcdInst(0b00110011); //set to 8 bit mode
     lcdInst(0b00110010); //set to 8 then 4 bit mode
