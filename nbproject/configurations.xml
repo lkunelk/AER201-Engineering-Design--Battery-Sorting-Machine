@@ -22,6 +22,8 @@
       <itemPath>keypad.c</itemPath>
       <itemPath>iopin.c</itemPath>
       <itemPath>eeprom.c</itemPath>
+      <itemPath>timer.c</itemPath>
+      <itemPath>timer.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

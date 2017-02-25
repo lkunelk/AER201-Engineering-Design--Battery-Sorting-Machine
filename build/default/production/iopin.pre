@@ -3705,7 +3705,7 @@ else LATD &= pin;
 void analogPinMode(){
 ADCON0 = 0;
 
-ADCON1 |= 0b11<<4;
+
 
 ADCON1 |= 0x0A;
 

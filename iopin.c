@@ -75,7 +75,7 @@ void digitalWrite(int port, int pin, int val){
 void analogPinMode(){
     ADCON0 = 0; //turn off AD module for now
     
-    ADCON1 |= 0b11<<4; //use external voltage reference 
+    //ADCON1 |= 0b11<<4; //use external voltage reference 
     //(an2 -> Vref-) and (an3 -> Vref+)
     ADCON1 |= 0x0A; //set V reference and set an0-4 (ra0-5) as analog
     

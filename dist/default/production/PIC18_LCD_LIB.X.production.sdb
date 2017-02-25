@@ -29,29 +29,29 @@
 [v ___flmul __flmul `(d  1 e 3 0 ]
 "15 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\Umul32.c
 [v ___lmul __lmul `(ul  1 e 4 0 ]
-"22 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\eeprom.c
-[v _eepromWrite eepromWrite `(v  1 e 1 0 ]
-"47
-[v _eepromRead eepromRead `(i  1 e 2 0 ]
-"35 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\keypad.c
-[v _readKeypad readKeypad `(i  1 e 2 0 ]
 "15 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
 [v _initLCD initLCD `(v  1 e 1 0 ]
 "27
 [v _lcdInst lcdInst `(v  1 e 1 0 ]
+[v i2_lcdInst lcdInst `(v  1 e 1 0 ]
 "35
 [v _putch putch `(v  1 e 1 0 ]
 "46
 [v _lcdNibble lcdNibble `(v  1 e 1 0 ]
+[v i2_lcdNibble lcdNibble `(v  1 e 1 0 ]
+"70
+[v _lcdClear lcdClear `(v  1 e 1 0 ]
 "74
 [v _lcdNewline lcdNewline `(v  1 e 1 0 ]
 "30 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
 [v _main main `(v  1 e 1 0 ]
+"75
+[v _lol lol `II(v  1 e 1 0 ]
 "49 C:\Program Files (x86)\Microchip\xc8\v1.40\include\pic18f4620.h
 [v _PORTA PORTA `VEuc  1 e 1 @3968 ]
 "185
 [v _PORTB PORTB `VEuc  1 e 1 @3969 ]
-[s S149 . 1 `uc 1 RB0 1 0 :1:0 
+[s S206 . 1 `uc 1 RB0 1 0 :1:0 
 `uc 1 RB1 1 0 :1:1 
 `uc 1 RB2 1 0 :1:2 
 `uc 1 RB3 1 0 :1:3 
@@ -61,7 +61,7 @@
 `uc 1 RB7 1 0 :1:7 
 ]
 "226
-[s S158 . 1 `uc 1 INT0 1 0 :1:0 
+[s S215 . 1 `uc 1 INT0 1 0 :1:0 
 `uc 1 INT1 1 0 :1:1 
 `uc 1 INT2 1 0 :1:2 
 `uc 1 CCP2 1 0 :1:3 
@@ -70,7 +70,7 @@
 `uc 1 KBI2 1 0 :1:6 
 `uc 1 KBI3 1 0 :1:7 
 ]
-[s S167 . 1 `uc 1 AN12 1 0 :1:0 
+[s S224 . 1 `uc 1 AN12 1 0 :1:0 
 `uc 1 AN10 1 0 :1:1 
 `uc 1 AN8 1 0 :1:2 
 `uc 1 AN9 1 0 :1:3 
@@ -79,11 +79,11 @@
 `uc 1 PGC 1 0 :1:6 
 `uc 1 PGD 1 0 :1:7 
 ]
-[s S176 . 1 `uc 1 . 1 0 :3:0 
+[s S233 . 1 `uc 1 . 1 0 :3:0 
 `uc 1 CCP2_PA2 1 0 :1:3 
 ]
-[u S179 . 1 `S149 1 . 1 0 `S158 1 . 1 0 `S167 1 . 1 0 `S176 1 . 1 0 ]
-[v _PORTBbits PORTBbits `VES179  1 e 1 @3969 ]
+[u S236 . 1 `S206 1 . 1 0 `S215 1 . 1 0 `S224 1 . 1 0 `S233 1 . 1 0 ]
+[v _PORTBbits PORTBbits `VES236  1 e 1 @3969 ]
 "355
 [v _PORTC PORTC `VEuc  1 e 1 @3970 ]
 "529
@@ -96,7 +96,7 @@
 [v _LATC LATC `VEuc  1 e 1 @3979 ]
 "1205
 [v _LATD LATD `VEuc  1 e 1 @3980 ]
-[s S77 . 1 `uc 1 LATD0 1 0 :1:0 
+[s S134 . 1 `uc 1 LATD0 1 0 :1:0 
 `uc 1 LATD1 1 0 :1:1 
 `uc 1 LATD2 1 0 :1:2 
 `uc 1 LATD3 1 0 :1:3 
@@ -106,7 +106,7 @@
 `uc 1 LATD7 1 0 :1:7 
 ]
 "1232
-[s S86 . 1 `uc 1 LD0 1 0 :1:0 
+[s S143 . 1 `uc 1 LD0 1 0 :1:0 
 `uc 1 LD1 1 0 :1:1 
 `uc 1 LD2 1 0 :1:2 
 `uc 1 LD3 1 0 :1:3 
@@ -115,8 +115,8 @@
 `uc 1 LD6 1 0 :1:6 
 `uc 1 LD7 1 0 :1:7 
 ]
-[u S95 . 1 `S77 1 . 1 0 `S86 1 . 1 0 ]
-[v _LATDbits LATDbits `VES95  1 e 1 @3980 ]
+[u S152 . 1 `S134 1 . 1 0 `S143 1 . 1 0 ]
+[v _LATDbits LATDbits `VES152  1 e 1 @3980 ]
 "1316
 [v _LATE LATE `VEuc  1 e 1 @3981 ]
 "1367
@@ -149,7 +149,13 @@
 [v _ADRESL ADRESL `VEuc  1 e 1 @4035 ]
 "4604
 [v _ADRESH ADRESH `VEuc  1 e 1 @4036 ]
-[s S260 . 1 `uc 1 RBIF 1 0 :1:0 
+"5781
+[v _T0CON T0CON `VEuc  1 e 1 @4053 ]
+"5863
+[v _TMR0L TMR0L `VEuc  1 e 1 @4054 ]
+"5869
+[v _TMR0H TMR0H `VEuc  1 e 1 @4055 ]
+[s S45 . 1 `uc 1 RBIF 1 0 :1:0 
 `uc 1 INT0IF 1 0 :1:1 
 `uc 1 TMR0IF 1 0 :1:2 
 `uc 1 RBIE 1 0 :1:3 
@@ -159,7 +165,7 @@
 `uc 1 GIE_GIEH 1 0 :1:7 
 ]
 "6298
-[s S269 . 1 `uc 1 . 1 0 :1:0 
+[s S54 . 1 `uc 1 . 1 0 :1:0 
 `uc 1 INT0F 1 0 :1:1 
 `uc 1 T0IF 1 0 :1:2 
 `uc 1 . 1 0 :1:3 
@@ -168,27 +174,64 @@
 `uc 1 PEIE 1 0 :1:6 
 `uc 1 GIE 1 0 :1:7 
 ]
-[s S278 . 1 `uc 1 . 1 0 :6:0 
+[s S63 . 1 `uc 1 . 1 0 :6:0 
 `uc 1 GIEL 1 0 :1:6 
 `uc 1 GIEH 1 0 :1:7 
 ]
-[u S282 . 1 `S260 1 . 1 0 `S269 1 . 1 0 `S278 1 . 1 0 ]
-[v _INTCONbits INTCONbits `VES282  1 e 1 @4082 ]
+[u S67 . 1 `S45 1 . 1 0 `S54 1 . 1 0 `S63 1 . 1 0 ]
+[v _INTCONbits INTCONbits `VES67  1 e 1 @4082 ]
 "6826
 [v _EEIF EEIF `VEb  1 e 0 @32012 ]
+"7216
+[v _PEIE PEIE `VEb  1 e 0 @32662 ]
+"7562
+[v _TMR0IE TMR0IE `VEb  1 e 0 @32661 ]
+"7564
+[v _TMR0IF TMR0IF `VEb  1 e 0 @32658 ]
 "354 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\doprnt.c
 [v _dpowers dpowers `C[5]ui  1 s 10 dpowers ]
-"30 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
+"73 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
+[v _count count `l  1 e 4 0 ]
+"74
+[v _time time `i  1 e 2 0 ]
+"30
 [v _main main `(v  1 e 1 0 ]
 {
-"69
+"63
+[v main@time time `l  1 a 4 47 ]
+"71
 } 0
-"35 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\keypad.c
-[v _readKeypad readKeypad `(i  1 e 2 0 ]
+"15 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
+[v _initLCD initLCD `(v  1 e 1 0 ]
 {
-"37
-[v readKeypad@key key `uc  1 a 1 0 ]
-"40
+"25
+} 0
+"27
+[v _lcdInst lcdInst `(v  1 e 1 0 ]
+{
+[v lcdInst@data data `uc  1 a 1 wreg ]
+[v lcdInst@data data `uc  1 a 1 wreg ]
+[v lcdInst@data data `uc  1 a 1 45 ]
+"32
+} 0
+"46
+[v _lcdNibble lcdNibble `(v  1 e 1 0 ]
+{
+[v lcdNibble@data data `uc  1 a 1 wreg ]
+"48
+[v lcdNibble@temp temp `uc  1 a 1 42 ]
+"46
+[v lcdNibble@data data `uc  1 a 1 wreg ]
+"48
+[v lcdNibble@data data `uc  1 a 1 43 ]
+"68
+} 0
+"75 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
+[v _lol lol `II(v  1 e 1 0 ]
+{
+"85
+[v lol@time time `l  1 a 4 38 ]
+"95
 } 0
 "464 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\doprnt.c
 [v _printf printf `(i  1 e 2 0 ]
@@ -242,44 +285,26 @@
 [v ___lwdiv@divisor divisor `ui  1 p 2 2 ]
 "31
 } 0
-"15 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
-[v _initLCD initLCD `(v  1 e 1 0 ]
+"70 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
+[v _lcdClear lcdClear `(v  1 e 1 0 ]
 {
-"25
+"72
 } 0
 "27
-[v _lcdInst lcdInst `(v  1 e 1 0 ]
+[v i2_lcdInst lcdInst `(v  1 e 1 0 ]
 {
-[v lcdInst@data data `uc  1 a 1 wreg ]
-[v lcdInst@data data `uc  1 a 1 wreg ]
-[v lcdInst@data data `uc  1 a 1 3 ]
+[v i2lcdInst@data data `uc  1 a 1 wreg ]
+[v i2lcdInst@data data `uc  1 a 1 wreg ]
+[v i2lcdInst@data data `uc  1 a 1 3 ]
 "32
 } 0
 "46
-[v _lcdNibble lcdNibble `(v  1 e 1 0 ]
+[v i2_lcdNibble lcdNibble `(v  1 e 1 0 ]
 {
-[v lcdNibble@data data `uc  1 a 1 wreg ]
+[v i2lcdNibble@data data `uc  1 a 1 wreg ]
+[v i2lcdNibble@temp lcdNibble `uc  1 a 1 0 ]
+[v i2lcdNibble@data data `uc  1 a 1 wreg ]
 "48
-[v lcdNibble@temp temp `uc  1 a 1 0 ]
-"46
-[v lcdNibble@data data `uc  1 a 1 wreg ]
-"48
-[v lcdNibble@data data `uc  1 a 1 1 ]
+[v i2lcdNibble@data data `uc  1 a 1 1 ]
 "68
-} 0
-"22 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\eeprom.c
-[v _eepromWrite eepromWrite `(v  1 e 1 0 ]
-{
-"26
-[v eepromWrite@ien ien `i  1 a 2 7 ]
-"22
-[v eepromWrite@data data `i  1 p 2 0 ]
-[v eepromWrite@address address `l  1 p 4 2 ]
-"45
-} 0
-"47
-[v _eepromRead eepromRead `(i  1 e 2 0 ]
-{
-[v eepromRead@address address `l  1 p 4 0 ]
-"53
 } 0

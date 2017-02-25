@@ -9,7 +9,7 @@
  * 
  * PIC18F4620 comes with 1024byte EEPROM
  * 5 special function registers control its operation:
- * - EEDATA - store data read or written to
+ * - EEDATA - store data that is read or written to
  * - EECON1 - control operations
  * - EECON2 - control operations
  * - EEADR - specifies lower part of 10 bit address

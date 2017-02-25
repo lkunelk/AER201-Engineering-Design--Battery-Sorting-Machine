@@ -32,7 +32,7 @@ void main(void) {
     //set direction
     TRISA = 0xFF; // Set Port A as all input
     TRISB = 0xFF; // input for keypads
-    TRISC = 0x00;
+    TRISC = 0xFF;
     TRISD = 0x00; //All output mode for LCD
     TRISE = 0x00;  
     
@@ -54,16 +54,42 @@ void main(void) {
     
     initLCD();
     
-    if(eepromRead(0b1111111111) == 255){
-        printf("wrintin");
-        eepromWrite(7,0b1111111111);
-    }
+    TMR0IE = 1; //enable timer0 inerrupt
+    PEIE = 1; //turn of interrupt priorities
+    ei();
+            
+    T0CON = 0b00010000; //set counter mode, 
+    T0CON |= 1<<3; //turn off prescaler
+    long time = (int)(0xffff - (.001)*(9800000)/4); //each interrupt happens every 1ms
+    TMR0H = time>>8;
+    TMR0L = time & 0xFF;
+    T0CON |= 1<<7;
     
-    
-    while(1){
-        readKeypad();
-        printf("%d",eepromRead(0b1111111111));
-    }
+    while(1){}
     
     return;
+}
+
+long count = 0;
+int time = 0;
+void interrupt lol(void) {
+    if(TMR0IF){
+        
+        TMR0IF = 0;     //Clear flag bit
+        count++;
+        
+        if(count == 1000){
+            lcdClear();
+            printf("time: %d\n",++time);
+            count = 0;
+        }
+        
+        
+        //set time again for 1ms
+        long time = (int)(0xffff - (.001)*(9000000)/4);
+        TMR0H = time>>8;
+        TMR0L = time & 0xFF;
+        T0CON |= 1<<7;
+        
+    }
 }

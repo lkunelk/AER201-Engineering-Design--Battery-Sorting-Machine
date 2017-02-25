@@ -2978,9 +2978,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;iopin.c: 76: ADCON0 = 0;
 "76
 [e = _ADCON0 -> -> 0 `i `uc ]
-[; ;iopin.c: 78: ADCON1 |= 0b11<<4;
-"78
-[e =| _ADCON1 -> << -> 3 `i -> 4 `i `uc ]
 [; ;iopin.c: 80: ADCON1 |= 0x0A;
 "80
 [e =| _ADCON1 -> -> 10 `i `uc ]
