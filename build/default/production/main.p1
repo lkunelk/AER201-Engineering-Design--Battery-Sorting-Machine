@@ -2,7 +2,20 @@ Version 3.2 HI-TECH Software Intermediate Code
 "195 C:\Program Files (x86)\Microchip\xc8\v1.40\include\stdio.h
 [v _printf `(i ~T0 @X0 0 ev`*Cuc ]
 [p mainexit ]
-"1367 C:\Program Files (x86)\Microchip\xc8\v1.40\include\pic18f4620.h
+"5705 C:\Program Files (x86)\Microchip\xc8\v1.40\include\pic18f4620.h
+[v _OSCCON `Vuc ~T0 @X0 0 e@4051 ]
+"2420
+[s S83 :5 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S83 . TUN . PLLEN INTSRC ]
+"2426
+[s S84 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S84 . TUN0 TUN1 TUN2 TUN3 TUN4 ]
+"2419
+[u S82 `S83 1 `S84 1 ]
+[n S82 . . . ]
+"2434
+[v _OSCTUNEbits `VS82 ~T0 @X0 0 e@3995 ]
+"1367
 [v _TRISA `Vuc ~T0 @X0 0 e@3986 ]
 "1588
 [v _TRISB `Vuc ~T0 @X0 0 e@3987 ]
@@ -33,11 +46,17 @@ Version 3.2 HI-TECH Software Intermediate Code
 "11 timer.h
 [v _initT0 `(v ~T0 @X0 0 ef ]
 "12
-[v _startT0 `(v ~T0 @X0 0 ef1`i ]
+[v _startT0 `(v ~T0 @X0 0 ef1`f ]
+"30 iopin.h
+[v _digitalWrite `(v ~T0 @X0 0 ef3`i`i`i ]
 "7564 C:\Program Files (x86)\Microchip\xc8\v1.40\include\pic18f4620.h
 [v _TMR0IF `Vb ~T0 @X0 0 e@32658 ]
+"6898
+[v _INT1IF `Vb ~T0 @X0 0 e@32640 ]
 "19 lcd.h
 [v _lcdClear `(v ~T0 @X0 0 ef ]
+"185 C:\Program Files (x86)\Microchip\xc8\v1.40\include\pic18f4620.h
+[v _PORTB `Vuc ~T0 @X0 0 e@3969 ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -2750,7 +2769,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdio.h: 194: extern int sprintf(char *, const char *, ...);
 [; ;stdio.h: 195: extern int printf(const char *, ...);
 "9 configBits.h
-[p x OSC=HS ]
+[p x OSC=INTIO67 ]
 "10
 [p x FCMEN=OFF ]
 "11
@@ -2855,7 +2874,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;I2C.h: 12: void I2C_Master_Write(unsigned d);
 [; ;I2C.h: 13: unsigned char I2C_Master_Read(unsigned char a);
 [; ;timer.h: 11: void initT0(void);
-[; ;timer.h: 12: void startT0(int time);
+[; ;timer.h: 12: void startT0(float time);
 [; ;timer.h: 13: float testFrequency();
 [; ;main.c: 22: void printb(int n);
 "24 main.c
@@ -2898,119 +2917,197 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :UE 266 ]
 }
 "31
+[v _angle `f ~T0 @X0 1 e ]
+[i _angle
+-> .1.5 `f
+]
+[; ;main.c: 31: float angle = 1.5;
+"32
 [v _main `(v ~T0 @X0 1 ef ]
 {
-[; ;main.c: 31: void main(void) {
+[; ;main.c: 32: void main(void) {
 [e :U _main ]
 [f ]
-[; ;main.c: 34: TRISA = 0xFF;
-"34
-[e = _TRISA -> -> 255 `i `uc ]
-[; ;main.c: 35: TRISB = 0xFF;
+[; ;main.c: 35: OSCCON = 0xF0;
 "35
-[e = _TRISB -> -> 255 `i `uc ]
-[; ;main.c: 36: TRISC = 0x00;
+[e = _OSCCON -> -> 240 `i `uc ]
+[; ;main.c: 36: OSCTUNEbits.PLLEN = 1;
 "36
-[e = _TRISC -> -> 0 `i `uc ]
-[; ;main.c: 37: TRISD = 0x00;
-"37
-[e = _TRISD -> -> 0 `i `uc ]
-[; ;main.c: 38: TRISE = 0x00;
-"38
-[e = _TRISE -> -> 0 `i `uc ]
-[; ;main.c: 40: LATA = 0x00;
+[e = . . _OSCTUNEbits 0 2 -> -> 1 `i `uc ]
+[; ;main.c: 39: TRISA = 0xFF;
+"39
+[e = _TRISA -> -> 255 `i `uc ]
+[; ;main.c: 40: TRISB = 0xFF;
 "40
-[e = _LATA -> -> 0 `i `uc ]
-[; ;main.c: 41: LATB = 0x00;
+[e = _TRISB -> -> 255 `i `uc ]
+[; ;main.c: 41: TRISC = 0x00;
 "41
-[e = _LATB -> -> 0 `i `uc ]
-[; ;main.c: 42: LATC = 0x00;
+[e = _TRISC -> -> 0 `i `uc ]
+[; ;main.c: 42: TRISD = 0x00;
 "42
-[e = _LATC -> -> 0 `i `uc ]
-[; ;main.c: 43: LATD = 0x00;
+[e = _TRISD -> -> 0 `i `uc ]
+[; ;main.c: 43: TRISE = 0x00;
 "43
-[e = _LATD -> -> 0 `i `uc ]
-[; ;main.c: 44: LATE = 0x00;
-"44
-[e = _LATE -> -> 0 `i `uc ]
-[; ;main.c: 46: ADCON0 = 0x00;
+[e = _TRISE -> -> 0 `i `uc ]
+[; ;main.c: 45: LATA = 0x00;
+"45
+[e = _LATA -> -> 0 `i `uc ]
+[; ;main.c: 46: LATB = 0x00;
 "46
-[e = _ADCON0 -> -> 0 `i `uc ]
-[; ;main.c: 47: ADCON1 |= 0x0A;
+[e = _LATB -> -> 0 `i `uc ]
+[; ;main.c: 47: LATC = 0x00;
 "47
-[e =| _ADCON1 -> -> 10 `i `uc ]
-[; ;main.c: 51: ADCON2 = 0;
+[e = _LATC -> -> 0 `i `uc ]
+[; ;main.c: 48: LATD = 0x00;
+"48
+[e = _LATD -> -> 0 `i `uc ]
+[; ;main.c: 49: LATE = 0x00;
+"49
+[e = _LATE -> -> 0 `i `uc ]
+[; ;main.c: 51: ADCON0 = 0x00;
 "51
-[e = _ADCON2 -> -> 0 `i `uc ]
-[; ;main.c: 52: ADCON2 |= 0b001;
+[e = _ADCON0 -> -> 0 `i `uc ]
+[; ;main.c: 52: ADCON1 |= 0x0A;
 "52
-[e =| _ADCON2 -> -> 1 `i `uc ]
-[; ;main.c: 53: ADCON2 |= 0b110<<3;
-"53
-[e =| _ADCON2 -> << -> 6 `i -> 3 `i `uc ]
-[; ;main.c: 54: ADCON2 |= 1<<7;
-"54
-[e =| _ADCON2 -> << -> 1 `i -> 7 `i `uc ]
-[; ;main.c: 56: initLCD();
+[e =| _ADCON1 -> -> 10 `i `uc ]
+[; ;main.c: 56: ADCON2 = 0;
 "56
-[e ( _initLCD ..  ]
-[; ;main.c: 58: initT0();
+[e = _ADCON2 -> -> 0 `i `uc ]
+[; ;main.c: 57: ADCON2 |= 0b001;
+"57
+[e =| _ADCON2 -> -> 1 `i `uc ]
+[; ;main.c: 58: ADCON2 |= 0b110<<3;
 "58
-[e ( _initT0 ..  ]
-[; ;main.c: 59: startT0(1000);
+[e =| _ADCON2 -> << -> 6 `i -> 3 `i `uc ]
+[; ;main.c: 59: ADCON2 |= 1<<7;
 "59
-[e ( _startT0 (1 -> 1000 `i ]
-[; ;main.c: 60: while(1);
-"60
+[e =| _ADCON2 -> << -> 1 `i -> 7 `i `uc ]
+[; ;main.c: 61: initLCD();
+"61
+[e ( _initLCD ..  ]
+[; ;main.c: 63: initT0();
+"63
+[e ( _initT0 ..  ]
+[; ;main.c: 64: startT0(angle);
+"64
+[e ( _startT0 (1 _angle ]
+[; ;main.c: 65: digitalWrite(3,0,1);
+"65
+[e ( _digitalWrite (3 , , -> 3 `i -> 0 `i -> 1 `i ]
+[; ;main.c: 69: while(1);
+"69
 [e :U 274 ]
 [e :U 273 ]
 [e $U 274  ]
 [e :U 275 ]
-[; ;main.c: 62: return;
-"62
-[e $UE 272  ]
-[; ;main.c: 63: }
-"63
+[; ;main.c: 70: }
+"70
 [e :UE 272 ]
 }
-"65
+"73
 [v _i `i ~T0 @X0 1 e ]
 [i _i
 -> 0 `i
 ]
-[; ;main.c: 65: int i = 0;
-[v F3076 `(v ~T0 @X0 1 tf ]
-"66
-[v _service `IF3076 ~T0 @X0 1 e ]
+[v _count `i ~T0 @X0 1 e ]
+[i _count
+-> 0 `i
+]
+[; ;main.c: 73: int i = 0, count = 0;
+"74
+[v _flag `i ~T0 @X0 1 e ]
+[i _flag
+-> 1 `i
+]
+[; ;main.c: 74: int flag = 1;
+[v F3079 `(v ~T0 @X0 1 tf ]
+"75
+[v _service `IF3079 ~T0 @X0 1 e ]
 {
-[; ;main.c: 66: void interrupt service(void) {
+[; ;main.c: 75: void interrupt service(void) {
 [e :U _service ]
 [f ]
-[; ;main.c: 67: if(TMR0IF){
-"67
+[; ;main.c: 77: if(TMR0IF){
+"77
 [e $ ! _TMR0IF 277  ]
 {
-[; ;main.c: 68: TMR0IF = 0;
-"68
+[; ;main.c: 78: TMR0IF = 0;
+"78
 [e = _TMR0IF -> -> 0 `i `b ]
-[; ;main.c: 69: lcdClear();
-"69
-[e ( _lcdClear ..  ]
-[; ;main.c: 70: printf("%d",i++);
-"70
-[e ( _printf , (. :s 3C ++ _i -> 1 `i ]
-[; ;main.c: 71: startT0(1000);
-"71
-[e ( _startT0 (1 -> 1000 `i ]
-"72
+[; ;main.c: 80: if(flag){
+"80
+[e $ ! != _flag -> 0 `i 278  ]
+{
+[; ;main.c: 81: flag=0;
+"81
+[e = _flag -> 0 `i ]
+[; ;main.c: 82: digitalWrite(3,0,0);
+"82
+[e ( _digitalWrite (3 , , -> 3 `i -> 0 `i -> 0 `i ]
+[; ;main.c: 83: startT0(20.0-angle);
+"83
+[e ( _startT0 (1 -> - .20.0 -> _angle `d `f ]
+"84
+}
+[; ;main.c: 84: }
+[e $U 279  ]
+"85
+[e :U 278 ]
+[; ;main.c: 85: else{
+{
+[; ;main.c: 86: flag=1;
+"86
+[e = _flag -> 1 `i ]
+[; ;main.c: 87: digitalWrite(3,0,1);
+"87
+[e ( _digitalWrite (3 , , -> 3 `i -> 0 `i -> 1 `i ]
+[; ;main.c: 88: startT0(angle);
+"88
+[e ( _startT0 (1 _angle ]
+"89
+}
+[e :U 279 ]
+"90
 }
 [e :U 277 ]
-[; ;main.c: 72: }
-[; ;main.c: 73: }
-"73
+[; ;main.c: 89: }
+[; ;main.c: 90: }
+[; ;main.c: 92: if(INT1IF){
+"92
+[e $ ! _INT1IF 280  ]
+{
+[; ;main.c: 94: lcdClear();
+"94
+[e ( _lcdClear ..  ]
+"95
+[v _key `uc ~T0 @X0 1 a ]
+[; ;main.c: 95: char key = (PORTB & 0xF0) >> 4;
+[e = _key -> >> & -> _PORTB `i -> 240 `i -> 4 `i `uc ]
+[; ;main.c: 96: if(key == 2) angle +=.1;
+"96
+[e $ ! == -> _key `i -> 2 `i 281  ]
+[e =+ _angle -> .0.1 `f ]
+[e :U 281 ]
+[; ;main.c: 97: if(key == 3) angle -=.1;
+"97
+[e $ ! == -> _key `i -> 3 `i 282  ]
+[e =- _angle -> .0.1 `f ]
+[e :U 282 ]
+[; ;main.c: 98: printf("angle %f",angle);
+"98
+[e ( _printf , (. :s 3C -> _angle `d ]
+[; ;main.c: 99: INT1IF = 0;
+"99
+[e = _INT1IF -> -> 0 `i `b ]
+"100
+}
+[e :U 280 ]
+[; ;main.c: 100: }
+[; ;main.c: 101: }
+"101
 [e :UE 276 ]
 }
-[p f _printf 8388736 ]
-[a 3C 37 100 0 ]
+[p f _printf 8396800 ]
+[a 3C 97 110 103 108 101 32 37 102 0 ]
 [a 1C 49 0 ]
 [a 2C 48 0 ]

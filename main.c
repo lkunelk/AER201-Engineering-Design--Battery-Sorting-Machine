@@ -28,7 +28,12 @@ void printb(int n) {
     }
 }
 
+float angle = 1.5;
 void main(void) {
+    
+    //**OSCILLATOR**//
+    OSCCON = 0xF0; // Force internal oscillator operation at 8 MHz (pg. 7-39)
+    OSCTUNEbits.PLLEN = 1; // set  OSCTUNE<6> to enable PLL (4x  phase-lock-loop) thereby setting internal oscillator frequency to 32 MHz
     
     //set direction
     TRISA = 0xFF; // Set Port A as all input
@@ -56,18 +61,41 @@ void main(void) {
     initLCD();
     
     initT0();
-    startT0(1000);
-    while(1);
+    startT0(angle);
+    digitalWrite(D,0,HIGH);
     
-    return;
+    //printf("%f",testFrequency());
+    
+    while(1); //stop here
 }
 
-int i = 0;
+
+int i = 0, count = 0;
+int flag = 1;
 void interrupt service(void) {
+    //angle = 1.5;
     if(TMR0IF){
         TMR0IF = 0; //clear flag
+        
+        if(flag){
+            flag=0;
+            digitalWrite(D,0,LOW);
+            startT0(20.0-angle);
+        }
+        else{
+            flag=1;
+            digitalWrite(D,0,HIGH);
+            startT0(angle);
+        }
+    }
+    
+    if(INT1IF){ //keyboard
+        
         lcdClear();
-        printf("%d",i++);
-        startT0(1000);
+        char key = (PORTB & 0xF0) >> 4;
+        if(key == 2) angle +=.1;
+        if(key == 3) angle -=.1;
+        printf("angle %f",angle);
+        INT1IF = 0;     //Clear flag bit
     }
 }

@@ -3639,7 +3639,7 @@ extern __nonreentrant void _delay3(unsigned char);
 
 
 # 9 "configBits.h"
-#pragma config OSC = HS
+#pragma config OSC = INTIO67
 #pragma config FCMEN = OFF
 #pragma config IESO = OFF
 
@@ -3738,21 +3738,21 @@ void lcdNewline(void);
 # 15 "lcd.c"
 void initLCD(void) {
 
-_delay((unsigned long)((15)*(8000000/4000.0)));
+_delay((unsigned long)((15)*(32000000/4000.0)));
 lcdInst(0b00110011);
 lcdInst(0b00110010);
 lcdInst(0b00101000);
 lcdInst(0b00001111);
 lcdInst(0b00000110);
 lcdInst(0b00000001);
-_delay((unsigned long)((15)*(8000000/4000.0)));
+_delay((unsigned long)((15)*(32000000/4000.0)));
 }
 
 void lcdInst(char data) {
 LATDbits.LATD2 = 0;
-_delay((unsigned long)((140)*(8000000/4000000.0)));
+_delay((unsigned long)((140)*(32000000/4000000.0)));
 lcdNibble(data);
-_delay((unsigned long)((1000)*(8000000/4000000.0)));
+_delay((unsigned long)((1000)*(32000000/4000000.0)));
 }
 
 
@@ -3761,7 +3761,7 @@ if(data == '\n')lcdNewline();
 else
 {
 LATDbits.LATD2 = 1;
-_delay((unsigned long)((140)*(8000000/4000000.0)));
+_delay((unsigned long)((140)*(32000000/4000000.0)));
 lcdNibble(data);
 }
 }
@@ -3774,9 +3774,9 @@ LATD = LATD & 0x0F;
 LATD = temp | LATD;
 
 LATDbits.LATD3 = 0;
-_delay((unsigned long)((600)*(8000000/4000000.0)));
+_delay((unsigned long)((600)*(32000000/4000000.0)));
 LATDbits.LATD3 = 1;
-_delay((unsigned long)((600)*(8000000/4000000.0)));
+_delay((unsigned long)((600)*(32000000/4000000.0)));
 
 
 data = data << 4;
@@ -3786,9 +3786,9 @@ LATD = LATD & 0x0F;
 LATD = temp | LATD;
 
 LATDbits.LATD3 = 0;
-_delay((unsigned long)((600)*(8000000/4000000.0)));
+_delay((unsigned long)((600)*(32000000/4000000.0)));
 LATDbits.LATD3 = 1;
-_delay((unsigned long)((600)*(8000000/4000000.0)));
+_delay((unsigned long)((600)*(32000000/4000000.0)));
 }
 
 void lcdHome(void){

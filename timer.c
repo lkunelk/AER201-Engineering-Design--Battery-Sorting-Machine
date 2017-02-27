@@ -35,6 +35,12 @@
  *
  * the external oscillator in use ~10MHz
  * experimental measurement: 9.982464MHz +- 0.000500Hz
+ * 
+ * 9982464 - too slow
+ * 9959472 - too slow
+ * 9893064 - too slow
+ * 9884827 - just right?
+ * 9826656 - too fast
  */
 
 #include <xc.h>
@@ -42,20 +48,26 @@
 #include "timer.h"
 #include "I2C.h"
 
-
+long extFreq = 32000000; //in Hertz
 
 void initT0(){
     //timer0 stuff
-    TMR0IE = 1; //enable timer0 inerrupt
+    TMR0IE = 1; //enable timer0 interrupt
     PEIE = 1; //turn off interrupt priorities
     ei(); //enable general interrupts
 }
 
-void startT0(int time){
+void startT0(float milliseconds){
+    //timer counts up from the time set
+    //so we need to subtract from maximum possible value (0xFFFF) the time that
+    //we want to elapse, 4 clock pulses per instruction, prescaler of 128 
+    //instructions per timer count. Dividing by 1000.0 to convert to seconds
+    long time = 0xFFFF - ( milliseconds / 1000.0 ) * extFreq / 4.0 / 256.0;
+    
     T0CON = 0; //clear before setting
     //default 16bit timer
     //T0CON |= 1<<3; //turn off prescaler
-    T0CON |= 0b110;
+    T0CON |= 0b111; // prescaler = 2^(0b110 + 1)) = 128
     TMR0H = time>>8;
     TMR0L = time & 0xFF;
     T0CON |= 1<<7; //start timer
@@ -64,14 +76,14 @@ void startT0(int time){
 //times number of oscillations of crystal in 1 second
 float testFrequency(){
     const char datetime[7] = {
-    0x45, //45 Seconds 
-    0x59, //59 Minutes
-    0x23, //24 hour mode, set to 23:00
-    0x07, //Saturday 
-    0x31, //31st
-    0x12, //December
-    0x16  //2016
-};
+        0x45, //45 Seconds 
+        0x59, //59 Minutes
+        0x23, //24 hour mode, set to 23:00
+        0x07, //Saturday 
+        0x31, //31st
+        0x12, //December
+        0x16  //2016
+    };
     
     di();
     I2C_Master_Init(10000); //initialize master with 100KHz clock
@@ -112,19 +124,23 @@ float testFrequency(){
                 if(timerOff){
                     printf("t1: %x ",time[0]);
                     initT0();
-                    startT0(0);
+                    T0CON = 0; //clear before setting
+                    T0CON |= 0b110; // prescaler = 2^(0b110 + 1)) = 128
+                    TMR0H = 0;
+                    TMR0L = 0;
+                    T0CON |= 1<<7; //start timer
                     timerOff = 0;
                 }
                 else
                 {
                     di();
-                    printf("%x %x\n",TMR0L, TMR0H);
+                    printf("[%x %x]\n",TMR0L, TMR0H);
                     T0CON = 0; //stop timer
                     
                     //process results
                     // 4 clock pulses per instruction
                     // prescaler = 1/128 -> 128 instructions per count increment of clock
-                    long count = TMR0L + (TMR0H<<8);
+                    long long count = TMR0L + (TMR0H<<8);
                     return count*128*4 / 1000000.0; //convert to MHz
                 }
             

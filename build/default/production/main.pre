@@ -3702,7 +3702,7 @@ extern int printf(const char *, ...);
 
 
 # 9 "configBits.h"
-#pragma config OSC = HS
+#pragma config OSC = INTIO67
 #pragma config FCMEN = OFF
 #pragma config IESO = OFF
 
@@ -3809,7 +3809,7 @@ unsigned char I2C_Master_Read(unsigned char a);
 
 # 11 "timer.h"
 void initT0(void);
-void startT0(int time);
+void startT0(float time);
 float testFrequency();
 
 # 22 "main.c"
@@ -3822,7 +3822,12 @@ else printf("0");
 }
 }
 
+float angle = 1.5;
 void main(void) {
+
+
+OSCCON = 0xF0;
+OSCTUNEbits.PLLEN = 1;
 
 
 TRISA = 0xFF;
@@ -3850,18 +3855,41 @@ ADCON2 |= 1<<7;
 initLCD();
 
 initT0();
-startT0(1000);
-while(1);
+startT0(angle);
+digitalWrite(3,0,1);
 
-return;
+
+
+while(1);
 }
 
-int i = 0;
+
+int i = 0, count = 0;
+int flag = 1;
 void interrupt service(void) {
+
 if(TMR0IF){
 TMR0IF = 0;
+
+if(flag){
+flag=0;
+digitalWrite(3,0,0);
+startT0(20.0-angle);
+}
+else{
+flag=1;
+digitalWrite(3,0,1);
+startT0(angle);
+}
+}
+
+if(INT1IF){
+
 lcdClear();
-printf("%d",i++);
-startT0(1000);
+char key = (PORTB & 0xF0) >> 4;
+if(key == 2) angle +=.1;
+if(key == 3) angle -=.1;
+printf("angle %f",angle);
+INT1IF = 0;
 }
 }

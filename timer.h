@@ -9,7 +9,7 @@
 #define	TIMER_H
 
 void initT0(void);
-void startT0(int time);
+void startT0(float time);
 float testFrequency();
 
 #endif	/* TIMER_H */

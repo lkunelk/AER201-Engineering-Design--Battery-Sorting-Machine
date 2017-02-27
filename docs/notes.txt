@@ -1,3 +1,7 @@
+27 feb [mon]
+------------
+OHH thank god! Thank Tyler, who posted the code for servo motors. It took forever to figure out what was wrong. Actually I'm still not sure what was wrong with my previous code. I was using the 10MHz external oscillator, which gave me good timing in seconds but when I tried to drive the servo it only worked in the left half of its rotation range. Like 1.5ms would correspond to all the way left while something close to 0ms pulse width would correspond to the neutral position. I have no idea, but the code works now. I need to prepare to go to school now.
+
 22 feb [wed]
 ------------
 I'm having problems with getting my pins to read input. The problem is that the pins are multiplexed with other functions and there are tons of registers that I need to modify. This makes it impossible to have a simple interface for setting pins and reading values, since I would have to consider the option that maybe I might want to use these special functions. I think for the io pin I'll just turn of the special functions and care only about making the pins digital input
