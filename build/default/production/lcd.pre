@@ -3791,6 +3791,10 @@ LATDbits.LATD3 = 1;
 _delay((unsigned long)((600)*(8000000/4000000.0)));
 }
 
+void lcdHome(void){
+lcdInst(0b11000000);
+}
+
 void lcdClear(void){
 lcdInst(0b00000001);
 }

@@ -8,16 +8,9 @@
 #ifndef TIMER_H
 #define	TIMER_H
 
-#ifdef	__cplusplus
-extern "C" {
-#endif
-
-
-
-
-#ifdef	__cplusplus
-}
-#endif
+void initT0(void);
+void startT0(int time);
+float testFrequency();
 
 #endif	/* TIMER_H */
 

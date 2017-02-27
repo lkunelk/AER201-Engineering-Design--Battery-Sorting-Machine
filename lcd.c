@@ -67,6 +67,10 @@ void lcdNibble(char data){
     __delay_us(LCD_DELAY);
 }
 
+void lcdHome(void){
+    lcdInst(0b11000000);
+}
+
 void lcdClear(void){
     lcdInst(0b00000001);
 }

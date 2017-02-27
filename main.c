@@ -15,8 +15,9 @@
 //#include "keypad.h"
 #include "lcd.h"
 #include "iopin.h"
-#include "eeprom.h"
-#include "eeprom_routines.h"
+//#include "eeprom.h"
+#include "I2C.h"
+#include "timer.h"
 
 void printb(int n);
 
@@ -32,7 +33,7 @@ void main(void) {
     //set direction
     TRISA = 0xFF; // Set Port A as all input
     TRISB = 0xFF; // input for keypads
-    TRISC = 0xFF;
+    TRISC = 0x00;
     TRISD = 0x00; //All output mode for LCD
     TRISE = 0x00;  
     
@@ -44,7 +45,7 @@ void main(void) {
     
     ADCON0 = 0x00; //turn off AD module for now
     ADCON1 |= 0x0A; //set V reference and set an0-4 (ra0-5) as analog
-    ADCON1 |= 0b11<<4; //use external voltage reference 
+    //ADCON1 |= 0b11<<4; //use external voltage reference 
     //(an2 -> Vref-) and (an3 -> Vref+)
     
     ADCON2 = 0; //clear before setting
@@ -54,42 +55,17 @@ void main(void) {
     
     initLCD();
     
-    TMR0IE = 1; //enable timer0 inerrupt
-    PEIE = 1; //turn of interrupt priorities
-    ei();
-            
-    T0CON = 0b00010000; //set counter mode, 
-    T0CON |= 1<<3; //turn off prescaler
-    long time = (int)(0xffff - (.001)*(9800000)/4); //each interrupt happens every 1ms
-    TMR0H = time>>8;
-    TMR0L = time & 0xFF;
-    T0CON |= 1<<7;
-    
-    while(1){}
+    printf("%f",testFrequency());
+    while(1);
     
     return;
 }
 
 long count = 0;
-int time = 0;
+int T = 0;
 void interrupt lol(void) {
     if(TMR0IF){
-        
-        TMR0IF = 0;     //Clear flag bit
-        count++;
-        
-        if(count == 1000){
-            lcdClear();
-            printf("time: %d\n",++time);
-            count = 0;
-        }
-        
-        
-        //set time again for 1ms
-        long time = (int)(0xffff - (.001)*(9000000)/4);
-        TMR0H = time>>8;
-        TMR0L = time & 0xFF;
-        T0CON |= 1<<7;
-        
+        printf("out of time");
+        while(1); //stop here
     }
 }

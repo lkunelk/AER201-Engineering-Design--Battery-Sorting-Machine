@@ -30,34 +30,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _ADCON2 `Vuc ~T0 @X0 0 e@4032 ]
 "18 lcd.h
 [v _initLCD `(v ~T0 @X0 0 ef ]
-"7562 C:\Program Files (x86)\Microchip\xc8\v1.40\include\pic18f4620.h
-[v _TMR0IE `Vb ~T0 @X0 0 e@32661 ]
-"7216
-[v _PEIE `Vb ~T0 @X0 0 e@32662 ]
-"6272
-[s S258 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S258 . RBIF INT0IF TMR0IF RBIE INT0IE TMR0IE PEIE_GIEL GIE_GIEH ]
-"6282
-[s S259 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S259 . . INT0F T0IF . INT0E T0IE PEIE GIE ]
-"6292
-[s S260 :6 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S260 . . GIEL GIEH ]
-"6271
-[u S257 `S258 1 `S259 1 `S260 1 ]
-[n S257 . . . . ]
-"6298
-[v _INTCONbits `VS257 ~T0 @X0 0 e@4082 ]
-"5781
-[v _T0CON `Vuc ~T0 @X0 0 e@4053 ]
-"5869
-[v _TMR0H `Vuc ~T0 @X0 0 e@4055 ]
-"5863
-[v _TMR0L `Vuc ~T0 @X0 0 e@4054 ]
-"7564
+"13 timer.h
+[v _testFrequency `(f ~T0 @X0 0 ef ]
+"7564 C:\Program Files (x86)\Microchip\xc8\v1.40\include\pic18f4620.h
 [v _TMR0IF `Vb ~T0 @X0 0 e@32658 ]
-"19 lcd.h
-[v _lcdClear `(v ~T0 @X0 0 ef ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -2871,18 +2847,22 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;iopin.h: 30: void digitalWrite(int port, int pin, int val);
 [; ;iopin.h: 31: void analogPinMode(void);
 [; ;iopin.h: 32: long analogRead(int channel);
-[; ;eeprom.h: 11: void eepromWrite(int data, long address);
-[; ;eeprom.h: 12: int eepromRead(long address);
-[; ;main.c: 21: void printb(int n);
-"23 main.c
+[; ;I2C.h: 11: void I2C_Master_Init(const unsigned long c);
+[; ;I2C.h: 12: void I2C_Master_Write(unsigned d);
+[; ;I2C.h: 13: unsigned char I2C_Master_Read(unsigned char a);
+[; ;timer.h: 11: void initT0(void);
+[; ;timer.h: 12: void startT0(int time);
+[; ;timer.h: 13: float testFrequency();
+[; ;main.c: 22: void printb(int n);
+"24 main.c
 [v _printb `(v ~T0 @X0 1 ef1`i ]
 {
-[; ;main.c: 23: void printb(int n) {
+[; ;main.c: 24: void printb(int n) {
 [e :U _printb ]
 [v _n `i ~T0 @X0 1 r1 ]
 [f ]
-[; ;main.c: 24: for(int a = 1<<7+0; a > 0; a>>=1){
-"24
+[; ;main.c: 25: for(int a = 1<<7+0; a > 0; a>>=1){
+"25
 {
 [v _a `i ~T0 @X0 1 a ]
 [e = _a << -> 1 `i + -> 7 `i -> 0 `i ]
@@ -2890,200 +2870,144 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e $U 268  ]
 [e :U 267 ]
 {
-[; ;main.c: 25: if(n & a)printf("1");
-"25
+[; ;main.c: 26: if(n & a)printf("1");
+"26
 [e $ ! != & _n _a -> 0 `i 270  ]
 [e ( _printf :s 1C ]
 [e $U 271  ]
-"26
+"27
 [e :U 270 ]
-[; ;main.c: 26: else printf("0");
+[; ;main.c: 27: else printf("0");
 [e ( _printf :s 2C ]
 [e :U 271 ]
-"27
+"28
 }
-"24
+"25
 [e =>> _a -> 1 `i ]
 [e $ > _a -> 0 `i 267  ]
 [e :U 268 ]
-"27
-}
-[; ;main.c: 27: }
-[; ;main.c: 28: }
 "28
+}
+[; ;main.c: 28: }
+[; ;main.c: 29: }
+"29
 [e :UE 266 ]
 }
-"30
+"31
 [v _main `(v ~T0 @X0 1 ef ]
 {
-[; ;main.c: 30: void main(void) {
+[; ;main.c: 31: void main(void) {
 [e :U _main ]
 [f ]
-[; ;main.c: 33: TRISA = 0xFF;
-"33
-[e = _TRISA -> -> 255 `i `uc ]
-[; ;main.c: 34: TRISB = 0xFF;
+[; ;main.c: 34: TRISA = 0xFF;
 "34
-[e = _TRISB -> -> 255 `i `uc ]
-[; ;main.c: 35: TRISC = 0xFF;
+[e = _TRISA -> -> 255 `i `uc ]
+[; ;main.c: 35: TRISB = 0xFF;
 "35
-[e = _TRISC -> -> 255 `i `uc ]
-[; ;main.c: 36: TRISD = 0x00;
+[e = _TRISB -> -> 255 `i `uc ]
+[; ;main.c: 36: TRISC = 0x00;
 "36
-[e = _TRISD -> -> 0 `i `uc ]
-[; ;main.c: 37: TRISE = 0x00;
+[e = _TRISC -> -> 0 `i `uc ]
+[; ;main.c: 37: TRISD = 0x00;
 "37
+[e = _TRISD -> -> 0 `i `uc ]
+[; ;main.c: 38: TRISE = 0x00;
+"38
 [e = _TRISE -> -> 0 `i `uc ]
-[; ;main.c: 39: LATA = 0x00;
-"39
-[e = _LATA -> -> 0 `i `uc ]
-[; ;main.c: 40: LATB = 0x00;
+[; ;main.c: 40: LATA = 0x00;
 "40
-[e = _LATB -> -> 0 `i `uc ]
-[; ;main.c: 41: LATC = 0x00;
+[e = _LATA -> -> 0 `i `uc ]
+[; ;main.c: 41: LATB = 0x00;
 "41
-[e = _LATC -> -> 0 `i `uc ]
-[; ;main.c: 42: LATD = 0x00;
+[e = _LATB -> -> 0 `i `uc ]
+[; ;main.c: 42: LATC = 0x00;
 "42
-[e = _LATD -> -> 0 `i `uc ]
-[; ;main.c: 43: LATE = 0x00;
+[e = _LATC -> -> 0 `i `uc ]
+[; ;main.c: 43: LATD = 0x00;
 "43
+[e = _LATD -> -> 0 `i `uc ]
+[; ;main.c: 44: LATE = 0x00;
+"44
 [e = _LATE -> -> 0 `i `uc ]
-[; ;main.c: 45: ADCON0 = 0x00;
-"45
-[e = _ADCON0 -> -> 0 `i `uc ]
-[; ;main.c: 46: ADCON1 |= 0x0A;
+[; ;main.c: 46: ADCON0 = 0x00;
 "46
-[e =| _ADCON1 -> -> 10 `i `uc ]
-[; ;main.c: 47: ADCON1 |= 0b11<<4;
+[e = _ADCON0 -> -> 0 `i `uc ]
+[; ;main.c: 47: ADCON1 |= 0x0A;
 "47
-[e =| _ADCON1 -> << -> 3 `i -> 4 `i `uc ]
-[; ;main.c: 50: ADCON2 = 0;
-"50
-[e = _ADCON2 -> -> 0 `i `uc ]
-[; ;main.c: 51: ADCON2 |= 0b001;
+[e =| _ADCON1 -> -> 10 `i `uc ]
+[; ;main.c: 51: ADCON2 = 0;
 "51
-[e =| _ADCON2 -> -> 1 `i `uc ]
-[; ;main.c: 52: ADCON2 |= 0b110<<3;
+[e = _ADCON2 -> -> 0 `i `uc ]
+[; ;main.c: 52: ADCON2 |= 0b001;
 "52
-[e =| _ADCON2 -> << -> 6 `i -> 3 `i `uc ]
-[; ;main.c: 53: ADCON2 |= 1<<7;
+[e =| _ADCON2 -> -> 1 `i `uc ]
+[; ;main.c: 53: ADCON2 |= 0b110<<3;
 "53
+[e =| _ADCON2 -> << -> 6 `i -> 3 `i `uc ]
+[; ;main.c: 54: ADCON2 |= 1<<7;
+"54
 [e =| _ADCON2 -> << -> 1 `i -> 7 `i `uc ]
-[; ;main.c: 55: initLCD();
-"55
+[; ;main.c: 56: initLCD();
+"56
 [e ( _initLCD ..  ]
-[; ;main.c: 57: TMR0IE = 1;
-"57
-[e = _TMR0IE -> -> 1 `i `b ]
-[; ;main.c: 58: PEIE = 1;
+[; ;main.c: 58: printf("%f",testFrequency());
 "58
-[e = _PEIE -> -> 1 `i `b ]
-[; ;main.c: 59: (INTCONbits.GIE = 1);
+[e ( _printf , (. :s 3C -> ( _testFrequency ..  `d ]
+[; ;main.c: 59: while(1);
 "59
-[e = . . _INTCONbits 1 7 -> -> 1 `i `uc ]
-[; ;main.c: 61: T0CON = 0b00010000;
-"61
-[e = _T0CON -> -> 16 `i `uc ]
-[; ;main.c: 62: T0CON |= 1<<3;
-"62
-[e =| _T0CON -> << -> 1 `i -> 3 `i `uc ]
-"63
-[v _time `l ~T0 @X0 1 a ]
-[; ;main.c: 63: long time = (int)(0xffff - (.001)*(9800000)/4);
-[e = _time -> -> - -> -> 65535 `ui `d / * .0.001 -> -> 9800000 `l `d -> -> 4 `i `d `i `l ]
-[; ;main.c: 64: TMR0H = time>>8;
-"64
-[e = _TMR0H -> >> _time -> 8 `i `uc ]
-[; ;main.c: 65: TMR0L = time & 0xFF;
-"65
-[e = _TMR0L -> & _time -> -> 255 `i `l `uc ]
-[; ;main.c: 66: T0CON |= 1<<7;
-"66
-[e =| _T0CON -> << -> 1 `i -> 7 `i `uc ]
-[; ;main.c: 68: while(1){}
-"68
 [e :U 274 ]
-{
-}
 [e :U 273 ]
 [e $U 274  ]
 [e :U 275 ]
-[; ;main.c: 70: return;
-"70
+[; ;main.c: 61: return;
+"61
 [e $UE 272  ]
-[; ;main.c: 71: }
-"71
+[; ;main.c: 62: }
+"62
 [e :UE 272 ]
 }
-"73
+"64
 [v _count `l ~T0 @X0 1 e ]
 [i _count
 -> -> 0 `i `l
 ]
-[; ;main.c: 73: long count = 0;
-"74
-[v _time `i ~T0 @X0 1 e ]
-[i _time
+[; ;main.c: 64: long count = 0;
+"65
+[v _T `i ~T0 @X0 1 e ]
+[i _T
 -> 0 `i
 ]
-[; ;main.c: 74: int time = 0;
-[v F3073 `(v ~T0 @X0 1 tf ]
-"75
-[v _lol `IF3073 ~T0 @X0 1 e ]
+[; ;main.c: 65: int T = 0;
+[v F3077 `(v ~T0 @X0 1 tf ]
+"66
+[v _lol `IF3077 ~T0 @X0 1 e ]
 {
-[; ;main.c: 75: void interrupt lol(void) {
+[; ;main.c: 66: void interrupt lol(void) {
 [e :U _lol ]
 [f ]
-[; ;main.c: 76: if(TMR0IF){
-"76
+[; ;main.c: 67: if(TMR0IF){
+"67
 [e $ ! _TMR0IF 277  ]
 {
-[; ;main.c: 78: TMR0IF = 0;
-"78
-[e = _TMR0IF -> -> 0 `i `b ]
-[; ;main.c: 79: count++;
-"79
-[e ++ _count -> -> 1 `i `l ]
-[; ;main.c: 81: if(count == 1000){
-"81
-[e $ ! == _count -> -> 1000 `i `l 278  ]
-{
-[; ;main.c: 82: lcdClear();
-"82
-[e ( _lcdClear ..  ]
-[; ;main.c: 83: printf("time: %d\n",++time);
-"83
-[e ( _printf , (. :s 3C =+ _time -> 1 `i ]
-[; ;main.c: 84: count = 0;
-"84
-[e = _count -> -> 0 `i `l ]
-"85
-}
+[; ;main.c: 68: printf("out of time");
+"68
+[e ( _printf :s 4C ]
+[; ;main.c: 69: while(1);
+"69
+[e :U 279 ]
 [e :U 278 ]
-[v _time `l ~T0 @X0 1 a ]
-[; ;main.c: 85: }
-[; ;main.c: 89: long time = (int)(0xffff - (.001)*(9000000)/4);
-"89
-[e = _time -> -> - -> -> 65535 `ui `d / * .0.001 -> -> 9000000 `l `d -> -> 4 `i `d `i `l ]
-[; ;main.c: 90: TMR0H = time>>8;
-"90
-[e = _TMR0H -> >> _time -> 8 `i `uc ]
-[; ;main.c: 91: TMR0L = time & 0xFF;
-"91
-[e = _TMR0L -> & _time -> -> 255 `i `l `uc ]
-[; ;main.c: 92: T0CON |= 1<<7;
-"92
-[e =| _T0CON -> << -> 1 `i -> 7 `i `uc ]
-"94
+[e $U 279  ]
+[e :U 280 ]
+"70
 }
 [e :U 277 ]
-[; ;main.c: 94: }
-[; ;main.c: 95: }
-"95
+[; ;main.c: 70: }
+[; ;main.c: 71: }
+"71
 [e :UE 276 ]
 }
-[p f _printf 8388736 ]
+[p f _printf 8396800 ]
+[a 3C 37 102 0 ]
+[a 4C 111 117 116 32 111 102 32 116 105 109 101 0 ]
 [a 1C 49 0 ]
 [a 2C 48 0 ]
-[a 3C 116 105 109 101 58 32 37 100 10 0 ]
