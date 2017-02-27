@@ -55,17 +55,19 @@ void main(void) {
     
     initLCD();
     
-    printf("%f",testFrequency());
+    initT0();
+    startT0(1000);
     while(1);
     
     return;
 }
 
-long count = 0;
-int T = 0;
-void interrupt lol(void) {
+int i = 0;
+void interrupt service(void) {
     if(TMR0IF){
-        printf("out of time");
-        while(1); //stop here
+        TMR0IF = 0; //clear flag
+        lcdClear();
+        printf("%d",i++);
+        startT0(1000);
     }
 }
