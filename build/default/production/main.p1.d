@@ -5,4 +5,7 @@ I2C.h  \
 iopin.h  \
 timer.h  \
 lcd.h  \
+servo.h  \
+keypad.h  \
+eeprom.h  \
 configBits.h 

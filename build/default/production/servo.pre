@@ -1,5 +1,5 @@
 
-# 1 "main.c"
+# 1 "servo.c"
 
 # 26 "C:\Program Files (x86)\Microchip\xc8\v1.40\include\htc.h"
 extern const char __xc8_OPTIM_SPEED;
@@ -3637,167 +3637,9 @@ extern __nonreentrant void _delaywdt(unsigned long);
 #pragma intrinsic(_delay3)
 extern __nonreentrant void _delay3(unsigned char);
 
-# 4 "C:\Program Files (x86)\Microchip\xc8\v1.40\include\__size_t.h"
-typedef unsigned size_t;
-
-# 7 "C:\Program Files (x86)\Microchip\xc8\v1.40\include\stdarg.h"
-typedef void * va_list[1];
-
-#pragma intrinsic(__va_start)
-extern void * __va_start(void);
-
-#pragma intrinsic(__va_arg)
-extern void * __va_arg(void *, ...);
-
-# 43 "C:\Program Files (x86)\Microchip\xc8\v1.40\include\stdio.h"
-struct __prbuf
-{
-char * ptr;
-void (* func)(char);
-};
-
-# 29 "C:\Program Files (x86)\Microchip\xc8\v1.40\include\errno.h"
-extern int errno;
-
-# 12 "C:\Program Files (x86)\Microchip\xc8\v1.40\include\conio.h"
-extern void init_uart(void);
-
-extern char getch(void);
-extern char getche(void);
-extern void putch(char);
-extern void ungetch(char);
-
-extern __bit kbhit(void);
-
-# 23
-extern char * cgets(char *);
-extern void cputs(const char *);
-
-# 88 "C:\Program Files (x86)\Microchip\xc8\v1.40\include\stdio.h"
-extern int cprintf(char *, ...);
-#pragma printf_check(cprintf)
-
-
-
-extern int _doprnt(struct __prbuf *, const register char *, register va_list);
-
-
-# 180
-#pragma printf_check(vprintf) const
-#pragma printf_check(vsprintf) const
-
-extern char * gets(char *);
-extern int puts(const char *);
-extern int scanf(const char *, ...) __attribute__((unsupported("scanf() is not supported by this compiler")));
-extern int sscanf(const char *, const char *, ...) __attribute__((unsupported("sscanf() is not supported by this compiler")));
-extern int vprintf(const char *, va_list) __attribute__((unsupported("vprintf() is not supported by this compiler")));
-extern int vsprintf(char *, const char *, va_list) __attribute__((unsupported("vsprintf() is not supported by this compiler")));
-extern int vscanf(const char *, va_list ap) __attribute__((unsupported("vscanf() is not supported by this compiler")));
-extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupported("vsscanf() is not supported by this compiler")));
-
-#pragma printf_check(printf) const
-#pragma printf_check(sprintf) const
-extern int sprintf(char *, const char *, ...);
-extern int printf(const char *, ...);
-
-
-# 9 "configBits.h"
-#pragma config OSC = INTIO67
-#pragma config FCMEN = OFF
-#pragma config IESO = OFF
-
-
-#pragma config PWRT = OFF
-#pragma config BOREN = SBORDIS
-#pragma config BORV = 3
-
-
-#pragma config WDT = OFF
-#pragma config WDTPS = 32768
-
-
-#pragma config CCP2MX = PORTC
-#pragma config PBADEN = ON
-#pragma config LPT1OSC = OFF
-#pragma config MCLRE = ON
-
-
-#pragma config STVREN = ON
-#pragma config LVP = OFF
-#pragma config XINST = OFF
-
-
-#pragma config CP0 = OFF
-#pragma config CP1 = OFF
-#pragma config CP2 = OFF
-#pragma config CP3 = OFF
-
-
-#pragma config CPB = OFF
-#pragma config CPD = OFF
-
-
-#pragma config WRT0 = OFF
-#pragma config WRT1 = OFF
-#pragma config WRT2 = OFF
-#pragma config WRT3 = OFF
-
-
-#pragma config WRTC = OFF
-#pragma config WRTB = OFF
-#pragma config WRTD = OFF
-
-
-#pragma config EBTR0 = OFF
-#pragma config EBTR1 = OFF
-#pragma config EBTR2 = OFF
-#pragma config EBTR3 = OFF
-
-
-#pragma config EBTRB = OFF
-
-# 14 "C:\Program Files (x86)\Microchip\xc8\v1.40\include\string.h"
-extern void * memcpy(void *, const void *, size_t);
-extern void * memmove(void *, const void *, size_t);
-extern void * memset(void *, int, size_t);
-
-# 34
-extern char * strcat(char *, const char *);
-extern char * strcpy(char *, const char *);
-extern char * strncat(char *, const char *, size_t);
-extern char * strncpy(char *, const char *, size_t);
-extern char * strdup(const char *);
-extern char * strtok(char *, const char *);
-
-
-extern int memcmp(const void *, const void *, size_t);
-extern int strcmp(const char *, const char *);
-extern int stricmp(const char *, const char *);
-extern int strncmp(const char *, const char *, size_t);
-extern int strnicmp(const char *, const char *, size_t);
-extern void * memchr(const void *, int, size_t);
-extern size_t strcspn(const char *, const char *);
-extern char * strpbrk(const char *, const char *);
-extern size_t strspn(const char *, const char *);
-extern char * strstr(const char *, const char *);
-extern char * stristr(const char *, const char *);
-extern char * strerror(int);
-extern size_t strlen(const char *);
-extern char * strchr(const char *, int);
-extern char * strichr(const char *, int);
-extern char * strrchr(const char *, int);
-extern char * strrichr(const char *, int);
-
-# 11 "keypad.h"
-void initKeypad(void);
-char readKeypad(void);
-
-# 16 "lcd.h"
-void lcdInst(char data);
-void lcdNibble(char data);
-void initLCD(void);
-void lcdClear(void);
-void lcdNewline(void);
+# 11 "servo.h"
+void initServo();
+void updateAngle(float angle);
 
 # 28 "iopin.h"
 void digitalPinMode(int port, int pin, int type);
@@ -3806,77 +3648,32 @@ void digitalWrite(int port, int pin, int val);
 void analogPinMode(void);
 long analogRead(int channel);
 
-# 11 "eeprom.h"
-void eepromWrite(int data, long address);
-int eepromRead(long address);
-
-# 11 "I2C.h"
-void I2C_Master_Init(const unsigned long c);
-void I2C_Master_Write(unsigned d);
-unsigned char I2C_Master_Read(unsigned char a);
-
 # 11 "timer.h"
 void initT0(void);
 void startT0(float time);
 float testFrequency();
 
-# 11 "servo.h"
-void initServo();
-void updateAngle(float angle);
-
-# 23 "main.c"
-void main(){
-
-
-OSCCON = 0xF0;
-OSCTUNEbits.PLLEN = 1;
-
-
-TRISA = 0xFF;
-TRISB = 0xFF;
-TRISC = 0x00;
-TRISD = 0x00;
-TRISE = 0x00;
-
-LATA = 0x00;
-LATB = 0x00;
-LATC = 0x00;
-LATD = 0x00;
-LATE = 0x00;
-
-ADCON0 = 0x00;
-ADCON1 |= 0x0A;
-
-
-
-ADCON2 = 0;
-ADCON2 |= 0b001;
-ADCON2 |= 0b110<<3;
-ADCON2 |= 1<<7;
-
-initLCD();
-
-# 58
-digitalWrite(2, 1, 1);
-
-while(1){};
+# 13 "servo.c"
+void initServo(){
+initT0();
+startT0(1.5);
+digitalWrite(3,0,1);
 }
 
+int flag = 1;
+void updateAngle(float angle){
+if(TMR0IF){
+TMR0IF = 0;
 
-int i = 0, count = 0;
-float angle = 1.5;
-
-void interrupt service(void) {
-
-updateAngle(angle);
-
-if(INT1IF){
-
-lcdClear();
-char key = (PORTB & 0xF0) >> 4;
-if(key == 2) angle +=.1;
-if(key == 3) angle -=.1;
-printf("angle %f",angle);
-INT1IF = 0;
+if(flag){
+flag=0;
+digitalWrite(3,0,0);
+startT0(20.0-angle);
+}
+else{
+flag=1;
+digitalWrite(3,0,1);
+startT0(angle);
+}
 }
 }

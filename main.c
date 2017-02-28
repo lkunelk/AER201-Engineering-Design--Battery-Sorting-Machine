@@ -8,28 +8,19 @@
  * Created on July 18, 2016, 12:11 PM
  */
 
-
 #include <xc.h>
 #include <stdio.h>
 #include "configBits.h"
-//#include "keypad.h"
+#include "keypad.h"
 #include "lcd.h"
 #include "iopin.h"
-//#include "eeprom.h"
+#include "eeprom.h"
 #include "I2C.h"
 #include "timer.h"
+#include "servo.h"
+//#include "RTC.h"
 
-void printb(int n);
-
-void printb(int n) {
-    for(int a = 1<<7+0; a > 0; a>>=1){
-        if(n & a)printf("1");
-        else printf("0");
-    }
-}
-
-float angle = 1.5;
-void main(void) {
+void main(){
     
     //**OSCILLATOR**//
     OSCCON = 0xF0; // Force internal oscillator operation at 8 MHz (pg. 7-39)
@@ -60,34 +51,22 @@ void main(void) {
     
     initLCD();
     
-    initT0();
-    startT0(angle);
-    digitalWrite(D,0,HIGH);
+    //initServo(); //servo test
     
-    //printf("%f",testFrequency());
+    //printf("%ld",analogRead(0)); //analog test
     
-    while(1); //stop here
+    digitalWrite(C, 1, HIGH);
+    
+    while(1){};//stop here
 }
 
 
 int i = 0, count = 0;
-int flag = 1;
+float angle = 1.5;
+
 void interrupt service(void) {
-    //angle = 1.5;
-    if(TMR0IF){
-        TMR0IF = 0; //clear flag
-        
-        if(flag){
-            flag=0;
-            digitalWrite(D,0,LOW);
-            startT0(20.0-angle);
-        }
-        else{
-            flag=1;
-            digitalWrite(D,0,HIGH);
-            startT0(angle);
-        }
-    }
+    
+    updateAngle(angle); //servo
     
     if(INT1IF){ //keyboard
         
