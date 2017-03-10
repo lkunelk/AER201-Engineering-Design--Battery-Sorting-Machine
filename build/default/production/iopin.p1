@@ -2984,9 +2984,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;iopin.c: 82: ADCON2 = 0;
 "82
 [e = _ADCON2 -> -> 0 `i `uc ]
-[; ;iopin.c: 83: ADCON2 |= 0b001;
+[; ;iopin.c: 83: ADCON2 |= 1<<0;
 "83
-[e =| _ADCON2 -> -> 1 `i `uc ]
+[e =| _ADCON2 -> << -> 1 `i -> 0 `i `uc ]
 [; ;iopin.c: 84: ADCON2 |= 0b110<<3;
 "84
 [e =| _ADCON2 -> << -> 6 `i -> 3 `i `uc ]
@@ -3007,12 +3007,12 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;iopin.c: 89: ADCON0 = channel<<2;
 "89
 [e = _ADCON0 -> << _channel -> 2 `i `uc ]
-[; ;iopin.c: 90: ADCON0 |= 0b01;
+[; ;iopin.c: 90: ADCON0 |= 1<<0;
 "90
-[e =| _ADCON0 -> -> 1 `i `uc ]
-[; ;iopin.c: 91: ADCON0 |= 0b10;
+[e =| _ADCON0 -> << -> 1 `i -> 0 `i `uc ]
+[; ;iopin.c: 91: ADCON0 |= 1<<1;
 "91
-[e =| _ADCON0 -> -> 2 `i `uc ]
+[e =| _ADCON0 -> << -> 1 `i -> 1 `i `uc ]
 [; ;iopin.c: 93: while(ADCON0 & 0b10);
 "93
 [e $U 306  ]

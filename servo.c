@@ -12,24 +12,26 @@
 
 void initServo(){
     initT0();
-    startT0(1.5);
-    digitalWrite(D,0,HIGH);
+    startT0(0xffd1);
+    digitalWrite(C,0,HIGH);
 }
 
-int flag = 1;
+int flag0 = 1;
 void updateAngle(float angle){
-    if(TMR0IF){
-        TMR0IF = 0; //clear flag
+    long hi = 0xffe1;
+    long lo = 0xfdb7;
+    
+    if(TMR0IF){ TMR0IF = 0; //clear flag
         
-        if(flag){
-            flag=0;
-            digitalWrite(D,0,LOW);
-            startT0(20.0-angle);
+        if(flag0){
+            startT0(lo);
+            flag0=0;
+            digitalWrite(C,0,LOW);
         }
         else{
-            flag=1;
-            digitalWrite(D,0,HIGH);
-            startT0(angle);
+            startT0(hi);
+            flag0=1;
+            digitalWrite(C,0,HIGH);
         }
     }
 }

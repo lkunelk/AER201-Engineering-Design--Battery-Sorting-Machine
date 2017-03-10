@@ -79,16 +79,16 @@ void analogPinMode(){
     //(an2 -> Vref-) and (an3 -> Vref+)
     ADCON1 |= 0x0A; //set V reference and set an0-4 (ra0-5) as analog
     
-    ADCON2 = 0; //clear before setting
-    ADCON2 |= 0b001; //set Tad = 1/ (Fosc/8)
+    ADCON2  = 0; //clear before setting
+    ADCON2 |=     1<<0; //set Tad = 1/ (Fosc/8)
     ADCON2 |= 0b110<<3; //set conversion rate  16 * Tosc per bit
-    ADCON2 |= 1<<7; //set right justified result
+    ADCON2 |=     1<<7; //set right justified result
 }
 
 long analogRead(int channel){
-    ADCON0 = channel<<2; // set the channel bits [5,2]
-    ADCON0 |= 0b01; //turn on the AD module
-    ADCON0 |= 0b10; //tell AD module to start conversion
+    ADCON0 = channel<<2; // select channel bits<5-2>
+    ADCON0 |=      1<<0; //turn on the AD module
+    ADCON0 |=      1<<1; //tell AD module to start conversion
     
     while(ADCON0 & 0b10); //waiting for result
     

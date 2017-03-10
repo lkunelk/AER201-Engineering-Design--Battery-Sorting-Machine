@@ -2704,7 +2704,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic18.h: 161: extern __nonreentrant void _delaywdt(unsigned long);
 [; ;pic18.h: 163: extern __nonreentrant void _delay3(unsigned char);
 "9 configBits.h
-[p x OSC=INTIO67 ]
+[p x OSC=HS ]
 "10
 [p x FCMEN=OFF ]
 "11
@@ -2807,9 +2807,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;lcd.c: 15: void initLCD(void) {
 [e :U _initLCD ]
 [f ]
-[; ;lcd.c: 17: _delay((unsigned long)((15)*(32000000/4000.0)));
+[; ;lcd.c: 17: _delay((unsigned long)((15)*(10000000/4000.0)));
 "17
-[e ( __delay (1 -> * -> -> 15 `i `d / -> -> 32000000 `l `d .4000.0 `ul ]
+[e ( __delay (1 -> * -> -> 15 `i `d / -> -> 10000000 `l `d .4000.0 `ul ]
 [; ;lcd.c: 18: lcdInst(0b00110011);
 "18
 [e ( _lcdInst (1 -> -> 51 `i `uc ]
@@ -2828,9 +2828,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;lcd.c: 23: lcdInst(0b00000001);
 "23
 [e ( _lcdInst (1 -> -> 1 `i `uc ]
-[; ;lcd.c: 24: _delay((unsigned long)((15)*(32000000/4000.0)));
+[; ;lcd.c: 24: _delay((unsigned long)((15)*(10000000/4000.0)));
 "24
-[e ( __delay (1 -> * -> -> 15 `i `d / -> -> 32000000 `l `d .4000.0 `ul ]
+[e ( __delay (1 -> * -> -> 15 `i `d / -> -> 10000000 `l `d .4000.0 `ul ]
 [; ;lcd.c: 25: }
 "25
 [e :UE 265 ]
@@ -2845,15 +2845,15 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;lcd.c: 28: LATDbits.LATD2 = 0;
 "28
 [e = . . _LATDbits 0 2 -> -> 0 `i `uc ]
-[; ;lcd.c: 29: _delay((unsigned long)((140)*(32000000/4000000.0)));
+[; ;lcd.c: 29: _delay((unsigned long)((140)*(10000000/4000000.0)));
 "29
-[e ( __delay (1 -> * -> -> 140 `i `d / -> -> 32000000 `l `d .4000000.0 `ul ]
+[e ( __delay (1 -> * -> -> 140 `i `d / -> -> 10000000 `l `d .4000000.0 `ul ]
 [; ;lcd.c: 30: lcdNibble(data);
 "30
 [e ( _lcdNibble (1 _data ]
-[; ;lcd.c: 31: _delay((unsigned long)((1000)*(32000000/4000000.0)));
+[; ;lcd.c: 31: _delay((unsigned long)((1000)*(10000000/4000000.0)));
 "31
-[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 32000000 `l `d .4000000.0 `ul ]
+[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 10000000 `l `d .4000000.0 `ul ]
 [; ;lcd.c: 32: }
 "32
 [e :UE 266 ]
@@ -2879,9 +2879,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;lcd.c: 39: LATDbits.LATD2 = 1;
 "39
 [e = . . _LATDbits 0 2 -> -> 1 `i `uc ]
-[; ;lcd.c: 40: _delay((unsigned long)((140)*(32000000/4000000.0)));
+[; ;lcd.c: 40: _delay((unsigned long)((140)*(10000000/4000000.0)));
 "40
-[e ( __delay (1 -> * -> -> 140 `i `d / -> -> 32000000 `l `d .4000000.0 `ul ]
+[e ( __delay (1 -> * -> -> 140 `i `d / -> -> 10000000 `l `d .4000000.0 `ul ]
 [; ;lcd.c: 41: lcdNibble(data);
 "41
 [e ( _lcdNibble (1 _data ]
@@ -2913,15 +2913,15 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;lcd.c: 52: LATDbits.LATD3 = 0;
 "52
 [e = . . _LATDbits 0 3 -> -> 0 `i `uc ]
-[; ;lcd.c: 53: _delay((unsigned long)((600)*(32000000/4000000.0)));
+[; ;lcd.c: 53: _delay((unsigned long)((600)*(10000000/4000000.0)));
 "53
-[e ( __delay (1 -> * -> -> 600 `i `d / -> -> 32000000 `l `d .4000000.0 `ul ]
+[e ( __delay (1 -> * -> -> 600 `i `d / -> -> 10000000 `l `d .4000000.0 `ul ]
 [; ;lcd.c: 54: LATDbits.LATD3 = 1;
 "54
 [e = . . _LATDbits 0 3 -> -> 1 `i `uc ]
-[; ;lcd.c: 55: _delay((unsigned long)((600)*(32000000/4000000.0)));
+[; ;lcd.c: 55: _delay((unsigned long)((600)*(10000000/4000000.0)));
 "55
-[e ( __delay (1 -> * -> -> 600 `i `d / -> -> 32000000 `l `d .4000000.0 `ul ]
+[e ( __delay (1 -> * -> -> 600 `i `d / -> -> 10000000 `l `d .4000000.0 `ul ]
 [; ;lcd.c: 58: data = data << 4;
 "58
 [e = _data -> << -> _data `i -> 4 `i `uc ]
@@ -2937,15 +2937,15 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;lcd.c: 64: LATDbits.LATD3 = 0;
 "64
 [e = . . _LATDbits 0 3 -> -> 0 `i `uc ]
-[; ;lcd.c: 65: _delay((unsigned long)((600)*(32000000/4000000.0)));
+[; ;lcd.c: 65: _delay((unsigned long)((600)*(10000000/4000000.0)));
 "65
-[e ( __delay (1 -> * -> -> 600 `i `d / -> -> 32000000 `l `d .4000000.0 `ul ]
+[e ( __delay (1 -> * -> -> 600 `i `d / -> -> 10000000 `l `d .4000000.0 `ul ]
 [; ;lcd.c: 66: LATDbits.LATD3 = 1;
 "66
 [e = . . _LATDbits 0 3 -> -> 1 `i `uc ]
-[; ;lcd.c: 67: _delay((unsigned long)((600)*(32000000/4000000.0)));
+[; ;lcd.c: 67: _delay((unsigned long)((600)*(10000000/4000000.0)));
 "67
-[e ( __delay (1 -> * -> -> 600 `i `d / -> -> 32000000 `l `d .4000000.0 `ul ]
+[e ( __delay (1 -> * -> -> 600 `i `d / -> -> 10000000 `l `d .4000000.0 `ul ]
 [; ;lcd.c: 68: }
 "68
 [e :UE 270 ]

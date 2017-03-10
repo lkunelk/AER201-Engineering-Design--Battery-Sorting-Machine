@@ -1,5 +1,7 @@
 Version 3.2 HI-TECH Software Intermediate Code
-"7562 C:\Program Files (x86)\Microchip\xc8\v1.40\include\pic18f4620.h
+"5781 C:\Program Files (x86)\Microchip\xc8\v1.40\include\pic18f4620.h
+[v _T0CON `Vuc ~T0 @X0 0 e@4053 ]
+"7562
 [v _TMR0IE `Vb ~T0 @X0 0 e@32661 ]
 "7216
 [v _PEIE `Vb ~T0 @X0 0 e@32662 ]
@@ -17,8 +19,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [n S257 . . . . ]
 "6298
 [v _INTCONbits `VS257 ~T0 @X0 0 e@4082 ]
-"5781
-[v _T0CON `Vuc ~T0 @X0 0 e@4053 ]
 "5869
 [v _TMR0H `Vuc ~T0 @X0 0 e@4055 ]
 "5863
@@ -2747,59 +2747,56 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdio.h: 194: extern int sprintf(char *, const char *, ...);
 [; ;stdio.h: 195: extern int printf(const char *, ...);
 [; ;timer.h: 11: void initT0(void);
-[; ;timer.h: 12: void startT0(float time);
+[; ;timer.h: 12: void startT0(long val);
 [; ;timer.h: 13: float testFrequency();
+[; ;timer.h: 14: void angleToPulseLength(float mill, int prescaler);
+"16 timer.h
+[v _extFreq `l ~T0 @X0 1 e ]
+[i _extFreq
+-> 31500000 `l
+]
+[; ;timer.h: 16: long extFreq = 31500000;
 [; ;I2C.h: 11: void I2C_Master_Init(const unsigned long c);
 [; ;I2C.h: 12: void I2C_Master_Write(unsigned d);
 [; ;I2C.h: 13: unsigned char I2C_Master_Read(unsigned char a);
-"51 timer.c
-[v _extFreq `l ~T0 @X0 1 e ]
-[i _extFreq
--> 32000000 `l
-]
-[; ;timer.c: 51: long extFreq = 32000000;
-"53
+"52 timer.c
 [v _initT0 `(v ~T0 @X0 1 ef ]
 {
-[; ;timer.c: 53: void initT0(){
+[; ;timer.c: 52: void initT0(){
 [e :U _initT0 ]
 [f ]
-[; ;timer.c: 55: TMR0IE = 1;
-"55
-[e = _TMR0IE -> -> 1 `i `b ]
-[; ;timer.c: 56: PEIE = 1;
+[; ;timer.c: 53: T0CON = 0;
+"53
+[e = _T0CON -> -> 0 `i `uc ]
+[; ;timer.c: 56: T0CON |= 0b111;
 "56
-[e = _PEIE -> -> 1 `i `b ]
-[; ;timer.c: 57: (INTCONbits.GIE = 1);
-"57
-[e = . . _INTCONbits 1 7 -> -> 1 `i `uc ]
-[; ;timer.c: 58: }
+[e =| _T0CON -> -> 7 `i `uc ]
+[; ;timer.c: 58: TMR0IE = 1;
 "58
+[e = _TMR0IE -> -> 1 `i `b ]
+[; ;timer.c: 59: PEIE = 1;
+"59
+[e = _PEIE -> -> 1 `i `b ]
+[; ;timer.c: 60: (INTCONbits.GIE = 1);
+"60
+[e = . . _INTCONbits 1 7 -> -> 1 `i `uc ]
+[; ;timer.c: 61: }
+"61
 [e :UE 266 ]
 }
-"60
-[v _startT0 `(v ~T0 @X0 1 ef1`f ]
-{
-[; ;timer.c: 60: void startT0(float milliseconds){
-[e :U _startT0 ]
-[v _milliseconds `f ~T0 @X0 1 r1 ]
-[f ]
-"65
-[v _time `l ~T0 @X0 1 a ]
-[; ;timer.c: 65: long time = 0xFFFF - ( milliseconds / 1000.0 ) * extFreq / 4.0 / 256.0;
-[e = _time -> - -> -> 65535 `ui `d / / * / -> _milliseconds `d .1000.0 -> _extFreq `d .4.0 .256.0 `l ]
-[; ;timer.c: 67: T0CON = 0;
-"67
-[e = _T0CON -> -> 0 `i `uc ]
-[; ;timer.c: 70: T0CON |= 0b111;
 "70
-[e =| _T0CON -> -> 7 `i `uc ]
-[; ;timer.c: 71: TMR0H = time>>8;
+[v _startT0 `(v ~T0 @X0 1 ef1`l ]
+{
+[; ;timer.c: 70: void startT0(long val){
+[e :U _startT0 ]
+[v _val `l ~T0 @X0 1 r1 ]
+[f ]
+[; ;timer.c: 71: TMR0H = val>>8;
 "71
-[e = _TMR0H -> >> _time -> 8 `i `uc ]
-[; ;timer.c: 72: TMR0L = time & 0xFF;
+[e = _TMR0H -> >> _val -> 8 `i `uc ]
+[; ;timer.c: 72: TMR0L = val;
 "72
-[e = _TMR0L -> & _time -> -> 255 `i `l `uc ]
+[e = _TMR0L -> _val `uc ]
 [; ;timer.c: 73: T0CON |= 1<<7;
 "73
 [e =| _T0CON -> << -> 1 `i -> 7 `i `uc ]
@@ -2813,8 +2810,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;timer.c: 77: float testFrequency(){
 [e :U _testFrequency ]
 [f ]
-[v F2962 `Cuc ~T0 @X0 -> 7 `i s ]
-[i F2962
+[v F2964 `Cuc ~T0 @X0 -> 7 `i s ]
+[i F2964
 :U ..
 "79
 -> -> 69 `i `uc
@@ -2844,7 +2841,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;timer.c: 85: 0x16
 [; ;timer.c: 86: };
 "86
-[e = _datetime F2962 ]
+[e = _datetime F2964 ]
 [; ;timer.c: 88: (INTCONbits.GIE = 0);
 "88
 [e = . . _INTCONbits 1 7 -> -> 0 `i `uc ]
@@ -2970,9 +2967,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;timer.c: 127: T0CON = 0;
 "127
 [e = _T0CON -> -> 0 `i `uc ]
-[; ;timer.c: 128: T0CON |= 0b110;
+[; ;timer.c: 128: T0CON |= 0b111;
 "128
-[e =| _T0CON -> -> 6 `i `uc ]
+[e =| _T0CON -> -> 7 `i `uc ]
 [; ;timer.c: 129: TMR0H = 0;
 "129
 [e = _TMR0H -> -> 0 `i `uc ]
@@ -3008,9 +3005,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _count `l ~T0 @X0 1 a ]
 [; ;timer.c: 143: long long count = TMR0L + (TMR0H<<8);
 [e = _count -> + -> _TMR0L `i << -> _TMR0H `i -> 8 `i `l ]
-[; ;timer.c: 144: return count*128*4 / 1000000.0;
+[; ;timer.c: 144: return count*256*4 / 1000000.0;
 "144
-[e ) -> / -> * * _count -> -> 128 `i `l -> -> 4 `i `l `d .1000000.0 `f ]
+[e ) -> / -> * * _count -> -> 256 `i `l -> -> 4 `i `l `d .1000000.0 `f ]
 [e $UE 268  ]
 "145
 }
@@ -3039,6 +3036,38 @@ Version 3.2 HI-TECH Software Intermediate Code
 "152
 [e :UE 268 ]
 }
-[p f _printf 12582912 ]
+"161
+[v _angleToPulseLength `(v ~T0 @X0 1 ef2`f`i ]
+{
+[; ;timer.c: 161: void angleToPulseLength(float mill, int prescaler){
+[e :U _angleToPulseLength ]
+[v _mill `f ~T0 @X0 1 r1 ]
+[v _prescaler `i ~T0 @X0 1 r2 ]
+[f ]
+"166
+[v _period `f ~T0 @X0 1 a ]
+[; ;timer.c: 166: float period = 20.0;
+[e = _period -> .20.0 `f ]
+"168
+[v _hi `l ~T0 @X0 1 a ]
+[; ;timer.c: 168: long hi = 0xFFFF - (long)(extFreq / 4.0 / prescaler * mill / 1000.0);
+[e = _hi - -> -> 65535 `ui `l -> / * / / -> _extFreq `d .4.0 -> _prescaler `d -> _mill `d .1000.0 `l ]
+"169
+[v _lo `l ~T0 @X0 1 a ]
+[; ;timer.c: 169: long lo = 0xFFFF - (long)(extFreq / 4.0 / prescaler * (period - mill) / 1000.0);
+[e = _lo - -> -> 65535 `ui `l -> / * / / -> _extFreq `d .4.0 -> _prescaler `d -> - _period _mill `d .1000.0 `l ]
+[; ;timer.c: 171: printf("high: %ld\n",hi);
+"171
+[e ( _printf , (. :s 3C _hi ]
+[; ;timer.c: 172: printf("low : %ld",lo);
+"172
+[e ( _printf , (. :s 4C _lo ]
+[; ;timer.c: 173: }
+"173
+[e :UE 283 ]
+}
+[p f _printf 12583056 ]
+[a 4C 108 111 119 32 58 32 37 108 100 0 ]
 [a 1C 116 49 58 32 37 120 32 0 ]
+[a 3C 104 105 103 104 58 32 37 108 100 10 0 ]
 [a 2C 91 37 120 32 37 120 93 10 0 ]

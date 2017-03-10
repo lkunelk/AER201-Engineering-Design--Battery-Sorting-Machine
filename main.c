@@ -20,13 +20,14 @@
 #include "servo.h"
 //#include "RTC.h"
 
-void main(){
-    
+void pinSetup(void);
+
+void pinSetup(){
     //**OSCILLATOR**//
-    OSCCON = 0xF0; // Force internal oscillator operation at 8 MHz (pg. 7-39)
-    OSCTUNEbits.PLLEN = 1; // set  OSCTUNE<6> to enable PLL (4x  phase-lock-loop) thereby setting internal oscillator frequency to 32 MHz
+    //OSCCON = 0xF0; // Force internal oscillator operation at 8 MHz (pg. 7-39)
+    //OSCTUNEbits.PLLEN = 1; // set  OSCTUNE<6> to enable PLL (4x  phase-lock-loop) thereby setting internal oscillator frequency to 32 MHz
     
-    //set direction
+    //set direction of pins
     TRISA = 0xFF; // Set Port A as all input
     TRISB = 0xFF; // input for keypads
     TRISC = 0x00;
@@ -45,36 +46,26 @@ void main(){
     //(an2 -> Vref-) and (an3 -> Vref+)
     
     ADCON2 = 0; //clear before setting
-    ADCON2 |= 0b001; //set Tad = 1/ (Fosc/8)
+    ADCON2 |= 0b010; //set Tad = 1/ (Fosc/32), (must be Tas>=0.7us)
     ADCON2 |= 0b110<<3; //set conversion rate  16 * Tosc per bit
     ADCON2 |= 1<<7; //set right justified result
-    
+}
+
+float angle = 180;
+
+void main(){
+    pinSetup();
     initLCD();
     
-    //initServo(); //servo test
-    
-    //printf("%ld",analogRead(0)); //analog test
-    
-    digitalWrite(C, 1, HIGH);
+    printf("freq: %f",testFrequency());
     
     while(1){};//stop here
 }
-
-
-int i = 0, count = 0;
-float angle = 1.5;
-
+int count = 0;
+int time = 0;
 void interrupt service(void) {
     
-    updateAngle(angle); //servo
-    
-    if(INT1IF){ //keyboard
-        
-        lcdClear();
-        char key = (PORTB & 0xF0) >> 4;
-        if(key == 2) angle +=.1;
-        if(key == 3) angle -=.1;
-        printf("angle %f",angle);
-        INT1IF = 0;     //Clear flag bit
+    //RB1 interrupt
+    if(INT1IF){INT1IF = 0;     //Clear flag bit
     }
 }

@@ -3710,15 +3710,15 @@ ADCON0 = 0;
 ADCON1 |= 0x0A;
 
 ADCON2 = 0;
-ADCON2 |= 0b001;
+ADCON2 |= 1<<0;
 ADCON2 |= 0b110<<3;
 ADCON2 |= 1<<7;
 }
 
 long analogRead(int channel){
 ADCON0 = channel<<2;
-ADCON0 |= 0b01;
-ADCON0 |= 0b10;
+ADCON0 |= 1<<0;
+ADCON0 |= 1<<1;
 
 while(ADCON0 & 0b10);
 

@@ -2714,7 +2714,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;I2C.h: 12: void I2C_Master_Write(unsigned d);
 [; ;I2C.h: 13: unsigned char I2C_Master_Read(unsigned char a);
 "9 configBits.h
-[p x OSC=INTIO67 ]
+[p x OSC=HS ]
 "10
 [p x FCMEN=OFF ]
 "11
@@ -2826,9 +2826,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;I2C.c: 18: SSPCON2 = 0b00000000;
 "18
 [e = _SSPCON2 -> -> 0 `i `uc ]
-[; ;I2C.c: 19: SSPADD = (32000000/(4*c))-1;
+[; ;I2C.c: 19: SSPADD = (10000000/(4*c))-1;
 "19
-[e = _SSPADD -> - / -> -> 32000000 `l `ul * -> -> -> 4 `i `l `ul _c -> -> -> 1 `i `l `ul `uc ]
+[e = _SSPADD -> - / -> -> 10000000 `l `ul * -> -> -> 4 `i `l `ul _c -> -> -> 1 `i `l `ul `uc ]
 [; ;I2C.c: 20: TRISC3 = 1;
 "20
 [e = _TRISC3 -> -> 1 `i `b ]
@@ -2988,9 +2988,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e $U 276  ]
 [e :U 277 ]
 {
-[; ;I2C.c: 68: _delay((unsigned long)((5)*(32000000/4000.0)));
+[; ;I2C.c: 68: _delay((unsigned long)((5)*(10000000/4000.0)));
 "68
-[e ( __delay (1 -> * -> -> 5 `i `d / -> -> 32000000 `l `d .4000.0 `ul ]
+[e ( __delay (1 -> * -> -> 5 `i `d / -> -> 10000000 `l `d .4000.0 `ul ]
 "69
 }
 [e :U 276 ]

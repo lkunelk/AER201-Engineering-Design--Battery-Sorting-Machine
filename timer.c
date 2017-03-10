@@ -48,29 +48,29 @@
 #include "timer.h"
 #include "I2C.h"
 
-long extFreq = 32000000; //in Hertz
 
 void initT0(){
-    //timer0 stuff
+    T0CON = 0; //clear before setting
+    //default 16bit timer
+    //T0CON |= 1<<3; //turn off prescaler
+    T0CON |= 0b111; // prescaler = 2^(0b110 + 1)) = 128
+    
     TMR0IE = 1; //enable timer0 interrupt
     PEIE = 1; //turn off interrupt priorities
     ei(); //enable general interrupts
 }
 
-void startT0(float milliseconds){
-    //timer counts up from the time set
-    //so we need to subtract from maximum possible value (0xFFFF) the time that
-    //we want to elapse, 4 clock pulses per instruction, prescaler of 128 
-    //instructions per timer count. Dividing by 1000.0 to convert to seconds
-    long time = 0xFFFF - ( milliseconds / 1000.0 ) * extFreq / 4.0 / 256.0;
-    
-    T0CON = 0; //clear before setting
-    //default 16bit timer
-    //T0CON |= 1<<3; //turn off prescaler
-    T0CON |= 0b111; // prescaler = 2^(0b110 + 1)) = 128
-    TMR0H = time>>8;
-    TMR0L = time & 0xFF;
-    T0CON |= 1<<7; //start timer
+/*
+ * function for starting timer
+ * parameter
+ * - val - timer counts up from val to 0xFFFF, the time it takes depends on
+ *         the oscillator frequency, the prescaler of the timer
+ *         val can be precalculated using angleToPulseLength()
+ */
+void startT0(long val){
+    TMR0H = val>>8; //high bits of val
+    TMR0L = val;    // low bits of val
+    T0CON |= 1<<7;  //start timer
 }
 
 //times number of oscillations of crystal in 1 second
@@ -125,7 +125,7 @@ float testFrequency(){
                     printf("t1: %x ",time[0]);
                     initT0();
                     T0CON = 0; //clear before setting
-                    T0CON |= 0b110; // prescaler = 2^(0b110 + 1)) = 128
+                    T0CON |= 0b111; // prescaler = 2^(0b110 + 1)) = 128
                     TMR0H = 0;
                     TMR0L = 0;
                     T0CON |= 1<<7; //start timer
@@ -141,7 +141,7 @@ float testFrequency(){
                     // 4 clock pulses per instruction
                     // prescaler = 1/128 -> 128 instructions per count increment of clock
                     long long count = TMR0L + (TMR0H<<8);
-                    return count*128*4 / 1000000.0; //convert to MHz
+                    return count*256*4 / 1000000.0; //convert to MHz
                 }
             
         }
@@ -149,4 +149,25 @@ float testFrequency(){
         prev = time[0];
     }
     return -1;
+}
+
+/*
+ * not actually used in the final code
+ * calculates the pulse duration for the servo to position 
+ * its arm at desired angle. The function prints to the lcd
+ * - number to set the timer for the pulse
+ * - number to set the timer for the low signal
+ */
+void angleToPulseLength(float mill, int prescaler){
+    //timer counts up from the time set
+    //so we need to subtract from maximum possible value (0xFFFF) the time that
+    //we want to elapse, 4 clock pulses per instruction, prescaler of 128 
+    //instructions per timer count. Dividing by 1000.0 to convert to seconds
+    float period = 20.0; //period of signal to servo
+    
+    long hi = 0xFFFF - (long)(extFreq / 4.0 / prescaler * mill / 1000.0);
+    long lo = 0xFFFF - (long)(extFreq / 4.0 / prescaler * (period - mill) / 1000.0);
+    
+    printf("high: %ld\n",hi);
+    printf("low : %ld",lo);
 }

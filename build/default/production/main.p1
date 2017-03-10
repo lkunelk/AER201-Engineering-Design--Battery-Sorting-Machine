@@ -1,19 +1,5 @@
 Version 3.2 HI-TECH Software Intermediate Code
-[p mainexit ]
-"5705 C:\Program Files (x86)\Microchip\xc8\v1.40\include\pic18f4620.h
-[v _OSCCON `Vuc ~T0 @X0 0 e@4051 ]
-"2420
-[s S83 :5 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S83 . TUN . PLLEN INTSRC ]
-"2426
-[s S84 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S84 . TUN0 TUN1 TUN2 TUN3 TUN4 ]
-"2419
-[u S82 `S83 1 `S84 1 ]
-[n S82 . . . ]
-"2434
-[v _OSCTUNEbits `VS82 ~T0 @X0 0 e@3995 ]
-"1367
+"1367 C:\Program Files (x86)\Microchip\xc8\v1.40\include\pic18f4620.h
 [v _TRISA `Vuc ~T0 @X0 0 e@3986 ]
 "1588
 [v _TRISB `Vuc ~T0 @X0 0 e@3987 ]
@@ -39,20 +25,15 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _ADCON1 `Vuc ~T0 @X0 0 e@4033 ]
 "4320
 [v _ADCON2 `Vuc ~T0 @X0 0 e@4032 ]
+[p mainexit ]
 "18 lcd.h
 [v _initLCD `(v ~T0 @X0 0 ef ]
-"30 iopin.h
-[v _digitalWrite `(v ~T0 @X0 0 ef3`i`i`i ]
-"12 servo.h
-[v _updateAngle `(v ~T0 @X0 0 ef1`f ]
-"6898 C:\Program Files (x86)\Microchip\xc8\v1.40\include\pic18f4620.h
-[v _INT1IF `Vb ~T0 @X0 0 e@32640 ]
-"19 lcd.h
-[v _lcdClear `(v ~T0 @X0 0 ef ]
-"185 C:\Program Files (x86)\Microchip\xc8\v1.40\include\pic18f4620.h
-[v _PORTB `Vuc ~T0 @X0 0 e@3969 ]
 "195 C:\Program Files (x86)\Microchip\xc8\v1.40\include\stdio.h
 [v _printf `(i ~T0 @X0 0 ev`*Cuc ]
+"13 timer.h
+[v _testFrequency `(f ~T0 @X0 0 ef ]
+"6898 C:\Program Files (x86)\Microchip\xc8\v1.40\include\pic18f4620.h
+[v _INT1IF `Vb ~T0 @X0 0 e@32640 ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -2765,7 +2746,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdio.h: 194: extern int sprintf(char *, const char *, ...);
 [; ;stdio.h: 195: extern int printf(const char *, ...);
 "9 configBits.h
-[p x OSC=INTIO67 ]
+[p x OSC=HS ]
 "10
 [p x FCMEN=OFF ]
 "11
@@ -2874,149 +2855,141 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;I2C.h: 12: void I2C_Master_Write(unsigned d);
 [; ;I2C.h: 13: unsigned char I2C_Master_Read(unsigned char a);
 [; ;timer.h: 11: void initT0(void);
-[; ;timer.h: 12: void startT0(float time);
+[; ;timer.h: 12: void startT0(long val);
 [; ;timer.h: 13: float testFrequency();
+[; ;timer.h: 14: void angleToPulseLength(float mill, int prescaler);
+"16 timer.h
+[v _extFreq `l ~T0 @X0 1 e ]
+[i _extFreq
+-> 31500000 `l
+]
+[; ;timer.h: 16: long extFreq = 31500000;
 [; ;servo.h: 11: void initServo();
 [; ;servo.h: 12: void updateAngle(float angle);
-"23 main.c
-[v _main `(v ~T0 @X0 1 ef ]
+[; ;main.c: 23: void pinSetup(void);
+"25 main.c
+[v _pinSetup `(v ~T0 @X0 1 ef ]
 {
-[; ;main.c: 23: void main(){
-[e :U _main ]
+[; ;main.c: 25: void pinSetup(){
+[e :U _pinSetup ]
 [f ]
-[; ;main.c: 26: OSCCON = 0xF0;
-"26
-[e = _OSCCON -> -> 240 `i `uc ]
-[; ;main.c: 27: OSCTUNEbits.PLLEN = 1;
-"27
-[e = . . _OSCTUNEbits 0 2 -> -> 1 `i `uc ]
-[; ;main.c: 30: TRISA = 0xFF;
-"30
-[e = _TRISA -> -> 255 `i `uc ]
-[; ;main.c: 31: TRISB = 0xFF;
+[; ;main.c: 31: TRISA = 0xFF;
 "31
-[e = _TRISB -> -> 255 `i `uc ]
-[; ;main.c: 32: TRISC = 0x00;
+[e = _TRISA -> -> 255 `i `uc ]
+[; ;main.c: 32: TRISB = 0xFF;
 "32
-[e = _TRISC -> -> 0 `i `uc ]
-[; ;main.c: 33: TRISD = 0x00;
+[e = _TRISB -> -> 255 `i `uc ]
+[; ;main.c: 33: TRISC = 0x00;
 "33
-[e = _TRISD -> -> 0 `i `uc ]
-[; ;main.c: 34: TRISE = 0x00;
+[e = _TRISC -> -> 0 `i `uc ]
+[; ;main.c: 34: TRISD = 0x00;
 "34
+[e = _TRISD -> -> 0 `i `uc ]
+[; ;main.c: 35: TRISE = 0x00;
+"35
 [e = _TRISE -> -> 0 `i `uc ]
-[; ;main.c: 36: LATA = 0x00;
-"36
-[e = _LATA -> -> 0 `i `uc ]
-[; ;main.c: 37: LATB = 0x00;
+[; ;main.c: 37: LATA = 0x00;
 "37
-[e = _LATB -> -> 0 `i `uc ]
-[; ;main.c: 38: LATC = 0x00;
+[e = _LATA -> -> 0 `i `uc ]
+[; ;main.c: 38: LATB = 0x00;
 "38
-[e = _LATC -> -> 0 `i `uc ]
-[; ;main.c: 39: LATD = 0x00;
+[e = _LATB -> -> 0 `i `uc ]
+[; ;main.c: 39: LATC = 0x00;
 "39
-[e = _LATD -> -> 0 `i `uc ]
-[; ;main.c: 40: LATE = 0x00;
+[e = _LATC -> -> 0 `i `uc ]
+[; ;main.c: 40: LATD = 0x00;
 "40
+[e = _LATD -> -> 0 `i `uc ]
+[; ;main.c: 41: LATE = 0x00;
+"41
 [e = _LATE -> -> 0 `i `uc ]
-[; ;main.c: 42: ADCON0 = 0x00;
-"42
-[e = _ADCON0 -> -> 0 `i `uc ]
-[; ;main.c: 43: ADCON1 |= 0x0A;
+[; ;main.c: 43: ADCON0 = 0x00;
 "43
+[e = _ADCON0 -> -> 0 `i `uc ]
+[; ;main.c: 44: ADCON1 |= 0x0A;
+"44
 [e =| _ADCON1 -> -> 10 `i `uc ]
-[; ;main.c: 47: ADCON2 = 0;
-"47
-[e = _ADCON2 -> -> 0 `i `uc ]
-[; ;main.c: 48: ADCON2 |= 0b001;
+[; ;main.c: 48: ADCON2 = 0;
 "48
-[e =| _ADCON2 -> -> 1 `i `uc ]
-[; ;main.c: 49: ADCON2 |= 0b110<<3;
+[e = _ADCON2 -> -> 0 `i `uc ]
+[; ;main.c: 49: ADCON2 |= 0b010;
 "49
-[e =| _ADCON2 -> << -> 6 `i -> 3 `i `uc ]
-[; ;main.c: 50: ADCON2 |= 1<<7;
+[e =| _ADCON2 -> -> 2 `i `uc ]
+[; ;main.c: 50: ADCON2 |= 0b110<<3;
 "50
+[e =| _ADCON2 -> << -> 6 `i -> 3 `i `uc ]
+[; ;main.c: 51: ADCON2 |= 1<<7;
+"51
 [e =| _ADCON2 -> << -> 1 `i -> 7 `i `uc ]
-[; ;main.c: 52: initLCD();
+[; ;main.c: 52: }
 "52
-[e ( _initLCD ..  ]
-[; ;main.c: 58: digitalWrite(2, 1, 1);
-"58
-[e ( _digitalWrite (3 , , -> 2 `i -> 1 `i -> 1 `i ]
-[; ;main.c: 60: while(1){};
-"60
-[e :U 268 ]
-{
-}
-[e :U 267 ]
-[e $U 268  ]
-[e :U 269 ]
-[; ;main.c: 61: }
-"61
 [e :UE 266 ]
 }
-"64
-[v _i `i ~T0 @X0 1 e ]
-[i _i
--> 0 `i
+"54
+[v _angle `f ~T0 @X0 1 e ]
+[i _angle
+-> -> 180 `i `f
 ]
+[; ;main.c: 54: float angle = 180;
+"56
+[v _main `(v ~T0 @X0 1 ef ]
+{
+[; ;main.c: 56: void main(){
+[e :U _main ]
+[f ]
+[; ;main.c: 57: pinSetup();
+"57
+[e ( _pinSetup ..  ]
+[; ;main.c: 58: initLCD();
+"58
+[e ( _initLCD ..  ]
+[; ;main.c: 60: printf("freq: %f",testFrequency());
+"60
+[e ( _printf , (. :s 1C -> ( _testFrequency ..  `d ]
+[; ;main.c: 62: while(1){};
+"62
+[e :U 269 ]
+{
+}
+[e :U 268 ]
+[e $U 269  ]
+[e :U 270 ]
+[; ;main.c: 63: }
+"63
+[e :UE 267 ]
+}
+"64
 [v _count `i ~T0 @X0 1 e ]
 [i _count
 -> 0 `i
 ]
-[; ;main.c: 64: int i = 0, count = 0;
+[; ;main.c: 64: int count = 0;
 "65
-[v _angle `f ~T0 @X0 1 e ]
-[i _angle
--> .1.5 `f
+[v _time `i ~T0 @X0 1 e ]
+[i _time
+-> 0 `i
 ]
-[; ;main.c: 65: float angle = 1.5;
-[v F3085 `(v ~T0 @X0 1 tf ]
-"67
-[v _service `IF3085 ~T0 @X0 1 e ]
+[; ;main.c: 65: int time = 0;
+[v F3091 `(v ~T0 @X0 1 tf ]
+"66
+[v _service `IF3091 ~T0 @X0 1 e ]
 {
-[; ;main.c: 67: void interrupt service(void) {
+[; ;main.c: 66: void interrupt service(void) {
 [e :U _service ]
 [f ]
-[; ;main.c: 69: updateAngle(angle);
+[; ;main.c: 69: if(INT1IF){INT1IF = 0;
 "69
-[e ( _updateAngle (1 _angle ]
-[; ;main.c: 71: if(INT1IF){
-"71
-[e $ ! _INT1IF 271  ]
+[e $ ! _INT1IF 272  ]
 {
-[; ;main.c: 73: lcdClear();
-"73
-[e ( _lcdClear ..  ]
-"74
-[v _key `uc ~T0 @X0 1 a ]
-[; ;main.c: 74: char key = (PORTB & 0xF0) >> 4;
-[e = _key -> >> & -> _PORTB `i -> 240 `i -> 4 `i `uc ]
-[; ;main.c: 75: if(key == 2) angle +=.1;
-"75
-[e $ ! == -> _key `i -> 2 `i 272  ]
-[e =+ _angle -> .0.1 `f ]
-[e :U 272 ]
-[; ;main.c: 76: if(key == 3) angle -=.1;
-"76
-[e $ ! == -> _key `i -> 3 `i 273  ]
-[e =- _angle -> .0.1 `f ]
-[e :U 273 ]
-[; ;main.c: 77: printf("angle %f",angle);
-"77
-[e ( _printf , (. :s 1C -> _angle `d ]
-[; ;main.c: 78: INT1IF = 0;
-"78
 [e = _INT1IF -> -> 0 `i `b ]
-"79
+"70
 }
-[e :U 271 ]
-[; ;main.c: 79: }
-[; ;main.c: 80: }
-"80
-[e :UE 270 ]
+[e :U 272 ]
+[; ;main.c: 70: }
+[; ;main.c: 71: }
+"71
+[e :UE 271 ]
 }
 [p f _printf 8396800 ]
-[a 1C 97 110 103 108 101 32 37 102 0 ]
+[a 1C 102 114 101 113 58 32 37 102 0 ]
 

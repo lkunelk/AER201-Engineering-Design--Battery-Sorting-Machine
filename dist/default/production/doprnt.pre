@@ -363,21 +363,36 @@ continue;
 # 548
 flag = 0;
 
-# 635
+# 633
+loop:
+
 switch(c = *f++) {
 
 case 0:
 goto alldone;
+
+
+case 'l':
+
+flag |= 0x10;
+goto loop;
 
 # 662
 case 'f':
 flag |= 0x400;
 break;
 
+# 697
+case 'd':
+case 'i':
+break;
+
 # 718
 case 'x':
 
-# 723
+
+flag |= 0x80;
+
 break;
 
 # 802
@@ -502,17 +517,70 @@ prec--;
 continue;
 }
 
-# 1273
+
+
+
+if((flag & 0x80) == 0x00)
+
 {
 
-# 1286
+if(flag & 0x10)
+val = (*(long *)__va_arg((*(long **)ap), (long)0));
+else
+
+val = (long)(*(int *)__va_arg((*(int **)ap), (int)0));
+
+if((long)val < 0) {
+flag |= 0x03;
+val = -val;
+}
+
+}
+
+else
+
+
+
+
+{
+
+# 1281
+if(flag & 0x10)
+val = (*(unsigned long *)__va_arg((*(unsigned long **)ap), (unsigned long)0));
+else
+
+
 val = (*(unsigned *)__va_arg((*(unsigned **)ap), (unsigned)0));
 }
 
-# 1316
+# 1294
+switch((unsigned char)(flag & 0x80)) {
+
+
+
+
+case 0x00:
+
+# 1305
+for(c = 1 ; c != sizeof dpowers/sizeof dpowers[0] ; c++)
+if(val < dpowers[c])
+break;
+
+break;
+
+
+
+
+case 0x80:
+
 for(c = 1 ; c != sizeof hexpowers/sizeof hexpowers[0] ; c++)
 if(val < hexpowers[c])
 break;
+
+break;
+
+# 1336
+}
 
 # 1422
 {
@@ -529,10 +597,23 @@ prec = c;
 
 while(prec--) {
 
-# 1478
+switch((unsigned char)(flag & 0x80))
+
 {
 
-# 1499
+
+
+
+case 0x00:
+
+# 1489
+c = (val / dpowers[prec]) % 10 + '0';
+
+break;
+
+# 1497
+case 0x80:
+
 {
 unsigned char idx = (val / hexpowers[prec]) & 0xF;
 
@@ -540,6 +621,8 @@ unsigned char idx = (val / hexpowers[prec]) & 0xF;
 c = "0123456789abcdef"[idx];
 
 }
+
+break;
 
 # 1523
 }

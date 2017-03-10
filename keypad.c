@@ -23,7 +23,7 @@
 
 const char keys[] = "123A456B789C*0#D";
 
-//sets up ports for input
+//sets up ports for input, this is for reference not actually used
 void initKeypad(){
     TRISB = 0xFF; //set all B ports as input
     LATB = 0x00;

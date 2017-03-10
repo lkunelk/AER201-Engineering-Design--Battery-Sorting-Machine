@@ -3702,37 +3702,33 @@ extern int printf(const char *, ...);
 
 # 11 "timer.h"
 void initT0(void);
-void startT0(float time);
+void startT0(long val);
 float testFrequency();
+void angleToPulseLength(float mill, int prescaler);
+
+long extFreq = 31500000;
 
 # 11 "I2C.h"
 void I2C_Master_Init(const unsigned long c);
 void I2C_Master_Write(unsigned d);
 unsigned char I2C_Master_Read(unsigned char a);
 
-# 51 "timer.c"
-long extFreq = 32000000;
-
+# 52 "timer.c"
 void initT0(){
+T0CON = 0;
+
+
+T0CON |= 0b111;
 
 TMR0IE = 1;
 PEIE = 1;
 (INTCONbits.GIE = 1);
 }
 
-void startT0(float milliseconds){
-
-
-
-
-long time = 0xFFFF - ( milliseconds / 1000.0 ) * extFreq / 4.0 / 256.0;
-
-T0CON = 0;
-
-
-T0CON |= 0b111;
-TMR0H = time>>8;
-TMR0L = time & 0xFF;
+# 70
+void startT0(long val){
+TMR0H = val>>8;
+TMR0L = val;
 T0CON |= 1<<7;
 }
 
@@ -3788,7 +3784,7 @@ if(timerOff){
 printf("t1: %x ",time[0]);
 initT0();
 T0CON = 0;
-T0CON |= 0b110;
+T0CON |= 0b111;
 TMR0H = 0;
 TMR0L = 0;
 T0CON |= 1<<7;
@@ -3804,7 +3800,7 @@ T0CON = 0;
 
 
 long long count = TMR0L + (TMR0H<<8);
-return count*128*4 / 1000000.0;
+return count*256*4 / 1000000.0;
 }
 
 }
@@ -3812,4 +3808,19 @@ return count*128*4 / 1000000.0;
 prev = time[0];
 }
 return -1;
+}
+
+# 161
+void angleToPulseLength(float mill, int prescaler){
+
+
+
+
+float period = 20.0;
+
+long hi = 0xFFFF - (long)(extFreq / 4.0 / prescaler * mill / 1000.0);
+long lo = 0xFFFF - (long)(extFreq / 4.0 / prescaler * (period - mill) / 1000.0);
+
+printf("high: %ld\n",hi);
+printf("low : %ld",lo);
 }

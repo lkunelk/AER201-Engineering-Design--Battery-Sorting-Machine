@@ -3702,7 +3702,7 @@ extern int printf(const char *, ...);
 
 
 # 9 "configBits.h"
-#pragma config OSC = INTIO67
+#pragma config OSC = HS
 #pragma config FCMEN = OFF
 #pragma config IESO = OFF
 
@@ -3817,21 +3817,22 @@ unsigned char I2C_Master_Read(unsigned char a);
 
 # 11 "timer.h"
 void initT0(void);
-void startT0(float time);
+void startT0(long val);
 float testFrequency();
+void angleToPulseLength(float mill, int prescaler);
+
+long extFreq = 31500000;
 
 # 11 "servo.h"
 void initServo();
 void updateAngle(float angle);
 
 # 23 "main.c"
-void main(){
+void pinSetup(void);
 
+void pinSetup(){
 
-OSCCON = 0xF0;
-OSCTUNEbits.PLLEN = 1;
-
-
+# 31
 TRISA = 0xFF;
 TRISB = 0xFF;
 TRISC = 0x00;
@@ -3850,33 +3851,26 @@ ADCON1 |= 0x0A;
 
 
 ADCON2 = 0;
-ADCON2 |= 0b001;
+ADCON2 |= 0b010;
 ADCON2 |= 0b110<<3;
 ADCON2 |= 1<<7;
+}
 
+float angle = 180;
+
+void main(){
+pinSetup();
 initLCD();
 
-# 58
-digitalWrite(2, 1, 1);
+printf("freq: %f",testFrequency());
 
 while(1){};
 }
-
-
-int i = 0, count = 0;
-float angle = 1.5;
-
+int count = 0;
+int time = 0;
 void interrupt service(void) {
 
-updateAngle(angle);
 
-if(INT1IF){
-
-lcdClear();
-char key = (PORTB & 0xF0) >> 4;
-if(key == 2) angle +=.1;
-if(key == 3) angle -=.1;
-printf("angle %f",angle);
-INT1IF = 0;
+if(INT1IF){INT1IF = 0;
 }
 }
