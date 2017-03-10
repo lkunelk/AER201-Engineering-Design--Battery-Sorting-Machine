@@ -75,30 +75,12 @@ void startT0(long val){
 
 //times number of oscillations of crystal in 1 second
 float testFrequency(){
-    const char datetime[7] = {
-        0x45, //45 Seconds 
-        0x59, //59 Minutes
-        0x23, //24 hour mode, set to 23:00
-        0x07, //Saturday 
-        0x31, //31st
-        0x12, //December
-        0x16  //2016
-    };
-    
-    di();
     I2C_Master_Init(10000); //initialize master with 100KHz clock
     
-    I2C_Master_Start();
-        I2C_Master_Write(0b11010000); //rtc address + write
-        I2C_Master_Write(0x00); //set pointer to seconds
-        for(char i = 0; i < 7; i++)I2C_Master_Write(datetime[i]);
-    I2C_Master_Stop();
-    
-    int time[7];
+    int time;
     int prev = 0;
     int timerOff = 1;
     int first = 1;
-    ei();
     
     while(1){
         //Reset RTC memory pointer 
@@ -110,43 +92,29 @@ float testFrequency(){
         //Read Current Time
         I2C_Master_Start();
         I2C_Master_Write(0b11010001); //7 bit RTC address + Read
-        
-        for(unsigned char i=0;i<0x06;i++){
-            time[i] = I2C_Master_Read(1);
-        }
-        time[6] = I2C_Master_Read(0);       //Final Read without ack
+        time = I2C_Master_Read(0);
         I2C_Master_Stop();
         
-        if(time[0]^prev){ //if time changes (is different from prev value))
-            if(first) //ignore the first difference in time[0] and prev
+        if(time^prev){ //if time changes (is different from prev value))
+            if(first) //ignore the first difference in time and prev
                 first = 0;
             else
                 if(timerOff){
-                    printf("t1: %x ",time[0]);
+                    printf("t1: %x ",time);
                     initT0();
-                    T0CON = 0; //clear before setting
-                    T0CON |= 0b111; // prescaler = 2^(0b110 + 1)) = 128
-                    TMR0H = 0;
-                    TMR0L = 0;
-                    T0CON |= 1<<7; //start timer
+                    startT0(0);
                     timerOff = 0;
                 }
-                else
-                {
+                else{
                     di();
                     printf("[%x %x]\n",TMR0L, TMR0H);
                     T0CON = 0; //stop timer
-                    
-                    //process results
-                    // 4 clock pulses per instruction
-                    // prescaler = 1/128 -> 128 instructions per count increment of clock
-                    long long count = TMR0L + (TMR0H<<8);
+                    long count = TMR0L + (TMR0H<<8);
                     return count*256*4 / 1000000.0; //convert to MHz
                 }
-            
         }
         
-        prev = time[0];
+        prev = time;
     }
     return -1;
 }

@@ -3734,30 +3734,12 @@ T0CON |= 1<<7;
 
 
 float testFrequency(){
-const char datetime[7] = {
-0x45,
-0x59,
-0x23,
-0x07,
-0x31,
-0x12,
-0x16
-};
-
-(INTCONbits.GIE = 0);
 I2C_Master_Init(10000);
 
-I2C_Master_Start();
-I2C_Master_Write(0b11010000);
-I2C_Master_Write(0x00);
-for(char i = 0; i < 7; i++)I2C_Master_Write(datetime[i]);
-I2C_Master_Stop();
-
-int time[7];
+int time;
 int prev = 0;
 int timerOff = 1;
 int first = 1;
-(INTCONbits.GIE = 1);
 
 while(1){
 
@@ -3769,48 +3751,34 @@ I2C_Master_Stop();
 
 I2C_Master_Start();
 I2C_Master_Write(0b11010001);
-
-for(unsigned char i=0;i<0x06;i++){
-time[i] = I2C_Master_Read(1);
-}
-time[6] = I2C_Master_Read(0);
+time = I2C_Master_Read(0);
 I2C_Master_Stop();
 
-if(time[0]^prev){
+if(time^prev){
 if(first)
 first = 0;
 else
 if(timerOff){
-printf("t1: %x ",time[0]);
+printf("t1: %x ",time);
 initT0();
-T0CON = 0;
-T0CON |= 0b111;
-TMR0H = 0;
-TMR0L = 0;
-T0CON |= 1<<7;
+startT0(0);
 timerOff = 0;
 }
-else
-{
+else{
 (INTCONbits.GIE = 0);
 printf("[%x %x]\n",TMR0L, TMR0H);
 T0CON = 0;
-
-
-
-
-long long count = TMR0L + (TMR0H<<8);
+long count = TMR0L + (TMR0H<<8);
 return count*256*4 / 1000000.0;
 }
-
 }
 
-prev = time[0];
+prev = time;
 }
 return -1;
 }
 
-# 161
+# 129
 void angleToPulseLength(float mill, int prescaler){
 
 
