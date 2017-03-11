@@ -1,5 +1,5 @@
 
-# 1 "main.c"
+# 1 "interface.c"
 
 # 26 "C:\Program Files (x86)\Microchip\xc8\v1.40\include\htc.h"
 extern const char __xc8_OPTIM_SPEED;
@@ -3700,98 +3700,6 @@ extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupport
 extern int sprintf(char *, const char *, ...);
 extern int printf(const char *, ...);
 
-
-# 9 "configBits.h"
-#pragma config OSC = HS
-#pragma config FCMEN = OFF
-#pragma config IESO = OFF
-
-
-#pragma config PWRT = OFF
-#pragma config BOREN = SBORDIS
-#pragma config BORV = 3
-
-
-#pragma config WDT = OFF
-#pragma config WDTPS = 32768
-
-
-#pragma config CCP2MX = PORTC
-#pragma config PBADEN = ON
-#pragma config LPT1OSC = OFF
-#pragma config MCLRE = ON
-
-
-#pragma config STVREN = ON
-#pragma config LVP = OFF
-#pragma config XINST = OFF
-
-
-#pragma config CP0 = OFF
-#pragma config CP1 = OFF
-#pragma config CP2 = OFF
-#pragma config CP3 = OFF
-
-
-#pragma config CPB = OFF
-#pragma config CPD = OFF
-
-
-#pragma config WRT0 = OFF
-#pragma config WRT1 = OFF
-#pragma config WRT2 = OFF
-#pragma config WRT3 = OFF
-
-
-#pragma config WRTC = OFF
-#pragma config WRTB = OFF
-#pragma config WRTD = OFF
-
-
-#pragma config EBTR0 = OFF
-#pragma config EBTR1 = OFF
-#pragma config EBTR2 = OFF
-#pragma config EBTR3 = OFF
-
-
-#pragma config EBTRB = OFF
-
-# 14 "C:\Program Files (x86)\Microchip\xc8\v1.40\include\string.h"
-extern void * memcpy(void *, const void *, size_t);
-extern void * memmove(void *, const void *, size_t);
-extern void * memset(void *, int, size_t);
-
-# 34
-extern char * strcat(char *, const char *);
-extern char * strcpy(char *, const char *);
-extern char * strncat(char *, const char *, size_t);
-extern char * strncpy(char *, const char *, size_t);
-extern char * strdup(const char *);
-extern char * strtok(char *, const char *);
-
-
-extern int memcmp(const void *, const void *, size_t);
-extern int strcmp(const char *, const char *);
-extern int stricmp(const char *, const char *);
-extern int strncmp(const char *, const char *, size_t);
-extern int strnicmp(const char *, const char *, size_t);
-extern void * memchr(const void *, int, size_t);
-extern size_t strcspn(const char *, const char *);
-extern char * strpbrk(const char *, const char *);
-extern size_t strspn(const char *, const char *);
-extern char * strstr(const char *, const char *);
-extern char * stristr(const char *, const char *);
-extern char * strerror(int);
-extern size_t strlen(const char *);
-extern char * strchr(const char *, int);
-extern char * strichr(const char *, int);
-extern char * strrchr(const char *, int);
-extern char * strrichr(const char *, int);
-
-# 11 "keypad.h"
-void initKeypad(void);
-char readKeypad(void);
-
 # 16 "lcd.h"
 void lcdInst(char data);
 void lcdNibble(char data);
@@ -3799,160 +3707,39 @@ void initLCD(void);
 void lcdClear(void);
 void lcdNewline(void);
 
-# 28 "iopin.h"
-void digitalPinMode(int port, int pin, int type);
-int digitalRead(int port, int pin);
-void digitalWrite(int port, int pin, int val);
-void analogPinMode(void);
-long analogRead(int channel);
-
-# 11 "eeprom.h"
-void eepromWrite(int data, long address);
-int eepromRead(long address);
-
-# 11 "I2C.h"
-void I2C_Master_Init(const unsigned long c);
-void I2C_Master_Write(unsigned d);
-unsigned char I2C_Master_Read(unsigned char a);
-
-# 11 "timer.h"
-void initTimer(int timer);
-void startTimer(int timer, long val);
-long getTimerCount(int timer);
-
-float testFrequency();
-void angleToPulseLength(float mill, int prescaler);
-
-# 11 "servo.h"
-void initServo(int timer, int po, int pi);
-void setAngle(int timer, long angle);
-void servoInterruptService();
-
-# 11 "interface.h"
-void dateTime();
-void mainMenu();
-void runSelect();
-void runMenu(char key);
-void runTime();
-void runStats();
-
-# 24 "main.c"
-void pinSetup(void);
-
-void pinSetup(){
-
-# 32
-TRISA = 0xFF;
-TRISB = 0xFF;
-TRISC = 0x00;
-TRISD = 0x00;
-TRISE = 0x00;
-
-LATA = 0x00;
-LATB = 0x00;
-LATC = 0x00;
-LATD = 0x00;
-LATE = 0x00;
-
-ADCON0 = 0x00;
-ADCON1 |= 0x0A;
-
-
-
-ADCON2 = 0;
-ADCON2 |= 0b010;
-ADCON2 |= 0b110<<3;
-ADCON2 |= 1<<7;
-
-
-
+# 12 "interface.c"
+void dateTime(){
+lcdClear();
+printf("  hh:mm:ss      \n");
+printf("  mm:dd:yy    A>");
 }
 
-long angle = 61785;
-
-void main(){
-pinSetup();
-initLCD();
-
-initServo(3,2,0);
-initServo(1,2,1);
-initServo(0,3,1);
-
-char key;
-while(1){
-dateTime();
-while(readKeypad() != 'A');
-
-while(1){
-
-mainMenu();
-
-
-do{key = readKeypad();}
-while(key != 'B' && key != 'C' && key != '*');
-
-if(key == 'C'){
-
-runSelect();
-
-
-
-
-do{key = readKeypad();}
-while(key != '1' && key != '2' && key != '3' && key != '4' && key != '*');
-
-if(key == '*')continue;
-
-
-
-while(1){
-
-runMenu(key);
-
-
-do{key = readKeypad();}
-while(key != 'A' && key != 'B' && key != '*');
-
-if(key == 'A'){
-
-runTime();
-
-}
-else if(key == 'B'){
-
-runStats();
-
-}
-else if(key == '*')break;
-
-while(readKeypad() != '*');
+void mainMenu(){
+lcdClear();
+printf("start   <B      \n");
+printf("history <C    *>");
 }
 
-}
-else if(key == 'B'){
-
-}
-else if(key == '*')break;
-}
+void runSelect(){
+lcdClear();
+printf("select run:     \n");
+printf("[1,2,3,4]     *>");
 }
 
-while(1){};
+void runMenu(char key){
+lcdClear();
+printf("%c) time  <A     \n",key);
+printf( "   stats <B   *>");
 }
 
-
-void interrupt service(void) {
-
-servoInterruptService();
-
-
-if(INT1IF){INT1IF = 0;
-char key = (PORTB & 0xF0) >> 4;
-if(key == 0)setAngle(1,64285);
-if(key == 1)setAngle(1,61785);
-if(key == 2)setAngle(1,59285);
-
-if(key == 4)setAngle(3,64285);
-if(key == 5)setAngle(3,61785);
-if(key == 6)setAngle(3,59285);
+void runTime(){
+lcdClear();
+printf("time: nnn sec   \n");
+printf("              *>");
 }
+
+void runStats(){
+lcdClear();
+printf("[AA,9V,C,other] \n");
+printf("[nn,n,n,nn]   *>");
 }

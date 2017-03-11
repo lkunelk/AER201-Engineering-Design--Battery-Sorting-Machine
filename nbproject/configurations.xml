@@ -30,6 +30,8 @@
       <itemPath>I2C.c</itemPath>
       <itemPath>servo.c</itemPath>
       <itemPath>RTC.c</itemPath>
+      <itemPath>interface.c</itemPath>
+      <itemPath>interface.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

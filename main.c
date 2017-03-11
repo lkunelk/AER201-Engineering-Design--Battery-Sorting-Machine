@@ -18,6 +18,7 @@
 #include "I2C.h"
 #include "timer.h"
 #include "servo.h"
+#include "interface.h"
 //#include "RTC.h"
 
 void pinSetup(void);
@@ -59,16 +60,73 @@ long angle = 61785;
 void main(){
     pinSetup();
     initLCD();
-    ei();
     
     initServo(3,C,0);
     initServo(1,C,1);
     initServo(0,D,1);
     
+    char key; //for storing keypad input
+    while(1){
+        dateTime();
+        while(readKeypad() != 'A');
+        
+        while(1){
+            //---------
+            mainMenu();
+            //---------
+            
+            do{key = readKeypad();}
+            while(key != 'B' && key != 'C' && key != '*');
+                
+            if(key == 'C'){ 
+                //---------
+                runSelect();
+                //---------
+                
+                //read eeprom for past runs
+                
+                do{key = readKeypad();}
+                while(key != '1' && key != '2' && key != '3' && key != '4' && key != '*');
+                
+                if(key == '*')continue;
+                
+                //check that there's something in memory
+                
+                while(1){ 
+                    //---------
+                    runMenu(key);
+                    //---------
+
+                    do{key = readKeypad();}
+                    while(key != 'A' && key != 'B' && key != '*');
+
+                    if(key == 'A'){ 
+                        //---------
+                        runTime();
+                        //---------
+                    }
+                    else if(key == 'B'){
+                        //---------
+                        runStats();
+                        //---------
+                    }
+                    else if(key == '*')break;
+                    
+                    while(readKeypad() != '*');
+                }
+                        
+            }
+            else if(key == 'B'){
+                //start
+            }
+            else if(key == '*')break;
+        }
+    }
+    
     while(1){};//stop here
 }
-int count = 0;
-int time = 0;
+
+
 void interrupt service(void) {
     
     servoInterruptService();
