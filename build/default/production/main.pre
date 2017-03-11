@@ -3825,7 +3825,8 @@ void angleToPulseLength(float mill, int prescaler);
 
 # 11 "servo.h"
 void initServo(int timer, int po, int pi);
-void servoInterruptService(long time);
+void setAngle(int timer, long angle);
+void servoInterruptService();
 
 # 23 "main.c"
 void pinSetup(void);
@@ -3868,6 +3869,7 @@ initLCD();
 
 initServo(3,2,0);
 initServo(1,2,1);
+initServo(0,3,1);
 
 while(1){};
 }
@@ -3875,14 +3877,17 @@ int count = 0;
 int time = 0;
 void interrupt service(void) {
 
-servoInterruptService(angle);
+servoInterruptService();
 
 
 if(INT1IF){INT1IF = 0;
 char key = (PORTB & 0xF0) >> 4;
-if(key == 0)angle = 64285;
-if(key == 1)angle = 61785;
-if(key == 2)angle = 59285;
+if(key == 0)setAngle(1,64285);
+if(key == 1)setAngle(1,61785);
+if(key == 2)setAngle(1,59285);
 
+if(key == 4)setAngle(3,64285);
+if(key == 5)setAngle(3,61785);
+if(key == 6)setAngle(3,59285);
 }
 }

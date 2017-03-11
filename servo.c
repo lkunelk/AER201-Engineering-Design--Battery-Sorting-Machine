@@ -11,17 +11,23 @@
 #include "timer.h"
 
 int port[4], pin[4];
+long pulse[4];
 
 void initServo(int timer, int po, int pi){
     port[timer] = po;
     pin[timer]  = pi;
+    pulse[timer] = 61785; //default 1.5ms
     
     initTimer(timer);
     startTimer(timer,61785);
-    digitalWrite(port[timer],pin[timer],HIGH);
+    digitalWrite(po,pi,HIGH);
 }
 
-void servoInterruptService(long time){
+void setAngle(int timer, long angle){
+    pulse[timer] = angle;
+}
+
+void servoInterruptService(){
     
     int flags[4];
     flags[0] = TMR0IF;
@@ -37,7 +43,7 @@ void servoInterruptService(long time){
                 digitalWrite(port[i],pin[i],LOW);
             }
             else{
-                startTimer(i,time);
+                startTimer(i, pulse[i]);
                 digitalWrite(port[i],pin[i],HIGH);
             }
             

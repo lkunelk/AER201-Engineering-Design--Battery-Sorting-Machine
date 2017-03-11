@@ -63,6 +63,7 @@ void main(){
     
     initServo(3,C,0);
     initServo(1,C,1);
+    initServo(0,D,1);
     
     while(1){};//stop here
 }
@@ -75,9 +76,12 @@ void interrupt service(void) {
     //RB1 interrupt
     if(INT1IF){INT1IF = 0;     //Clear flag bit
         char key = (PORTB & 0xF0) >> 4;
-        if(key == 0)angle = 64285;
-        if(key == 1)angle = 61785;
-        if(key == 2)angle = 59285;
-        //if(key == 3)angle = 2500;
+        if(key == 0)setAngle(1,64285);
+        if(key == 1)setAngle(1,61785);
+        if(key == 2)setAngle(1,59285);
+        
+        if(key == 4)setAngle(3,64285);
+        if(key == 5)setAngle(3,61785);
+        if(key == 6)setAngle(3,59285);
     }
 }

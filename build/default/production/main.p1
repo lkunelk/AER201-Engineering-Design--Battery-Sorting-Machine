@@ -44,12 +44,14 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _INTCONbits `VS257 ~T0 @X0 0 e@4082 ]
 "11 servo.h
 [v _initServo `(v ~T0 @X0 0 ef3`i`i`i ]
-"12
-[v _servoInterruptService `(v ~T0 @X0 0 ef1`l ]
+"13
+[v _servoInterruptService `(v ~T0 @X0 0 ef ]
 "6898 C:\Program Files (x86)\Microchip\xc8\v1.40\include\pic18f4620.h
 [v _INT1IF `Vb ~T0 @X0 0 e@32640 ]
 "185
 [v _PORTB `Vuc ~T0 @X0 0 e@3969 ]
+"12 servo.h
+[v _setAngle `(v ~T0 @X0 0 ef2`i`l ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -2876,7 +2878,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;timer.h: 15: float testFrequency();
 [; ;timer.h: 16: void angleToPulseLength(float mill, int prescaler);
 [; ;servo.h: 11: void initServo(int timer, int po, int pi);
-[; ;servo.h: 12: void servoInterruptService(long time);
+[; ;servo.h: 12: void setAngle(int timer, long angle);
+[; ;servo.h: 13: void servoInterruptService();
 [; ;main.c: 23: void pinSetup(void);
 "25 main.c
 [v _pinSetup `(v ~T0 @X0 1 ef ]
@@ -2963,69 +2966,87 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 65: initServo(1,2,1);
 "65
 [e ( _initServo (3 , , -> 1 `i -> 2 `i -> 1 `i ]
-[; ;main.c: 67: while(1){};
-"67
+[; ;main.c: 66: initServo(0,3,1);
+"66
+[e ( _initServo (3 , , -> 0 `i -> 3 `i -> 1 `i ]
+[; ;main.c: 68: while(1){};
+"68
 [e :U 269 ]
 {
 }
 [e :U 268 ]
 [e $U 269  ]
 [e :U 270 ]
-[; ;main.c: 68: }
-"68
+[; ;main.c: 69: }
+"69
 [e :UE 267 ]
 }
-"69
+"70
 [v _count `i ~T0 @X0 1 e ]
 [i _count
 -> 0 `i
 ]
-[; ;main.c: 69: int count = 0;
-"70
+[; ;main.c: 70: int count = 0;
+"71
 [v _time `i ~T0 @X0 1 e ]
 [i _time
 -> 0 `i
 ]
-[; ;main.c: 70: int time = 0;
-[v F3096 `(v ~T0 @X0 1 tf ]
-"71
-[v _service `IF3096 ~T0 @X0 1 e ]
+[; ;main.c: 71: int time = 0;
+[v F3098 `(v ~T0 @X0 1 tf ]
+"72
+[v _service `IF3098 ~T0 @X0 1 e ]
 {
-[; ;main.c: 71: void interrupt service(void) {
+[; ;main.c: 72: void interrupt service(void) {
 [e :U _service ]
 [f ]
-[; ;main.c: 73: servoInterruptService(angle);
-"73
-[e ( _servoInterruptService (1 _angle ]
-[; ;main.c: 76: if(INT1IF){INT1IF = 0;
-"76
+[; ;main.c: 74: servoInterruptService();
+"74
+[e ( _servoInterruptService ..  ]
+[; ;main.c: 77: if(INT1IF){INT1IF = 0;
+"77
 [e $ ! _INT1IF 272  ]
 {
 [e = _INT1IF -> -> 0 `i `b ]
-"77
-[v _key `uc ~T0 @X0 1 a ]
-[; ;main.c: 77: char key = (PORTB & 0xF0) >> 4;
-[e = _key -> >> & -> _PORTB `i -> 240 `i -> 4 `i `uc ]
-[; ;main.c: 78: if(key == 0)angle = 64285;
 "78
-[e $ ! == -> _key `i -> 0 `i 273  ]
-[e = _angle -> 64285 `l ]
-[e :U 273 ]
-[; ;main.c: 79: if(key == 1)angle = 61785;
+[v _key `uc ~T0 @X0 1 a ]
+[; ;main.c: 78: char key = (PORTB & 0xF0) >> 4;
+[e = _key -> >> & -> _PORTB `i -> 240 `i -> 4 `i `uc ]
+[; ;main.c: 79: if(key == 0)setAngle(1,64285);
 "79
-[e $ ! == -> _key `i -> 1 `i 274  ]
-[e = _angle -> 61785 `l ]
-[e :U 274 ]
-[; ;main.c: 80: if(key == 2)angle = 59285;
+[e $ ! == -> _key `i -> 0 `i 273  ]
+[e ( _setAngle (2 , -> 1 `i -> 64285 `l ]
+[e :U 273 ]
+[; ;main.c: 80: if(key == 1)setAngle(1,61785);
 "80
+[e $ ! == -> _key `i -> 1 `i 274  ]
+[e ( _setAngle (2 , -> 1 `i -> 61785 `l ]
+[e :U 274 ]
+[; ;main.c: 81: if(key == 2)setAngle(1,59285);
+"81
 [e $ ! == -> _key `i -> 2 `i 275  ]
-[e = _angle -> 59285 `l ]
+[e ( _setAngle (2 , -> 1 `i -> 59285 `l ]
 [e :U 275 ]
-"82
+[; ;main.c: 83: if(key == 4)setAngle(3,64285);
+"83
+[e $ ! == -> _key `i -> 4 `i 276  ]
+[e ( _setAngle (2 , -> 3 `i -> 64285 `l ]
+[e :U 276 ]
+[; ;main.c: 84: if(key == 5)setAngle(3,61785);
+"84
+[e $ ! == -> _key `i -> 5 `i 277  ]
+[e ( _setAngle (2 , -> 3 `i -> 61785 `l ]
+[e :U 277 ]
+[; ;main.c: 85: if(key == 6)setAngle(3,59285);
+"85
+[e $ ! == -> _key `i -> 6 `i 278  ]
+[e ( _setAngle (2 , -> 3 `i -> 59285 `l ]
+[e :U 278 ]
+"86
 }
 [e :U 272 ]
-[; ;main.c: 82: }
-[; ;main.c: 83: }
-"83
+[; ;main.c: 86: }
+[; ;main.c: 87: }
+"87
 [e :UE 271 ]
 }

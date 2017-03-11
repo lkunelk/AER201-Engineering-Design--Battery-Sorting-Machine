@@ -3639,7 +3639,8 @@ extern __nonreentrant void _delay3(unsigned char);
 
 # 11 "servo.h"
 void initServo(int timer, int po, int pi);
-void servoInterruptService(long time);
+void setAngle(int timer, long angle);
+void servoInterruptService();
 
 # 28 "iopin.h"
 void digitalPinMode(int port, int pin, int type);
@@ -3658,17 +3659,23 @@ void angleToPulseLength(float mill, int prescaler);
 
 # 13 "servo.c"
 int port[4], pin[4];
+long pulse[4];
 
 void initServo(int timer, int po, int pi){
 port[timer] = po;
 pin[timer] = pi;
+pulse[timer] = 61785;
 
 initTimer(timer);
 startTimer(timer,61785);
-digitalWrite(port[timer],pin[timer],1);
+digitalWrite(po,pi,1);
 }
 
-void servoInterruptService(long time){
+void setAngle(int timer, long angle){
+pulse[timer] = angle;
+}
+
+void servoInterruptService(){
 
 int flags[4];
 flags[0] = TMR0IF;
@@ -3684,7 +3691,7 @@ startTimer(i,15535);
 digitalWrite(port[i],pin[i],0);
 }
 else{
-startTimer(i,time);
+startTimer(i, pulse[i]);
 digitalWrite(port[i],pin[i],1);
 }
 

@@ -9,7 +9,8 @@
 #define	SERVO_H
 
 void initServo(int timer, int po, int pi);
-void servoInterruptService(long time);
+void setAngle(int timer, long angle);
+void servoInterruptService();
 
 #endif	/* SERVO_H */
 
