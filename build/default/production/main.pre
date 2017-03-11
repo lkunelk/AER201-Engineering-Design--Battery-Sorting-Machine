@@ -3816,16 +3816,16 @@ void I2C_Master_Write(unsigned d);
 unsigned char I2C_Master_Read(unsigned char a);
 
 # 11 "timer.h"
-void initT0(void);
-void startT0(long val);
+void initTimer(int timer);
+void startTimer(int timer, long val);
+long getTimerCount(int timer);
+
 float testFrequency();
 void angleToPulseLength(float mill, int prescaler);
 
-long extFreq = 31500000;
-
 # 11 "servo.h"
-void initServo();
-void updateAngle(float angle);
+void initServo(int timer, int po, int pi);
+void servoInterruptService(long time);
 
 # 23 "main.c"
 void pinSetup(void);
@@ -3854,15 +3854,20 @@ ADCON2 = 0;
 ADCON2 |= 0b010;
 ADCON2 |= 0b110<<3;
 ADCON2 |= 1<<7;
+
+
+
 }
 
-float angle = 180;
+long angle = 61785;
 
 void main(){
 pinSetup();
 initLCD();
+(INTCONbits.GIE = 1);
 
-printf("freq: %f",testFrequency());
+initServo(3,2,0);
+initServo(1,2,1);
 
 while(1){};
 }
@@ -3870,7 +3875,14 @@ int count = 0;
 int time = 0;
 void interrupt service(void) {
 
+servoInterruptService(angle);
+
 
 if(INT1IF){INT1IF = 0;
+char key = (PORTB & 0xF0) >> 4;
+if(key == 0)angle = 64285;
+if(key == 1)angle = 61785;
+if(key == 2)angle = 59285;
+
 }
 }

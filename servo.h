@@ -8,8 +8,8 @@
 #ifndef SERVO_H
 #define	SERVO_H
 
-void initServo();
-void updateAngle(float angle);
+void initServo(int timer, int po, int pi);
+void servoInterruptService(long time);
 
 #endif	/* SERVO_H */
 

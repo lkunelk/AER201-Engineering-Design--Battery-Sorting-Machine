@@ -28,12 +28,28 @@ Version 3.2 HI-TECH Software Intermediate Code
 [p mainexit ]
 "18 lcd.h
 [v _initLCD `(v ~T0 @X0 0 ef ]
-"195 C:\Program Files (x86)\Microchip\xc8\v1.40\include\stdio.h
-[v _printf `(i ~T0 @X0 0 ev`*Cuc ]
-"13 timer.h
-[v _testFrequency `(f ~T0 @X0 0 ef ]
+"6272 C:\Program Files (x86)\Microchip\xc8\v1.40\include\pic18f4620.h
+[s S258 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S258 . RBIF INT0IF TMR0IF RBIE INT0IE TMR0IE PEIE_GIEL GIE_GIEH ]
+"6282
+[s S259 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S259 . . INT0F T0IF . INT0E T0IE PEIE GIE ]
+"6292
+[s S260 :6 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S260 . . GIEL GIEH ]
+"6271
+[u S257 `S258 1 `S259 1 `S260 1 ]
+[n S257 . . . . ]
+"6298
+[v _INTCONbits `VS257 ~T0 @X0 0 e@4082 ]
+"11 servo.h
+[v _initServo `(v ~T0 @X0 0 ef3`i`i`i ]
+"12
+[v _servoInterruptService `(v ~T0 @X0 0 ef1`l ]
 "6898 C:\Program Files (x86)\Microchip\xc8\v1.40\include\pic18f4620.h
 [v _INT1IF `Vb ~T0 @X0 0 e@32640 ]
+"185
+[v _PORTB `Vuc ~T0 @X0 0 e@3969 ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -2854,18 +2870,13 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;I2C.h: 11: void I2C_Master_Init(const unsigned long c);
 [; ;I2C.h: 12: void I2C_Master_Write(unsigned d);
 [; ;I2C.h: 13: unsigned char I2C_Master_Read(unsigned char a);
-[; ;timer.h: 11: void initT0(void);
-[; ;timer.h: 12: void startT0(long val);
-[; ;timer.h: 13: float testFrequency();
-[; ;timer.h: 14: void angleToPulseLength(float mill, int prescaler);
-"16 timer.h
-[v _extFreq `l ~T0 @X0 1 e ]
-[i _extFreq
--> 31500000 `l
-]
-[; ;timer.h: 16: long extFreq = 31500000;
-[; ;servo.h: 11: void initServo();
-[; ;servo.h: 12: void updateAngle(float angle);
+[; ;timer.h: 11: void initTimer(int timer);
+[; ;timer.h: 12: void startTimer(int timer, long val);
+[; ;timer.h: 13: long getTimerCount(int timer);
+[; ;timer.h: 15: float testFrequency();
+[; ;timer.h: 16: void angleToPulseLength(float mill, int prescaler);
+[; ;servo.h: 11: void initServo(int timer, int po, int pi);
+[; ;servo.h: 12: void servoInterruptService(long time);
 [; ;main.c: 23: void pinSetup(void);
 "25 main.c
 [v _pinSetup `(v ~T0 @X0 1 ef ]
@@ -2921,75 +2932,100 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 51: ADCON2 |= 1<<7;
 "51
 [e =| _ADCON2 -> << -> 1 `i -> 7 `i `uc ]
-[; ;main.c: 52: }
-"52
+[; ;main.c: 55: }
+"55
 [e :UE 266 ]
 }
-"54
-[v _angle `f ~T0 @X0 1 e ]
+"57
+[v _angle `l ~T0 @X0 1 e ]
 [i _angle
--> -> 180 `i `f
+-> 61785 `l
 ]
-[; ;main.c: 54: float angle = 180;
-"56
+[; ;main.c: 57: long angle = 61785;
+"59
 [v _main `(v ~T0 @X0 1 ef ]
 {
-[; ;main.c: 56: void main(){
+[; ;main.c: 59: void main(){
 [e :U _main ]
 [f ]
-[; ;main.c: 57: pinSetup();
-"57
-[e ( _pinSetup ..  ]
-[; ;main.c: 58: initLCD();
-"58
-[e ( _initLCD ..  ]
-[; ;main.c: 60: printf("freq: %f",testFrequency());
+[; ;main.c: 60: pinSetup();
 "60
-[e ( _printf , (. :s 1C -> ( _testFrequency ..  `d ]
-[; ;main.c: 62: while(1){};
+[e ( _pinSetup ..  ]
+[; ;main.c: 61: initLCD();
+"61
+[e ( _initLCD ..  ]
+[; ;main.c: 62: (INTCONbits.GIE = 1);
 "62
+[e = . . _INTCONbits 1 7 -> -> 1 `i `uc ]
+[; ;main.c: 64: initServo(3,2,0);
+"64
+[e ( _initServo (3 , , -> 3 `i -> 2 `i -> 0 `i ]
+[; ;main.c: 65: initServo(1,2,1);
+"65
+[e ( _initServo (3 , , -> 1 `i -> 2 `i -> 1 `i ]
+[; ;main.c: 67: while(1){};
+"67
 [e :U 269 ]
 {
 }
 [e :U 268 ]
 [e $U 269  ]
 [e :U 270 ]
-[; ;main.c: 63: }
-"63
+[; ;main.c: 68: }
+"68
 [e :UE 267 ]
 }
-"64
+"69
 [v _count `i ~T0 @X0 1 e ]
 [i _count
 -> 0 `i
 ]
-[; ;main.c: 64: int count = 0;
-"65
+[; ;main.c: 69: int count = 0;
+"70
 [v _time `i ~T0 @X0 1 e ]
 [i _time
 -> 0 `i
 ]
-[; ;main.c: 65: int time = 0;
-[v F3091 `(v ~T0 @X0 1 tf ]
-"66
-[v _service `IF3091 ~T0 @X0 1 e ]
+[; ;main.c: 70: int time = 0;
+[v F3096 `(v ~T0 @X0 1 tf ]
+"71
+[v _service `IF3096 ~T0 @X0 1 e ]
 {
-[; ;main.c: 66: void interrupt service(void) {
+[; ;main.c: 71: void interrupt service(void) {
 [e :U _service ]
 [f ]
-[; ;main.c: 69: if(INT1IF){INT1IF = 0;
-"69
+[; ;main.c: 73: servoInterruptService(angle);
+"73
+[e ( _servoInterruptService (1 _angle ]
+[; ;main.c: 76: if(INT1IF){INT1IF = 0;
+"76
 [e $ ! _INT1IF 272  ]
 {
 [e = _INT1IF -> -> 0 `i `b ]
-"70
+"77
+[v _key `uc ~T0 @X0 1 a ]
+[; ;main.c: 77: char key = (PORTB & 0xF0) >> 4;
+[e = _key -> >> & -> _PORTB `i -> 240 `i -> 4 `i `uc ]
+[; ;main.c: 78: if(key == 0)angle = 64285;
+"78
+[e $ ! == -> _key `i -> 0 `i 273  ]
+[e = _angle -> 64285 `l ]
+[e :U 273 ]
+[; ;main.c: 79: if(key == 1)angle = 61785;
+"79
+[e $ ! == -> _key `i -> 1 `i 274  ]
+[e = _angle -> 61785 `l ]
+[e :U 274 ]
+[; ;main.c: 80: if(key == 2)angle = 59285;
+"80
+[e $ ! == -> _key `i -> 2 `i 275  ]
+[e = _angle -> 59285 `l ]
+[e :U 275 ]
+"82
 }
 [e :U 272 ]
-[; ;main.c: 70: }
-[; ;main.c: 71: }
-"71
+[; ;main.c: 82: }
+[; ;main.c: 83: }
+"83
 [e :UE 271 ]
 }
-[p f _printf 8396800 ]
-[a 1C 102 114 101 113 58 32 37 102 0 ]
-

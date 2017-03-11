@@ -49,31 +49,57 @@
 #include "I2C.h"
 
 
-void initT0(){
-    T0CON = 0; //clear before setting
-    //default 16bit timer
-    //T0CON |= 1<<3; //turn off prescaler
-    T0CON |= 0b111; // prescaler = 2^(0b110 + 1)) = 128
-    
-    TMR0IE = 1; //enable timer0 interrupt
+void initTimer(int timer){
+    switch(timer){
+        case 0: //default 16bit timer
+            T0CON = 0; //clear settings
+            T0CON |= 1<<3; //turn off prescaler
+            //T0CON |= 0b111; // prescaler = 2^(0b110 + 1)) = 128
+            TMR0IE = 1; //enable timer0 interrupt
+            break;
+        case 1:
+            T1CON = 0; //clear settings
+            //prescaler default = 1
+            TMR1IE = 1; //enable timer0 interrupt
+            break;
+        case 3:
+            T3CON = 0; //clear settings
+            TMR3IE = 1;
+            break;
+    }
     PEIE = 1; //turn off interrupt priorities
     ei(); //enable general interrupts
 }
 
-/*
- * function for starting timer
- * parameter
- * - val - timer counts up from val to 0xFFFF, the time it takes depends on
- *         the oscillator frequency, the prescaler of the timer
- *         val can be precalculated using angleToPulseLength()
- */
-void startT0(long val){
-    TMR0H = val>>8; //high bits of val
-    TMR0L = val;    // low bits of val
-    T0CON |= 1<<7;  //start timer
+//start timer with precalculated time
+void startTimer(int timer, long val){
+    switch(timer){
+        case 0:
+            TMR0H = val>>8; //high bits of val
+            TMR0L = val;    // low bits of val
+            T0CON |= 1<<7;  //start timer
+            break;
+        case 1:
+            TMR1H = val>>8; //high bits of val
+            TMR1L = val;    // low bits of val
+            T1CON |= 1<<0;  //start timer
+            break;
+        case 3:
+            TMR3H = val>>8; //high bits of val
+            TMR3L = val;    // low bits of val
+            T3CON |= 1<<0;  //start timer
+    }
 }
 
-//times number of oscillations of crystal in 1 second
+long getTimerCount(int timer){
+    switch(timer){
+        case 0: return TMR0L + ( TMR0H >> 8 ) ;
+        case 1: return TMR1L + ( TMR1H >> 8 ) ;
+        case 3: return TMR3L + ( TMR3H >> 8 ) ;
+    }
+}
+
+//counts number of oscillations of crystal in 1 second
 float testFrequency(){
     I2C_Master_Init(10000); //initialize master with 100KHz clock
     
@@ -119,23 +145,3 @@ float testFrequency(){
     return -1;
 }
 
-/*
- * not actually used in the final code
- * calculates the pulse duration for the servo to position 
- * its arm at desired angle. The function prints to the lcd
- * - number to set the timer for the pulse
- * - number to set the timer for the low signal
- */
-void angleToPulseLength(float mill, int prescaler){
-    //timer counts up from the time set
-    //so we need to subtract from maximum possible value (0xFFFF) the time that
-    //we want to elapse, 4 clock pulses per instruction, prescaler of 128 
-    //instructions per timer count. Dividing by 1000.0 to convert to seconds
-    float period = 20.0; //period of signal to servo
-    
-    long hi = 0xFFFF - (long)(extFreq / 4.0 / prescaler * mill / 1000.0);
-    long lo = 0xFFFF - (long)(extFreq / 4.0 / prescaler * (period - mill) / 1000.0);
-    
-    printf("high: %ld\n",hi);
-    printf("low : %ld",lo);
-}

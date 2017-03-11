@@ -3638,8 +3638,8 @@ extern __nonreentrant void _delaywdt(unsigned long);
 extern __nonreentrant void _delay3(unsigned char);
 
 # 11 "servo.h"
-void initServo();
-void updateAngle(float angle);
+void initServo(int timer, int po, int pi);
+void servoInterruptService(long time);
 
 # 28 "iopin.h"
 void digitalPinMode(int port, int pin, int type);
@@ -3649,36 +3649,52 @@ void analogPinMode(void);
 long analogRead(int channel);
 
 # 11 "timer.h"
-void initT0(void);
-void startT0(long val);
+void initTimer(int timer);
+void startTimer(int timer, long val);
+long getTimerCount(int timer);
+
 float testFrequency();
 void angleToPulseLength(float mill, int prescaler);
 
-long extFreq = 31500000;
-
 # 13 "servo.c"
-void initServo(){
-initT0();
-startT0(0xffd1);
-digitalWrite(2,0,1);
+int port[4], pin[4];
+
+void initServo(int timer, int po, int pi){
+port[timer] = po;
+pin[timer] = pi;
+
+initTimer(timer);
+startTimer(timer,61785);
+digitalWrite(port[timer],pin[timer],1);
 }
 
-int flag0 = 1;
-void updateAngle(float angle){
-long hi = 0xffe1;
-long lo = 0xfdb7;
+void servoInterruptService(long time){
 
-if(TMR0IF){ TMR0IF = 0;
+int flags[4];
+flags[0] = TMR0IF;
+flags[1] = TMR1IF;
+flags[2] = TMR2IF;
+flags[3] = TMR3IF;
 
-if(flag0){
-startT0(lo);
-flag0=0;
-digitalWrite(2,0,0);
+for(int i = 0; i < 4; i++){
+if(flags[i]){
+
+if(digitalRead(port[i],pin[i])){
+startTimer(i,15535);
+digitalWrite(port[i],pin[i],0);
 }
 else{
-startT0(hi);
-flag0=1;
-digitalWrite(2,0,1);
+startTimer(i,time);
+digitalWrite(port[i],pin[i],1);
+}
+
+
+switch(i){
+case 0: TMR0IF = 0; break;
+case 1: TMR1IF = 0; break;
+case 2: TMR2IF = 0; break;
+case 3: TMR3IF = 0; break;
+}
 }
 }
 }

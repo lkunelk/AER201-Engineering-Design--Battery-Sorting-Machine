@@ -49,15 +49,20 @@ void pinSetup(){
     ADCON2 |= 0b010; //set Tad = 1/ (Fosc/32), (must be Tas>=0.7us)
     ADCON2 |= 0b110<<3; //set conversion rate  16 * Tosc per bit
     ADCON2 |= 1<<7; //set right justified result
+    
+    //interrupts
+    //INT1IE = 1;
 }
 
-float angle = 180;
+long angle = 61785;
 
 void main(){
     pinSetup();
     initLCD();
+    ei();
     
-    printf("freq: %f",testFrequency());
+    initServo(3,C,0);
+    initServo(1,C,1);
     
     while(1){};//stop here
 }
@@ -65,7 +70,14 @@ int count = 0;
 int time = 0;
 void interrupt service(void) {
     
+    servoInterruptService();
+    
     //RB1 interrupt
     if(INT1IF){INT1IF = 0;     //Clear flag bit
+        char key = (PORTB & 0xF0) >> 4;
+        if(key == 0)angle = 64285;
+        if(key == 1)angle = 61785;
+        if(key == 2)angle = 59285;
+        //if(key == 3)angle = 2500;
     }
 }

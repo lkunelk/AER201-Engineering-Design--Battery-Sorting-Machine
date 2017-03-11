@@ -8,11 +8,12 @@
 #ifndef TIMER_H
 #define	TIMER_H
 
-void initT0(void);
-void startT0(long val);
+void initTimer(int timer);
+void startTimer(int timer, long val);
+long getTimerCount(int timer);
+
 float testFrequency();
 void angleToPulseLength(float mill, int prescaler);
 
-long extFreq = 31500000; //in Hertz
 #endif	/* TIMER_H */
 

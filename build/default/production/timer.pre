@@ -3701,12 +3701,12 @@ extern int sprintf(char *, const char *, ...);
 extern int printf(const char *, ...);
 
 # 11 "timer.h"
-void initT0(void);
-void startT0(long val);
+void initTimer(int timer);
+void startTimer(int timer, long val);
+long getTimerCount(int timer);
+
 float testFrequency();
 void angleToPulseLength(float mill, int prescaler);
-
-long extFreq = 31500000;
 
 # 11 "I2C.h"
 void I2C_Master_Init(const unsigned long c);
@@ -3714,22 +3714,54 @@ void I2C_Master_Write(unsigned d);
 unsigned char I2C_Master_Read(unsigned char a);
 
 # 52 "timer.c"
-void initT0(){
+void initTimer(int timer){
+switch(timer){
+case 0:
 T0CON = 0;
-
-
-T0CON |= 0b111;
+T0CON |= 1<<3;
 
 TMR0IE = 1;
+break;
+case 1:
+T1CON = 0;
+
+TMR1IE = 1;
+break;
+case 3:
+T3CON = 0;
+TMR3IE = 1;
+break;
+}
 PEIE = 1;
 (INTCONbits.GIE = 1);
 }
 
-# 70
-void startT0(long val){
+
+void startTimer(int timer, long val){
+switch(timer){
+case 0:
 TMR0H = val>>8;
 TMR0L = val;
 T0CON |= 1<<7;
+break;
+case 1:
+TMR1H = val>>8;
+TMR1L = val;
+T1CON |= 1<<0;
+break;
+case 3:
+TMR3H = val>>8;
+TMR3L = val;
+T3CON |= 1<<0;
+}
+}
+
+long getTimerCount(int timer){
+switch(timer){
+case 0: return TMR0L + ( TMR0H >> 8 ) ;
+case 1: return TMR1L + ( TMR1H >> 8 ) ;
+case 3: return TMR3L + ( TMR3H >> 8 ) ;
+}
 }
 
 
@@ -3778,17 +3810,3 @@ prev = time;
 return -1;
 }
 
-# 129
-void angleToPulseLength(float mill, int prescaler){
-
-
-
-
-float period = 20.0;
-
-long hi = 0xFFFF - (long)(extFreq / 4.0 / prescaler * mill / 1000.0);
-long lo = 0xFFFF - (long)(extFreq / 4.0 / prescaler * (period - mill) / 1000.0);
-
-printf("high: %ld\n",hi);
-printf("low : %ld",lo);
-}
