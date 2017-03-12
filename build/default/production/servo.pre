@@ -3637,6 +3637,69 @@ extern __nonreentrant void _delaywdt(unsigned long);
 #pragma intrinsic(_delay3)
 extern __nonreentrant void _delay3(unsigned char);
 
+# 4 "C:\Program Files (x86)\Microchip\xc8\v1.40\include\__size_t.h"
+typedef unsigned size_t;
+
+# 7 "C:\Program Files (x86)\Microchip\xc8\v1.40\include\stdarg.h"
+typedef void * va_list[1];
+
+#pragma intrinsic(__va_start)
+extern void * __va_start(void);
+
+#pragma intrinsic(__va_arg)
+extern void * __va_arg(void *, ...);
+
+# 43 "C:\Program Files (x86)\Microchip\xc8\v1.40\include\stdio.h"
+struct __prbuf
+{
+char * ptr;
+void (* func)(char);
+};
+
+# 29 "C:\Program Files (x86)\Microchip\xc8\v1.40\include\errno.h"
+extern int errno;
+
+# 12 "C:\Program Files (x86)\Microchip\xc8\v1.40\include\conio.h"
+extern void init_uart(void);
+
+extern char getch(void);
+extern char getche(void);
+extern void putch(char);
+extern void ungetch(char);
+
+extern __bit kbhit(void);
+
+# 23
+extern char * cgets(char *);
+extern void cputs(const char *);
+
+# 88 "C:\Program Files (x86)\Microchip\xc8\v1.40\include\stdio.h"
+extern int cprintf(char *, ...);
+#pragma printf_check(cprintf)
+
+
+
+extern int _doprnt(struct __prbuf *, const register char *, register va_list);
+
+
+# 180
+#pragma printf_check(vprintf) const
+#pragma printf_check(vsprintf) const
+
+extern char * gets(char *);
+extern int puts(const char *);
+extern int scanf(const char *, ...) __attribute__((unsupported("scanf() is not supported by this compiler")));
+extern int sscanf(const char *, const char *, ...) __attribute__((unsupported("sscanf() is not supported by this compiler")));
+extern int vprintf(const char *, va_list) __attribute__((unsupported("vprintf() is not supported by this compiler")));
+extern int vsprintf(char *, const char *, va_list) __attribute__((unsupported("vsprintf() is not supported by this compiler")));
+extern int vscanf(const char *, va_list ap) __attribute__((unsupported("vscanf() is not supported by this compiler")));
+extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupported("vsscanf() is not supported by this compiler")));
+
+#pragma printf_check(printf) const
+#pragma printf_check(sprintf) const
+extern int sprintf(char *, const char *, ...);
+extern int printf(const char *, ...);
+
 # 11 "servo.h"
 void initServo(int timer, int po, int pi);
 void setAngle(int timer, long angle);
@@ -3657,51 +3720,65 @@ long getTimerCount(int timer);
 float testFrequency();
 void angleToPulseLength(float mill, int prescaler);
 
-# 13 "servo.c"
-int port[4], pin[4];
-long pulse[4];
+# 14 "servo.c"
+int nServo = 2;
+int curr = 0;
+;int order[4] = {0,1,2,3};
+int port[4] = {2, 2, -1, -1};
+int pin[4] = {0, 1, 0, 0};
+long pulse[4] = {1500,1500,0,0};
+long sequence[4] = {1250,1250,50000,0};
+
 
 void initServo(int timer, int po, int pi){
-port[timer] = po;
-pin[timer] = pi;
-pulse[timer] = 61785;
-
-initTimer(timer);
-startTimer(timer,61785);
-digitalWrite(po,pi,1);
+initTimer(0);
+startTimer(0,61785);
 }
 
-void setAngle(int timer, long angle){
-pulse[timer] = angle;
+void setAngle(int id, long puls){
+pulse[id] = puls;
+
+
+int seen[10];
+for(int a = 0; a < nServo; a++)
+seen[a] = 0;
+
+int ind = 0;
+for(int a = 0; a < nServo; a++){
+long smallest = 0xffff;
+int smallest_ind = 0;
+for(int b = 0; b < nServo; b++){
+if(!seen[b] && pulse[b] < smallest){
+seen[b] = 1;
+smallest = pulse[b];
+smallest_ind = b;
+}
+}
+order[ind++] = smallest_ind;
+}
+
+
+int prev = 0;
+for(int a = 0; a < nServo; a++){
+sequence[order[a]] = (pulse[order[a]] - prev) * 5 / 2;
+prev = pulse[order[a]];
+}
+lcdClear();
+printf("%ld %ld",sequence[0], sequence[1]);
 }
 
 void servoInterruptService(){
-
-int flags[4];
-flags[0] = TMR0IF;
-flags[1] = TMR1IF;
-flags[2] = TMR2IF;
-flags[3] = TMR3IF;
-
-for(int i = 0; i < 4; i++){
-if(flags[i]){
-
-if(digitalRead(port[i],pin[i])){
-startTimer(i,15535);
-digitalWrite(port[i],pin[i],0);
+if(TMR0IF){ TMR0IF = 0;
+if(curr == nServo){
+curr = 0;
+for(int i = 0; i < nServo; i++)
+digitalWrite(port[i], pin[i], 1);
+startTimer(0, 0xffff - sequence[order[curr]]);
 }
 else{
-startTimer(i, pulse[i]);
-digitalWrite(port[i],pin[i],1);
-}
-
-
-switch(i){
-case 0: TMR0IF = 0; break;
-case 1: TMR1IF = 0; break;
-case 2: TMR2IF = 0; break;
-case 3: TMR3IF = 0; break;
-}
+curr++;
+startTimer(0, 0xffff - sequence[order[curr]]);
+digitalWrite(port[order[curr-1]],pin[order[curr-1]],0);
 }
 }
 }

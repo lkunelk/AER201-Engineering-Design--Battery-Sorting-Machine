@@ -11,6 +11,7 @@
 void initServo(int timer, int po, int pi);
 void setAngle(int timer, long angle);
 void servoInterruptService();
+long angleToPulse(float angle);
 
 #endif	/* SERVO_H */
 

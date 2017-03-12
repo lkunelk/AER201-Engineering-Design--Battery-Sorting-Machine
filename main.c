@@ -22,6 +22,7 @@
 //#include "RTC.h"
 
 void pinSetup(void);
+void showInterface(void);
 
 void pinSetup(){
     //**OSCILLATOR**//
@@ -55,16 +56,7 @@ void pinSetup(){
     //INT1IE = 1;
 }
 
-long angle = 61785;
-
-void main(){
-    pinSetup();
-    initLCD();
-    
-    initServo(3,C,0);
-    initServo(1,C,1);
-    initServo(0,D,1);
-    
+void showInterface(){
     char key; //for storing keypad input
     while(1){
         dateTime();
@@ -122,6 +114,17 @@ void main(){
             else if(key == '*')break;
         }
     }
+}
+
+long angle = 61785;
+
+void main(){
+    pinSetup();
+    initLCD();
+    
+    //printf("done");
+    
+    initServo(0,0,0);
     
     while(1){};//stop here
 }
@@ -134,12 +137,12 @@ void interrupt service(void) {
     //RB1 interrupt
     if(INT1IF){INT1IF = 0;     //Clear flag bit
         char key = (PORTB & 0xF0) >> 4;
-        if(key == 0)setAngle(1,64285);
-        if(key == 1)setAngle(1,61785);
-        if(key == 2)setAngle(1,59285);
+        if(key == 0)setAngle(0,2500);
+        if(key == 1)setAngle(0,1500);
+        if(key == 2)setAngle(0,500);
         
-        if(key == 4)setAngle(3,64285);
-        if(key == 5)setAngle(3,61785);
-        if(key == 6)setAngle(3,59285);
+        if(key == 4)setAngle(1,2500);
+        if(key == 5)setAngle(1,1500);
+        if(key == 6)setAngle(1,500);
     }
 }

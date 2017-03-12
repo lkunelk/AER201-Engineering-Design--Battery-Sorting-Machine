@@ -25,11 +25,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _ADCON1 `Vuc ~T0 @X0 0 e@4033 ]
 "4320
 [v _ADCON2 `Vuc ~T0 @X0 0 e@4032 ]
-[p mainexit ]
-"18 lcd.h
-[v _initLCD `(v ~T0 @X0 0 ef ]
-"11 servo.h
-[v _initServo `(v ~T0 @X0 0 ef3`i`i`i ]
 "11 interface.h
 [v _dateTime `(v ~T0 @X0 0 ef ]
 "12 keypad.h
@@ -44,7 +39,12 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _runTime `(v ~T0 @X0 0 ef ]
 "16
 [v _runStats `(v ~T0 @X0 0 ef ]
-"13 servo.h
+[p mainexit ]
+"18 lcd.h
+[v _initLCD `(v ~T0 @X0 0 ef ]
+"11 servo.h
+[v _initServo `(v ~T0 @X0 0 ef3`i`i`i ]
+"13
 [v _servoInterruptService `(v ~T0 @X0 0 ef ]
 "6898 C:\Program Files (x86)\Microchip\xc8\v1.40\include\pic18f4620.h
 [v _INT1IF `Vb ~T0 @X0 0 e@32640 ]
@@ -2887,310 +2887,315 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;interface.h: 15: void runTime();
 [; ;interface.h: 16: void runStats();
 [; ;main.c: 24: void pinSetup(void);
-"26 main.c
+[; ;main.c: 25: void showInterface(void);
+"27 main.c
 [v _pinSetup `(v ~T0 @X0 1 ef ]
 {
-[; ;main.c: 26: void pinSetup(){
+[; ;main.c: 27: void pinSetup(){
 [e :U _pinSetup ]
 [f ]
-[; ;main.c: 32: TRISA = 0xFF;
-"32
-[e = _TRISA -> -> 255 `i `uc ]
-[; ;main.c: 33: TRISB = 0xFF;
+[; ;main.c: 33: TRISA = 0xFF;
 "33
-[e = _TRISB -> -> 255 `i `uc ]
-[; ;main.c: 34: TRISC = 0x00;
+[e = _TRISA -> -> 255 `i `uc ]
+[; ;main.c: 34: TRISB = 0xFF;
 "34
-[e = _TRISC -> -> 0 `i `uc ]
-[; ;main.c: 35: TRISD = 0x00;
+[e = _TRISB -> -> 255 `i `uc ]
+[; ;main.c: 35: TRISC = 0x00;
 "35
-[e = _TRISD -> -> 0 `i `uc ]
-[; ;main.c: 36: TRISE = 0x00;
+[e = _TRISC -> -> 0 `i `uc ]
+[; ;main.c: 36: TRISD = 0x00;
 "36
+[e = _TRISD -> -> 0 `i `uc ]
+[; ;main.c: 37: TRISE = 0x00;
+"37
 [e = _TRISE -> -> 0 `i `uc ]
-[; ;main.c: 38: LATA = 0x00;
-"38
-[e = _LATA -> -> 0 `i `uc ]
-[; ;main.c: 39: LATB = 0x00;
+[; ;main.c: 39: LATA = 0x00;
 "39
-[e = _LATB -> -> 0 `i `uc ]
-[; ;main.c: 40: LATC = 0x00;
+[e = _LATA -> -> 0 `i `uc ]
+[; ;main.c: 40: LATB = 0x00;
 "40
-[e = _LATC -> -> 0 `i `uc ]
-[; ;main.c: 41: LATD = 0x00;
+[e = _LATB -> -> 0 `i `uc ]
+[; ;main.c: 41: LATC = 0x00;
 "41
-[e = _LATD -> -> 0 `i `uc ]
-[; ;main.c: 42: LATE = 0x00;
+[e = _LATC -> -> 0 `i `uc ]
+[; ;main.c: 42: LATD = 0x00;
 "42
+[e = _LATD -> -> 0 `i `uc ]
+[; ;main.c: 43: LATE = 0x00;
+"43
 [e = _LATE -> -> 0 `i `uc ]
-[; ;main.c: 44: ADCON0 = 0x00;
-"44
-[e = _ADCON0 -> -> 0 `i `uc ]
-[; ;main.c: 45: ADCON1 |= 0x0A;
+[; ;main.c: 45: ADCON0 = 0x00;
 "45
+[e = _ADCON0 -> -> 0 `i `uc ]
+[; ;main.c: 46: ADCON1 |= 0x0A;
+"46
 [e =| _ADCON1 -> -> 10 `i `uc ]
-[; ;main.c: 49: ADCON2 = 0;
-"49
-[e = _ADCON2 -> -> 0 `i `uc ]
-[; ;main.c: 50: ADCON2 |= 0b010;
+[; ;main.c: 50: ADCON2 = 0;
 "50
-[e =| _ADCON2 -> -> 2 `i `uc ]
-[; ;main.c: 51: ADCON2 |= 0b110<<3;
+[e = _ADCON2 -> -> 0 `i `uc ]
+[; ;main.c: 51: ADCON2 |= 0b010;
 "51
-[e =| _ADCON2 -> << -> 6 `i -> 3 `i `uc ]
-[; ;main.c: 52: ADCON2 |= 1<<7;
+[e =| _ADCON2 -> -> 2 `i `uc ]
+[; ;main.c: 52: ADCON2 |= 0b110<<3;
 "52
+[e =| _ADCON2 -> << -> 6 `i -> 3 `i `uc ]
+[; ;main.c: 53: ADCON2 |= 1<<7;
+"53
 [e =| _ADCON2 -> << -> 1 `i -> 7 `i `uc ]
-[; ;main.c: 56: }
-"56
+[; ;main.c: 57: }
+"57
 [e :UE 266 ]
 }
-"58
-[v _angle `l ~T0 @X0 1 e ]
-[i _angle
--> 61785 `l
-]
-[; ;main.c: 58: long angle = 61785;
-"60
-[v _main `(v ~T0 @X0 1 ef ]
+"59
+[v _showInterface `(v ~T0 @X0 1 ef ]
 {
-[; ;main.c: 60: void main(){
-[e :U _main ]
+[; ;main.c: 59: void showInterface(){
+[e :U _showInterface ]
 [f ]
-[; ;main.c: 61: pinSetup();
-"61
-[e ( _pinSetup ..  ]
-[; ;main.c: 62: initLCD();
-"62
-[e ( _initLCD ..  ]
-[; ;main.c: 64: initServo(3,2,0);
-"64
-[e ( _initServo (3 , , -> 3 `i -> 2 `i -> 0 `i ]
-[; ;main.c: 65: initServo(1,2,1);
-"65
-[e ( _initServo (3 , , -> 1 `i -> 2 `i -> 1 `i ]
-[; ;main.c: 66: initServo(0,3,1);
-"66
-[e ( _initServo (3 , , -> 0 `i -> 3 `i -> 1 `i ]
-"68
+"60
 [v _key `uc ~T0 @X0 1 a ]
-[; ;main.c: 68: char key;
-[; ;main.c: 69: while(1){
-"69
+[; ;main.c: 60: char key;
+[; ;main.c: 61: while(1){
+"61
 [e :U 269 ]
 {
-[; ;main.c: 70: dateTime();
-"70
+[; ;main.c: 62: dateTime();
+"62
 [e ( _dateTime ..  ]
-[; ;main.c: 71: while(readKeypad() != 'A');
-"71
+[; ;main.c: 63: while(readKeypad() != 'A');
+"63
 [e $U 271  ]
 [e :U 272 ]
 [e :U 271 ]
 [e $ != -> ( _readKeypad ..  `ui -> 65 `ui 272  ]
 [e :U 273 ]
-[; ;main.c: 73: while(1){
-"73
+[; ;main.c: 65: while(1){
+"65
 [e :U 275 ]
 {
-[; ;main.c: 75: mainMenu();
-"75
+[; ;main.c: 67: mainMenu();
+"67
 [e ( _mainMenu ..  ]
-[; ;main.c: 78: do{key = readKeypad();}
-"78
+[; ;main.c: 70: do{key = readKeypad();}
+"70
 [e :U 279 ]
 {
 [e = _key ( _readKeypad ..  ]
 }
-[; ;main.c: 79: while(key != 'B' && key != 'C' && key != '*');
-"79
+[; ;main.c: 71: while(key != 'B' && key != 'C' && key != '*');
+"71
 [e $ && && != -> _key `ui -> 66 `ui != -> _key `ui -> 67 `ui != -> _key `ui -> 42 `ui 279  ]
 [e :U 278 ]
-[; ;main.c: 81: if(key == 'C'){
-"81
+[; ;main.c: 73: if(key == 'C'){
+"73
 [e $ ! == -> _key `ui -> 67 `ui 280  ]
 {
-[; ;main.c: 83: runSelect();
-"83
+[; ;main.c: 75: runSelect();
+"75
 [e ( _runSelect ..  ]
-[; ;main.c: 88: do{key = readKeypad();}
-"88
+[; ;main.c: 80: do{key = readKeypad();}
+"80
 [e :U 283 ]
 {
 [e = _key ( _readKeypad ..  ]
 }
-[; ;main.c: 89: while(key != '1' && key != '2' && key != '3' && key != '4' && key != '*');
-"89
+[; ;main.c: 81: while(key != '1' && key != '2' && key != '3' && key != '4' && key != '*');
+"81
 [e $ && && && && != -> _key `ui -> 49 `ui != -> _key `ui -> 50 `ui != -> _key `ui -> 51 `ui != -> _key `ui -> 52 `ui != -> _key `ui -> 42 `ui 283  ]
 [e :U 282 ]
-[; ;main.c: 91: if(key == '*')continue;
-"91
+[; ;main.c: 83: if(key == '*')continue;
+"83
 [e $ ! == -> _key `ui -> 42 `ui 284  ]
 [e $U 274  ]
 [e :U 284 ]
-[; ;main.c: 95: while(1){
-"95
+[; ;main.c: 87: while(1){
+"87
 [e :U 286 ]
 {
-[; ;main.c: 97: runMenu(key);
-"97
+[; ;main.c: 89: runMenu(key);
+"89
 [e ( _runMenu (1 _key ]
-[; ;main.c: 100: do{key = readKeypad();}
-"100
+[; ;main.c: 92: do{key = readKeypad();}
+"92
 [e :U 290 ]
 {
 [e = _key ( _readKeypad ..  ]
 }
-[; ;main.c: 101: while(key != 'A' && key != 'B' && key != '*');
-"101
+[; ;main.c: 93: while(key != 'A' && key != 'B' && key != '*');
+"93
 [e $ && && != -> _key `ui -> 65 `ui != -> _key `ui -> 66 `ui != -> _key `ui -> 42 `ui 290  ]
 [e :U 289 ]
-[; ;main.c: 103: if(key == 'A'){
-"103
+[; ;main.c: 95: if(key == 'A'){
+"95
 [e $ ! == -> _key `ui -> 65 `ui 291  ]
 {
-[; ;main.c: 105: runTime();
-"105
+[; ;main.c: 97: runTime();
+"97
 [e ( _runTime ..  ]
-"107
+"99
 }
-[; ;main.c: 107: }
+[; ;main.c: 99: }
 [e $U 292  ]
-"108
+"100
 [e :U 291 ]
-[; ;main.c: 108: else if(key == 'B'){
+[; ;main.c: 100: else if(key == 'B'){
 [e $ ! == -> _key `ui -> 66 `ui 293  ]
 {
-[; ;main.c: 110: runStats();
-"110
+[; ;main.c: 102: runStats();
+"102
 [e ( _runStats ..  ]
-"112
+"104
 }
-[; ;main.c: 112: }
+[; ;main.c: 104: }
 [e $U 294  ]
-"113
+"105
 [e :U 293 ]
-[; ;main.c: 113: else if(key == '*')break;
+[; ;main.c: 105: else if(key == '*')break;
 [e $ ! == -> _key `ui -> 42 `ui 295  ]
 [e $U 287  ]
 [e :U 295 ]
-"115
+"107
 [e :U 294 ]
 [e :U 292 ]
-[; ;main.c: 115: while(readKeypad() != '*');
+[; ;main.c: 107: while(readKeypad() != '*');
 [e $U 296  ]
 [e :U 297 ]
 [e :U 296 ]
 [e $ != -> ( _readKeypad ..  `ui -> 42 `ui 297  ]
 [e :U 298 ]
-"116
+"108
 }
 [e :U 285 ]
-"95
+"87
 [e $U 286  ]
 [e :U 287 ]
-"118
+"110
 }
-[; ;main.c: 116: }
-[; ;main.c: 118: }
+[; ;main.c: 108: }
+[; ;main.c: 110: }
 [e $U 299  ]
-"119
+"111
 [e :U 280 ]
-[; ;main.c: 119: else if(key == 'B'){
+[; ;main.c: 111: else if(key == 'B'){
 [e $ ! == -> _key `ui -> 66 `ui 300  ]
 {
-"121
+"113
 }
-[; ;main.c: 121: }
+[; ;main.c: 113: }
 [e $U 301  ]
-"122
+"114
 [e :U 300 ]
-[; ;main.c: 122: else if(key == '*')break;
+[; ;main.c: 114: else if(key == '*')break;
 [e $ ! == -> _key `ui -> 42 `ui 302  ]
 [e $U 276  ]
 [e :U 302 ]
-"123
+"115
 [e :U 301 ]
 [e :U 299 ]
 }
 [e :U 274 ]
-"73
+"65
 [e $U 275  ]
 [e :U 276 ]
-"124
+"116
 }
 [e :U 268 ]
-"69
+"61
 [e $U 269  ]
 [e :U 270 ]
-[; ;main.c: 123: }
-[; ;main.c: 124: }
-[; ;main.c: 126: while(1){};
-"126
-[e :U 304 ]
-{
-}
-[e :U 303 ]
-[e $U 304  ]
-[e :U 305 ]
-[; ;main.c: 127: }
-"127
+[; ;main.c: 115: }
+[; ;main.c: 116: }
+[; ;main.c: 117: }
+"117
 [e :UE 267 ]
 }
-[v F3104 `(v ~T0 @X0 1 tf ]
-"130
-[v _service `IF3104 ~T0 @X0 1 e ]
+"119
+[v _angle `l ~T0 @X0 1 e ]
+[i _angle
+-> 61785 `l
+]
+[; ;main.c: 119: long angle = 61785;
+"121
+[v _main `(v ~T0 @X0 1 ef ]
 {
-[; ;main.c: 130: void interrupt service(void) {
+[; ;main.c: 121: void main(){
+[e :U _main ]
+[f ]
+[; ;main.c: 122: pinSetup();
+"122
+[e ( _pinSetup ..  ]
+[; ;main.c: 123: initLCD();
+"123
+[e ( _initLCD ..  ]
+[; ;main.c: 127: initServo(0,0,0);
+"127
+[e ( _initServo (3 , , -> 0 `i -> 0 `i -> 0 `i ]
+[; ;main.c: 129: while(1){};
+"129
+[e :U 305 ]
+{
+}
+[e :U 304 ]
+[e $U 305  ]
+[e :U 306 ]
+[; ;main.c: 130: }
+"130
+[e :UE 303 ]
+}
+[v F3106 `(v ~T0 @X0 1 tf ]
+"133
+[v _service `IF3106 ~T0 @X0 1 e ]
+{
+[; ;main.c: 133: void interrupt service(void) {
 [e :U _service ]
 [f ]
-[; ;main.c: 132: servoInterruptService();
-"132
-[e ( _servoInterruptService ..  ]
-[; ;main.c: 135: if(INT1IF){INT1IF = 0;
+[; ;main.c: 135: servoInterruptService();
 "135
-[e $ ! _INT1IF 307  ]
+[e ( _servoInterruptService ..  ]
+[; ;main.c: 138: if(INT1IF){INT1IF = 0;
+"138
+[e $ ! _INT1IF 308  ]
 {
 [e = _INT1IF -> -> 0 `i `b ]
-"136
-[v _key `uc ~T0 @X0 1 a ]
-[; ;main.c: 136: char key = (PORTB & 0xF0) >> 4;
-[e = _key -> >> & -> _PORTB `i -> 240 `i -> 4 `i `uc ]
-[; ;main.c: 137: if(key == 0)setAngle(1,64285);
-"137
-[e $ ! == -> _key `i -> 0 `i 308  ]
-[e ( _setAngle (2 , -> 1 `i -> 64285 `l ]
-[e :U 308 ]
-[; ;main.c: 138: if(key == 1)setAngle(1,61785);
-"138
-[e $ ! == -> _key `i -> 1 `i 309  ]
-[e ( _setAngle (2 , -> 1 `i -> 61785 `l ]
-[e :U 309 ]
-[; ;main.c: 139: if(key == 2)setAngle(1,59285);
 "139
-[e $ ! == -> _key `i -> 2 `i 310  ]
-[e ( _setAngle (2 , -> 1 `i -> 59285 `l ]
-[e :U 310 ]
-[; ;main.c: 141: if(key == 4)setAngle(3,64285);
+[v _key `uc ~T0 @X0 1 a ]
+[; ;main.c: 139: char key = (PORTB & 0xF0) >> 4;
+[e = _key -> >> & -> _PORTB `i -> 240 `i -> 4 `i `uc ]
+[; ;main.c: 140: if(key == 0)setAngle(0,2500);
+"140
+[e $ ! == -> _key `i -> 0 `i 309  ]
+[e ( _setAngle (2 , -> 0 `i -> -> 2500 `i `l ]
+[e :U 309 ]
+[; ;main.c: 141: if(key == 1)setAngle(0,1500);
 "141
-[e $ ! == -> _key `i -> 4 `i 311  ]
-[e ( _setAngle (2 , -> 3 `i -> 64285 `l ]
-[e :U 311 ]
-[; ;main.c: 142: if(key == 5)setAngle(3,61785);
+[e $ ! == -> _key `i -> 1 `i 310  ]
+[e ( _setAngle (2 , -> 0 `i -> -> 1500 `i `l ]
+[e :U 310 ]
+[; ;main.c: 142: if(key == 2)setAngle(0,500);
 "142
-[e $ ! == -> _key `i -> 5 `i 312  ]
-[e ( _setAngle (2 , -> 3 `i -> 61785 `l ]
-[e :U 312 ]
-[; ;main.c: 143: if(key == 6)setAngle(3,59285);
-"143
-[e $ ! == -> _key `i -> 6 `i 313  ]
-[e ( _setAngle (2 , -> 3 `i -> 59285 `l ]
-[e :U 313 ]
+[e $ ! == -> _key `i -> 2 `i 311  ]
+[e ( _setAngle (2 , -> 0 `i -> -> 500 `i `l ]
+[e :U 311 ]
+[; ;main.c: 144: if(key == 4)setAngle(1,2500);
 "144
-}
-[e :U 307 ]
-[; ;main.c: 144: }
-[; ;main.c: 145: }
+[e $ ! == -> _key `i -> 4 `i 312  ]
+[e ( _setAngle (2 , -> 1 `i -> -> 2500 `i `l ]
+[e :U 312 ]
+[; ;main.c: 145: if(key == 5)setAngle(1,1500);
 "145
-[e :UE 306 ]
+[e $ ! == -> _key `i -> 5 `i 313  ]
+[e ( _setAngle (2 , -> 1 `i -> -> 1500 `i `l ]
+[e :U 313 ]
+[; ;main.c: 146: if(key == 6)setAngle(1,500);
+"146
+[e $ ! == -> _key `i -> 6 `i 314  ]
+[e ( _setAngle (2 , -> 1 `i -> -> 500 `i `l ]
+[e :U 314 ]
+"147
+}
+[e :U 308 ]
+[; ;main.c: 147: }
+[; ;main.c: 148: }
+"148
+[e :UE 307 ]
 }

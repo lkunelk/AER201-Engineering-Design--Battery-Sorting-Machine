@@ -3838,10 +3838,11 @@ void runStats();
 
 # 24 "main.c"
 void pinSetup(void);
+void showInterface(void);
 
 void pinSetup(){
 
-# 32
+# 33
 TRISA = 0xFF;
 TRISB = 0xFF;
 TRISC = 0x00;
@@ -3868,16 +3869,7 @@ ADCON2 |= 1<<7;
 
 }
 
-long angle = 61785;
-
-void main(){
-pinSetup();
-initLCD();
-
-initServo(3,2,0);
-initServo(1,2,1);
-initServo(0,3,1);
-
+void showInterface(){
 char key;
 while(1){
 dateTime();
@@ -3935,6 +3927,17 @@ else if(key == 'B'){
 else if(key == '*')break;
 }
 }
+}
+
+long angle = 61785;
+
+void main(){
+pinSetup();
+initLCD();
+
+
+
+initServo(0,0,0);
 
 while(1){};
 }
@@ -3947,12 +3950,12 @@ servoInterruptService();
 
 if(INT1IF){INT1IF = 0;
 char key = (PORTB & 0xF0) >> 4;
-if(key == 0)setAngle(1,64285);
-if(key == 1)setAngle(1,61785);
-if(key == 2)setAngle(1,59285);
+if(key == 0)setAngle(0,2500);
+if(key == 1)setAngle(0,1500);
+if(key == 2)setAngle(0,500);
 
-if(key == 4)setAngle(3,64285);
-if(key == 5)setAngle(3,61785);
-if(key == 6)setAngle(3,59285);
+if(key == 4)setAngle(1,2500);
+if(key == 5)setAngle(1,1500);
+if(key == 6)setAngle(1,500);
 }
 }
