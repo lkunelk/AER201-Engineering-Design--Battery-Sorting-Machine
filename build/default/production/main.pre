@@ -3896,6 +3896,7 @@ ADCON2 |= 1<<7;
 
 
 INT1IE = 1;
+INT0IE = 1;
 (INTCONbits.GIE = 1);
 }
 
@@ -3988,5 +3989,5 @@ void sortBatteryInterruptService(){
 lcdClear();
 printf("sorting!");
 
-# 192
+# 193
 }
