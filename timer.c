@@ -127,8 +127,8 @@ float testFrequency(){
             else
                 if(timerOff){
                     printf("t1: %x ",time);
-                    initT0();
-                    startT0(0);
+                    initTimer(0);
+                    startTimer(0,0);
                     timerOff = 0;
                 }
                 else{

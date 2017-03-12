@@ -43,7 +43,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 "18 lcd.h
 [v _initLCD `(v ~T0 @X0 0 ef ]
 "11 servo.h
-[v _initServo `(v ~T0 @X0 0 ef3`i`i`i ]
+[v _initServo `(i ~T0 @X0 0 ef3`i`i`i ]
 "13
 [v _servoInterruptService `(v ~T0 @X0 0 ef ]
 "6898 C:\Program Files (x86)\Microchip\xc8\v1.40\include\pic18f4620.h
@@ -51,7 +51,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 "185
 [v _PORTB `Vuc ~T0 @X0 0 e@3969 ]
 "12 servo.h
-[v _setAngle `(v ~T0 @X0 0 ef2`i`l ]
+[v _setAngle `(v ~T0 @X0 0 ef2`i`i ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -2877,9 +2877,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;timer.h: 13: long getTimerCount(int timer);
 [; ;timer.h: 15: float testFrequency();
 [; ;timer.h: 16: void angleToPulseLength(float mill, int prescaler);
-[; ;servo.h: 11: void initServo(int timer, int po, int pi);
-[; ;servo.h: 12: void setAngle(int timer, long angle);
+[; ;servo.h: 11: int initServo(int po, int pi, int angle);
+[; ;servo.h: 12: void setAngle(int timer, int angle);
 [; ;servo.h: 13: void servoInterruptService();
+[; ;servo.h: 14: long angleToPulse(int angle);
 [; ;interface.h: 11: void dateTime();
 [; ;interface.h: 12: void mainMenu();
 [; ;interface.h: 13: void runSelect();
@@ -3127,75 +3128,81 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 123: initLCD();
 "123
 [e ( _initLCD ..  ]
-[; ;main.c: 127: initServo(0,0,0);
+[; ;main.c: 127: initServo(2,0,0);
 "127
-[e ( _initServo (3 , , -> 0 `i -> 0 `i -> 0 `i ]
-[; ;main.c: 129: while(1){};
-"129
+[e ( _initServo (3 , , -> 2 `i -> 0 `i -> 0 `i ]
+[; ;main.c: 128: initServo(2,1,180);
+"128
+[e ( _initServo (3 , , -> 2 `i -> 1 `i -> 180 `i ]
+[; ;main.c: 133: while(1){};
+"133
 [e :U 305 ]
 {
 }
 [e :U 304 ]
 [e $U 305  ]
 [e :U 306 ]
-[; ;main.c: 130: }
-"130
+[; ;main.c: 134: }
+"134
 [e :UE 303 ]
 }
-[v F3106 `(v ~T0 @X0 1 tf ]
-"133
-[v _service `IF3106 ~T0 @X0 1 e ]
+"136
+[v _a0 `i ~T0 @X0 1 e ]
+[i _a0
+-> 0 `i
+]
+[; ;main.c: 136: int a0 = 0;
+"137
+[v _a1 `i ~T0 @X0 1 e ]
+[i _a1
+-> 90 `i
+]
+[; ;main.c: 137: int a1 = 90;
+"138
+[v _a2 `i ~T0 @X0 1 e ]
+[i _a2
+-> 180 `i
+]
+[; ;main.c: 138: int a2 = 180;
+[v F3111 `(v ~T0 @X0 1 tf ]
+"139
+[v _service `IF3111 ~T0 @X0 1 e ]
 {
-[; ;main.c: 133: void interrupt service(void) {
+[; ;main.c: 139: void interrupt service(void) {
 [e :U _service ]
 [f ]
-[; ;main.c: 135: servoInterruptService();
-"135
+[; ;main.c: 141: servoInterruptService();
+"141
 [e ( _servoInterruptService ..  ]
-[; ;main.c: 138: if(INT1IF){INT1IF = 0;
-"138
+[; ;main.c: 144: if(INT1IF){INT1IF = 0;
+"144
 [e $ ! _INT1IF 308  ]
 {
 [e = _INT1IF -> -> 0 `i `b ]
-"139
-[v _key `uc ~T0 @X0 1 a ]
-[; ;main.c: 139: char key = (PORTB & 0xF0) >> 4;
-[e = _key -> >> & -> _PORTB `i -> 240 `i -> 4 `i `uc ]
-[; ;main.c: 140: if(key == 0)setAngle(0,2500);
-"140
-[e $ ! == -> _key `i -> 0 `i 309  ]
-[e ( _setAngle (2 , -> 0 `i -> -> 2500 `i `l ]
-[e :U 309 ]
-[; ;main.c: 141: if(key == 1)setAngle(0,1500);
-"141
-[e $ ! == -> _key `i -> 1 `i 310  ]
-[e ( _setAngle (2 , -> 0 `i -> -> 1500 `i `l ]
-[e :U 310 ]
-[; ;main.c: 142: if(key == 2)setAngle(0,500);
-"142
-[e $ ! == -> _key `i -> 2 `i 311  ]
-[e ( _setAngle (2 , -> 0 `i -> -> 500 `i `l ]
-[e :U 311 ]
-[; ;main.c: 144: if(key == 4)setAngle(1,2500);
-"144
-[e $ ! == -> _key `i -> 4 `i 312  ]
-[e ( _setAngle (2 , -> 1 `i -> -> 2500 `i `l ]
-[e :U 312 ]
-[; ;main.c: 145: if(key == 5)setAngle(1,1500);
 "145
-[e $ ! == -> _key `i -> 5 `i 313  ]
-[e ( _setAngle (2 , -> 1 `i -> -> 1500 `i `l ]
-[e :U 313 ]
-[; ;main.c: 146: if(key == 6)setAngle(1,500);
-"146
-[e $ ! == -> _key `i -> 6 `i 314  ]
-[e ( _setAngle (2 , -> 1 `i -> -> 500 `i `l ]
-[e :U 314 ]
-"147
+[v _key `uc ~T0 @X0 1 a ]
+[; ;main.c: 145: char key = (PORTB & 0xF0) >> 4;
+[e = _key -> >> & -> _PORTB `i -> 240 `i -> 4 `i `uc ]
+[; ;main.c: 149: if(key == 4)setAngle(1,0);
+"149
+[e $ ! == -> _key `i -> 4 `i 309  ]
+[e ( _setAngle (2 , -> 1 `i -> 0 `i ]
+[e :U 309 ]
+[; ;main.c: 150: if(key == 5)setAngle(1,90);
+"150
+[e $ ! == -> _key `i -> 5 `i 310  ]
+[e ( _setAngle (2 , -> 1 `i -> 90 `i ]
+[e :U 310 ]
+[; ;main.c: 151: if(key == 6)setAngle(1,180);
+"151
+[e $ ! == -> _key `i -> 6 `i 311  ]
+[e ( _setAngle (2 , -> 1 `i -> 180 `i ]
+[e :U 311 ]
+"158
 }
 [e :U 308 ]
-[; ;main.c: 147: }
-[; ;main.c: 148: }
-"148
+[; ;main.c: 158: }
+[; ;main.c: 159: }
+"159
 [e :UE 307 ]
 }

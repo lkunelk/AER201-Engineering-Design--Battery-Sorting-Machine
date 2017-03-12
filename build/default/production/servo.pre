@@ -3701,9 +3701,10 @@ extern int sprintf(char *, const char *, ...);
 extern int printf(const char *, ...);
 
 # 11 "servo.h"
-void initServo(int timer, int po, int pi);
-void setAngle(int timer, long angle);
+int initServo(int po, int pi, int angle);
+void setAngle(int timer, int angle);
 void servoInterruptService();
+long angleToPulse(int angle);
 
 # 28 "iopin.h"
 void digitalPinMode(int port, int pin, int type);
@@ -3721,50 +3722,75 @@ float testFrequency();
 void angleToPulseLength(float mill, int prescaler);
 
 # 14 "servo.c"
-int nServo = 2;
+int nServo = 0;
 int curr = 0;
-;int order[4] = {0,1,2,3};
-int port[4] = {2, 2, -1, -1};
-int pin[4] = {0, 1, 0, 0};
-long pulse[4] = {1500,1500,0,0};
-long sequence[4] = {1250,1250,50000,0};
+int order[4];
+int port[4];
+int pin[4];
+long pulse[4];
+long sequence[4];
 
 
-void initServo(int timer, int po, int pi){
+int initServo(int po, int pi, int angle){
+int id = nServo;
+nServo++;
+port[id] = po;
+pin[id] = pi;
+
+
+port = {2,2,2};
+pin = {0,1,2};
+order = {0,1,2};
+sequence = {750, 0, 0};
+
+
 initTimer(0);
-startTimer(0,61785);
+startTimer(0,0);
+
+# 44
+return id;
 }
 
-void setAngle(int id, long puls){
-pulse[id] = puls;
+void setAngle(int id, int angle){
+pulse[id] = angleToPulse(angle);
 
 
-int seen[10];
-for(int a = 0; a < nServo; a++)
-seen[a] = 0;
+int taken[10];
+for(int a = 0; a < nServo; a++) taken[a] = 0;
 
 int ind = 0;
 for(int a = 0; a < nServo; a++){
 long smallest = 0xffff;
-int smallest_ind = 0;
+int smallest_ind = -1;
 for(int b = 0; b < nServo; b++){
-if(!seen[b] && pulse[b] < smallest){
-seen[b] = 1;
+if(!taken[b] && pulse[b] < smallest){
 smallest = pulse[b];
 smallest_ind = b;
 }
 }
+taken[smallest_ind] = 1;
 order[ind++] = smallest_ind;
 }
 
 
 int prev = 0;
 for(int a = 0; a < nServo; a++){
-sequence[order[a]] = (pulse[order[a]] - prev) * 5 / 2;
+sequence[a] = pulse[order[a]] - prev;
 prev = pulse[order[a]];
 }
+sequence[nServo] = 50000;
+
 lcdClear();
-printf("%ld %ld",sequence[0], sequence[1]);
+printf("%ld %ld %ld %ld\n",pulse[0],pulse[1],pulse[2],pulse[3]);
+printf("%ld %ld %ld %ld",sequence[0],sequence[1],sequence[2],sequence[3]);
+}
+
+long angleToPulse(int angle){
+long offset = -500;
+long a000 = 1250 + offset;
+long a180 = 6250 + offset;
+
+return (long)(a000 + angle/180.0*(a180-a000));
 }
 
 void servoInterruptService(){
@@ -3777,7 +3803,7 @@ startTimer(0, 0xffff - sequence[order[curr]]);
 }
 else{
 curr++;
-startTimer(0, 0xffff - sequence[order[curr]]);
+startTimer(0, 0xfffe - sequence[order[curr]]);
 digitalWrite(port[order[curr-1]],pin[order[curr-1]],0);
 }
 }

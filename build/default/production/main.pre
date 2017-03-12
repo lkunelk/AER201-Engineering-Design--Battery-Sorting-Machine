@@ -3824,9 +3824,10 @@ float testFrequency();
 void angleToPulseLength(float mill, int prescaler);
 
 # 11 "servo.h"
-void initServo(int timer, int po, int pi);
-void setAngle(int timer, long angle);
+int initServo(int po, int pi, int angle);
+void setAngle(int timer, int angle);
 void servoInterruptService();
+long angleToPulse(int angle);
 
 # 11 "interface.h"
 void dateTime();
@@ -3937,12 +3938,18 @@ initLCD();
 
 
 
-initServo(0,0,0);
+initServo(2,0,0);
+initServo(2,1,180);
+
+
+
 
 while(1){};
 }
 
-
+int a0 = 0;
+int a1 = 90;
+int a2 = 180;
 void interrupt service(void) {
 
 servoInterruptService();
@@ -3950,12 +3957,13 @@ servoInterruptService();
 
 if(INT1IF){INT1IF = 0;
 char key = (PORTB & 0xF0) >> 4;
-if(key == 0)setAngle(0,2500);
-if(key == 1)setAngle(0,1500);
-if(key == 2)setAngle(0,500);
 
-if(key == 4)setAngle(1,2500);
-if(key == 5)setAngle(1,1500);
-if(key == 6)setAngle(1,500);
+
+
+if(key == 4)setAngle(1,0);
+if(key == 5)setAngle(1,90);
+if(key == 6)setAngle(1,180);
+
+# 158
 }
 }

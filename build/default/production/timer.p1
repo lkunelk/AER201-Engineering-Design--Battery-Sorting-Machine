@@ -51,10 +51,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _I2C_Master_Read `(uc ~T0 @X0 0 ef1`uc ]
 "195 C:\Program Files (x86)\Microchip\xc8\v1.40\include\stdio.h
 [v _printf `(i ~T0 @X0 0 ev`*Cuc ]
-"130 timer.c
-[v _initT0 `(i ~T0 @X0 0 ef ]
-"131
-[v _startT0 `(i ~T0 @X0 0 ef ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -3031,12 +3027,12 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;timer.c: 129: printf("t1: %x ",time);
 "129
 [e ( _printf , (. :s 1C _time ]
-[; ;timer.c: 130: initT0();
+[; ;timer.c: 130: initTimer(0);
 "130
-[e ( _initT0 ..  ]
-[; ;timer.c: 131: startT0(0);
+[e ( _initTimer (1 -> 0 `i ]
+[; ;timer.c: 131: startTimer(0,0);
 "131
-[e ( _startT0 -> 0 `i ]
+[e ( _startTimer (2 , -> 0 `i -> -> 0 `i `l ]
 [; ;timer.c: 132: timerOff = 0;
 "132
 [e = _timerOff -> 0 `i ]

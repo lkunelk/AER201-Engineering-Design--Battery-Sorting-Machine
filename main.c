@@ -124,12 +124,18 @@ void main(){
     
     //printf("done");
     
-    initServo(0,0,0);
+    initServo(C,0,0);
+    initServo(C,1,180);
+    //initServo(C,2,180);
+    
+    //printf("f: %f",testFrequency());
     
     while(1){};//stop here
 }
 
-
+int a0 = 0;
+int a1 = 90;
+int a2 = 180;
 void interrupt service(void) {
     
     servoInterruptService();
@@ -137,12 +143,17 @@ void interrupt service(void) {
     //RB1 interrupt
     if(INT1IF){INT1IF = 0;     //Clear flag bit
         char key = (PORTB & 0xF0) >> 4;
-        if(key == 0)setAngle(0,2500);
-        if(key == 1)setAngle(0,1500);
-        if(key == 2)setAngle(0,500);
+        //if(key == 0)a0+=10;
+        //if(key == 1)a0-=10;
         
-        if(key == 4)setAngle(1,2500);
-        if(key == 5)setAngle(1,1500);
-        if(key == 6)setAngle(1,500);
+        if(key == 4)setAngle(1,0);
+        if(key == 5)setAngle(1,90);
+        if(key == 6)setAngle(1,180);
+        
+        //if(key == 8)a2+=10;
+        //if(key == 9)a2-=10;
+        
+        //lcdClear();
+        //printf("%d %d %d",a0,a1,a2);
     }
 }
