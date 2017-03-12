@@ -3984,10 +3984,11 @@ if(key == 2)setAngle(0,135);
 
 int binAngle[4] = {60, 80, 100, 120};
 
+int count = 0;
 void sortBatteryInterruptService(){
-
+count++;
 lcdClear();
-printf("sorting!");
+printf("sorting! %d",count);
 
-# 193
+# 194
 }

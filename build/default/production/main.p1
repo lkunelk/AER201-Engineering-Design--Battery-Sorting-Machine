@@ -3280,21 +3280,30 @@ Version 3.2 HI-TECH Software Intermediate Code
 ]
 [; ;main.c: 171: int binAngle[4] = {60, 80, 100, 120};
 "173
+[v _count `i ~T0 @X0 1 e ]
+[i _count
+-> 0 `i
+]
+[; ;main.c: 173: int count = 0;
+"174
 [v _sortBatteryInterruptService `(v ~T0 @X0 1 ef ]
 {
-[; ;main.c: 173: void sortBatteryInterruptService(){
+[; ;main.c: 174: void sortBatteryInterruptService(){
 [e :U _sortBatteryInterruptService ]
 [f ]
-[; ;main.c: 175: lcdClear();
+[; ;main.c: 175: count++;
 "175
-[e ( _lcdClear ..  ]
-[; ;main.c: 176: printf("sorting!");
+[e ++ _count -> 1 `i ]
+[; ;main.c: 176: lcdClear();
 "176
-[e ( _printf :s 2C ]
-[; ;main.c: 193: }
-"193
+[e ( _lcdClear ..  ]
+[; ;main.c: 177: printf("sorting! %d",count);
+"177
+[e ( _printf , (. :s 2C _count ]
+[; ;main.c: 194: }
+"194
 [e :UE 316 ]
 }
-[p f _printf 8388608 ]
+[p f _printf 8388736 ]
 [a 1C 115 116 97 114 116 105 110 103 0 ]
-[a 2C 115 111 114 116 105 110 103 33 0 ]
+[a 2C 115 111 114 116 105 110 103 33 32 37 100 0 ]

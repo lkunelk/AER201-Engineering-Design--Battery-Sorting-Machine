@@ -170,10 +170,11 @@ void interrupt service(void) {
 //                 AA, C,  9V,  other
 int binAngle[4] = {60, 80, 100, 120}; //angles for the re-directing arm
 
+int count = 0;
 void sortBatteryInterruptService(){
-    
+    count++;
     lcdClear();
-    printf("sorting!");
+    printf("sorting! %d",count);
     
     //stop cylinder and conveyor belt
     
