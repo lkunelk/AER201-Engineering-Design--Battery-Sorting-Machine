@@ -3651,8 +3651,12 @@ const char happynewyear[7] = { 0x45,
 0x12,
 0x16};
 
+void initRTC(){
+I2C_Master_Init(10000);
+}
+
 int* getTime(){
-unsigned char time[7];
+int time[7];
 
 
 I2C_Master_Start();

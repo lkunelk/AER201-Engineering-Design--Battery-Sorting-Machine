@@ -19,10 +19,11 @@
 #include "timer.h"
 #include "servo.h"
 #include "interface.h"
-//#include "RTC.h"
+#include "RTC.h"
 
 void pinSetup(void);
 void showInterface(void);
+void sortBatteryInterruptService(void);
 
 void pinSetup(){
     //**OSCILLATOR**//
@@ -53,7 +54,8 @@ void pinSetup(){
     ADCON2 |= 1<<7; //set right justified result
     
     //interrupts
-    //INT1IE = 1;
+    INT1IE = 1;
+    ei();
 }
 
 void showInterface(){
@@ -67,7 +69,7 @@ void showInterface(){
             mainMenu();
             //---------
             
-            do{key = readKeypad();}
+            do{key = readKeypad();} //proceed only if 
             while(key != 'B' && key != 'C' && key != '*');
                 
             if(key == 'C'){ 
@@ -109,51 +111,75 @@ void showInterface(){
                         
             }
             else if(key == 'B'){
-                //start
+                return; //begin the process
             }
             else if(key == '*')break;
         }
     }
 }
 
-long angle = 61785;
-
 void main(){
     pinSetup();
     initLCD();
+    initRTC();
     
-    //printf("done");
-    
-    initServo(C,0,0);
-    initServo(C,1,180);
-    //initServo(C,2,180);
-    
-    //printf("f: %f",testFrequency());
-    
-    while(1){};//stop here
+    while(1){
+        di();
+        showInterface();
+        ei();
+
+        //start up motors
+        //init servo (timer, port, pin, angle))
+        //initServo(0, C,0, 90);
+        //initServo(1, C,1, 90);
+        //initServo(3, C,2, 90);
+
+        // poll the time if it exceeds some amount stop process
+        
+        //display results
+        
+    };//stop here
 }
 
-int a0 = 0;
-int a1 = 90;
-int a2 = 180;
 void interrupt service(void) {
     
     servoInterruptService();
     
-    //RB1 interrupt
+    //Contact sensor - port B, pin 0 external interrupt
+    if(INT0IF){ INT0IF = 0; //clear flag
+        sortBatteryInterruptService();
+    }
+    
+    //Keyboard - port B, pin 1 external interrupt
     if(INT1IF){INT1IF = 0;     //Clear flag bit
         char key = (PORTB & 0xF0) >> 4;
-        //if(key == 0)a0+=10;
-        //if(key == 1)a0-=10;
-        
-        if(key == 4)setAngle(1,0);
-        if(key == 5)setAngle(1,90);
-        if(key == 6)setAngle(1,180);
-        
-        //if(key == 8)a2+=10;
-        //if(key == 9)a2-=10;
-        
-        //lcdClear();
-        //printf("%d %d %d",a0,a1,a2);
+        if(key == 0)setAngle(0,45);
+        if(key == 1)setAngle(0,90);
+        if(key == 2)setAngle(0,135);
     }
+}
+
+//                 AA, C,  9V,  other
+int binAngle[4] = {60, 80, 100, 120}; //angles for the re-directing arm
+
+void sortBatteryInterruptService(){
+    
+    lcdClear();
+    printf("sorting!");
+    
+    //stop cylinder and conveyor belt
+    
+    //wait for battery to fall in
+    
+    //compress battery
+    
+    //measure voltage
+    
+    //set the angle for directing arm
+    
+    //release battery
+    
+    //set gate to the resting state
+    
+    //turn on the conveyor belt and cylinder
 }

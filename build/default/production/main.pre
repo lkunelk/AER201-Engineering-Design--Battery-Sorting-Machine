@@ -3824,7 +3824,7 @@ float testFrequency();
 void angleToPulseLength(float mill, int prescaler);
 
 # 11 "servo.h"
-int initServo(int po, int pi, int angle);
+void initServo(int timer, int po, int pi, int angle);
 void setAngle(int timer, int angle);
 void servoInterruptService();
 long angleToPulse(int angle);
@@ -3837,13 +3837,19 @@ void runMenu(char key);
 void runTime();
 void runStats();
 
+# 11 "RTC.h"
+int* getTime();
+void setTime(void);
+void initRTC();
+
 # 24 "main.c"
 void pinSetup(void);
 void showInterface(void);
+void sortBatteryInterruptService(void);
 
 void pinSetup(){
 
-# 33
+# 34
 TRISA = 0xFF;
 TRISB = 0xFF;
 TRISC = 0x00;
@@ -3867,7 +3873,8 @@ ADCON2 |= 0b110<<3;
 ADCON2 |= 1<<7;
 
 
-
+INT1IE = 1;
+(INTCONbits.GIE = 1);
 }
 
 void showInterface(){
@@ -3930,40 +3937,44 @@ else if(key == '*')break;
 }
 }
 
-long angle = 61785;
-
 void main(){
 pinSetup();
 initLCD();
+initRTC();
 
+(INTCONbits.GIE = 0);
+showInterface();
+(INTCONbits.GIE = 1);
 
-
-initServo(2,0,0);
-initServo(2,1,180);
-
-
-
-
+# 137
 while(1){};
 }
 
-int a0 = 0;
-int a1 = 90;
-int a2 = 180;
 void interrupt service(void) {
 
 servoInterruptService();
 
 
+if(INT0IF){ INT0IF = 0;
+sortBatteryInterruptService();
+}
+
+
 if(INT1IF){INT1IF = 0;
 char key = (PORTB & 0xF0) >> 4;
-
-
-
-if(key == 4)setAngle(1,0);
-if(key == 5)setAngle(1,90);
-if(key == 6)setAngle(1,180);
-
-# 158
+if(key == 0)setAngle(0,45);
+if(key == 1)setAngle(0,90);
+if(key == 2)setAngle(0,135);
 }
+}
+
+
+int binAngle[4] = {60, 80, 100, 120};
+
+void sortBatteryInterruptService(){
+
+lcdClear();
+printf("sorting!");
+
+# 181
 }

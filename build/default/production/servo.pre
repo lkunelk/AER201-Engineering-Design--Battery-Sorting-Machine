@@ -3701,7 +3701,7 @@ extern int sprintf(char *, const char *, ...);
 extern int printf(const char *, ...);
 
 # 11 "servo.h"
-int initServo(int po, int pi, int angle);
+void initServo(int timer, int po, int pi, int angle);
 void setAngle(int timer, int angle);
 void servoInterruptService();
 long angleToPulse(int angle);
@@ -3722,89 +3722,59 @@ float testFrequency();
 void angleToPulseLength(float mill, int prescaler);
 
 # 14 "servo.c"
-int nServo = 0;
-int curr = 0;
-int order[4];
-int port[4];
-int pin[4];
+int port[4], pin[4];
 long pulse[4];
-long sequence[4];
 
+void initServo(int timer, int po, int pi, int angle){
+port[timer] = po;
+pin[timer] = pi;
+setAngle(timer, angle);
 
-int initServo(int po, int pi, int angle){
-int id = nServo;
-nServo++;
-port[id] = po;
-pin[id] = pi;
-
-
-port = {2,2,2};
-pin = {0,1,2};
-order = {0,1,2};
-sequence = {750, 0, 0};
-
-
-initTimer(0);
-startTimer(0,0);
-
-# 44
-return id;
-}
-
-void setAngle(int id, int angle){
-pulse[id] = angleToPulse(angle);
-
-
-int taken[10];
-for(int a = 0; a < nServo; a++) taken[a] = 0;
-
-int ind = 0;
-for(int a = 0; a < nServo; a++){
-long smallest = 0xffff;
-int smallest_ind = -1;
-for(int b = 0; b < nServo; b++){
-if(!taken[b] && pulse[b] < smallest){
-smallest = pulse[b];
-smallest_ind = b;
-}
-}
-taken[smallest_ind] = 1;
-order[ind++] = smallest_ind;
-}
-
-
-int prev = 0;
-for(int a = 0; a < nServo; a++){
-sequence[a] = pulse[order[a]] - prev;
-prev = pulse[order[a]];
-}
-sequence[nServo] = 50000;
-
-lcdClear();
-printf("%ld %ld %ld %ld\n",pulse[0],pulse[1],pulse[2],pulse[3]);
-printf("%ld %ld %ld %ld",sequence[0],sequence[1],sequence[2],sequence[3]);
+initTimer(timer);
+startTimer(timer,0);
 }
 
 long angleToPulse(int angle){
-long offset = -500;
-long a000 = 1250 + offset;
-long a180 = 6250 + offset;
+long offset = 0;
+long a000 = 1250;
+long a180 = 6250;
 
-return (long)(a000 + angle/180.0*(a180-a000));
+return a000 + angle/180.0*(a180-a000) + offset;
+}
+
+void setAngle(int timer, int angle){
+pulse[timer] = 0xffff - angleToPulse(angle);
+lcdClear();
+printf("%ld",pulse[timer]);
 }
 
 void servoInterruptService(){
-if(TMR0IF){ TMR0IF = 0;
-if(curr == nServo){
-curr = 0;
-for(int i = 0; i < nServo; i++)
-digitalWrite(port[i], pin[i], 1);
-startTimer(0, 0xffff - sequence[order[curr]]);
+
+int flags[4];
+flags[0] = TMR0IF;
+flags[1] = TMR1IF;
+flags[2] = TMR2IF;
+flags[3] = TMR3IF;
+
+for(int i = 0; i < 4; i++){
+if(flags[i]){
+
+if(digitalRead(port[i],pin[i])){
+startTimer(i,15535);
+digitalWrite(port[i],pin[i],0);
 }
 else{
-curr++;
-startTimer(0, 0xfffe - sequence[order[curr]]);
-digitalWrite(port[order[curr-1]],pin[order[curr-1]],0);
+startTimer(i, pulse[i]);
+digitalWrite(port[i],pin[i],1);
+}
+
+
+switch(i){
+case 0: TMR0IF = 0; break;
+case 1: TMR1IF = 0; break;
+case 2: TMR2IF = 0; break;
+case 3: TMR3IF = 0; break;
+}
 }
 }
 }

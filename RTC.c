@@ -16,10 +16,14 @@ const char happynewyear[7] = {  0x45, //45 Seconds
                             0x12, //December
                             0x16};//2016
 
+void initRTC(){
+    I2C_Master_Init(10000); //Initialize I2C Master with 100KHz clock
+}
+
 int* getTime(){
-    unsigned char time[7];
+    int time[7];
     
-    //Reset RTC memory pointer 
+    ///Reset RTC memory pointer 
     I2C_Master_Start(); //Start condition
     I2C_Master_Write(0b11010000); //7 bit RTC address + Write
     I2C_Master_Write(0x00); //Set memory pointer to seconds
