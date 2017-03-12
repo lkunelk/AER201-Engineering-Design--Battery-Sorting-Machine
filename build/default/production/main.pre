@@ -3847,9 +3847,31 @@ void pinSetup(void);
 void showInterface(void);
 void sortBatteryInterruptService(void);
 
+void main(){
+pinSetup();
+initLCD();
+initRTC();
+
+while(1){
+(INTCONbits.GIE = 0);
+showInterface();
+(INTCONbits.GIE = 1);
+
+# 44
+lcdClear();
+printf("starting");
+digitalWrite(2,0,1);
+
+
+
+
+while(1);
+};
+}
+
 void pinSetup(){
 
-# 34
+# 61
 TRISA = 0xFF;
 TRISB = 0xFF;
 TRISC = 0x00;
@@ -3930,25 +3952,15 @@ while(readKeypad() != '*');
 
 }
 else if(key == 'B'){
+return;
+}
+else if(key == '*')
+break;
+}
+}
+}
 
-}
-else if(key == '*')break;
-}
-}
-}
 
-void main(){
-pinSetup();
-initLCD();
-initRTC();
-
-(INTCONbits.GIE = 0);
-showInterface();
-(INTCONbits.GIE = 1);
-
-# 137
-while(1){};
-}
 
 void interrupt service(void) {
 
@@ -3976,5 +3988,5 @@ void sortBatteryInterruptService(){
 lcdClear();
 printf("sorting!");
 
-# 181
+# 192
 }

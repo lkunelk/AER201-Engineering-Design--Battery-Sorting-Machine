@@ -1,4 +1,33 @@
 Version 3.2 HI-TECH Software Intermediate Code
+[p mainexit ]
+"24 main.c
+[v _pinSetup `(v ~T0 @X0 0 ef ]
+"18 lcd.h
+[v _initLCD `(v ~T0 @X0 0 ef ]
+"13 RTC.h
+[v _initRTC `(v ~T0 @X0 0 ef ]
+"6272 C:\Program Files (x86)\Microchip\xc8\v1.40\include\pic18f4620.h
+[s S258 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S258 . RBIF INT0IF TMR0IF RBIE INT0IE TMR0IE PEIE_GIEL GIE_GIEH ]
+"6282
+[s S259 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S259 . . INT0F T0IF . INT0E T0IE PEIE GIE ]
+"6292
+[s S260 :6 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S260 . . GIEL GIEH ]
+"6271
+[u S257 `S258 1 `S259 1 `S260 1 ]
+[n S257 . . . . ]
+"6298
+[v _INTCONbits `VS257 ~T0 @X0 0 e@4082 ]
+"25 main.c
+[v _showInterface `(v ~T0 @X0 0 ef ]
+"19 lcd.h
+[v _lcdClear `(v ~T0 @X0 0 ef ]
+"195 C:\Program Files (x86)\Microchip\xc8\v1.40\include\stdio.h
+[v _printf `(i ~T0 @X0 0 ev`*Cuc ]
+"30 iopin.h
+[v _digitalWrite `(v ~T0 @X0 0 ef3`i`i`i ]
 "1367 C:\Program Files (x86)\Microchip\xc8\v1.40\include\pic18f4620.h
 [v _TRISA `Vuc ~T0 @X0 0 e@3986 ]
 "1588
@@ -27,20 +56,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _ADCON2 `Vuc ~T0 @X0 0 e@4032 ]
 "6896
 [v _INT1IE `Vb ~T0 @X0 0 e@32643 ]
-"6272
-[s S258 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S258 . RBIF INT0IF TMR0IF RBIE INT0IE TMR0IE PEIE_GIEL GIE_GIEH ]
-"6282
-[s S259 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S259 . . INT0F T0IF . INT0E T0IE PEIE GIE ]
-"6292
-[s S260 :6 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S260 . . GIEL GIEH ]
-"6271
-[u S257 `S258 1 `S259 1 `S260 1 ]
-[n S257 . . . . ]
-"6298
-[v _INTCONbits `VS257 ~T0 @X0 0 e@4082 ]
 "11 interface.h
 [v _dateTime `(v ~T0 @X0 0 ef ]
 "12 keypad.h
@@ -55,11 +70,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _runTime `(v ~T0 @X0 0 ef ]
 "16
 [v _runStats `(v ~T0 @X0 0 ef ]
-[p mainexit ]
-"18 lcd.h
-[v _initLCD `(v ~T0 @X0 0 ef ]
-"13 RTC.h
-[v _initRTC `(v ~T0 @X0 0 ef ]
 "13 servo.h
 [v _servoInterruptService `(v ~T0 @X0 0 ef ]
 "6888 C:\Program Files (x86)\Microchip\xc8\v1.40\include\pic18f4620.h
@@ -72,10 +82,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _PORTB `Vuc ~T0 @X0 0 e@3969 ]
 "12 servo.h
 [v _setAngle `(v ~T0 @X0 0 ef2`i`i ]
-"19 lcd.h
-[v _lcdClear `(v ~T0 @X0 0 ef ]
-"195 C:\Program Files (x86)\Microchip\xc8\v1.40\include\stdio.h
-[v _printf `(i ~T0 @X0 0 ev`*Cuc ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -2918,323 +2924,346 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 25: void showInterface(void);
 [; ;main.c: 26: void sortBatteryInterruptService(void);
 "28 main.c
-[v _pinSetup `(v ~T0 @X0 1 ef ]
+[v _main `(v ~T0 @X0 1 ef ]
 {
-[; ;main.c: 28: void pinSetup(){
-[e :U _pinSetup ]
+[; ;main.c: 28: void main(){
+[e :U _main ]
 [f ]
-[; ;main.c: 34: TRISA = 0xFF;
+[; ;main.c: 29: pinSetup();
+"29
+[e ( _pinSetup ..  ]
+[; ;main.c: 30: initLCD();
+"30
+[e ( _initLCD ..  ]
+[; ;main.c: 31: initRTC();
+"31
+[e ( _initRTC ..  ]
+[; ;main.c: 33: while(1){
+"33
+[e :U 268 ]
+{
+[; ;main.c: 34: (INTCONbits.GIE = 0);
 "34
-[e = _TRISA -> -> 255 `i `uc ]
-[; ;main.c: 35: TRISB = 0xFF;
+[e = . . _INTCONbits 1 7 -> -> 0 `i `uc ]
+[; ;main.c: 35: showInterface();
 "35
-[e = _TRISB -> -> 255 `i `uc ]
-[; ;main.c: 36: TRISC = 0x00;
+[e ( _showInterface ..  ]
+[; ;main.c: 36: (INTCONbits.GIE = 1);
 "36
-[e = _TRISC -> -> 0 `i `uc ]
-[; ;main.c: 37: TRISD = 0x00;
-"37
-[e = _TRISD -> -> 0 `i `uc ]
-[; ;main.c: 38: TRISE = 0x00;
-"38
-[e = _TRISE -> -> 0 `i `uc ]
-[; ;main.c: 40: LATA = 0x00;
-"40
-[e = _LATA -> -> 0 `i `uc ]
-[; ;main.c: 41: LATB = 0x00;
-"41
-[e = _LATB -> -> 0 `i `uc ]
-[; ;main.c: 42: LATC = 0x00;
-"42
-[e = _LATC -> -> 0 `i `uc ]
-[; ;main.c: 43: LATD = 0x00;
-"43
-[e = _LATD -> -> 0 `i `uc ]
-[; ;main.c: 44: LATE = 0x00;
-"44
-[e = _LATE -> -> 0 `i `uc ]
-[; ;main.c: 46: ADCON0 = 0x00;
-"46
-[e = _ADCON0 -> -> 0 `i `uc ]
-[; ;main.c: 47: ADCON1 |= 0x0A;
-"47
-[e =| _ADCON1 -> -> 10 `i `uc ]
-[; ;main.c: 51: ADCON2 = 0;
-"51
-[e = _ADCON2 -> -> 0 `i `uc ]
-[; ;main.c: 52: ADCON2 |= 0b010;
-"52
-[e =| _ADCON2 -> -> 2 `i `uc ]
-[; ;main.c: 53: ADCON2 |= 0b110<<3;
-"53
-[e =| _ADCON2 -> << -> 6 `i -> 3 `i `uc ]
-[; ;main.c: 54: ADCON2 |= 1<<7;
-"54
-[e =| _ADCON2 -> << -> 1 `i -> 7 `i `uc ]
-[; ;main.c: 57: INT1IE = 1;
-"57
-[e = _INT1IE -> -> 1 `i `b ]
-[; ;main.c: 58: (INTCONbits.GIE = 1);
-"58
 [e = . . _INTCONbits 1 7 -> -> 1 `i `uc ]
-[; ;main.c: 59: }
-"59
-[e :UE 266 ]
-}
-"61
-[v _showInterface `(v ~T0 @X0 1 ef ]
-{
-[; ;main.c: 61: void showInterface(){
-[e :U _showInterface ]
-[f ]
-"62
-[v _key `uc ~T0 @X0 1 a ]
-[; ;main.c: 62: char key;
-[; ;main.c: 63: while(1){
-"63
-[e :U 269 ]
-{
-[; ;main.c: 64: dateTime();
-"64
-[e ( _dateTime ..  ]
-[; ;main.c: 65: while(readKeypad() != 'A');
-"65
+[; ;main.c: 44: lcdClear();
+"44
+[e ( _lcdClear ..  ]
+[; ;main.c: 45: printf("starting");
+"45
+[e ( _printf :s 1C ]
+[; ;main.c: 46: digitalWrite(2,0,1);
+"46
+[e ( _digitalWrite (3 , , -> 2 `i -> 0 `i -> 1 `i ]
+[; ;main.c: 51: while(1);
+"51
+[e :U 271 ]
+[e :U 270 ]
 [e $U 271  ]
 [e :U 272 ]
-[e :U 271 ]
-[e $ != -> ( _readKeypad ..  `ui -> 65 `ui 272  ]
-[e :U 273 ]
-[; ;main.c: 67: while(1){
+"52
+}
+[e :U 267 ]
+"33
+[e $U 268  ]
+[e :U 269 ]
+[; ;main.c: 52: };
+[; ;main.c: 53: }
+"53
+[e :UE 266 ]
+}
+"55
+[v _pinSetup `(v ~T0 @X0 1 ef ]
+{
+[; ;main.c: 55: void pinSetup(){
+[e :U _pinSetup ]
+[f ]
+[; ;main.c: 61: TRISA = 0xFF;
+"61
+[e = _TRISA -> -> 255 `i `uc ]
+[; ;main.c: 62: TRISB = 0xFF;
+"62
+[e = _TRISB -> -> 255 `i `uc ]
+[; ;main.c: 63: TRISC = 0x00;
+"63
+[e = _TRISC -> -> 0 `i `uc ]
+[; ;main.c: 64: TRISD = 0x00;
+"64
+[e = _TRISD -> -> 0 `i `uc ]
+[; ;main.c: 65: TRISE = 0x00;
+"65
+[e = _TRISE -> -> 0 `i `uc ]
+[; ;main.c: 67: LATA = 0x00;
 "67
-[e :U 275 ]
-{
-[; ;main.c: 69: mainMenu();
+[e = _LATA -> -> 0 `i `uc ]
+[; ;main.c: 68: LATB = 0x00;
+"68
+[e = _LATB -> -> 0 `i `uc ]
+[; ;main.c: 69: LATC = 0x00;
 "69
-[e ( _mainMenu ..  ]
-[; ;main.c: 72: do{key = readKeypad();}
-"72
-[e :U 279 ]
-{
-[e = _key ( _readKeypad ..  ]
-}
-[; ;main.c: 73: while(key != 'B' && key != 'C' && key != '*');
+[e = _LATC -> -> 0 `i `uc ]
+[; ;main.c: 70: LATD = 0x00;
+"70
+[e = _LATD -> -> 0 `i `uc ]
+[; ;main.c: 71: LATE = 0x00;
+"71
+[e = _LATE -> -> 0 `i `uc ]
+[; ;main.c: 73: ADCON0 = 0x00;
 "73
-[e $ && && != -> _key `ui -> 66 `ui != -> _key `ui -> 67 `ui != -> _key `ui -> 42 `ui 279  ]
-[e :U 278 ]
-[; ;main.c: 75: if(key == 'C'){
-"75
-[e $ ! == -> _key `ui -> 67 `ui 280  ]
-{
-[; ;main.c: 77: runSelect();
-"77
-[e ( _runSelect ..  ]
-[; ;main.c: 82: do{key = readKeypad();}
-"82
-[e :U 283 ]
-{
-[e = _key ( _readKeypad ..  ]
-}
-[; ;main.c: 83: while(key != '1' && key != '2' && key != '3' && key != '4' && key != '*');
-"83
-[e $ && && && && != -> _key `ui -> 49 `ui != -> _key `ui -> 50 `ui != -> _key `ui -> 51 `ui != -> _key `ui -> 52 `ui != -> _key `ui -> 42 `ui 283  ]
-[e :U 282 ]
-[; ;main.c: 85: if(key == '*')continue;
+[e = _ADCON0 -> -> 0 `i `uc ]
+[; ;main.c: 74: ADCON1 |= 0x0A;
+"74
+[e =| _ADCON1 -> -> 10 `i `uc ]
+[; ;main.c: 78: ADCON2 = 0;
+"78
+[e = _ADCON2 -> -> 0 `i `uc ]
+[; ;main.c: 79: ADCON2 |= 0b010;
+"79
+[e =| _ADCON2 -> -> 2 `i `uc ]
+[; ;main.c: 80: ADCON2 |= 0b110<<3;
+"80
+[e =| _ADCON2 -> << -> 6 `i -> 3 `i `uc ]
+[; ;main.c: 81: ADCON2 |= 1<<7;
+"81
+[e =| _ADCON2 -> << -> 1 `i -> 7 `i `uc ]
+[; ;main.c: 84: INT1IE = 1;
+"84
+[e = _INT1IE -> -> 1 `i `b ]
+[; ;main.c: 85: (INTCONbits.GIE = 1);
 "85
-[e $ ! == -> _key `ui -> 42 `ui 284  ]
-[e $U 274  ]
-[e :U 284 ]
-[; ;main.c: 89: while(1){
+[e = . . _INTCONbits 1 7 -> -> 1 `i `uc ]
+[; ;main.c: 86: }
+"86
+[e :UE 273 ]
+}
+"88
+[v _showInterface `(v ~T0 @X0 1 ef ]
+{
+[; ;main.c: 88: void showInterface(){
+[e :U _showInterface ]
+[f ]
 "89
+[v _key `uc ~T0 @X0 1 a ]
+[; ;main.c: 89: char key;
+[; ;main.c: 90: while(1){
+"90
+[e :U 276 ]
+{
+[; ;main.c: 91: dateTime();
+"91
+[e ( _dateTime ..  ]
+[; ;main.c: 92: while(readKeypad() != 'A');
+"92
+[e $U 278  ]
+[e :U 279 ]
+[e :U 278 ]
+[e $ != -> ( _readKeypad ..  `ui -> 65 `ui 279  ]
+[e :U 280 ]
+[; ;main.c: 94: while(1){
+"94
+[e :U 282 ]
+{
+[; ;main.c: 96: mainMenu();
+"96
+[e ( _mainMenu ..  ]
+[; ;main.c: 99: do{key = readKeypad();}
+"99
 [e :U 286 ]
 {
-[; ;main.c: 91: runMenu(key);
-"91
-[e ( _runMenu (1 _key ]
-[; ;main.c: 94: do{key = readKeypad();}
-"94
+[e = _key ( _readKeypad ..  ]
+}
+[; ;main.c: 100: while(key != 'B' && key != 'C' && key != '*');
+"100
+[e $ && && != -> _key `ui -> 66 `ui != -> _key `ui -> 67 `ui != -> _key `ui -> 42 `ui 286  ]
+[e :U 285 ]
+[; ;main.c: 102: if(key == 'C'){
+"102
+[e $ ! == -> _key `ui -> 67 `ui 287  ]
+{
+[; ;main.c: 104: runSelect();
+"104
+[e ( _runSelect ..  ]
+[; ;main.c: 109: do{key = readKeypad();}
+"109
 [e :U 290 ]
 {
 [e = _key ( _readKeypad ..  ]
 }
-[; ;main.c: 95: while(key != 'A' && key != 'B' && key != '*');
-"95
-[e $ && && != -> _key `ui -> 65 `ui != -> _key `ui -> 66 `ui != -> _key `ui -> 42 `ui 290  ]
-[e :U 289 ]
-[; ;main.c: 97: if(key == 'A'){
-"97
-[e $ ! == -> _key `ui -> 65 `ui 291  ]
-{
-[; ;main.c: 99: runTime();
-"99
-[e ( _runTime ..  ]
-"101
-}
-[; ;main.c: 101: }
-[e $U 292  ]
-"102
-[e :U 291 ]
-[; ;main.c: 102: else if(key == 'B'){
-[e $ ! == -> _key `ui -> 66 `ui 293  ]
-{
-[; ;main.c: 104: runStats();
-"104
-[e ( _runStats ..  ]
-"106
-}
-[; ;main.c: 106: }
-[e $U 294  ]
-"107
-[e :U 293 ]
-[; ;main.c: 107: else if(key == '*')break;
-[e $ ! == -> _key `ui -> 42 `ui 295  ]
-[e $U 287  ]
-[e :U 295 ]
-"109
-[e :U 294 ]
-[e :U 292 ]
-[; ;main.c: 109: while(readKeypad() != '*');
-[e $U 296  ]
-[e :U 297 ]
-[e :U 296 ]
-[e $ != -> ( _readKeypad ..  `ui -> 42 `ui 297  ]
-[e :U 298 ]
+[; ;main.c: 110: while(key != '1' && key != '2' && key != '3' && key != '4' && key != '*');
 "110
-}
-[e :U 285 ]
-"89
-[e $U 286  ]
-[e :U 287 ]
+[e $ && && && && != -> _key `ui -> 49 `ui != -> _key `ui -> 50 `ui != -> _key `ui -> 51 `ui != -> _key `ui -> 52 `ui != -> _key `ui -> 42 `ui 290  ]
+[e :U 289 ]
+[; ;main.c: 112: if(key == '*')continue;
 "112
+[e $ ! == -> _key `ui -> 42 `ui 291  ]
+[e $U 281  ]
+[e :U 291 ]
+[; ;main.c: 116: while(1){
+"116
+[e :U 293 ]
+{
+[; ;main.c: 118: runMenu(key);
+"118
+[e ( _runMenu (1 _key ]
+[; ;main.c: 121: do{key = readKeypad();}
+"121
+[e :U 297 ]
+{
+[e = _key ( _readKeypad ..  ]
 }
-[; ;main.c: 110: }
-[; ;main.c: 112: }
+[; ;main.c: 122: while(key != 'A' && key != 'B' && key != '*');
+"122
+[e $ && && != -> _key `ui -> 65 `ui != -> _key `ui -> 66 `ui != -> _key `ui -> 42 `ui 297  ]
+[e :U 296 ]
+[; ;main.c: 124: if(key == 'A'){
+"124
+[e $ ! == -> _key `ui -> 65 `ui 298  ]
+{
+[; ;main.c: 126: runTime();
+"126
+[e ( _runTime ..  ]
+"128
+}
+[; ;main.c: 128: }
 [e $U 299  ]
-"113
-[e :U 280 ]
-[; ;main.c: 113: else if(key == 'B'){
+"129
+[e :U 298 ]
+[; ;main.c: 129: else if(key == 'B'){
 [e $ ! == -> _key `ui -> 66 `ui 300  ]
 {
-"115
+[; ;main.c: 131: runStats();
+"131
+[e ( _runStats ..  ]
+"133
 }
-[; ;main.c: 115: }
+[; ;main.c: 133: }
 [e $U 301  ]
-"116
+"134
 [e :U 300 ]
-[; ;main.c: 116: else if(key == '*')break;
+[; ;main.c: 134: else if(key == '*')break;
 [e $ ! == -> _key `ui -> 42 `ui 302  ]
-[e $U 276  ]
+[e $U 294  ]
 [e :U 302 ]
-"117
+"136
 [e :U 301 ]
 [e :U 299 ]
-}
-[e :U 274 ]
-"67
-[e $U 275  ]
-[e :U 276 ]
-"118
-}
-[e :U 268 ]
-"63
-[e $U 269  ]
-[e :U 270 ]
-[; ;main.c: 117: }
-[; ;main.c: 118: }
-[; ;main.c: 119: }
-"119
-[e :UE 267 ]
-}
-"121
-[v _main `(v ~T0 @X0 1 ef ]
-{
-[; ;main.c: 121: void main(){
-[e :U _main ]
-[f ]
-[; ;main.c: 122: pinSetup();
-"122
-[e ( _pinSetup ..  ]
-[; ;main.c: 123: initLCD();
-"123
-[e ( _initLCD ..  ]
-[; ;main.c: 124: initRTC();
-"124
-[e ( _initRTC ..  ]
-[; ;main.c: 126: (INTCONbits.GIE = 0);
-"126
-[e = . . _INTCONbits 1 7 -> -> 0 `i `uc ]
-[; ;main.c: 127: showInterface();
-"127
-[e ( _showInterface ..  ]
-[; ;main.c: 128: (INTCONbits.GIE = 1);
-"128
-[e = . . _INTCONbits 1 7 -> -> 1 `i `uc ]
-[; ;main.c: 137: while(1){};
-"137
-[e :U 305 ]
-{
-}
+[; ;main.c: 136: while(readKeypad() != '*');
+[e $U 303  ]
 [e :U 304 ]
-[e $U 305  ]
+[e :U 303 ]
+[e $ != -> ( _readKeypad ..  `ui -> 42 `ui 304  ]
+[e :U 305 ]
+"137
+}
+[e :U 292 ]
+"116
+[e $U 293  ]
+[e :U 294 ]
+"139
+}
+[; ;main.c: 137: }
+[; ;main.c: 139: }
+[e $U 306  ]
+"140
+[e :U 287 ]
+[; ;main.c: 140: else if(key == 'B'){
+[e $ ! == -> _key `ui -> 66 `ui 307  ]
+{
+[; ;main.c: 141: return;
+"141
+[e $UE 274  ]
+"142
+}
+[; ;main.c: 142: }
+[e $U 308  ]
+"143
+[e :U 307 ]
+[; ;main.c: 143: else if(key == '*')
+[e $ ! == -> _key `ui -> 42 `ui 309  ]
+[; ;main.c: 144: break;
+"144
+[e $U 283  ]
+[e :U 309 ]
+"145
+[e :U 308 ]
 [e :U 306 ]
-[; ;main.c: 138: }
-"138
-[e :UE 303 ]
+}
+[e :U 281 ]
+"94
+[e $U 282  ]
+[e :U 283 ]
+"146
+}
+[e :U 275 ]
+"90
+[e $U 276  ]
+[e :U 277 ]
+[; ;main.c: 145: }
+[; ;main.c: 146: }
+[; ;main.c: 147: }
+"147
+[e :UE 274 ]
 }
 [v F3114 `(v ~T0 @X0 1 tf ]
-"140
+"151
 [v _service `IF3114 ~T0 @X0 1 e ]
 {
-[; ;main.c: 140: void interrupt service(void) {
+[; ;main.c: 151: void interrupt service(void) {
 [e :U _service ]
 [f ]
-[; ;main.c: 142: servoInterruptService();
-"142
+[; ;main.c: 153: servoInterruptService();
+"153
 [e ( _servoInterruptService ..  ]
-[; ;main.c: 145: if(INT0IF){ INT0IF = 0;
-"145
-[e $ ! _INT0IF 308  ]
+[; ;main.c: 156: if(INT0IF){ INT0IF = 0;
+"156
+[e $ ! _INT0IF 311  ]
 {
 [e = _INT0IF -> -> 0 `i `b ]
-[; ;main.c: 146: sortBatteryInterruptService();
-"146
+[; ;main.c: 157: sortBatteryInterruptService();
+"157
 [e ( _sortBatteryInterruptService ..  ]
-"147
+"158
 }
-[e :U 308 ]
-[; ;main.c: 147: }
-[; ;main.c: 150: if(INT1IF){INT1IF = 0;
-"150
-[e $ ! _INT1IF 309  ]
+[e :U 311 ]
+[; ;main.c: 158: }
+[; ;main.c: 161: if(INT1IF){INT1IF = 0;
+"161
+[e $ ! _INT1IF 312  ]
 {
 [e = _INT1IF -> -> 0 `i `b ]
-"151
+"162
 [v _key `uc ~T0 @X0 1 a ]
-[; ;main.c: 151: char key = (PORTB & 0xF0) >> 4;
+[; ;main.c: 162: char key = (PORTB & 0xF0) >> 4;
 [e = _key -> >> & -> _PORTB `i -> 240 `i -> 4 `i `uc ]
-[; ;main.c: 152: if(key == 0)setAngle(0,45);
-"152
-[e $ ! == -> _key `i -> 0 `i 310  ]
+[; ;main.c: 163: if(key == 0)setAngle(0,45);
+"163
+[e $ ! == -> _key `i -> 0 `i 313  ]
 [e ( _setAngle (2 , -> 0 `i -> 45 `i ]
-[e :U 310 ]
-[; ;main.c: 153: if(key == 1)setAngle(0,90);
-"153
-[e $ ! == -> _key `i -> 1 `i 311  ]
+[e :U 313 ]
+[; ;main.c: 164: if(key == 1)setAngle(0,90);
+"164
+[e $ ! == -> _key `i -> 1 `i 314  ]
 [e ( _setAngle (2 , -> 0 `i -> 90 `i ]
-[e :U 311 ]
-[; ;main.c: 154: if(key == 2)setAngle(0,135);
-"154
-[e $ ! == -> _key `i -> 2 `i 312  ]
+[e :U 314 ]
+[; ;main.c: 165: if(key == 2)setAngle(0,135);
+"165
+[e $ ! == -> _key `i -> 2 `i 315  ]
 [e ( _setAngle (2 , -> 0 `i -> 135 `i ]
+[e :U 315 ]
+"166
+}
 [e :U 312 ]
-"155
+[; ;main.c: 166: }
+[; ;main.c: 167: }
+"167
+[e :UE 310 ]
 }
-[e :U 309 ]
-[; ;main.c: 155: }
-[; ;main.c: 156: }
-"156
-[e :UE 307 ]
-}
-"159
+"170
 [v _binAngle `i ~T0 @X0 -> 4 `i e ]
 [i _binAngle
 :U ..
@@ -3244,23 +3273,23 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 120 `i
 ..
 ]
-[; ;main.c: 159: int binAngle[4] = {60, 80, 100, 120};
-"161
+[; ;main.c: 170: int binAngle[4] = {60, 80, 100, 120};
+"172
 [v _sortBatteryInterruptService `(v ~T0 @X0 1 ef ]
 {
-[; ;main.c: 161: void sortBatteryInterruptService(){
+[; ;main.c: 172: void sortBatteryInterruptService(){
 [e :U _sortBatteryInterruptService ]
 [f ]
-[; ;main.c: 163: lcdClear();
-"163
+[; ;main.c: 174: lcdClear();
+"174
 [e ( _lcdClear ..  ]
-[; ;main.c: 164: printf("sorting!");
-"164
-[e ( _printf :s 1C ]
-[; ;main.c: 181: }
-"181
-[e :UE 313 ]
+[; ;main.c: 175: printf("sorting!");
+"175
+[e ( _printf :s 2C ]
+[; ;main.c: 192: }
+"192
+[e :UE 316 ]
 }
 [p f _printf 8388608 ]
-[a 1C 115 111 114 116 105 110 103 33 0 ]
-
+[a 1C 115 116 97 114 116 105 110 103 0 ]
+[a 2C 115 111 114 116 105 110 103 33 0 ]

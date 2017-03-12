@@ -25,6 +25,33 @@ void pinSetup(void);
 void showInterface(void);
 void sortBatteryInterruptService(void);
 
+void main(){
+    pinSetup();
+    initLCD();
+    initRTC();
+    
+    while(1){
+        di();
+        showInterface();
+        ei();
+
+        //start up motors
+        //init servo (timer, port, pin, angle))
+        //initServo(0, C,0, 90);
+        //initServo(1, C,1, 90);
+        //initServo(3, C,2, 90);
+        
+        lcdClear();
+        printf("starting");
+        digitalWrite(C,0,HIGH);
+        
+        // poll the time if it exceeds some amount stop process
+        
+        //display results
+        while(1); //stop here for now
+    };//stop here
+}
+
 void pinSetup(){
     //**OSCILLATOR**//
     //OSCCON = 0xF0; // Force internal oscillator operation at 8 MHz (pg. 7-39)
@@ -54,7 +81,8 @@ void pinSetup(){
     ADCON2 |= 1<<7; //set right justified result
     
     //interrupts
-    INT1IE = 1;
+    INT1IE = 1; // external interrupt for keypad
+    INT0IE = 1; // external interrupt on B0 for battery touch sensor
     ei();
 }
 
@@ -72,7 +100,7 @@ void showInterface(){
             do{key = readKeypad();} //proceed only if 
             while(key != 'B' && key != 'C' && key != '*');
                 
-            if(key == 'C'){ 
+            if(key == 'C'){ // history of runs
                 //---------
                 runSelect();
                 //---------
@@ -94,12 +122,12 @@ void showInterface(){
                     do{key = readKeypad();}
                     while(key != 'A' && key != 'B' && key != '*');
 
-                    if(key == 'A'){ 
+                    if(key == 'A'){ //how long the process ran
                         //---------
                         runTime();
                         //---------
                     }
-                    else if(key == 'B'){
+                    else if(key == 'B'){ //how  many batteries for each category
                         //---------
                         runStats();
                         //---------
@@ -110,36 +138,16 @@ void showInterface(){
                 }
                         
             }
-            else if(key == 'B'){
+            else if(key == 'B'){ //start
                 return; //begin the process
             }
-            else if(key == '*')break;
+            else if(key == '*')//go back
+                break;
         }
     }
 }
 
-void main(){
-    pinSetup();
-    initLCD();
-    initRTC();
-    
-    while(1){
-        di();
-        showInterface();
-        ei();
 
-        //start up motors
-        //init servo (timer, port, pin, angle))
-        //initServo(0, C,0, 90);
-        //initServo(1, C,1, 90);
-        //initServo(3, C,2, 90);
-
-        // poll the time if it exceeds some amount stop process
-        
-        //display results
-        
-    };//stop here
-}
 
 void interrupt service(void) {
     
