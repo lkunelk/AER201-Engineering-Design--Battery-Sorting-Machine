@@ -24,6 +24,7 @@
 void pinSetup(void);
 void showInterface(void);
 void sortBattery(void);
+void pause(char* message);
 
 int switchFlag = 0;
 
@@ -56,6 +57,9 @@ void main(){
         initServo(padServo[0],         padServo[1],        padServo[2],         padAngle_CATCH);
         initServo(redirectingServo[0], redirectingServo[1],redirectingServo[2], 90);
         
+        lcdClear();
+        printf("running");
+        
         // poll the time if it exceeds some amount stop process
         while(1){
             while(!switchFlag);
@@ -79,25 +83,27 @@ void sortBattery(){
     //wait for battery to fall in
     //__delay_ms(1000);
     
-    readKeypad();
+        pause("close?");
     
     //compress battery
     setAngle(padServo[0], padAngle_CLOSE);
     
-    lcdClear();
-    printf("open?");
+        pause("read voltage?");
     //measure voltage
-    readKeypad();
+        
     //set the angle for directing arm
-    lcdClear();
-    printf("open!");
+    
+        pause("release battery?");
     //release battery
     setAngle(padServo[0], padAngle_OPEN);
+    
+        pause("reset the pad?");
     //set gate to the resting state
     
-    readKeypad();
+        pause("conveyor & cylinder on?");
     //turn on the conveyor belt and cylinder
-    initServo();
+    initServo(conveyorServo[0],    conveyorServo[1],   conveyorServo[2],    90);
+
     while(1);
 }
 
@@ -130,7 +136,7 @@ void pinSetup(){
     ADCON2 |= 1<<7; //set right justified result
     
     //interrupts
-    INT1IE = 1; // external interrupt for keypad
+    //INT1IE = 1; // external interrupt for keypad
     INT0IE = 1; // external interrupt on B0 for battery touch sensor
     ei();
 }
@@ -196,8 +202,6 @@ void showInterface(){
     }
 }
 
-
-
 void interrupt service(void) {
     
     servoInterruptService();
@@ -218,4 +222,10 @@ void interrupt service(void) {
         if(key == 5)setAngle(3,90);
         if(key == 6)setAngle(3,100);
     }
+}
+
+void pause(char* message){
+    lcdClear();
+    printf(message);
+    readKeypad();
 }

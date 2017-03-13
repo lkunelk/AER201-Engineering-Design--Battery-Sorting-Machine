@@ -3847,6 +3847,7 @@ void initRTC();
 void pinSetup(void);
 void showInterface(void);
 void sortBattery(void);
+void pause(char* message);
 
 int switchFlag = 0;
 
@@ -3879,6 +3880,9 @@ initServo(conveyorServo[0], conveyorServo[1], conveyorServo[2], 90);
 initServo(padServo[0], padServo[1], padServo[2], padAngle_CATCH);
 initServo(redirectingServo[0], redirectingServo[1],redirectingServo[2], 90);
 
+lcdClear();
+printf("running");
+
 
 while(1){
 while(!switchFlag);
@@ -3902,30 +3906,33 @@ digitalWrite(cylinderMotor[0], cylinderMotor[1], 0);
 
 
 
-readKeypad();
+pause("close?");
 
 
 setAngle(padServo[0], padAngle_CLOSE);
 
-lcdClear();
-printf("open?");
+pause("read voltage?");
 
-readKeypad();
 
-lcdClear();
-printf("open!");
+
+
+pause("release battery?");
 
 setAngle(padServo[0], padAngle_OPEN);
 
+pause("reset the pad?");
 
 
+pause("conveyor & cylinder on?");
+
+initServo(conveyorServo[0], conveyorServo[1], conveyorServo[2], 90);
 
 while(1);
 }
 
 void pinSetup(){
 
-# 109
+# 116
 TRISA = 0xFF;
 TRISB = 0xFF;
 TRISC = 0x00;
@@ -3949,7 +3956,7 @@ ADCON2 |= 0b110<<3;
 ADCON2 |= 1<<7;
 
 
-INT1IE = 1;
+
 INT0IE = 1;
 (INTCONbits.GIE = 1);
 }
@@ -4015,8 +4022,6 @@ break;
 }
 }
 
-
-
 void interrupt service(void) {
 
 servoInterruptService();
@@ -4037,4 +4042,10 @@ if(key == 4)setAngle(3,80);
 if(key == 5)setAngle(3,90);
 if(key == 6)setAngle(3,100);
 }
+}
+
+void pause(char* message){
+lcdClear();
+printf(message);
+readKeypad();
 }
