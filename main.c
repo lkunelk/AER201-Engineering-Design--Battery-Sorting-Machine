@@ -66,7 +66,7 @@ void main(){
 
         //start up motors
         initServo(conveyorServo[0],    conveyorServo[1],   conveyorServo[2],    90);
-        initServo(padServo[0],         padServo[1],        padServo[2],         padAngle_CATCH);
+        initServo(padServo[0],         padServo[1],        padServo[2],         padAngle_NEUTRAL);
         initServo(redirectingServo[0], redirectingServo[1],redirectingServo[2], 90);
         
         lcdClear();
@@ -74,11 +74,19 @@ void main(){
         
         // poll the time if it exceeds some amount stop process
         while(1){
-            while(!switchFlag);
-            switchFlag = 0;
+            while(!switchFlag){
+                //poll timer if waiting exceeds limit stop the whole process
+            }
+            
             sortBattery();
+            
+            //reset flag after sorting
+            switchFlag = 0;
         }
+        
         //display results
+        
+        
         while(1); //stop here for now
     };//stop here
 }
@@ -109,7 +117,7 @@ void sortBattery(){
     float V = analogRead(padPin3[1]) / resolution * Vcc; //voltage read
     
     lcdClear();
-    printf("target: %d, V: %d",signal,V);
+    printf("target: %d, V: %f",signal,V);
     while(1);
     
     //set the angle for directing arm
