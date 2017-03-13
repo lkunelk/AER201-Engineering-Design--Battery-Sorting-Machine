@@ -23,6 +23,15 @@ void initServo(int timer, int po, int pi, int angle){
     startTimer(timer,0);
 }
 
+void stopServo(int timer){
+    switch(timer){
+        case 0: T0CON = 0; break;
+        case 1: T1CON = 0; break;
+        case 2: T2CON = 0; break;
+        case 3: T3CON = 0; break;
+    }
+}
+
 long angleToPulse(int angle){
     long offset = 0; //offset for tuning range
     long a000 = 1250; // pulse for angle of 0
