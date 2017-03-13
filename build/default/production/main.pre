@@ -3865,6 +3865,13 @@ int conveyorServo[3] = {0, 2, 1};
 int padServo[3] = {1, 2, 2};
 int redirectingServo[3] = {3, 2, 3};
 
+
+int padPin1[2] = {0,1};
+int padPin2[2] = {0,2};
+int padPin3[2] = {0,0};
+
+
+
 void main(){
 pinSetup();
 initLCD();
@@ -3903,28 +3910,36 @@ printf("interrupt!");
 stopServo(conveyorServo[0]);
 digitalWrite(cylinderMotor[0], cylinderMotor[1], 0);
 
-
-
-
+# 96
 pause("close?");
-
-
 setAngle(padServo[0], padAngle_CLOSE);
 
+
 pause("read voltage?");
+int Vcc = 4.8;
+int resolution = (1<<10) - 1;
+
+int target = digitalRead(padPin1[0],padPin1[1])<<1;
+target |= digitalRead(padPin2[0],padPin2[1]);
+int V = analogRead(padPin3[1]) / resolution * Vcc;
+
+lcdClear();
+printf("target: %d, V: %d",target,V);
+while(1);
 
 
+pause("set redirect angle?");
 
 
 pause("release battery?");
-
 setAngle(padServo[0], padAngle_OPEN);
+
+
 
 pause("reset the pad?");
 
 
 pause("conveyor & cylinder on?");
-
 initServo(conveyorServo[0], conveyorServo[1], conveyorServo[2], 90);
 
 while(1);
@@ -3932,7 +3947,7 @@ while(1);
 
 void pinSetup(){
 
-# 116
+# 136
 TRISA = 0xFF;
 TRISB = 0xFF;
 TRISC = 0x00;
@@ -3946,7 +3961,7 @@ LATD = 0x00;
 LATE = 0x00;
 
 ADCON0 = 0x00;
-ADCON1 |= 0x0A;
+ADCON1 |= 0x0E;
 
 
 

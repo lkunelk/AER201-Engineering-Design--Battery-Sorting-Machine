@@ -42,6 +42,13 @@ int    conveyorServo[3] = {0, C, 1}; //timer 0, port C, pin 1
 int         padServo[3] = {1, C, 2}; //timer 1, port C, pin 2
 int redirectingServo[3] = {3, C, 3}; //timer 3, port C, pin 2
 
+//measure voltage and determine battery type
+int padPin1[2] = {A,1}; //digital port A, pin 1
+int padPin2[2] = {A,2}; //digital port A, pin 2
+int padPin3[2] = {A,0}; //analog 0 is the channel not the pin 
+                     //(in this case channel 0 is pin 0),
+                     //port value not needed only for reference
+
 void main(){
     pinSetup();
     initLCD();
@@ -83,25 +90,38 @@ void sortBattery(){
     //wait for battery to fall in
     //__delay_ms(1000);
     
-        pause("close?");
+        
     
     //compress battery
+    pause("close?");
     setAngle(padServo[0], padAngle_CLOSE);
     
-        pause("read voltage?");
     //measure voltage
-        
-    //set the angle for directing arm
+    pause("read voltage?");
+    int Vcc = 4.8; //voltage of vcc pin on pic
+    int resolution = (1<<10) - 1;
     
-        pause("release battery?");
+    int target = digitalRead(padPin1[0],padPin1[1])<<1; //combine 2 reads
+    target    |= digitalRead(padPin2[0],padPin2[1]);
+    int V = analogRead(padPin3[1]) / resolution * Vcc; //voltage read
+    
+    lcdClear();
+    printf("target: %d, V: %d",target,V);
+    while(1);
+    
+    //set the angle for directing arm
+    pause("set redirect angle?");
+        
     //release battery
+    pause("release battery?");
     setAngle(padServo[0], padAngle_OPEN);
     
-        pause("reset the pad?");
+        
     //set gate to the resting state
-    
-        pause("conveyor & cylinder on?");
+    pause("reset the pad?");
+        
     //turn on the conveyor belt and cylinder
+    pause("conveyor & cylinder on?");    
     initServo(conveyorServo[0],    conveyorServo[1],   conveyorServo[2],    90);
 
     while(1);
@@ -126,7 +146,7 @@ void pinSetup(){
     LATE = 0x00;
     
     ADCON0 = 0x00; //turn off AD module for now
-    ADCON1 |= 0x0A; //set V reference and set an0-4 (ra0-5) as analog
+    ADCON1 |= 0x0E; //set V reference and set an0 (ra0) as analog
     //ADCON1 |= 0b11<<4; //use external voltage reference 
     //(an2 -> Vref-) and (an3 -> Vref+)
     
