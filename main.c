@@ -25,6 +25,7 @@ void pinSetup(void);
 void showInterface(void);
 void sortBattery(void);
 void pause(char* message);
+void test(int* a);
 
 int switchFlag = 0;
 
@@ -57,7 +58,15 @@ float V_LIM_9V = 0;
 void main(){
     pinSetup();
     initLCD();
-    //initRTC();
+    initRTC();
+    
+    //test time
+    while(1){
+        int* t = getTime();
+        lcdClear();
+        printf(" %02x : %02x : %02x",t[2],t[1],t[0]);
+        __delay_ms(100);
+    }
     
     while(1){
         di();
@@ -117,8 +126,7 @@ void sortBattery(){
     float V = analogRead(padPin3[1]) / resolution * Vcc; //voltage read
     
     lcdClear();
-    printf("target: %d, V: %f",signal,V);
-    while(1);
+    printf("target: %d\nV: %f",signal,V);
     
     //set the angle for directing arm
     pause("set redirect angle?");
@@ -128,7 +136,7 @@ void sortBattery(){
             digitalWrite(AA_float[0], AA_float[1], LOW);
             __delay_ms(1); //let voltage changes occur
             float V_float = analogRead(padPin3[1]) / resolution * Vcc; //voltage read
-            if(V_float < 0.5){ //if below then it's AA battery
+            if(V_float < 0.1){ //if below then it's AA battery
                 if(V > V_LIM_AA) targetAngle = redirectAngle_AA;
                 else             targetAngle = redirectAngle_OTHER;
                 break;
@@ -196,8 +204,6 @@ void pinSetup(){
     INT0IE = 1; // external interrupt on B0 for battery touch sensor
     ei();
 }
-
-
 
 void interrupt service(void) {
     

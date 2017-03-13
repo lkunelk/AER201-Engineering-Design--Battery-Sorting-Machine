@@ -3849,6 +3849,7 @@ void pinSetup(void);
 void showInterface(void);
 void sortBattery(void);
 void pause(char* message);
+void test(int* a);
 
 int switchFlag = 0;
 
@@ -3881,7 +3882,15 @@ float V_LIM_9V = 0;
 void main(){
 pinSetup();
 initLCD();
+initRTC();
 
+
+while(1){
+int* t = getTime();
+lcdClear();
+printf(" %02x : %02x : %02x",t[2],t[1],t[0]);
+_delay((unsigned long)((100)*(10000000/4000.0)));
+}
 
 while(1){
 (INTCONbits.GIE = 0);
@@ -3921,7 +3930,7 @@ void sortBattery(){
 stopServo(conveyorServo[0]);
 digitalWrite(cylinderMotor[0], cylinderMotor[1], 0);
 
-# 104
+# 113
 pause("interrupt!!!\nclose?");
 setAngle(padServo[0], padAngle_CLOSE);
 
@@ -3938,8 +3947,7 @@ digitalWrite(AA_float[0], AA_float[1], 1);
 float V = analogRead(padPin3[1]) / resolution * Vcc;
 
 lcdClear();
-printf("target: %d, V: %f",signal,V);
-while(1);
+printf("target: %d\nV: %f",signal,V);
 
 
 pause("set redirect angle?");
@@ -3949,7 +3957,7 @@ case 0b00:
 digitalWrite(AA_float[0], AA_float[1], 0);
 _delay((unsigned long)((1)*(10000000/4000.0)));
 float V_float = analogRead(padPin3[1]) / resolution * Vcc;
-if(V_float < 0.5){
+if(V_float < 0.1){
 if(V > V_LIM_AA) targetAngle = redirectAngle_AA;
 else targetAngle = redirectAngle_OTHER;
 break;
@@ -3986,7 +3994,7 @@ while(1);
 
 void pinSetup(){
 
-# 172
+# 180
 TRISA = 0xFF;
 TRISB = 0xFF;
 TRISC = 0x00;
@@ -4014,8 +4022,6 @@ ADCON2 |= 1<<7;
 INT0IE = 1;
 (INTCONbits.GIE = 1);
 }
-
-
 
 void interrupt service(void) {
 

@@ -3659,6 +3659,8 @@ int* getTime(){
 int time[7];
 
 
+
+
 I2C_Master_Start();
 I2C_Master_Write(0b11010000);
 I2C_Master_Write(0x00);
@@ -3673,10 +3675,13 @@ time[i] = I2C_Master_Read(1);
 time[6] = I2C_Master_Read(0);
 I2C_Master_Stop();
 
+
+
 return time;
 }
 
 void setTime(void){
+(INTCONbits.GIE = 0);
 I2C_Master_Start();
 I2C_Master_Write(0b11010000);
 I2C_Master_Write(0x00);
@@ -3684,4 +3689,5 @@ for(char i=0; i<7; i++){
 I2C_Master_Write(happynewyear[i]);
 }
 I2C_Master_Stop();
+(INTCONbits.GIE = 1);
 }

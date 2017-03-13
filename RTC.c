@@ -23,6 +23,8 @@ void initRTC(){
 int* getTime(){
     int time[7];
     
+    //di();
+    
     ///Reset RTC memory pointer 
     I2C_Master_Start(); //Start condition
     I2C_Master_Write(0b11010000); //7 bit RTC address + Write
@@ -38,15 +40,19 @@ int* getTime(){
     time[6] = I2C_Master_Read(0);       //Final Read without ack
     I2C_Master_Stop();
     
+    //ei();
+    
     return time;
 }
 
 void setTime(void){
+    di();
     I2C_Master_Start(); //Start condition
     I2C_Master_Write(0b11010000); //7 bit RTC address + Write
     I2C_Master_Write(0x00); //Set memory pointer to seconds
     for(char i=0; i<7; i++){
         I2C_Master_Write(happynewyear[i]);
     }    
-    I2C_Master_Stop(); //Stop condition 
+    I2C_Master_Stop(); //Stop condition
+    ei();
 }
