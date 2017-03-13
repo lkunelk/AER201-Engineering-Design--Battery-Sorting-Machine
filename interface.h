@@ -8,6 +8,7 @@
 #ifndef INTERFACE_H
 #define	INTERFACE_H
 
+void showInterface();
 void dateTime();
 void mainMenu();
 void runSelect();

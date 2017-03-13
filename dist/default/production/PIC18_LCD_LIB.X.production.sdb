@@ -74,17 +74,19 @@
 [v _I2C_Master_Write I2C_Master_Write `(v  1 e 1 0 ]
 "53
 [v _I2C_Master_Read I2C_Master_Read `(uc  1 e 1 0 ]
-"12 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\interface.c
+"14 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\interface.c
+[v _showInterface showInterface `(v  1 e 1 0 ]
+"75
 [v _dateTime dateTime `(v  1 e 1 0 ]
-"18
+"81
 [v _mainMenu mainMenu `(v  1 e 1 0 ]
-"24
+"87
 [v _runSelect runSelect `(v  1 e 1 0 ]
-"30
+"93
 [v _runMenu runMenu `(v  1 e 1 0 ]
-"36
+"99
 [v _runTime runTime `(v  1 e 1 0 ]
-"42
+"105
 [v _runStats runStats `(v  1 e 1 0 ]
 "43 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\iopin.c
 [v _digitalRead digitalRead `(i  1 e 2 0 ]
@@ -114,11 +116,9 @@
 [v _sortBattery sortBattery `(v  1 e 1 0 ]
 "166
 [v _pinSetup pinSetup `(v  1 e 1 0 ]
-"200
-[v _showInterface showInterface `(v  1 e 1 0 ]
-"261
+"202
 [v _service service `II(v  1 e 1 0 ]
-"283
+"224
 [v _pause pause `(v  1 e 1 0 ]
 "17 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\servo.c
 [v _initServo initServo `(v  1 e 1 0 ]
@@ -141,7 +141,7 @@
 [v _PORTA PORTA `VEuc  1 e 1 @3968 ]
 "185
 [v _PORTB PORTB `VEuc  1 e 1 @3969 ]
-[s S324 . 1 `uc 1 RB0 1 0 :1:0 
+[s S297 . 1 `uc 1 RB0 1 0 :1:0 
 `uc 1 RB1 1 0 :1:1 
 `uc 1 RB2 1 0 :1:2 
 `uc 1 RB3 1 0 :1:3 
@@ -151,7 +151,7 @@
 `uc 1 RB7 1 0 :1:7 
 ]
 "226
-[s S333 . 1 `uc 1 INT0 1 0 :1:0 
+[s S306 . 1 `uc 1 INT0 1 0 :1:0 
 `uc 1 INT1 1 0 :1:1 
 `uc 1 INT2 1 0 :1:2 
 `uc 1 CCP2 1 0 :1:3 
@@ -160,7 +160,7 @@
 `uc 1 KBI2 1 0 :1:6 
 `uc 1 KBI3 1 0 :1:7 
 ]
-[s S342 . 1 `uc 1 AN12 1 0 :1:0 
+[s S315 . 1 `uc 1 AN12 1 0 :1:0 
 `uc 1 AN10 1 0 :1:1 
 `uc 1 AN8 1 0 :1:2 
 `uc 1 AN9 1 0 :1:3 
@@ -169,11 +169,11 @@
 `uc 1 PGC 1 0 :1:6 
 `uc 1 PGD 1 0 :1:7 
 ]
-[s S351 . 1 `uc 1 . 1 0 :3:0 
+[s S324 . 1 `uc 1 . 1 0 :3:0 
 `uc 1 CCP2_PA2 1 0 :1:3 
 ]
-[u S354 . 1 `S324 1 . 1 0 `S333 1 . 1 0 `S342 1 . 1 0 `S351 1 . 1 0 ]
-[v _PORTBbits PORTBbits `VES354  1 e 1 @3969 ]
+[u S327 . 1 `S297 1 . 1 0 `S306 1 . 1 0 `S315 1 . 1 0 `S324 1 . 1 0 ]
+[v _PORTBbits PORTBbits `VES327  1 e 1 @3969 ]
 "355
 [v _PORTC PORTC `VEuc  1 e 1 @3970 ]
 "529
@@ -186,7 +186,7 @@
 [v _LATC LATC `VEuc  1 e 1 @3979 ]
 "1205
 [v _LATD LATD `VEuc  1 e 1 @3980 ]
-[s S251 . 1 `uc 1 LATD0 1 0 :1:0 
+[s S224 . 1 `uc 1 LATD0 1 0 :1:0 
 `uc 1 LATD1 1 0 :1:1 
 `uc 1 LATD2 1 0 :1:2 
 `uc 1 LATD3 1 0 :1:3 
@@ -196,7 +196,7 @@
 `uc 1 LATD7 1 0 :1:7 
 ]
 "1232
-[s S260 . 1 `uc 1 LD0 1 0 :1:0 
+[s S233 . 1 `uc 1 LD0 1 0 :1:0 
 `uc 1 LD1 1 0 :1:1 
 `uc 1 LD2 1 0 :1:2 
 `uc 1 LD3 1 0 :1:3 
@@ -205,8 +205,8 @@
 `uc 1 LD6 1 0 :1:6 
 `uc 1 LD7 1 0 :1:7 
 ]
-[u S269 . 1 `S251 1 . 1 0 `S260 1 . 1 0 ]
-[v _LATDbits LATDbits `VES269  1 e 1 @3980 ]
+[u S242 . 1 `S224 1 . 1 0 `S233 1 . 1 0 ]
+[v _LATDbits LATDbits `VES242  1 e 1 @3980 ]
 "1316
 [v _LATE LATE `VEuc  1 e 1 @3981 ]
 "1367
@@ -415,11 +415,11 @@
 [v stopServo@timer timer `i  1 p 2 0 ]
 "33
 } 0
-"283 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
+"224 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
 [v _pause pause `(v  1 e 1 0 ]
 {
 [v pause@message message `*.25uc  1 p 2 122 ]
-"287
+"228
 } 0
 "17 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\servo.c
 [v _initServo initServo `(v  1 e 1 0 ]
@@ -517,35 +517,35 @@
 [v analogRead@channel channel `i  1 p 2 0 ]
 "96
 } 0
-"200 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
+"14 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\interface.c
 [v _showInterface showInterface `(v  1 e 1 0 ]
 {
-"201
+"15
 [v showInterface@key key `uc  1 a 1 123 ]
-"259
+"73
 } 0
-"36 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\interface.c
+"99
 [v _runTime runTime `(v  1 e 1 0 ]
 {
-"40
+"103
 } 0
-"42
+"105
 [v _runStats runStats `(v  1 e 1 0 ]
 {
-"46
+"109
 } 0
-"24
+"87
 [v _runSelect runSelect `(v  1 e 1 0 ]
 {
-"28
+"91
 } 0
-"30
+"93
 [v _runMenu runMenu `(v  1 e 1 0 ]
 {
 [v runMenu@key key `uc  1 a 1 wreg ]
 [v runMenu@key key `uc  1 a 1 wreg ]
 [v runMenu@key key `uc  1 a 1 122 ]
-"34
+"97
 } 0
 "35 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\keypad.c
 [v _readKeypad readKeypad `(uc  1 e 1 0 ]
@@ -554,15 +554,15 @@
 [v readKeypad@key key `uc  1 a 1 0 ]
 "40
 } 0
-"18 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\interface.c
+"81 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\interface.c
 [v _mainMenu mainMenu `(v  1 e 1 0 ]
 {
-"22
+"85
 } 0
-"12
+"75
 [v _dateTime dateTime `(v  1 e 1 0 ]
 {
-"16
+"79
 } 0
 "464 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\doprnt.c
 [v _printf printf `(i  1 e 2 0 ]
@@ -571,9 +571,9 @@
 [v printf@idx idx `uc  1 a 1 101 ]
 "528
 [v printf@val val `ul  1 a 4 114 ]
-[u S692 . 4 `ul 1 vd 4 0 `d 1 integ 3 0 ]
+[u S693 . 4 `ul 1 vd 4 0 `d 1 integ 3 0 ]
 "526
-[v printf@tmpval tmpval `S692  1 a 4 110 ]
+[v printf@tmpval tmpval `S693  1 a 4 110 ]
 "516
 [v printf@fval fval `d  1 a 3 118 ]
 [v printf@exp exp `i  1 a 2 108 ]
@@ -812,12 +812,12 @@
 [v lcdNibble@data data `uc  1 a 1 1 ]
 "68
 } 0
-"261 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
+"202 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
 [v _service service `II(v  1 e 1 0 ]
 {
-"272
+"213
 [v service@key key `uc  1 a 1 116 ]
-"281
+"222
 } 0
 "43 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\servo.c
 [v i2_setAngle setAngle `(v  1 e 1 0 ]

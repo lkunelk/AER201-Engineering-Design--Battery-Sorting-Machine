@@ -5,7 +5,7 @@ Linker command line:
 -W-3 --edf=C:\Program Files (x86)\Microchip\xc8\v1.40\dat\en_msgs.txt -cs \
   -h+dist/default/production\PIC18_LCD_LIB.X.production.sym \
   --cmf=dist/default/production\PIC18_LCD_LIB.X.production.cmf -z -Q18F4620 \
-  -oC:\Users\Nam\AppData\Local\Temp\s6f8.2 \
+  -oC:\Users\Nam\AppData\Local\Temp\s68s.2 \
   -Mdist/default/production/PIC18_LCD_LIB.X.production.map -E1 -ver=XC8 \
   -ASTACK=016Dh-0f7fh -pstack=STACK -ACODE=00h-0FFFFh -ACONST=00h-0FFFFh \
   -ASMALLCONST=01000h-010FFhx240 -AMEDIUMCONST=01000h-0FFFFh \
@@ -25,7 +25,7 @@ Linker command line:
   -pfarbss=FARRAM,fardata=FARRAM,nvFARRAM=FARRAM \
   -pintsave_regs=BIGRAM,bigbss=BIGRAM,bigdata=BIGRAM -pbss=RAM \
   -pidata=CODE,irdata=CODE,ibigdata=CODE,ifardata=CODE -prparam=COMRAM \
-  C:\Users\Nam\AppData\Local\Temp\s6f8.obj \
+  C:\Users\Nam\AppData\Local\Temp\s68s.obj \
   dist/default/production\PIC18_LCD_LIB.X.production.obj 
 
 Object code version is 3.11
@@ -38,7 +38,7 @@ Call graph: (short form)
 
 
                 Name                               Link     Load   Length Selector   Space Scale
-C:\Users\Nam\AppData\Local\Temp\s6f8.obj
+C:\Users\Nam\AppData\Local\Temp\s68s.obj
                 init                                  E        E        4        4       0
                 reset_vec                             0        0        4        0       0
                 idloc                            200000   200000        8   200000       0
@@ -1010,7 +1010,7 @@ __tdiv_to_l_@f2                 cstackBANK0  000083
 __tdiv_to_l_@quot               cstackBANK0  000089
 _analogRead                     text14       003786
 _angleToPulse                   text7        001CF6
-_angleToPulse$1296              cstackBANK0  0000E5
+_angleToPulse$1297              cstackBANK0  0000E5
 _conveyorServo                  dataBANK1    00012F
 _cylinderMotor                  dataBANK1    000145
 _dateTime                       text22       003A18
@@ -1018,8 +1018,8 @@ _digitalRead                    text13       0028BE
 _digitalWrite                   text12       002A8C
 _dpowers                        mediumconst  00FDD3
 _fround                         text27       00113C
-_fround$1297                    cstackBANK0  0000B6
-_fround$1298                    cstackBANK0  0000B3
+_fround$1298                    cstackBANK0  0000B6
+_fround$1299                    cstackBANK0  0000B3
 _happynewyear                   mediumconst  00FE7A
 _hexpowers                      mediumconst  00FE49
 _initLCD                        text45       0036F8
@@ -1044,7 +1044,7 @@ _pin                            bssBANK1     000110
 _pinSetup                       text44       0037C8
 _port                           bssBANK1     000118
 _printf                         text23       000012
-_printf$1300                    cstackBANK0  0000E2
+_printf$1301                    cstackBANK0  0000E2
 _pulse                          bssBANK1     000100
 _putch                          text25       003958
 _readKeypad                     text20       003904
@@ -1058,7 +1058,7 @@ _runSelect                      text18       0039CC
 _runStats                       text17       0039A6
 _runTime                        text16       003980
 _scale                          text24       000964
-_scale$1299                     cstackBANK0  0000B3
+_scale$1300                     cstackBANK0  0000B3
 _service                        intcode      000008
 _servoInterruptService          text58       001650
 _setAngle                       text6        003246
@@ -1117,7 +1117,7 @@ i2___fttol@f1                   cstackCOMRAM 000037
 i2___fttol@lval                 cstackCOMRAM 000041
 i2___fttol@sign1                cstackCOMRAM 000040
 i2_angleToPulse                 text50       00224A
-i2_angleToPulse$1392            cstackCOMRAM 000056
+i2_angleToPulse$1393            cstackCOMRAM 000056
 i2_digitalRead                  text61       002E60
 i2_digitalWrite                 text60       002FC0
 i2_setAngle                     text49       0034C2
@@ -1301,7 +1301,7 @@ Total ram usage:        4 bytes
 
  *************** function _pause *****************
  Defined at:
-		line 283 in file "main.c"
+		line 224 in file "main.c"
  Parameters:    Size  Location     Type
   message         2  122[BANK0 ] PTR unsigned char 
 		 -> STR_8(24), STR_7(15), STR_6(17), STR_5(20), 
@@ -1695,7 +1695,7 @@ Total ram usage:        6 bytes
 
  *************** function _showInterface *****************
  Defined at:
-		line 200 in file "main.c"
+		line 14 in file "interface.c"
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
@@ -1731,7 +1731,7 @@ Total ram usage:        1 bytes
 
  *************** function _runTime *****************
  Defined at:
-		line 36 in file "interface.c"
+		line 99 in file "interface.c"
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
@@ -1762,7 +1762,7 @@ Total ram usage:        0 bytes
 
  *************** function _runStats *****************
  Defined at:
-		line 42 in file "interface.c"
+		line 105 in file "interface.c"
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
@@ -1793,7 +1793,7 @@ Total ram usage:        0 bytes
 
  *************** function _runSelect *****************
  Defined at:
-		line 24 in file "interface.c"
+		line 87 in file "interface.c"
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
@@ -1824,7 +1824,7 @@ Total ram usage:        0 bytes
 
  *************** function _runMenu *****************
  Defined at:
-		line 30 in file "interface.c"
+		line 93 in file "interface.c"
  Parameters:    Size  Location     Type
   key             1    wreg     unsigned char 
  Auto vars:     Size  Location     Type
@@ -1879,14 +1879,14 @@ Total ram usage:        1 bytes
  This function calls:
 		Nothing
  This function is called by:
-		_showInterface
 		_pause
+		_showInterface
  This function uses a non-reentrant model
 
 
  *************** function _mainMenu *****************
  Defined at:
-		line 18 in file "interface.c"
+		line 81 in file "interface.c"
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
@@ -1917,7 +1917,7 @@ Total ram usage:        0 bytes
 
  *************** function _dateTime *****************
  Defined at:
-		line 12 in file "interface.c"
+		line 75 in file "interface.c"
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
@@ -2808,7 +2808,7 @@ Total ram usage:        2 bytes
 
  *************** function _service *****************
  Defined at:
-		line 261 in file "main.c"
+		line 202 in file "main.c"
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
@@ -3389,9 +3389,10 @@ interface.c
 		_runTime       		CODE           	3980	0000	39
 		_runStats      		CODE           	39A6	0000	39
 		_runMenu       		CODE           	3874	0000	51
+		_showInterface 		CODE           	25D2	0000	261
 		_mainMenu      		CODE           	39F2	0000	39
 
-interface.c estimated size: 246
+interface.c estimated size: 507
 
 lcd.c
 		_putch         		CODE           	3958	0000	41
@@ -3424,9 +3425,8 @@ main.c
 		_pinSetup      		CODE           	37C8	0000	63
 		_main          		CODE           	2DAE	0000	179
 		_pause         		CODE           	3A3E	0000	23
-		_showInterface 		CODE           	25D2	0000	261
 
-main.c estimated size: 1660
+main.c estimated size: 1399
 
 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\ftadd.c
 		___ftadd       		CODE           	13E8	0000	617
