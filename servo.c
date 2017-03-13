@@ -42,8 +42,6 @@ long angleToPulse(int angle){
 
 void setAngle(int timer, int angle){
     pulse[timer] = 0xffff - angleToPulse(angle);
-    lcdClear();
-    printf("%ld",pulse[timer]);
 }
 
 void servoInterruptService(){

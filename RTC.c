@@ -11,7 +11,7 @@
 const char happynewyear[7] = {  0x45, //45 Seconds 
                             0x59, //59 Minutes
                             0x23, //24 hour mode, set to 23:00
-                            0x07, //Saturday 
+                            0x07, //Saturday
                             0x31, //31st
                             0x12, //December
                             0x16};//2016

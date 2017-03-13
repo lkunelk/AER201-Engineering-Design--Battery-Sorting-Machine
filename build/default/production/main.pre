@@ -3827,6 +3827,7 @@ void angleToPulseLength(float mill, int prescaler);
 void initServo(int timer, int po, int pi, int angle);
 void setAngle(int timer, int angle);
 void servoInterruptService();
+void stopServo(int timer);
 long angleToPulse(int angle);
 
 # 11 "interface.h"
@@ -3845,33 +3846,86 @@ void initRTC();
 # 24 "main.c"
 void pinSetup(void);
 void showInterface(void);
-void sortBatteryInterruptService(void);
+void sortBattery(void);
+
+int switchFlag = 0;
+
+int redirectAngle_AA = 60;
+int redirectAngle_C = 80;
+int redirectAngle_9V = 100;
+int redirectAngle_OTHER = 120;
+
+int padAngle_CLOSE = 70;
+int padAngle_CATCH = 90;
+int padAngle_OPEN = 180;
+
+int cylinderMotor[2] = { 2, 0};
+int conveyorServo[3] = {0, 2, 1};
+int padServo[3] = {1, 2, 2};
+int redirectingServo[3] = {3, 2, 3};
 
 void main(){
 pinSetup();
 initLCD();
-initRTC();
+
 
 while(1){
 (INTCONbits.GIE = 0);
 showInterface();
 (INTCONbits.GIE = 1);
 
-# 44
-lcdClear();
-printf("starting");
-digitalWrite(2,0,1);
+
+initServo(conveyorServo[0], conveyorServo[1], conveyorServo[2], 90);
+initServo(padServo[0], padServo[1], padServo[2], padAngle_CATCH);
+initServo(redirectingServo[0], redirectingServo[1],redirectingServo[2], 90);
 
 
-
+while(1){
+while(!switchFlag);
+switchFlag = 0;
+sortBattery();
+}
 
 while(1);
 };
 }
 
+void sortBattery(){
+
+lcdClear();
+printf("interrupt!");
+
+
+stopServo(conveyorServo[0]);
+digitalWrite(cylinderMotor[0], cylinderMotor[1], 0);
+
+
+
+
+readKeypad();
+
+
+setAngle(padServo[0], padAngle_CLOSE);
+
+lcdClear();
+printf("open?");
+
+readKeypad();
+
+lcdClear();
+printf("open!");
+
+setAngle(padServo[0], padAngle_OPEN);
+
+
+
+
+while(1);
+}
+
 void pinSetup(){
 
-# 61
+# 109
 TRISA = 0xFF;
 TRISB = 0xFF;
 TRISC = 0x00;
@@ -3969,26 +4023,18 @@ servoInterruptService();
 
 
 if(INT0IF){ INT0IF = 0;
-sortBatteryInterruptService();
+switchFlag = 1;
 }
 
 
 if(INT1IF){INT1IF = 0;
 char key = (PORTB & 0xF0) >> 4;
-if(key == 0)setAngle(0,45);
+if(key == 0)setAngle(0,30);
 if(key == 1)setAngle(0,90);
 if(key == 2)setAngle(0,135);
+
+if(key == 4)setAngle(3,80);
+if(key == 5)setAngle(3,90);
+if(key == 6)setAngle(3,100);
 }
-}
-
-
-int binAngle[4] = {60, 80, 100, 120};
-
-int count = 0;
-void sortBatteryInterruptService(){
-count++;
-lcdClear();
-printf("sorting! %d",count);
-
-# 194
 }

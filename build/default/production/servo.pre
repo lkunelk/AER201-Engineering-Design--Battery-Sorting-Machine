@@ -3704,6 +3704,7 @@ extern int printf(const char *, ...);
 void initServo(int timer, int po, int pi, int angle);
 void setAngle(int timer, int angle);
 void servoInterruptService();
+void stopServo(int timer);
 long angleToPulse(int angle);
 
 # 28 "iopin.h"
@@ -3734,6 +3735,15 @@ initTimer(timer);
 startTimer(timer,0);
 }
 
+void stopServo(int timer){
+switch(timer){
+case 0: T0CON = 0; break;
+case 1: T1CON = 0; break;
+case 2: T2CON = 0; break;
+case 3: T3CON = 0; break;
+}
+}
+
 long angleToPulse(int angle){
 long offset = 0;
 long a000 = 1250;
@@ -3744,8 +3754,6 @@ return a000 + angle/180.0*(a180-a000) + offset;
 
 void setAngle(int timer, int angle){
 pulse[timer] = 0xffff - angleToPulse(angle);
-lcdClear();
-printf("%ld",pulse[timer]);
 }
 
 void servoInterruptService(){

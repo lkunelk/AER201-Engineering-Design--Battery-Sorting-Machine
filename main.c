@@ -23,12 +23,28 @@
 
 void pinSetup(void);
 void showInterface(void);
-void sortBatteryInterruptService(void);
+void sortBattery(void);
+
+int switchFlag = 0;
+
+int redirectAngle_AA = 60; //angles for the re-directing arm
+int redirectAngle_C  = 80;
+int redirectAngle_9V = 100;
+int redirectAngle_OTHER = 120;
+
+int padAngle_CLOSE = 70; //angles for voltage testing pads
+int padAngle_CATCH = 90;
+int padAngle_OPEN  = 180;
+
+int    cylinderMotor[2] = {   C, 0}; //         port C, pin 1
+int    conveyorServo[3] = {0, C, 1}; //timer 0, port C, pin 1
+int         padServo[3] = {1, C, 2}; //timer 1, port C, pin 2
+int redirectingServo[3] = {3, C, 3}; //timer 3, port C, pin 2
 
 void main(){
     pinSetup();
     initLCD();
-    initRTC();
+    //initRTC();
     
     while(1){
         di();
@@ -36,20 +52,53 @@ void main(){
         ei();
 
         //start up motors
-        //init servo (timer, port, pin, angle))
-        //initServo(0, C,0, 90);
-        //initServo(1, C,1, 90);
-        //initServo(3, C,2, 90);
-        
-        lcdClear();
-        printf("starting");
-        digitalWrite(C,0,HIGH);
+        initServo(conveyorServo[0],    conveyorServo[1],   conveyorServo[2],    90);
+        initServo(padServo[0],         padServo[1],        padServo[2],         padAngle_CATCH);
+        initServo(redirectingServo[0], redirectingServo[1],redirectingServo[2], 90);
         
         // poll the time if it exceeds some amount stop process
-        
+        while(1){
+            while(!switchFlag);
+            switchFlag = 0;
+            sortBattery();
+        }
         //display results
         while(1); //stop here for now
     };//stop here
+}
+
+void sortBattery(){
+    
+    lcdClear();
+    printf("interrupt!");
+    
+    //stop cylinder and conveyor belt
+    stopServo(conveyorServo[0]);
+    digitalWrite(cylinderMotor[0], cylinderMotor[1], LOW);
+    
+    //wait for battery to fall in
+    //__delay_ms(1000);
+    
+    readKeypad();
+    
+    //compress battery
+    setAngle(padServo[0], padAngle_CLOSE);
+    
+    lcdClear();
+    printf("open?");
+    //measure voltage
+    readKeypad();
+    //set the angle for directing arm
+    lcdClear();
+    printf("open!");
+    //release battery
+    setAngle(padServo[0], padAngle_OPEN);
+    //set gate to the resting state
+    
+    readKeypad();
+    //turn on the conveyor belt and cylinder
+    initServo();
+    while(1);
 }
 
 void pinSetup(){
@@ -155,40 +204,18 @@ void interrupt service(void) {
     
     //Contact sensor - port B, pin 0 external interrupt
     if(INT0IF){ INT0IF = 0; //clear flag
-        sortBatteryInterruptService();
+        switchFlag = 1;
     }
     
     //Keyboard - port B, pin 1 external interrupt
     if(INT1IF){INT1IF = 0;     //Clear flag bit
         char key = (PORTB & 0xF0) >> 4;
-        if(key == 0)setAngle(0,45);
+        if(key == 0)setAngle(0,30);
         if(key == 1)setAngle(0,90);
         if(key == 2)setAngle(0,135);
+        
+        if(key == 4)setAngle(3,80);
+        if(key == 5)setAngle(3,90);
+        if(key == 6)setAngle(3,100);
     }
-}
-
-//                 AA, C,  9V,  other
-int binAngle[4] = {60, 80, 100, 120}; //angles for the re-directing arm
-
-int count = 0;
-void sortBatteryInterruptService(){
-    count++;
-    lcdClear();
-    printf("sorting! %d",count);
-    
-    //stop cylinder and conveyor belt
-    
-    //wait for battery to fall in
-    
-    //compress battery
-    
-    //measure voltage
-    
-    //set the angle for directing arm
-    
-    //release battery
-    
-    //set gate to the resting state
-    
-    //turn on the conveyor belt and cylinder
 }
