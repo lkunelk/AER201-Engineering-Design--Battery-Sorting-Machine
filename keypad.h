@@ -8,9 +8,10 @@
 #ifndef KEYPAD_H
 #define	KEYPAD_H
 
-void initKeypad(void);
-char readKeypad(void);
-
+void initKeypad();
+char readKeypad();
+char keyPressed();
+void keyPressedInterruptService();
 
 
 #endif	/* KEYPAD_H */

@@ -3638,11 +3638,14 @@ extern __nonreentrant void _delaywdt(unsigned long);
 extern __nonreentrant void _delay3(unsigned char);
 
 # 11 "keypad.h"
-void initKeypad(void);
-char readKeypad(void);
+void initKeypad();
+char readKeypad();
+char keyPressed();
+void keyPressedInterruptService();
 
 # 24 "keypad.c"
 const char keys[] = "123A456B789C*0#D";
+char lastKey = 0;
 
 
 void initKeypad(){
@@ -3658,4 +3661,15 @@ while(PORTBbits.RB1 == 0);
 char key = (PORTB & 0xF0) >> 4;
 while(PORTBbits.RB1 == 1);
 return keys[key];
+}
+
+char keyPressed(){
+char key = lastKey;
+lastKey = 0;
+return key;
+}
+
+void keyPressedInterruptService(){
+char key = (PORTB & 0xF0) >> 4;
+lastKey = keys[key];
 }

@@ -3717,13 +3717,24 @@ void lcdClear(void);
 void lcdNewline(void);
 
 # 11 "keypad.h"
-void initKeypad(void);
-char readKeypad(void);
+void initKeypad();
+char readKeypad();
+char keyPressed();
+void keyPressedInterruptService();
 
-# 14 "interface.c"
+# 11 "RTC.h"
+int* getTime();
+void setTime(void);
+void initRTC();
+
+# 16 "interface.c"
 void showInterface(){
+
+initRTC();
+setTime();
 char key;
 while(1){
+
 dateTime();
 while(readKeypad() != 'A');
 
@@ -3782,7 +3793,12 @@ break;
 }
 }
 
+
+int prevTime = 0;
+int count = 0;
 void dateTime(){
+
+# 94
 lcdClear();
 printf("  hh:mm:ss      \n");
 printf("  mm:dd:yy    A>");

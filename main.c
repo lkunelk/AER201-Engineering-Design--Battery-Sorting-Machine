@@ -19,7 +19,6 @@
 #include "timer.h"
 #include "servo.h"
 #include "interface.h"
-#include "RTC.h"
 
 void pinSetup(void);
 void showInterface(void);
@@ -38,16 +37,16 @@ int padAngle_CLOSE = 70; //angles for voltage testing pads
 int padAngle_NEUTRAL = 90;
 int padAngle_OPEN  = 180;
 
-int    cylinderMotor[2] = {   C, 0}; //         port C, pin 1
+int    cylinderMotor[2] = {   C, 0}; //         port C, pin 0
 int    conveyorServo[3] = {0, C, 1}; //timer 0, port C, pin 1
 int         padServo[3] = {1, C, 2}; //timer 1, port C, pin 2
-int redirectingServo[3] = {3, C, 3}; //timer 3, port C, pin 2
+int redirectingServo[3] = {3, C, 3}; //timer 3, port C, pin 3
 
 //measure voltage and determine battery type
 int AA_float[2] = {A,3}; //pin for helping differentiate AA from 9V, for some case
-int padPin1[2] = {A,1}; //digital port A, pin 1
-int padPin2[2] = {A,2}; //digital port A, pin 2
-int padPin3[2] = {A,0}; //analog 0 is the channel not the pin 
+int  padPin1[2] = {A,1}; //digital port A, pin 1
+int  padPin2[2] = {A,2}; //digital port A, pin 2
+int  padPin3[2] = {A,0}; //analog 0 is the channel not the pin 
                      //(in this case channel 0 is pin 0),
                      //port value not needed only for reference
 
@@ -58,22 +57,12 @@ float V_LIM_9V = 0;
 void main(){
     pinSetup();
     initLCD();
-    initRTC();
-    
-    //test time
-    while(1){
-        int* t = getTime();
-        lcdClear();
-        printf(" %02x : %02x : %02x",t[2],t[1],t[0]);
-        __delay_ms(100);
-    }
     
     while(1){
-        di();
         showInterface();
-        ei();
 
         //start up motors
+        digitalWrite(cylinderMotor[0], cylinderMotor[1], HIGH);
         initServo(conveyorServo[0],    conveyorServo[1],   conveyorServo[2],    90);
         initServo(padServo[0],         padServo[1],        padServo[2],         padAngle_NEUTRAL);
         initServo(redirectingServo[0], redirectingServo[1],redirectingServo[2], 90);
@@ -127,9 +116,9 @@ void sortBattery(){
     
     lcdClear();
     printf("target: %d\nV: %f",signal,V);
-    
+    readKeypad();
     //set the angle for directing arm
-    pause("set redirect angle?");
+    /*pause("set redirect angle?");
     switch(signal){
         case 0b00: 
             //float pin to ground to differentiate AA from 9V
@@ -153,6 +142,12 @@ void sortBattery(){
     }
     
     setAngle(redirectingServo[0], targetAngle);
+    */
+    
+    lcdClear();
+    printf("pick angle: 1,2,3,4?");
+    int dir[4] = {100,95,90,85};
+    setAngle(redirectingServo[0], dir[readKeypad() - '0']);
     
     //release battery
     pause("release battery?");
@@ -200,7 +195,7 @@ void pinSetup(){
     ADCON2 |= 1<<7; //set right justified result
     
     //interrupts
-    //INT1IE = 1; // external interrupt for keypad
+    INT1IE = 1; // external interrupt for keypad
     INT0IE = 1; // external interrupt on B0 for battery touch sensor
     ei();
 }
@@ -216,14 +211,7 @@ void interrupt service(void) {
     
     //Keyboard - port B, pin 1 external interrupt
     if(INT1IF){INT1IF = 0;     //Clear flag bit
-        char key = (PORTB & 0xF0) >> 4;
-        if(key == 0)setAngle(0,30);
-        if(key == 1)setAngle(0,90);
-        if(key == 2)setAngle(0,135);
-        
-        if(key == 4)setAngle(3,80);
-        if(key == 5)setAngle(3,90);
-        if(key == 6)setAngle(3,100);
+        keyPressedInterruptService();
     }
 }
 

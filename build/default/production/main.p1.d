@@ -4,7 +4,6 @@
 I2C.h  \
 iopin.h  \
 timer.h  \
-RTC.h  \
 lcd.h  \
 servo.h  \
 keypad.h  \

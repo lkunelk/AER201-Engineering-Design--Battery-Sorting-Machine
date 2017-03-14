@@ -10,12 +10,18 @@
 #include "interface.h"
 #include "lcd.h"
 #include "keypad.h"
+#include "RTC.h"
+
 
 void showInterface(){
+    
+    initRTC();
+    setTime();
     char key; //for storing keypad input
     while(1){
-        dateTime();
-        while(readKeypad() != 'A');
+        
+            dateTime();
+            while(readKeypad() != 'A');
         
         while(1){
             //---------
@@ -72,7 +78,19 @@ void showInterface(){
     }
 }
 
+
+int prevTime = 0; //stores last second on RTC
+int count = 0;
 void dateTime(){
+    /*int* time = getTime();
+    if(prevTime^time[0]){ //if seconds change update screen
+        
+        lcdClear();
+        printf("  %02x:%02x:%02x      \n",time[2],time[1],time[0]);
+        printf("  %02x/%02x/%02x A>",time[6],time[5],time[4]);
+        
+        prevTime = getTime()[0];
+    }*/
     lcdClear();
     printf("  hh:mm:ss      \n");
     printf("  mm:dd:yy    A>");

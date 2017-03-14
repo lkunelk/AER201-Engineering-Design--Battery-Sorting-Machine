@@ -22,6 +22,7 @@
 #include "keypad.h"
 
 const char keys[] = "123A456B789C*0#D";
+char lastKey = 0;
 
 //sets up ports for input, this is for reference not actually used
 void initKeypad(){
@@ -37,4 +38,15 @@ char readKeypad(){
     char key = (PORTB & 0xF0) >> 4; //read the keypress
     while(PORTBbits.RB1 == 1); //wait for release
     return keys[key];
+}
+
+char keyPressed(){
+    char key = lastKey;
+    lastKey = 0;
+    return key;
+}
+
+void keyPressedInterruptService(){
+    char key = (PORTB & 0xF0) >> 4; //read the keypress
+    lastKey = keys[key]; //store it
 }

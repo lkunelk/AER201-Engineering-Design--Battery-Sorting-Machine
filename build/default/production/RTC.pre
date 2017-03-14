@@ -3643,13 +3643,13 @@ void I2C_Master_Write(unsigned d);
 unsigned char I2C_Master_Read(unsigned char a);
 
 # 11 "RTC.c"
-const char happynewyear[7] = { 0x45,
+const char happynewyear[7] = { 0x00,
 0x59,
-0x23,
-0x07,
-0x31,
-0x12,
-0x16};
+0x03,
+0x01,
+0x13,
+0x04,
+0x17};
 
 void initRTC(){
 I2C_Master_Init(10000);
