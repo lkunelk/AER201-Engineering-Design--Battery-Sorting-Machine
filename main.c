@@ -1,11 +1,46 @@
 /*
  * File:   main.c
  * Author: Nam Nguyen
+ * Created on Feb 18, 2017, 12:11 PM
  *
- * library offers basic functions to interface with standard
- * LCD screen. The main file tests these functions as they are implemented.
+ * Main procedure for the Battery Sorting Machine
  * 
- * Created on July 18, 2016, 12:11 PM
+ * Goal of Machine:
+ * - given 15 batteries or less (type: AA, 9V, C) seperate the batteries
+ * autonomously into 4 different categories: Charged AA, Charged 9V, Charged C,
+ * Discharged and place each category into a separate bin.
+ * 
+ * Structure of physical machine:
+ * 
+ * rotating cylinder
+ * ---------------------------------------------------------
+ * batteries are placed into a cylinder which picks up batteries
+ * and drops them onto a conveyor belt running in the middle of cylinder. 
+ * The cylinder is run by a DC motor
+ * 
+ * conveyor belt
+ * -------------------------------------------------------------
+ * transports batteries outside of cylinder. 
+ * Uses a continuous servo motor
+ * 
+ * testing channel
+ * -----------------------------------------------------------
+ * the batteries then drop into a testing v-shaped channel.
+ * The battery triggers a contact switch as it falls into place. The testing channel
+ * consists of 2 voltage measuring pads, which are embedded with metal contacts at
+ * different locations. This helps to differentiate between batteries depending 
+ * on which contacts detect a voltage. One pad is static while the other can rotate
+ * to clamp or release the battery. The dynamic pad is controlled using a servo.
+ * 
+ * redirecting arm
+ * -----------------------------------------------------------
+ * below the testing channel is the redirecting arm. It points towards the 4
+ * different bins. Depending on what type the testing channel detected the arm
+ * will point to the correct bin. The dynamic pad above will release the battery
+ * which will fall onto the redirecting arm and make its way to the bin. The 
+ * directing arm is controlled using a servo motor.
+ * 
+ * 
  */
 
 #include <xc.h>
@@ -21,23 +56,21 @@
 #include "interface.h"
 
 void pinSetup(void);
-void showInterface(void);
 void sortBattery(void);
 void pause(char* message);
-void test(int* a);
 
-int switchFlag = 0;
+int batteryDetected = 0; //1 == contact switch activated on machine
 
-int redirectAngle_AA = 60; //angles for the re-directing arm
-int redirectAngle_C  = 80;
-int redirectAngle_9V = 100;
+int    redirectAngle_AA = 60; //angles for the re-directing arm
+int     redirectAngle_C = 80;
+int    redirectAngle_9V = 100;
 int redirectAngle_OTHER = 120;
 
-int padAngle_CLOSE = 70; //angles for voltage testing pads
+int   padAngle_CLOSE = 70; //angles for voltage testing pads
 int padAngle_NEUTRAL = 90;
-int padAngle_OPEN  = 180;
+int   padAngle_OPEN  = 180;
 
-int    cylinderMotor[2] = {   C, 0}; //         port C, pin 0
+int    cylinderMotor[2] = {   C, 0}; //no timer port C, pin 0
 int    conveyorServo[3] = {0, C, 1}; //timer 0, port C, pin 1
 int         padServo[3] = {1, C, 2}; //timer 1, port C, pin 2
 int redirectingServo[3] = {3, C, 3}; //timer 3, port C, pin 3
@@ -50,7 +83,7 @@ int  padPin3[2] = {A,0}; //analog 0 is the channel not the pin
                      //(in this case channel 0 is pin 0),
                      //port value not needed only for reference
 
-float V_LIM_AA = 0;
+float V_LIM_AA = 0; //Voltage limits (above => charged, below => discharged)
 float V_LIM_C  = 0;
 float V_LIM_9V = 0;
 
@@ -72,14 +105,14 @@ void main(){
         
         // poll the time if it exceeds some amount stop process
         while(1){
-            while(!switchFlag){
+            while(!batteryDetected){
                 //poll timer if waiting exceeds limit stop the whole process
             }
             
             sortBattery();
             
             //reset flag after sorting
-            switchFlag = 0;
+            batteryDetected = 0;
         }
         
         //display results
@@ -206,7 +239,7 @@ void interrupt service(void) {
     
     //Contact sensor - port B, pin 0 external interrupt
     if(INT0IF){ INT0IF = 0; //clear flag
-        switchFlag = 1;
+        batteryDetected = 1;
     }
     
     //Keyboard - port B, pin 1 external interrupt
