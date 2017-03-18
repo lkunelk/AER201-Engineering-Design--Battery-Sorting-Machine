@@ -8,8 +8,8 @@
 #ifndef SERVO_H
 #define	SERVO_H
 
-void initServo(int timer, int po, int pi, int angle);
-void setAngle(int timer, int angle);
+void initServo(int* motor, int angle);
+void setAngle(int* motor, int angle);
 void servoInterruptService();
 void stopServo(int timer);
 long angleToPulse(int angle);

@@ -1,8 +1,4 @@
 Version 3.2 HI-TECH Software Intermediate Code
-"13 RTC.h
-[v _initRTC `(v ~T0 @X0 0 ef ]
-"12
-[v _setTime `(v ~T0 @X0 0 ef ]
 "12 interface.h
 [v _dateTime `(v ~T0 @X0 0 ef ]
 "12 keypad.h
@@ -2757,12 +2753,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;interface.c: 16: void showInterface(){
 [e :U _showInterface ]
 [f ]
-[; ;interface.c: 18: initRTC();
-"18
-[e ( _initRTC ..  ]
-[; ;interface.c: 19: setTime();
-"19
-[e ( _setTime ..  ]
 "20
 [v _key `uc ~T0 @X0 1 a ]
 [; ;interface.c: 20: char key;

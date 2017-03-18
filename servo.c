@@ -7,17 +7,23 @@
 
 #include <xc.h>
 #include <stdio.h>
+#include "lcd.h"
 #include "servo.h"
 #include "iopin.h"
 #include "timer.h"
 
-int port[4], pin[4];
+int servo[4][2];
 long pulse[4];
 
-void initServo(int timer, int po, int pi, int angle){
-    port[timer] = po;
-    pin[timer]  = pi;
-    setAngle(timer, angle); //default 1.5ms
+//motor = {timer, port, pin}
+void initServo(int* motor, int angle){
+    int timer = motor[0];
+    int port = motor[1];
+    int pin = motor[2];
+    
+    servo[timer][0] = port;
+    servo[timer][1]  = pin;
+    setAngle(&timer, angle); //initial angle
     
     initTimer(timer);
     startTimer(timer,0);
@@ -40,8 +46,8 @@ long angleToPulse(int angle){
     return a000 + angle/180.0*(a180-a000) + offset;
 }
 
-void setAngle(int timer, int angle){
-    pulse[timer] = 0xffff - angleToPulse(angle);
+void setAngle(int* motor, int angle){
+    pulse[motor[0]] = 0xffff - angleToPulse(angle);
 }
 
 void servoInterruptService(){
@@ -55,13 +61,13 @@ void servoInterruptService(){
     for(int i = 0; i < 4; i++){
         if(flags[i]){
 
-            if(digitalRead(port[i],pin[i])){ //if it was high
+            if(digitalRead(servo[i])){ //if it was high
                 startTimer(i,15535); //20ms
-                digitalWrite(port[i],pin[i],LOW);
+                digitalWrite(servo[i],LOW);
             }
             else{
                 startTimer(i, pulse[i]);
-                digitalWrite(port[i],pin[i],HIGH);
+                digitalWrite(servo[i],HIGH);
             }
             
             //clear flag

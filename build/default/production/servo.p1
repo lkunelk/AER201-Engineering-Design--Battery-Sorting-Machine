@@ -1,6 +1,6 @@
 Version 3.2 HI-TECH Software Intermediate Code
 "12 servo.h
-[v _setAngle `(v ~T0 @X0 0 ef2`i`i ]
+[v _setAngle `(v ~T0 @X0 0 ef2`*i`i ]
 "11 timer.h
 [v _initTimer `(v ~T0 @X0 0 ef1`i ]
 "12
@@ -22,9 +22,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 "7592
 [v _TMR3IF `Vb ~T0 @X0 0 e@32009 ]
 "29 iopin.h
-[v _digitalRead `(i ~T0 @X0 0 ef2`i`i ]
+[v _digitalRead `(i ~T0 @X0 0 ef1`*i ]
 "30
-[v _digitalWrite `(v ~T0 @X0 0 ef3`i`i`i ]
+[v _digitalWrite `(v ~T0 @X0 0 ef2`*i`i ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -2736,14 +2736,19 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdio.h: 190: extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupported("vsscanf() is not supported by this compiler")));
 [; ;stdio.h: 194: extern int sprintf(char *, const char *, ...);
 [; ;stdio.h: 195: extern int printf(const char *, ...);
-[; ;servo.h: 11: void initServo(int timer, int po, int pi, int angle);
-[; ;servo.h: 12: void setAngle(int timer, int angle);
+[; ;lcd.h: 16: void lcdInst(char data);
+[; ;lcd.h: 17: void lcdNibble(char data);
+[; ;lcd.h: 18: void initLCD(void);
+[; ;lcd.h: 19: void lcdClear(void);
+[; ;lcd.h: 20: void lcdNewline(void);
+[; ;servo.h: 11: void initServo(int* motor, int angle);
+[; ;servo.h: 12: void setAngle(int* motor, int angle);
 [; ;servo.h: 13: void servoInterruptService();
 [; ;servo.h: 14: void stopServo(int timer);
 [; ;servo.h: 15: long angleToPulse(int angle);
 [; ;iopin.h: 28: void digitalPinMode(int port, int pin, int type);
-[; ;iopin.h: 29: int digitalRead(int port, int pin);
-[; ;iopin.h: 30: void digitalWrite(int port, int pin, int val);
+[; ;iopin.h: 29: int digitalRead(int* pin);
+[; ;iopin.h: 30: void digitalWrite(int* pin, int val);
 [; ;iopin.h: 31: void analogPinMode(void);
 [; ;iopin.h: 32: long analogRead(int channel);
 [; ;timer.h: 11: void initTimer(int timer);
@@ -2751,155 +2756,165 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;timer.h: 13: long getTimerCount(int timer);
 [; ;timer.h: 15: float testFrequency();
 [; ;timer.h: 16: void angleToPulseLength(float mill, int prescaler);
-"14 servo.c
-[v _port `i ~T0 @X0 -> 4 `i e ]
-[v _pin `i ~T0 @X0 -> 4 `i e ]
-[; ;servo.c: 14: int port[4], pin[4];
-"15
+[v F2993 `i ~T0 @X0 -> 2 `i t ]
+"15 servo.c
+[v _servo `F2993 ~T0 @X0 -> 4 `i e ]
+[; ;servo.c: 15: int servo[4][2];
+"16
 [v _pulse `l ~T0 @X0 -> 4 `i e ]
-[; ;servo.c: 15: long pulse[4];
-"17
-[v _initServo `(v ~T0 @X0 1 ef4`i`i`i`i ]
-{
-[; ;servo.c: 17: void initServo(int timer, int po, int pi, int angle){
-[e :U _initServo ]
-[v _timer `i ~T0 @X0 1 r1 ]
-[v _po `i ~T0 @X0 1 r2 ]
-[v _pi `i ~T0 @X0 1 r3 ]
-[v _angle `i ~T0 @X0 1 r4 ]
-[f ]
-[; ;servo.c: 18: port[timer] = po;
-"18
-[e = *U + &U _port * -> -> _timer `ui `ux -> -> # *U &U _port `ui `ux _po ]
-[; ;servo.c: 19: pin[timer] = pi;
+[; ;servo.c: 16: long pulse[4];
 "19
-[e = *U + &U _pin * -> -> _timer `ui `ux -> -> # *U &U _pin `ui `ux _pi ]
-[; ;servo.c: 20: setAngle(timer, angle);
+[v _initServo `(v ~T0 @X0 1 ef2`*i`i ]
+{
+[; ;servo.c: 19: void initServo(int* motor, int angle){
+[e :U _initServo ]
+[v _motor `*i ~T0 @X0 1 r1 ]
+[v _angle `i ~T0 @X0 1 r2 ]
+[f ]
 "20
-[e ( _setAngle (2 , _timer _angle ]
-[; ;servo.c: 22: initTimer(timer);
+[v _timer `i ~T0 @X0 1 a ]
+[; ;servo.c: 20: int timer = motor[0];
+[e = _timer *U + _motor * -> -> 0 `i `x -> -> # *U _motor `i `x ]
+"21
+[v _port `i ~T0 @X0 1 a ]
+[; ;servo.c: 21: int port = motor[1];
+[e = _port *U + _motor * -> -> 1 `i `x -> -> # *U _motor `i `x ]
 "22
-[e ( _initTimer (1 _timer ]
-[; ;servo.c: 23: startTimer(timer,0);
-"23
-[e ( _startTimer (2 , _timer -> -> 0 `i `l ]
-[; ;servo.c: 24: }
+[v _pin `i ~T0 @X0 1 a ]
+[; ;servo.c: 22: int pin = motor[2];
+[e = _pin *U + _motor * -> -> 2 `i `x -> -> # *U _motor `i `x ]
+[; ;servo.c: 24: servo[timer][0] = port;
 "24
+[e = *U + &U *U + &U _servo * -> -> _timer `ui `ux -> * -> # *U &U *U &U _servo `ui -> -> 2 `i `ui `ux * -> -> -> 0 `i `ui `ux -> -> # *U &U *U + &U _servo * -> -> _timer `ui `ux -> * -> # *U &U *U &U _servo `ui -> -> 2 `i `ui `ux `ui `ux _port ]
+[; ;servo.c: 25: servo[timer][1] = pin;
+"25
+[e = *U + &U *U + &U _servo * -> -> _timer `ui `ux -> * -> # *U &U *U &U _servo `ui -> -> 2 `i `ui `ux * -> -> -> 1 `i `ui `ux -> -> # *U &U *U + &U _servo * -> -> _timer `ui `ux -> * -> # *U &U *U &U _servo `ui -> -> 2 `i `ui `ux `ui `ux _pin ]
+[; ;servo.c: 26: setAngle(&timer, angle);
+"26
+[e ( _setAngle (2 , &U _timer _angle ]
+[; ;servo.c: 28: initTimer(timer);
+"28
+[e ( _initTimer (1 _timer ]
+[; ;servo.c: 29: startTimer(timer,0);
+"29
+[e ( _startTimer (2 , _timer -> -> 0 `i `l ]
+[; ;servo.c: 30: }
+"30
 [e :UE 266 ]
 }
-"26
+"32
 [v _stopServo `(v ~T0 @X0 1 ef1`i ]
 {
-[; ;servo.c: 26: void stopServo(int timer){
+[; ;servo.c: 32: void stopServo(int timer){
 [e :U _stopServo ]
 [v _timer `i ~T0 @X0 1 r1 ]
 [f ]
-[; ;servo.c: 27: switch(timer){
-"27
+[; ;servo.c: 33: switch(timer){
+"33
 [e $U 269  ]
 {
-[; ;servo.c: 28: case 0: T0CON = 0; break;
-"28
+[; ;servo.c: 34: case 0: T0CON = 0; break;
+"34
 [e :U 270 ]
 [e = _T0CON -> -> 0 `i `uc ]
 [e $U 268  ]
-[; ;servo.c: 29: case 1: T1CON = 0; break;
-"29
+[; ;servo.c: 35: case 1: T1CON = 0; break;
+"35
 [e :U 271 ]
 [e = _T1CON -> -> 0 `i `uc ]
 [e $U 268  ]
-[; ;servo.c: 30: case 2: T2CON = 0; break;
-"30
+[; ;servo.c: 36: case 2: T2CON = 0; break;
+"36
 [e :U 272 ]
 [e = _T2CON -> -> 0 `i `uc ]
 [e $U 268  ]
-[; ;servo.c: 31: case 3: T3CON = 0; break;
-"31
+[; ;servo.c: 37: case 3: T3CON = 0; break;
+"37
 [e :U 273 ]
 [e = _T3CON -> -> 0 `i `uc ]
 [e $U 268  ]
-"32
+"38
 }
-[; ;servo.c: 32: }
+[; ;servo.c: 38: }
 [e $U 268  ]
-"27
+"33
 [e :U 269 ]
 [e [\ _timer , $ -> 0 `i 270
  , $ -> 1 `i 271
  , $ -> 2 `i 272
  , $ -> 3 `i 273
  268 ]
-"32
+"38
 [e :U 268 ]
-[; ;servo.c: 33: }
-"33
+[; ;servo.c: 39: }
+"39
 [e :UE 267 ]
 }
-"35
+"41
 [v _angleToPulse `(l ~T0 @X0 1 ef1`i ]
 {
-[; ;servo.c: 35: long angleToPulse(int angle){
+[; ;servo.c: 41: long angleToPulse(int angle){
 [e :U _angleToPulse ]
 [v _angle `i ~T0 @X0 1 r1 ]
 [f ]
-"36
+"42
 [v _offset `l ~T0 @X0 1 a ]
-[; ;servo.c: 36: long offset = 0;
+[; ;servo.c: 42: long offset = 0;
 [e = _offset -> -> 0 `i `l ]
-"37
+"43
 [v _a000 `l ~T0 @X0 1 a ]
-[; ;servo.c: 37: long a000 = 1250;
+[; ;servo.c: 43: long a000 = 1250;
 [e = _a000 -> -> 1250 `i `l ]
-"38
+"44
 [v _a180 `l ~T0 @X0 1 a ]
-[; ;servo.c: 38: long a180 = 6250;
+[; ;servo.c: 44: long a180 = 6250;
 [e = _a180 -> -> 6250 `i `l ]
-[; ;servo.c: 40: return a000 + angle/180.0*(a180-a000) + offset;
-"40
+[; ;servo.c: 46: return a000 + angle/180.0*(a180-a000) + offset;
+"46
 [e ) -> + + -> _a000 `d * / -> _angle `d .180.0 -> - _a180 _a000 `d -> _offset `d `l ]
 [e $UE 274  ]
-[; ;servo.c: 41: }
-"41
+[; ;servo.c: 47: }
+"47
 [e :UE 274 ]
 }
-"43
-[v _setAngle `(v ~T0 @X0 1 ef2`i`i ]
+"49
+[v _setAngle `(v ~T0 @X0 1 ef2`*i`i ]
 {
-[; ;servo.c: 43: void setAngle(int timer, int angle){
+[; ;servo.c: 49: void setAngle(int* motor, int angle){
 [e :U _setAngle ]
-[v _timer `i ~T0 @X0 1 r1 ]
+[v _motor `*i ~T0 @X0 1 r1 ]
 [v _angle `i ~T0 @X0 1 r2 ]
 [f ]
-[; ;servo.c: 44: pulse[timer] = 0xffff - angleToPulse(angle);
-"44
-[e = *U + &U _pulse * -> -> _timer `ui `ux -> -> # *U &U _pulse `ui `ux - -> -> 65535 `ui `l ( _angleToPulse (1 _angle ]
-[; ;servo.c: 45: }
-"45
+[; ;servo.c: 50: pulse[motor[0]] = 0xffff - angleToPulse(angle);
+"50
+[e = *U + &U _pulse * -> -> *U + _motor * -> -> 0 `i `x -> -> # *U _motor `i `x `ui `ux -> -> # *U &U _pulse `ui `ux - -> -> 65535 `ui `l ( _angleToPulse (1 _angle ]
+[; ;servo.c: 51: }
+"51
 [e :UE 275 ]
 }
-"47
+"53
 [v _servoInterruptService `(v ~T0 @X0 1 ef ]
 {
-[; ;servo.c: 47: void servoInterruptService(){
+[; ;servo.c: 53: void servoInterruptService(){
 [e :U _servoInterruptService ]
 [f ]
-"49
-[v _flags `i ~T0 @X0 -> 4 `i a ]
-[; ;servo.c: 49: int flags[4];
-[; ;servo.c: 50: flags[0] = TMR0IF;
-"50
-[e = *U + &U _flags * -> -> -> 0 `i `ui `ux -> -> # *U &U _flags `ui `ux -> _TMR0IF `i ]
-[; ;servo.c: 51: flags[1] = TMR1IF;
-"51
-[e = *U + &U _flags * -> -> -> 1 `i `ui `ux -> -> # *U &U _flags `ui `ux -> _TMR1IF `i ]
-[; ;servo.c: 52: flags[2] = TMR2IF;
-"52
-[e = *U + &U _flags * -> -> -> 2 `i `ui `ux -> -> # *U &U _flags `ui `ux -> _TMR2IF `i ]
-[; ;servo.c: 53: flags[3] = TMR3IF;
-"53
-[e = *U + &U _flags * -> -> -> 3 `i `ui `ux -> -> # *U &U _flags `ui `ux -> _TMR3IF `i ]
-[; ;servo.c: 55: for(int i = 0; i < 4; i++){
 "55
+[v _flags `i ~T0 @X0 -> 4 `i a ]
+[; ;servo.c: 55: int flags[4];
+[; ;servo.c: 56: flags[0] = TMR0IF;
+"56
+[e = *U + &U _flags * -> -> -> 0 `i `ui `ux -> -> # *U &U _flags `ui `ux -> _TMR0IF `i ]
+[; ;servo.c: 57: flags[1] = TMR1IF;
+"57
+[e = *U + &U _flags * -> -> -> 1 `i `ui `ux -> -> # *U &U _flags `ui `ux -> _TMR1IF `i ]
+[; ;servo.c: 58: flags[2] = TMR2IF;
+"58
+[e = *U + &U _flags * -> -> -> 2 `i `ui `ux -> -> # *U &U _flags `ui `ux -> _TMR2IF `i ]
+[; ;servo.c: 59: flags[3] = TMR3IF;
+"59
+[e = *U + &U _flags * -> -> -> 3 `i `ui `ux -> -> # *U &U _flags `ui `ux -> _TMR3IF `i ]
+[; ;servo.c: 61: for(int i = 0; i < 4; i++){
+"61
 {
 [v _i `i ~T0 @X0 1 a ]
 [e = _i -> 0 `i ]
@@ -2907,89 +2922,89 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e $U 278  ]
 [e :U 277 ]
 {
-[; ;servo.c: 56: if(flags[i]){
-"56
+[; ;servo.c: 62: if(flags[i]){
+"62
 [e $ ! != *U + &U _flags * -> -> _i `ui `ux -> -> # *U &U _flags `ui `ux -> 0 `i 280  ]
 {
-[; ;servo.c: 58: if(digitalRead(port[i],pin[i])){
-"58
-[e $ ! != ( _digitalRead (2 , *U + &U _port * -> -> _i `ui `ux -> -> # *U &U _port `ui `ux *U + &U _pin * -> -> _i `ui `ux -> -> # *U &U _pin `ui `ux -> 0 `i 281  ]
-{
-[; ;servo.c: 59: startTimer(i,15535);
-"59
-[e ( _startTimer (2 , _i -> -> 15535 `i `l ]
-[; ;servo.c: 60: digitalWrite(port[i],pin[i],0);
-"60
-[e ( _digitalWrite (3 , , *U + &U _port * -> -> _i `ui `ux -> -> # *U &U _port `ui `ux *U + &U _pin * -> -> _i `ui `ux -> -> # *U &U _pin `ui `ux -> 0 `i ]
-"61
-}
-[; ;servo.c: 61: }
-[e $U 282  ]
-"62
-[e :U 281 ]
-[; ;servo.c: 62: else{
-{
-[; ;servo.c: 63: startTimer(i, pulse[i]);
-"63
-[e ( _startTimer (2 , _i *U + &U _pulse * -> -> _i `ui `ux -> -> # *U &U _pulse `ui `ux ]
-[; ;servo.c: 64: digitalWrite(port[i],pin[i],1);
+[; ;servo.c: 64: if(digitalRead(servo[i])){
 "64
-[e ( _digitalWrite (3 , , *U + &U _port * -> -> _i `ui `ux -> -> # *U &U _port `ui `ux *U + &U _pin * -> -> _i `ui `ux -> -> # *U &U _pin `ui `ux -> 1 `i ]
+[e $ ! != ( _digitalRead (1 &U *U + &U _servo * -> -> _i `ui `ux -> * -> # *U &U *U &U _servo `ui -> -> 2 `i `ui `ux -> 0 `i 281  ]
+{
+[; ;servo.c: 65: startTimer(i,15535);
 "65
+[e ( _startTimer (2 , _i -> -> 15535 `i `l ]
+[; ;servo.c: 66: digitalWrite(servo[i],0);
+"66
+[e ( _digitalWrite (2 , &U *U + &U _servo * -> -> _i `ui `ux -> * -> # *U &U *U &U _servo `ui -> -> 2 `i `ui `ux -> 0 `i ]
+"67
+}
+[; ;servo.c: 67: }
+[e $U 282  ]
+"68
+[e :U 281 ]
+[; ;servo.c: 68: else{
+{
+[; ;servo.c: 69: startTimer(i, pulse[i]);
+"69
+[e ( _startTimer (2 , _i *U + &U _pulse * -> -> _i `ui `ux -> -> # *U &U _pulse `ui `ux ]
+[; ;servo.c: 70: digitalWrite(servo[i],1);
+"70
+[e ( _digitalWrite (2 , &U *U + &U _servo * -> -> _i `ui `ux -> * -> # *U &U *U &U _servo `ui -> -> 2 `i `ui `ux -> 1 `i ]
+"71
 }
 [e :U 282 ]
-[; ;servo.c: 65: }
-[; ;servo.c: 68: switch(i){
-"68
+[; ;servo.c: 71: }
+[; ;servo.c: 74: switch(i){
+"74
 [e $U 284  ]
 {
-[; ;servo.c: 69: case 0: TMR0IF = 0; break;
-"69
+[; ;servo.c: 75: case 0: TMR0IF = 0; break;
+"75
 [e :U 285 ]
 [e = _TMR0IF -> -> 0 `i `b ]
 [e $U 283  ]
-[; ;servo.c: 70: case 1: TMR1IF = 0; break;
-"70
+[; ;servo.c: 76: case 1: TMR1IF = 0; break;
+"76
 [e :U 286 ]
 [e = _TMR1IF -> -> 0 `i `b ]
 [e $U 283  ]
-[; ;servo.c: 71: case 2: TMR2IF = 0; break;
-"71
+[; ;servo.c: 77: case 2: TMR2IF = 0; break;
+"77
 [e :U 287 ]
 [e = _TMR2IF -> -> 0 `i `b ]
 [e $U 283  ]
-[; ;servo.c: 72: case 3: TMR3IF = 0; break;
-"72
+[; ;servo.c: 78: case 3: TMR3IF = 0; break;
+"78
 [e :U 288 ]
 [e = _TMR3IF -> -> 0 `i `b ]
 [e $U 283  ]
-"73
+"79
 }
-[; ;servo.c: 73: }
+[; ;servo.c: 79: }
 [e $U 283  ]
-"68
+"74
 [e :U 284 ]
 [e [\ _i , $ -> 0 `i 285
  , $ -> 1 `i 286
  , $ -> 2 `i 287
  , $ -> 3 `i 288
  283 ]
-"73
+"79
 [e :U 283 ]
-"74
+"80
 }
 [e :U 280 ]
-"75
+"81
 }
-"55
+"61
 [e ++ _i -> 1 `i ]
 [e $ < _i -> 4 `i 277  ]
 [e :U 278 ]
-"75
+"81
 }
-[; ;servo.c: 74: }
-[; ;servo.c: 75: }
-[; ;servo.c: 76: }
-"76
+[; ;servo.c: 80: }
+[; ;servo.c: 81: }
+[; ;servo.c: 82: }
+"82
 [e :UE 276 ]
 }

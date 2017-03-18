@@ -72,8 +72,8 @@ int   padAngle_OPEN  = 180;
 
 int    cylinderMotor[2] = {   C, 0}; //no timer port C, pin 0
 int    conveyorServo[3] = {0, C, 1}; //timer 0, port C, pin 1
-int         padServo[3] = {1, C, 2}; //timer 1, port C, pin 2
-int redirectingServo[3] = {3, C, 3}; //timer 3, port C, pin 3
+int         padServo[3] = {3, C, 2}; //timer 1, port C, pin 2
+int redirectingServo[3] = {1, C, 3}; //timer 3, port C, pin 3
 
 //measure voltage and determine battery type
 int AA_float[2] = {A,3}; //pin for helping differentiate AA from 9V, for some case
@@ -95,12 +95,12 @@ void main(){
         showInterface();
 
         //start up motors
-        digitalWrite(cylinderMotor[0], cylinderMotor[1], HIGH);
-        initServo(conveyorServo[0],    conveyorServo[1],   conveyorServo[2],    90);
-        initServo(padServo[0],         padServo[1],        padServo[2],         padAngle_NEUTRAL);
-        initServo(redirectingServo[0], redirectingServo[1],redirectingServo[2], 90);
+        digitalWrite(cylinderMotor, HIGH);
+        initServo(conveyorServo,    90);
+        initServo(padServo,         padAngle_NEUTRAL);
+        initServo(redirectingServo, 90);
         
-        lcdClear();
+        //lcdClear();
         printf("running");
         
         // poll the time if it exceeds some amount stop process
@@ -118,7 +118,6 @@ void main(){
         //display results
         
         
-        while(1); //stop here for now
     };//stop here
 }
 
@@ -126,14 +125,14 @@ void sortBattery(){
     
     //stop cylinder and conveyor belt
     stopServo(conveyorServo[0]);
-    digitalWrite(cylinderMotor[0], cylinderMotor[1], LOW);
+    digitalWrite(cylinderMotor, LOW);
     
     //wait for battery to fall in
     //__delay_ms(1000);
     
     //compress battery
     pause("interrupt!!!\nclose?");
-    setAngle(padServo[0], padAngle_CLOSE);
+    setAngle(padServo, padAngle_CLOSE);
     
     //measure voltage
     pause("read voltage?");
@@ -141,10 +140,10 @@ void sortBattery(){
     float resolution = (1<<10) - 1;
     
     int targetAngle;
-    int signal = digitalRead(padPin1[0],padPin1[1])<<1; //combine 2 reads
-    signal    |= digitalRead(padPin2[0],padPin2[1]);
+    int signal = digitalRead(padPin1)<<1; //combine 2 reads
+    signal    |= digitalRead(padPin2);
     
-    digitalWrite(AA_float[0], AA_float[1], HIGH); //set floating pin before reading
+    digitalWrite(AA_float, HIGH); //set floating pin before reading
     float V = analogRead(padPin3[1]) / resolution * Vcc; //voltage read
     
     lcdClear();
@@ -180,21 +179,21 @@ void sortBattery(){
     lcdClear();
     printf("pick angle: 1,2,3,4?");
     int dir[4] = {100,95,90,85};
-    setAngle(redirectingServo[0], dir[readKeypad() - '0']);
+    setAngle(redirectingServo, dir[readKeypad() - '0']);
     
     //release battery
     pause("release battery?");
-    setAngle(padServo[0], padAngle_OPEN);
+    setAngle(padServo, padAngle_OPEN);
     
         
     //set gate to the resting state
     pause("reset the pad?");
-    setAngle(padServo[0], padAngle_NEUTRAL);
+    setAngle(padServo, padAngle_NEUTRAL);
     
     //turn on the conveyor belt and cylinder
     pause("conveyor & cylinder on?");
-    initServo(conveyorServo[0],    conveyorServo[1],   conveyorServo[2],    90);
-    digitalWrite(cylinderMotor[0], cylinderMotor[1], HIGH);
+    initServo(conveyorServo,    90);
+    digitalWrite(cylinderMotor, HIGH);
     
     while(1);
 }

@@ -3730,8 +3730,8 @@ void initRTC();
 # 16 "interface.c"
 void showInterface(){
 
-initRTC();
-setTime();
+
+
 char key;
 while(1){
 

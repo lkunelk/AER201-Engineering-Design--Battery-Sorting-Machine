@@ -3700,17 +3700,24 @@ extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupport
 extern int sprintf(char *, const char *, ...);
 extern int printf(const char *, ...);
 
+# 16 "lcd.h"
+void lcdInst(char data);
+void lcdNibble(char data);
+void initLCD(void);
+void lcdClear(void);
+void lcdNewline(void);
+
 # 11 "servo.h"
-void initServo(int timer, int po, int pi, int angle);
-void setAngle(int timer, int angle);
+void initServo(int* motor, int angle);
+void setAngle(int* motor, int angle);
 void servoInterruptService();
 void stopServo(int timer);
 long angleToPulse(int angle);
 
 # 28 "iopin.h"
 void digitalPinMode(int port, int pin, int type);
-int digitalRead(int port, int pin);
-void digitalWrite(int port, int pin, int val);
+int digitalRead(int* pin);
+void digitalWrite(int* pin, int val);
 void analogPinMode(void);
 long analogRead(int channel);
 
@@ -3722,14 +3729,19 @@ long getTimerCount(int timer);
 float testFrequency();
 void angleToPulseLength(float mill, int prescaler);
 
-# 14 "servo.c"
-int port[4], pin[4];
+# 15 "servo.c"
+int servo[4][2];
 long pulse[4];
 
-void initServo(int timer, int po, int pi, int angle){
-port[timer] = po;
-pin[timer] = pi;
-setAngle(timer, angle);
+
+void initServo(int* motor, int angle){
+int timer = motor[0];
+int port = motor[1];
+int pin = motor[2];
+
+servo[timer][0] = port;
+servo[timer][1] = pin;
+setAngle(&timer, angle);
 
 initTimer(timer);
 startTimer(timer,0);
@@ -3752,8 +3764,8 @@ long a180 = 6250;
 return a000 + angle/180.0*(a180-a000) + offset;
 }
 
-void setAngle(int timer, int angle){
-pulse[timer] = 0xffff - angleToPulse(angle);
+void setAngle(int* motor, int angle){
+pulse[motor[0]] = 0xffff - angleToPulse(angle);
 }
 
 void servoInterruptService(){
@@ -3767,13 +3779,13 @@ flags[3] = TMR3IF;
 for(int i = 0; i < 4; i++){
 if(flags[i]){
 
-if(digitalRead(port[i],pin[i])){
+if(digitalRead(servo[i])){
 startTimer(i,15535);
-digitalWrite(port[i],pin[i],0);
+digitalWrite(servo[i],0);
 }
 else{
 startTimer(i, pulse[i]);
-digitalWrite(port[i],pin[i],1);
+digitalWrite(servo[i],1);
 }
 
 

@@ -15,8 +15,8 @@
 
 void showInterface(){
     
-    initRTC();
-    setTime();
+    //initRTC();
+    //setTime();
     char key; //for storing keypad input
     while(1){
         

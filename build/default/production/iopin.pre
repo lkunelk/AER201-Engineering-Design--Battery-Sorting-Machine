@@ -3639,8 +3639,8 @@ extern __nonreentrant void _delay3(unsigned char);
 
 # 28 "iopin.h"
 void digitalPinMode(int port, int pin, int type);
-int digitalRead(int port, int pin);
-void digitalWrite(int port, int pin, int val);
+int digitalRead(int* pin);
+void digitalWrite(int* pin, int val);
 void analogPinMode(void);
 long analogRead(int channel);
 
@@ -3670,34 +3670,34 @@ break;
 }
 }
 
-int digitalRead(int port, int pin){
-switch(port){
-case 0: return (PORTA>>pin)&1;
-case 1: return (PORTB>>pin)&1;
-case 2: return (PORTC>>pin)&1;
-case 3: return (PORTD>>pin)&1;
+int digitalRead(int* pin){
+switch(pin[0]){
+case 0: return (PORTA>>pin[1])&1;
+case 1: return (PORTB>>pin[1])&1;
+case 2: return (PORTC>>pin[1])&1;
+case 3: return (PORTD>>pin[1])&1;
 }
 return -1;
 }
 
-void digitalWrite(int port, int pin, int val){
-pin = 1 << pin;
+void digitalWrite(int* pin, int val){
+int p = 1 << pin[1];
 if(val == 0){
-pin ^= 0xff;
+p ^= 0xff;
 }
 
-switch(port){
-case 0: if(val == 1) LATA |= pin;
-else LATA &= pin;
+switch(pin[0]){
+case 0: if(val == 1) LATA |= p;
+else LATA &= p;
 break;
-case 1: if(val == 1) LATB |= pin;
-else LATB &= pin;
+case 1: if(val == 1) LATB |= p;
+else LATB &= p;
 break;
-case 2: if(val == 1) LATC |= pin;
-else LATC &= pin;
+case 2: if(val == 1) LATC |= p;
+else LATC &= p;
 break;
-case 3: if(val == 1) LATD |= pin;
-else LATD &= pin;
+case 3: if(val == 1) LATD |= p;
+else LATD &= p;
 }
 }
 

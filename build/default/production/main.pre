@@ -3803,8 +3803,8 @@ void lcdNewline(void);
 
 # 28 "iopin.h"
 void digitalPinMode(int port, int pin, int type);
-int digitalRead(int port, int pin);
-void digitalWrite(int port, int pin, int val);
+int digitalRead(int* pin);
+void digitalWrite(int* pin, int val);
 void analogPinMode(void);
 long analogRead(int channel);
 
@@ -3826,8 +3826,8 @@ float testFrequency();
 void angleToPulseLength(float mill, int prescaler);
 
 # 11 "servo.h"
-void initServo(int timer, int po, int pi, int angle);
-void setAngle(int timer, int angle);
+void initServo(int* motor, int angle);
+void setAngle(int* motor, int angle);
 void servoInterruptService();
 void stopServo(int timer);
 long angleToPulse(int angle);
@@ -3841,14 +3841,12 @@ void runMenu(char key);
 void runTime();
 void runStats();
 
-# 23 "main.c"
+# 58 "main.c"
 void pinSetup(void);
-void showInterface(void);
 void sortBattery(void);
 void pause(char* message);
-void test(int* a);
 
-int switchFlag = 0;
+int batteryDetected = 0;
 
 int redirectAngle_AA = 60;
 int redirectAngle_C = 80;
@@ -3861,8 +3859,8 @@ int padAngle_OPEN = 180;
 
 int cylinderMotor[2] = { 2, 0};
 int conveyorServo[3] = {0, 2, 1};
-int padServo[3] = {1, 2, 2};
-int redirectingServo[3] = {3, 2, 3};
+int padServo[3] = {3, 2, 2};
+int redirectingServo[3] = {1, 2, 3};
 
 
 int AA_float[2] = {0,3};
@@ -3884,30 +3882,29 @@ while(1){
 showInterface();
 
 
-digitalWrite(cylinderMotor[0], cylinderMotor[1], 1);
-initServo(conveyorServo[0], conveyorServo[1], conveyorServo[2], 90);
-initServo(padServo[0], padServo[1], padServo[2], padAngle_NEUTRAL);
-initServo(redirectingServo[0], redirectingServo[1],redirectingServo[2], 90);
+digitalWrite(cylinderMotor, 1);
+initServo(conveyorServo, 90);
+initServo(padServo, padAngle_NEUTRAL);
+initServo(redirectingServo, 90);
 
-lcdClear();
+
 printf("running");
 
 
 while(1){
-while(!switchFlag){
+while(!batteryDetected){
 
 }
 
 sortBattery();
 
 
-switchFlag = 0;
+batteryDetected = 0;
 }
 
 
 
 
-while(1);
 };
 }
 
@@ -3915,11 +3912,11 @@ void sortBattery(){
 
 
 stopServo(conveyorServo[0]);
-digitalWrite(cylinderMotor[0], cylinderMotor[1], 0);
+digitalWrite(cylinderMotor, 0);
 
-# 102
+# 134
 pause("interrupt!!!\nclose?");
-setAngle(padServo[0], padAngle_CLOSE);
+setAngle(padServo, padAngle_CLOSE);
 
 
 pause("read voltage?");
@@ -3927,42 +3924,42 @@ float Vcc = 4.8;
 float resolution = (1<<10) - 1;
 
 int targetAngle;
-int signal = digitalRead(padPin1[0],padPin1[1])<<1;
-signal |= digitalRead(padPin2[0],padPin2[1]);
+int signal = digitalRead(padPin1)<<1;
+signal |= digitalRead(padPin2);
 
-digitalWrite(AA_float[0], AA_float[1], 1);
+digitalWrite(AA_float, 1);
 float V = analogRead(padPin3[1]) / resolution * Vcc;
 
 lcdClear();
 printf("target: %d\nV: %f",signal,V);
 readKeypad();
 
-# 147
+# 179
 lcdClear();
 printf("pick angle: 1,2,3,4?");
 int dir[4] = {100,95,90,85};
-setAngle(redirectingServo[0], dir[readKeypad() - '0']);
+setAngle(redirectingServo, dir[readKeypad() - '0']);
 
 
 pause("release battery?");
-setAngle(padServo[0], padAngle_OPEN);
+setAngle(padServo, padAngle_OPEN);
 
 
 
 pause("reset the pad?");
-setAngle(padServo[0], padAngle_NEUTRAL);
+setAngle(padServo, padAngle_NEUTRAL);
 
 
 pause("conveyor & cylinder on?");
-initServo(conveyorServo[0], conveyorServo[1], conveyorServo[2], 90);
-digitalWrite(cylinderMotor[0], cylinderMotor[1], 1);
+initServo(conveyorServo, 90);
+digitalWrite(cylinderMotor, 1);
 
 while(1);
 }
 
 void pinSetup(){
 
-# 175
+# 207
 TRISA = 0xFF;
 TRISB = 0xFF;
 TRISC = 0x00;
@@ -3997,7 +3994,7 @@ servoInterruptService();
 
 
 if(INT0IF){ INT0IF = 0;
-switchFlag = 1;
+batteryDetected = 1;
 }
 
 

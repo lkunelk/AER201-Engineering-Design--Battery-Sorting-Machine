@@ -3,4 +3,5 @@
  servo.c  \
 iopin.h  \
 timer.h  \
+lcd.h  \
 servo.h 

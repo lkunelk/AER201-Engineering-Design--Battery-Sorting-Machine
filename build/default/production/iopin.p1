@@ -2715,8 +2715,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic18.h: 161: extern __nonreentrant void _delaywdt(unsigned long);
 [; ;pic18.h: 163: extern __nonreentrant void _delay3(unsigned char);
 [; ;iopin.h: 28: void digitalPinMode(int port, int pin, int type);
-[; ;iopin.h: 29: int digitalRead(int port, int pin);
-[; ;iopin.h: 30: void digitalWrite(int port, int pin, int val);
+[; ;iopin.h: 29: int digitalRead(int* pin);
+[; ;iopin.h: 30: void digitalWrite(int* pin, int val);
 [; ;iopin.h: 31: void analogPinMode(void);
 [; ;iopin.h: 32: long analogRead(int channel);
 "18 iopin.c
@@ -2820,36 +2820,35 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :UE 265 ]
 }
 "43
-[v _digitalRead `(i ~T0 @X0 1 ef2`i`i ]
+[v _digitalRead `(i ~T0 @X0 1 ef1`*i ]
 {
-[; ;iopin.c: 43: int digitalRead(int port, int pin){
+[; ;iopin.c: 43: int digitalRead(int* pin){
 [e :U _digitalRead ]
-[v _port `i ~T0 @X0 1 r1 ]
-[v _pin `i ~T0 @X0 1 r2 ]
+[v _pin `*i ~T0 @X0 1 r1 ]
 [f ]
-[; ;iopin.c: 44: switch(port){
+[; ;iopin.c: 44: switch(pin[0]){
 "44
 [e $U 283  ]
 {
-[; ;iopin.c: 45: case 0: return (PORTA>>pin)&1;
+[; ;iopin.c: 45: case 0: return (PORTA>>pin[1])&1;
 "45
 [e :U 284 ]
-[e ) & >> -> _PORTA `i _pin -> 1 `i ]
+[e ) & >> -> _PORTA `i *U + _pin * -> -> 1 `i `x -> -> # *U _pin `i `x -> 1 `i ]
 [e $UE 281  ]
-[; ;iopin.c: 46: case 1: return (PORTB>>pin)&1;
+[; ;iopin.c: 46: case 1: return (PORTB>>pin[1])&1;
 "46
 [e :U 285 ]
-[e ) & >> -> _PORTB `i _pin -> 1 `i ]
+[e ) & >> -> _PORTB `i *U + _pin * -> -> 1 `i `x -> -> # *U _pin `i `x -> 1 `i ]
 [e $UE 281  ]
-[; ;iopin.c: 47: case 2: return (PORTC>>pin)&1;
+[; ;iopin.c: 47: case 2: return (PORTC>>pin[1])&1;
 "47
 [e :U 286 ]
-[e ) & >> -> _PORTC `i _pin -> 1 `i ]
+[e ) & >> -> _PORTC `i *U + _pin * -> -> 1 `i `x -> -> # *U _pin `i `x -> 1 `i ]
 [e $UE 281  ]
-[; ;iopin.c: 48: case 3: return (PORTD>>pin)&1;
+[; ;iopin.c: 48: case 3: return (PORTD>>pin[1])&1;
 "48
 [e :U 287 ]
-[e ) & >> -> _PORTD `i _pin -> 1 `i ]
+[e ) & >> -> _PORTD `i *U + _pin * -> -> 1 `i `x -> -> # *U _pin `i `x -> 1 `i ]
 [e $UE 281  ]
 "49
 }
@@ -2857,7 +2856,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e $U 282  ]
 "44
 [e :U 283 ]
-[e [\ _port , $ -> 0 `i 284
+[e [\ *U + _pin * -> -> 0 `i `x -> -> # *U _pin `i `x , $ -> 0 `i 284
  , $ -> 1 `i 285
  , $ -> 2 `i 286
  , $ -> 3 `i 287
@@ -2873,84 +2872,84 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :UE 281 ]
 }
 "53
-[v _digitalWrite `(v ~T0 @X0 1 ef3`i`i`i ]
+[v _digitalWrite `(v ~T0 @X0 1 ef2`*i`i ]
 {
-[; ;iopin.c: 53: void digitalWrite(int port, int pin, int val){
+[; ;iopin.c: 53: void digitalWrite(int* pin, int val){
 [e :U _digitalWrite ]
-[v _port `i ~T0 @X0 1 r1 ]
-[v _pin `i ~T0 @X0 1 r2 ]
-[v _val `i ~T0 @X0 1 r3 ]
+[v _pin `*i ~T0 @X0 1 r1 ]
+[v _val `i ~T0 @X0 1 r2 ]
 [f ]
-[; ;iopin.c: 54: pin = 1 << pin;
 "54
-[e = _pin << -> 1 `i _pin ]
+[v _p `i ~T0 @X0 1 a ]
+[; ;iopin.c: 54: int p = 1 << pin[1];
+[e = _p << -> 1 `i *U + _pin * -> -> 1 `i `x -> -> # *U _pin `i `x ]
 [; ;iopin.c: 55: if(val == 0){
 "55
 [e $ ! == _val -> 0 `i 289  ]
 {
-[; ;iopin.c: 56: pin ^= 0xff;
+[; ;iopin.c: 56: p ^= 0xff;
 "56
-[e =^ _pin -> 255 `i ]
+[e =^ _p -> 255 `i ]
 "57
 }
 [e :U 289 ]
 [; ;iopin.c: 57: }
-[; ;iopin.c: 59: switch(port){
+[; ;iopin.c: 59: switch(pin[0]){
 "59
 [e $U 291  ]
 {
-[; ;iopin.c: 60: case 0: if(val == 1) LATA |= pin;
+[; ;iopin.c: 60: case 0: if(val == 1) LATA |= p;
 "60
 [e :U 292 ]
 [e $ ! == _val -> 1 `i 293  ]
-[e =| _LATA -> _pin `uc ]
+[e =| _LATA -> _p `uc ]
 [e $U 294  ]
 "61
 [e :U 293 ]
-[; ;iopin.c: 61: else LATA &= pin;
-[e =& _LATA -> _pin `uc ]
+[; ;iopin.c: 61: else LATA &= p;
+[e =& _LATA -> _p `uc ]
 [e :U 294 ]
 [; ;iopin.c: 62: break;
 "62
 [e $U 290  ]
-[; ;iopin.c: 63: case 1: if(val == 1) LATB |= pin;
+[; ;iopin.c: 63: case 1: if(val == 1) LATB |= p;
 "63
 [e :U 295 ]
 [e $ ! == _val -> 1 `i 296  ]
-[e =| _LATB -> _pin `uc ]
+[e =| _LATB -> _p `uc ]
 [e $U 297  ]
 "64
 [e :U 296 ]
-[; ;iopin.c: 64: else LATB &= pin;
-[e =& _LATB -> _pin `uc ]
+[; ;iopin.c: 64: else LATB &= p;
+[e =& _LATB -> _p `uc ]
 [e :U 297 ]
 [; ;iopin.c: 65: break;
 "65
 [e $U 290  ]
-[; ;iopin.c: 66: case 2: if(val == 1) LATC |= pin;
+[; ;iopin.c: 66: case 2: if(val == 1) LATC |= p;
 "66
 [e :U 298 ]
 [e $ ! == _val -> 1 `i 299  ]
-[e =| _LATC -> _pin `uc ]
+[e =| _LATC -> _p `uc ]
 [e $U 300  ]
 "67
 [e :U 299 ]
-[; ;iopin.c: 67: else LATC &= pin;
-[e =& _LATC -> _pin `uc ]
+[; ;iopin.c: 67: else LATC &= p;
+[e =& _LATC -> _p `uc ]
 [e :U 300 ]
 [; ;iopin.c: 68: break;
 "68
 [e $U 290  ]
-[; ;iopin.c: 69: case 3: if(val == 1) LATD |= pin;
+[; ;iopin.c: 69: case 3: if(val == 1) LATD |= p;
 "69
 [e :U 301 ]
 [e $ ! == _val -> 1 `i 302  ]
-[e =| _LATD -> _pin `uc ]
+[e =| _LATD -> _p `uc ]
 [e $U 303  ]
 "70
 [e :U 302 ]
-[; ;iopin.c: 70: else LATD &= pin;
-[e =& _LATD -> _pin `uc ]
+[; ;iopin.c: 70: else LATD &= p;
+[e =& _LATD -> _p `uc ]
 [e :U 303 ]
 "71
 }
@@ -2958,7 +2957,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e $U 290  ]
 "59
 [e :U 291 ]
-[e [\ _port , $ -> 0 `i 292
+[e [\ *U + _pin * -> -> 0 `i `x -> -> # *U _pin `i `x , $ -> 0 `i 292
  , $ -> 1 `i 295
  , $ -> 2 `i 298
  , $ -> 3 `i 301
