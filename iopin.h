@@ -26,8 +26,8 @@
 #define LOW 0
 
 void digitalPinMode(int port, int pin, int type);
-int digitalRead(int port, int pin);
-void digitalWrite(int port, int pin, int val);
+int digitalRead(int* pin);
+void digitalWrite(int* pin, int val);
 void analogPinMode(void);
 long analogRead(int channel);
 

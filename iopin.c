@@ -40,34 +40,34 @@ void digitalPinMode(int port, int pin, int type){
     }
 }
 
-int digitalRead(int port, int pin){
-    switch(port){
-        case A: return (PORTA>>pin)&1;
-        case B: return (PORTB>>pin)&1;
-        case C: return (PORTC>>pin)&1;
-        case D: return (PORTD>>pin)&1;
+int digitalRead(int* pin){
+    switch(pin[0]){
+        case A: return (PORTA>>pin[1])&1;
+        case B: return (PORTB>>pin[1])&1;
+        case C: return (PORTC>>pin[1])&1;
+        case D: return (PORTD>>pin[1])&1;
     }
     return -1;
 }
 
-void digitalWrite(int port, int pin, int val){
-    pin = 1 << pin;
+void digitalWrite(int* pin, int val){
+    int p = 1 << pin[1];
     if(val == LOW){
-        pin ^= 0xff;
+        p ^= 0xff;
     } 
     
-    switch(port){
-        case A: if(val == HIGH) LATA |= pin;
-                else LATA &= pin;
+    switch(pin[0]){
+        case A: if(val == HIGH) LATA |= p;
+                else LATA &= p;
                 break;
-        case B: if(val == HIGH) LATB |= pin;
-                else LATB &= pin;
+        case B: if(val == HIGH) LATB |= p;
+                else LATB &= p;
                 break;
-        case C: if(val == HIGH) LATC |= pin;
-                else LATC &= pin;
+        case C: if(val == HIGH) LATC |= p;
+                else LATC &= p;
                 break;
-        case D: if(val == HIGH) LATD |= pin;
-                else LATD &= pin;
+        case D: if(val == HIGH) LATD |= p;
+                else LATD &= p;
     }
 }
 
