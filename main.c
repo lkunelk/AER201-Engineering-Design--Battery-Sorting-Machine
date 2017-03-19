@@ -100,11 +100,11 @@ void main(){
         initServo(padServo,         padAngle_NEUTRAL);
         initServo(redirectingServo, 90);
         
-        //lcdClear();
-        printf("running");
-        
         // poll the time if it exceeds some amount stop process
         while(1){
+            lcdClear();
+            printf("running");
+            
             while(!batteryDetected){
                 //poll timer if waiting exceeds limit stop the whole process
             }
@@ -136,7 +136,7 @@ void sortBattery(){
     
     //measure voltage
     pause("read voltage?");
-    float Vcc = 4.8; //voltage of vcc pin on pic
+    float Vcc = 3.9; //voltage of vcc pin on pic
     float resolution = (1<<10) - 1;
     
     int targetAngle;
@@ -147,14 +147,15 @@ void sortBattery(){
     float V = analogRead(padPin3[1]) / resolution * Vcc; //voltage read
     
     lcdClear();
-    printf("target: %d\nV: %f",signal,V);
+    printf("signal: %d \nVoltage: %f",signal,V);
     readKeypad();
+    
     //set the angle for directing arm
-    /*pause("set redirect angle?");
+    pause("set redirect angle?");
     switch(signal){
         case 0b00: 
             //float pin to ground to differentiate AA from 9V
-            digitalWrite(AA_float[0], AA_float[1], LOW);
+            digitalWrite(AA_float, LOW);
             __delay_ms(1); //let voltage changes occur
             float V_float = analogRead(padPin3[1]) / resolution * Vcc; //voltage read
             if(V_float < 0.1){ //if below then it's AA battery
@@ -173,29 +174,20 @@ void sortBattery(){
             break;
     }
     
-    setAngle(redirectingServo[0], targetAngle);
-    */
-    
-    lcdClear();
-    printf("pick angle: 1,2,3,4?");
-    int dir[4] = {100,95,90,85};
-    setAngle(redirectingServo, dir[readKeypad() - '0']);
+    setAngle(redirectingServo, targetAngle);
     
     //release battery
     pause("release battery?");
     setAngle(padServo, padAngle_OPEN);
-    
         
     //set gate to the resting state
     pause("reset the pad?");
     setAngle(padServo, padAngle_NEUTRAL);
     
     //turn on the conveyor belt and cylinder
-    pause("conveyor & cylinder on?");
+    pause("conveyor & \ncylinder on?");
     initServo(conveyorServo,    90);
     digitalWrite(cylinderMotor, HIGH);
-    
-    while(1);
 }
 
 void pinSetup(){
@@ -217,7 +209,9 @@ void pinSetup(){
     LATE = 0x00;
     
     ADCON0 = 0x00; //turn off AD module for now
-    ADCON1 |= 0x0E; //set V reference and set an0 (ra0) as analog
+    ADCON1 |= 0x10; //set an3 (pin RA3) as V+ voltage reference
+    ADCON1 |= 0x0B; //set channel an0-an3 as analog 
+                    //(map of channels (an#) to pins in iopin.c))
     //ADCON1 |= 0b11<<4; //use external voltage reference 
     //(an2 -> Vref-) and (an3 -> Vref+)
     

@@ -5,7 +5,7 @@
  *
  * Created on Feb 20, 2016, 7:38 PM
  * 
- * analog pins:
+ * channel to analog pin mapping:
  * an0 an1 an2 an3 an4 an5 an6 an7 an8 an9 an10 an11 an12
  * ra0 ra1 ra2 ra3 ra5 re0 re1 re2 rb2 rb3 rb1  rb4  rb0 
  * 
