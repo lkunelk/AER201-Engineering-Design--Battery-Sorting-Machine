@@ -70,10 +70,10 @@ int   padAngle_CLOSE = 70; //angles for voltage testing pads
 int padAngle_NEUTRAL = 90;
 int   padAngle_OPEN  = 180;
 
-int    cylinderMotor[2] = {   C, 0}; //no timer port C, pin 0
-int    conveyorServo[3] = {0, C, 1}; //timer 0, port C, pin 1
-int         padServo[3] = {3, C, 2}; //timer 1, port C, pin 2
-int redirectingServo[3] = {1, C, 3}; //timer 3, port C, pin 3
+int    cylinderMotor[2] = {C, 0}; //no timer port C, pin 0
+int    conveyorServo[3] = {C, 1}; //timer 0, port C, pin 1
+int         padServo[3] = {C, 2}; //timer 1, port C, pin 2
+int redirectingServo[3] = {C, 3}; //timer 3, port C, pin 3
 
 //measure voltage and determine battery type
 int AA_float[2] = {A,3}; //pin for helping differentiate AA from 9V, for some case
@@ -92,17 +92,17 @@ void main(){
     initLCD();
     
     while(1){
-        showInterface();
+        //showInterface();
 
         //start up motors
         digitalWrite(cylinderMotor, HIGH);
-        initServo(conveyorServo,    90);
+        initServo(conveyorServo,    0);
         initServo(padServo,         padAngle_NEUTRAL);
-        initServo(redirectingServo, 90);
+        initServo(redirectingServo, 140);
         
         // poll the time if it exceeds some amount stop process
         while(1){
-            lcdClear();
+            //lcdClear();
             printf("running");
             
             while(!batteryDetected){
@@ -124,7 +124,7 @@ void main(){
 void sortBattery(){
     
     //stop cylinder and conveyor belt
-    stopServo(conveyorServo[0]);
+    setAngle(conveyorServo, 90);
     digitalWrite(cylinderMotor, LOW);
     
     //wait for battery to fall in
@@ -186,7 +186,7 @@ void sortBattery(){
     
     //turn on the conveyor belt and cylinder
     pause("conveyor & \ncylinder on?");
-    initServo(conveyorServo,    90);
+    setAngle(conveyorServo, 0);
     digitalWrite(cylinderMotor, HIGH);
 }
 
@@ -221,8 +221,8 @@ void pinSetup(){
     ADCON2 |= 1<<7; //set right justified result
     
     //interrupts
-    INT1IE = 1; // external interrupt for keypad
-    INT0IE = 1; // external interrupt on B0 for battery touch sensor
+    //INT1IE = 1; // external interrupt for keypad
+    INT0IE = 1; // external interrupt on B0 for battery sensing switch
     ei();
 }
 
@@ -236,7 +236,7 @@ void interrupt service(void) {
     }
     
     //Keyboard - port B, pin 1 external interrupt
-    if(INT1IF){INT1IF = 0;     //Clear flag bit
+    if(INT1IF && INT1IE){INT1IF = 0;     //Clear flag bit
         keyPressedInterruptService();
     }
 }

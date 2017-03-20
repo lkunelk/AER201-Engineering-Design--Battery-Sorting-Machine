@@ -2879,151 +2879,159 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _pin `*i ~T0 @X0 1 r1 ]
 [v _val `i ~T0 @X0 1 r2 ]
 [f ]
+[; ;iopin.c: 54: if(pin){
 "54
-[v _p `i ~T0 @X0 1 a ]
-[; ;iopin.c: 54: int p = 1 << pin[1];
-[e = _p << -> 1 `i *U + _pin * -> -> 1 `i `x -> -> # *U _pin `i `x ]
-[; ;iopin.c: 55: if(val == 0){
+[e $ ! != _pin -> -> 0 `i `*i 289  ]
+{
 "55
-[e $ ! == _val -> 0 `i 289  ]
-{
-[; ;iopin.c: 56: p ^= 0xff;
+[v _p `i ~T0 @X0 1 a ]
+[; ;iopin.c: 55: int p = 1 << pin[1];
+[e = _p << -> 1 `i *U + _pin * -> -> 1 `i `x -> -> # *U _pin `i `x ]
+[; ;iopin.c: 56: if(val == 0){
 "56
-[e =^ _p -> 255 `i ]
-"57
-}
-[e :U 289 ]
-[; ;iopin.c: 57: }
-[; ;iopin.c: 59: switch(pin[0]){
-"59
-[e $U 291  ]
+[e $ ! == _val -> 0 `i 290  ]
 {
-[; ;iopin.c: 60: case 0: if(val == 1) LATA |= p;
+[; ;iopin.c: 57: p ^= 0xff;
+"57
+[e =^ _p -> 255 `i ]
+"58
+}
+[e :U 290 ]
+[; ;iopin.c: 58: }
+[; ;iopin.c: 60: switch(pin[0]){
 "60
-[e :U 292 ]
-[e $ ! == _val -> 1 `i 293  ]
-[e =| _LATA -> _p `uc ]
-[e $U 294  ]
+[e $U 292  ]
+{
+[; ;iopin.c: 61: case 0: if(val == 1) LATA |= p;
 "61
 [e :U 293 ]
-[; ;iopin.c: 61: else LATA &= p;
-[e =& _LATA -> _p `uc ]
-[e :U 294 ]
-[; ;iopin.c: 62: break;
+[e $ ! == _val -> 1 `i 294  ]
+[e =| _LATA -> _p `uc ]
+[e $U 295  ]
 "62
-[e $U 290  ]
-[; ;iopin.c: 63: case 1: if(val == 1) LATB |= p;
-"63
+[e :U 294 ]
+[; ;iopin.c: 62: else LATA &= p;
+[e =& _LATA -> _p `uc ]
 [e :U 295 ]
-[e $ ! == _val -> 1 `i 296  ]
-[e =| _LATB -> _p `uc ]
-[e $U 297  ]
+[; ;iopin.c: 63: break;
+"63
+[e $U 291  ]
+[; ;iopin.c: 64: case 1: if(val == 1) LATB |= p;
 "64
 [e :U 296 ]
-[; ;iopin.c: 64: else LATB &= p;
-[e =& _LATB -> _p `uc ]
-[e :U 297 ]
-[; ;iopin.c: 65: break;
+[e $ ! == _val -> 1 `i 297  ]
+[e =| _LATB -> _p `uc ]
+[e $U 298  ]
 "65
-[e $U 290  ]
-[; ;iopin.c: 66: case 2: if(val == 1) LATC |= p;
-"66
+[e :U 297 ]
+[; ;iopin.c: 65: else LATB &= p;
+[e =& _LATB -> _p `uc ]
 [e :U 298 ]
-[e $ ! == _val -> 1 `i 299  ]
-[e =| _LATC -> _p `uc ]
-[e $U 300  ]
+[; ;iopin.c: 66: break;
+"66
+[e $U 291  ]
+[; ;iopin.c: 67: case 2: if(val == 1) LATC |= p;
 "67
 [e :U 299 ]
-[; ;iopin.c: 67: else LATC &= p;
-[e =& _LATC -> _p `uc ]
-[e :U 300 ]
-[; ;iopin.c: 68: break;
+[e $ ! == _val -> 1 `i 300  ]
+[e =| _LATC -> _p `uc ]
+[e $U 301  ]
 "68
-[e $U 290  ]
-[; ;iopin.c: 69: case 3: if(val == 1) LATD |= p;
-"69
+[e :U 300 ]
+[; ;iopin.c: 68: else LATC &= p;
+[e =& _LATC -> _p `uc ]
 [e :U 301 ]
-[e $ ! == _val -> 1 `i 302  ]
-[e =| _LATD -> _p `uc ]
-[e $U 303  ]
+[; ;iopin.c: 69: break;
+"69
+[e $U 291  ]
+[; ;iopin.c: 70: case 3: if(val == 1) LATD |= p;
 "70
 [e :U 302 ]
-[; ;iopin.c: 70: else LATD &= p;
-[e =& _LATD -> _p `uc ]
+[e $ ! == _val -> 1 `i 303  ]
+[e =| _LATD -> _p `uc ]
+[e $U 304  ]
+"71
 [e :U 303 ]
-"71
-}
-[; ;iopin.c: 71: }
-[e $U 290  ]
-"59
-[e :U 291 ]
-[e [\ *U + _pin * -> -> 0 `i `x -> -> # *U _pin `i `x , $ -> 0 `i 292
- , $ -> 1 `i 295
- , $ -> 2 `i 298
- , $ -> 3 `i 301
- 290 ]
-"71
-[e :U 290 ]
-[; ;iopin.c: 72: }
+[; ;iopin.c: 71: else LATD &= p;
+[e =& _LATD -> _p `uc ]
+[e :U 304 ]
 "72
+}
+[; ;iopin.c: 72: }
+[e $U 291  ]
+"60
+[e :U 292 ]
+[e [\ *U + _pin * -> -> 0 `i `x -> -> # *U _pin `i `x , $ -> 0 `i 293
+ , $ -> 1 `i 296
+ , $ -> 2 `i 299
+ , $ -> 3 `i 302
+ 291 ]
+"72
+[e :U 291 ]
+"73
+}
+[e :U 289 ]
+[; ;iopin.c: 73: }
+[; ;iopin.c: 74: }
+"74
 [e :UE 288 ]
 }
-"75
+"77
 [v _analogPinMode `(v ~T0 @X0 1 ef ]
 {
-[; ;iopin.c: 75: void analogPinMode(){
+[; ;iopin.c: 77: void analogPinMode(){
 [e :U _analogPinMode ]
 [f ]
-[; ;iopin.c: 76: ADCON0 = 0;
-"76
+[; ;iopin.c: 78: ADCON0 = 0;
+"78
 [e = _ADCON0 -> -> 0 `i `uc ]
-[; ;iopin.c: 80: ADCON1 |= 0x0A;
-"80
-[e =| _ADCON1 -> -> 10 `i `uc ]
-[; ;iopin.c: 82: ADCON2 = 0;
+[; ;iopin.c: 82: ADCON1 |= 0x0A;
 "82
-[e = _ADCON2 -> -> 0 `i `uc ]
-[; ;iopin.c: 83: ADCON2 |= 1<<0;
-"83
-[e =| _ADCON2 -> << -> 1 `i -> 0 `i `uc ]
-[; ;iopin.c: 84: ADCON2 |= 0b110<<3;
+[e =| _ADCON1 -> -> 10 `i `uc ]
+[; ;iopin.c: 84: ADCON2 = 0;
 "84
-[e =| _ADCON2 -> << -> 6 `i -> 3 `i `uc ]
-[; ;iopin.c: 85: ADCON2 |= 1<<7;
+[e = _ADCON2 -> -> 0 `i `uc ]
+[; ;iopin.c: 85: ADCON2 |= 1<<0;
 "85
-[e =| _ADCON2 -> << -> 1 `i -> 7 `i `uc ]
-[; ;iopin.c: 86: }
+[e =| _ADCON2 -> << -> 1 `i -> 0 `i `uc ]
+[; ;iopin.c: 86: ADCON2 |= 0b110<<3;
 "86
-[e :UE 304 ]
-}
+[e =| _ADCON2 -> << -> 6 `i -> 3 `i `uc ]
+[; ;iopin.c: 87: ADCON2 |= 1<<7;
+"87
+[e =| _ADCON2 -> << -> 1 `i -> 7 `i `uc ]
+[; ;iopin.c: 88: }
 "88
+[e :UE 305 ]
+}
+"90
 [v _analogRead `(l ~T0 @X0 1 ef1`i ]
 {
-[; ;iopin.c: 88: long analogRead(int channel){
+[; ;iopin.c: 90: long analogRead(int channel){
 [e :U _analogRead ]
 [v _channel `i ~T0 @X0 1 r1 ]
 [f ]
-[; ;iopin.c: 89: ADCON0 = channel<<2;
-"89
-[e = _ADCON0 -> << _channel -> 2 `i `uc ]
-[; ;iopin.c: 90: ADCON0 |= 1<<0;
-"90
-[e =| _ADCON0 -> << -> 1 `i -> 0 `i `uc ]
-[; ;iopin.c: 91: ADCON0 |= 1<<1;
+[; ;iopin.c: 91: ADCON0 = channel<<2;
 "91
-[e =| _ADCON0 -> << -> 1 `i -> 1 `i `uc ]
-[; ;iopin.c: 93: while(ADCON0 & 0b10);
+[e = _ADCON0 -> << _channel -> 2 `i `uc ]
+[; ;iopin.c: 92: ADCON0 |= 1<<0;
+"92
+[e =| _ADCON0 -> << -> 1 `i -> 0 `i `uc ]
+[; ;iopin.c: 93: ADCON0 |= 1<<1;
 "93
-[e $U 306  ]
-[e :U 307 ]
-[e :U 306 ]
-[e $ != & -> _ADCON0 `i -> 2 `i -> 0 `i 307  ]
-[e :U 308 ]
-[; ;iopin.c: 95: return (ADRESH<<8) + ADRESL;
+[e =| _ADCON0 -> << -> 1 `i -> 1 `i `uc ]
+[; ;iopin.c: 95: while(ADCON0 & 0b10);
 "95
+[e $U 307  ]
+[e :U 308 ]
+[e :U 307 ]
+[e $ != & -> _ADCON0 `i -> 2 `i -> 0 `i 308  ]
+[e :U 309 ]
+[; ;iopin.c: 97: return (ADRESH<<8) + ADRESL;
+"97
 [e ) -> + << -> _ADRESH `i -> 8 `i -> _ADRESL `i `l ]
-[e $UE 305  ]
-[; ;iopin.c: 96: }
-"96
-[e :UE 305 ]
+[e $UE 306  ]
+[; ;iopin.c: 98: }
+"98
+[e :UE 306 ]
 }

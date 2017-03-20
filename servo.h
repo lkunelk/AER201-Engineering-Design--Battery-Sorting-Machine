@@ -11,7 +11,6 @@
 void initServo(int* motor, int angle);
 void setAngle(int* motor, int angle);
 void servoInterruptService();
-void stopServo(int timer);
 long angleToPulse(int angle);
 
 #endif	/* SERVO_H */

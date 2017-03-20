@@ -3711,7 +3711,6 @@ void lcdNewline(void);
 void initServo(int* motor, int angle);
 void setAngle(int* motor, int angle);
 void servoInterruptService();
-void stopServo(int timer);
 long angleToPulse(int angle);
 
 # 28 "iopin.h"
@@ -3730,34 +3729,26 @@ float testFrequency();
 void angleToPulseLength(float mill, int prescaler);
 
 # 15 "servo.c"
-int servo[4][2];
-long pulse[4];
+int n = 0;
+int* servos[4];
+unsigned int pulse[4];
+int curr = 0;
 
 
 void initServo(int* motor, int angle){
-int timer = motor[0];
-int port = motor[1];
-int pin = motor[2];
+n++;
+servos[n-1] = motor;
+setAngle(motor, angle);
 
-servo[timer][0] = port;
-servo[timer][1] = pin;
-setAngle(&timer, angle);
+initTimer(0);
+startTimer(0,0);
 
-initTimer(timer);
-startTimer(timer,0);
-}
 
-void stopServo(int timer){
-switch(timer){
-case 0: T0CON = 0; break;
-case 1: T1CON = 0; break;
-case 2: T2CON = 0; break;
-case 3: T3CON = 0; break;
-}
+
 }
 
 long angleToPulse(int angle){
-long offset = 0;
+long offset = -600;
 long a000 = 1250;
 long a180 = 6250;
 
@@ -3765,36 +3756,23 @@ return a000 + angle/180.0*(a180-a000) + offset;
 }
 
 void setAngle(int* motor, int angle){
-pulse[motor[0]] = 0xffff - angleToPulse(angle);
+unsigned int period = 50000;
+for(int i = 0; i < n; i++){
+if(servos[i] == motor){
+pulse[i] = angleToPulse(angle);
+}
+period-=pulse[i];
+}
+pulse[n] = period;
 }
 
 void servoInterruptService(){
 
-int flags[4];
-flags[0] = TMR0IF;
-flags[1] = TMR1IF;
-flags[2] = TMR2IF;
-flags[3] = TMR3IF;
+if(TMR0IF){TMR0IF = 0;
+digitalWrite(servos[curr],0);
+digitalWrite(servos[ (curr+1)%(n+1) ],1);
+startTimer(0, 0xFFFF - pulse[ (curr+1)%(n+1) ]);
 
-for(int i = 0; i < 4; i++){
-if(flags[i]){
-
-if(digitalRead(servo[i])){
-startTimer(i,15535);
-digitalWrite(servo[i],0);
-}
-else{
-startTimer(i, pulse[i]);
-digitalWrite(servo[i],1);
-}
-
-
-switch(i){
-case 0: TMR0IF = 0; break;
-case 1: TMR1IF = 0; break;
-case 2: TMR2IF = 0; break;
-case 3: TMR3IF = 0; break;
-}
-}
+curr = (curr+1)%(n+1);
 }
 }

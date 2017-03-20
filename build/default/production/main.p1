@@ -4,28 +4,24 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _pinSetup `(v ~T0 @X0 0 ef ]
 "18 lcd.h
 [v _initLCD `(v ~T0 @X0 0 ef ]
-"11 interface.h
-[v _showInterface `(v ~T0 @X0 0 ef ]
 "30 iopin.h
 [v _digitalWrite `(v ~T0 @X0 0 ef2`*i`i ]
 "11 servo.h
 [v _initServo `(v ~T0 @X0 0 ef2`*i`i ]
-"19 lcd.h
-[v _lcdClear `(v ~T0 @X0 0 ef ]
 "195 C:\Program Files (x86)\Microchip\xc8\v1.40\include\stdio.h
 [v _printf `(i ~T0 @X0 0 ev`*Cuc ]
 "59 main.c
 [v _sortBattery `(v ~T0 @X0 0 ef ]
-"14 servo.h
-[v _stopServo `(v ~T0 @X0 0 ef1`i ]
-"60 main.c
-[v _pause `(v ~T0 @X0 0 ef1`*uc ]
 "12 servo.h
 [v _setAngle `(v ~T0 @X0 0 ef2`*i`i ]
+"60 main.c
+[v _pause `(v ~T0 @X0 0 ef1`*uc ]
 "29 iopin.h
 [v _digitalRead `(i ~T0 @X0 0 ef1`*i ]
 "32
 [v _analogRead `(l ~T0 @X0 0 ef1`i ]
+"19 lcd.h
+[v _lcdClear `(v ~T0 @X0 0 ef ]
 "12 keypad.h
 [v _readKeypad `(uc ~T0 @X0 0 ef ]
 [v F2878 `(v ~T0 @X0 1 tf1`ul ]
@@ -58,8 +54,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _ADCON1 `Vuc ~T0 @X0 0 e@4033 ]
 "4320
 [v _ADCON2 `Vuc ~T0 @X0 0 e@4032 ]
-"6896
-[v _INT1IE `Vb ~T0 @X0 0 e@32643 ]
 "6886
 [v _INT0IE `Vb ~T0 @X0 0 e@32660 ]
 "6272
@@ -82,6 +76,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _INT0IF `Vb ~T0 @X0 0 e@32657 ]
 "6898
 [v _INT1IF `Vb ~T0 @X0 0 e@32640 ]
+"6896
+[v _INT1IE `Vb ~T0 @X0 0 e@32643 ]
 "14 keypad.h
 [v _keyPressedInterruptService `(v ~T0 @X0 0 ef ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
@@ -2914,8 +2910,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;servo.h: 11: void initServo(int* motor, int angle);
 [; ;servo.h: 12: void setAngle(int* motor, int angle);
 [; ;servo.h: 13: void servoInterruptService();
-[; ;servo.h: 14: void stopServo(int timer);
-[; ;servo.h: 15: long angleToPulse(int angle);
+[; ;servo.h: 14: long angleToPulse(int angle);
 [; ;interface.h: 11: void showInterface();
 [; ;interface.h: 12: void dateTime();
 [; ;interface.h: 13: void mainMenu();
@@ -2982,37 +2977,34 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `i
 ..
 ]
-[; ;main.c: 73: int cylinderMotor[2] = { 2, 0};
+[; ;main.c: 73: int cylinderMotor[2] = {2, 0};
 "74
 [v _conveyorServo `i ~T0 @X0 -> 3 `i e ]
 [i _conveyorServo
 :U ..
--> 0 `i
 -> 2 `i
 -> 1 `i
 ..
 ]
-[; ;main.c: 74: int conveyorServo[3] = {0, 2, 1};
+[; ;main.c: 74: int conveyorServo[3] = {2, 1};
 "75
 [v _padServo `i ~T0 @X0 -> 3 `i e ]
 [i _padServo
 :U ..
--> 3 `i
 -> 2 `i
 -> 2 `i
 ..
 ]
-[; ;main.c: 75: int padServo[3] = {3, 2, 2};
+[; ;main.c: 75: int padServo[3] = {2, 2};
 "76
 [v _redirectingServo `i ~T0 @X0 -> 3 `i e ]
 [i _redirectingServo
 :U ..
--> 1 `i
 -> 2 `i
 -> 3 `i
 ..
 ]
-[; ;main.c: 76: int redirectingServo[3] = {1, 2, 3};
+[; ;main.c: 76: int redirectingServo[3] = {2, 3};
 "79
 [v _AA_float `i ~T0 @X0 -> 2 `i e ]
 [i _AA_float
@@ -3083,28 +3075,22 @@ Version 3.2 HI-TECH Software Intermediate Code
 "94
 [e :U 268 ]
 {
-[; ;main.c: 95: showInterface();
-"95
-[e ( _showInterface ..  ]
 [; ;main.c: 98: digitalWrite(cylinderMotor, 1);
 "98
 [e ( _digitalWrite (2 , &U _cylinderMotor -> 1 `i ]
-[; ;main.c: 99: initServo(conveyorServo, 90);
+[; ;main.c: 99: initServo(conveyorServo, 0);
 "99
-[e ( _initServo (2 , &U _conveyorServo -> 90 `i ]
+[e ( _initServo (2 , &U _conveyorServo -> 0 `i ]
 [; ;main.c: 100: initServo(padServo, padAngle_NEUTRAL);
 "100
 [e ( _initServo (2 , &U _padServo _padAngle_NEUTRAL ]
-[; ;main.c: 101: initServo(redirectingServo, 90);
+[; ;main.c: 101: initServo(redirectingServo, 140);
 "101
-[e ( _initServo (2 , &U _redirectingServo -> 90 `i ]
+[e ( _initServo (2 , &U _redirectingServo -> 140 `i ]
 [; ;main.c: 104: while(1){
 "104
 [e :U 271 ]
 {
-[; ;main.c: 105: lcdClear();
-"105
-[e ( _lcdClear ..  ]
 [; ;main.c: 106: printf("running");
 "106
 [e ( _printf :s 1C ]
@@ -3150,9 +3136,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 124: void sortBattery(){
 [e :U _sortBattery ]
 [f ]
-[; ;main.c: 127: stopServo(conveyorServo[0]);
+[; ;main.c: 127: setAngle(conveyorServo, 90);
 "127
-[e ( _stopServo (1 *U + &U _conveyorServo * -> -> -> 0 `i `ui `ux -> -> # *U &U _conveyorServo `ui `ux ]
+[e ( _setAngle (2 , &U _conveyorServo -> 90 `i ]
 [; ;main.c: 128: digitalWrite(cylinderMotor, 0);
 "128
 [e ( _digitalWrite (2 , &U _cylinderMotor -> 0 `i ]
@@ -3302,9 +3288,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 188: pause("conveyor & \ncylinder on?");
 "188
 [e ( _pause (1 -> :s 8C `*uc ]
-[; ;main.c: 189: initServo(conveyorServo, 90);
+[; ;main.c: 189: setAngle(conveyorServo, 0);
 "189
-[e ( _initServo (2 , &U _conveyorServo -> 90 `i ]
+[e ( _setAngle (2 , &U _conveyorServo -> 0 `i ]
 [; ;main.c: 190: digitalWrite(cylinderMotor, 1);
 "190
 [e ( _digitalWrite (2 , &U _cylinderMotor -> 1 `i ]
@@ -3369,9 +3355,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 221: ADCON2 |= 1<<7;
 "221
 [e =| _ADCON2 -> << -> 1 `i -> 7 `i `uc ]
-[; ;main.c: 224: INT1IE = 1;
-"224
-[e = _INT1IE -> -> 1 `i `b ]
 [; ;main.c: 225: INT0IE = 1;
 "225
 [e = _INT0IE -> -> 1 `i `b ]
@@ -3382,9 +3365,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 "227
 [e :UE 289 ]
 }
-[v F3134 `(v ~T0 @X0 1 tf ]
+[v F3132 `(v ~T0 @X0 1 tf ]
 "229
-[v _service `IF3134 ~T0 @X0 1 e ]
+[v _service `IF3132 ~T0 @X0 1 e ]
 {
 [; ;main.c: 229: void interrupt service(void) {
 [e :U _service ]
@@ -3404,9 +3387,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 }
 [e :U 291 ]
 [; ;main.c: 236: }
-[; ;main.c: 239: if(INT1IF){INT1IF = 0;
+[; ;main.c: 239: if(INT1IF && INT1IE){INT1IF = 0;
 "239
-[e $ ! _INT1IF 292  ]
+[e $ ! && _INT1IF _INT1IE 292  ]
 {
 [e = _INT1IF -> -> 0 `i `b ]
 [; ;main.c: 240: keyPressedInterruptService();

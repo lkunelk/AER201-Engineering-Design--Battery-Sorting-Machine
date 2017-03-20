@@ -3681,6 +3681,7 @@ return -1;
 }
 
 void digitalWrite(int* pin, int val){
+if(pin){
 int p = 1 << pin[1];
 if(val == 0){
 p ^= 0xff;
@@ -3698,6 +3699,7 @@ else LATC &= p;
 break;
 case 3: if(val == 1) LATD |= p;
 else LATD &= p;
+}
 }
 }
 

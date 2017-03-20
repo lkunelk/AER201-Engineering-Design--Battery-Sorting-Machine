@@ -51,23 +51,25 @@ int digitalRead(int* pin){
 }
 
 void digitalWrite(int* pin, int val){
-    int p = 1 << pin[1];
-    if(val == LOW){
-        p ^= 0xff;
-    } 
-    
-    switch(pin[0]){
-        case A: if(val == HIGH) LATA |= p;
-                else LATA &= p;
-                break;
-        case B: if(val == HIGH) LATB |= p;
-                else LATB &= p;
-                break;
-        case C: if(val == HIGH) LATC |= p;
-                else LATC &= p;
-                break;
-        case D: if(val == HIGH) LATD |= p;
-                else LATD &= p;
+    if(pin){ //not null
+        int p = 1 << pin[1];
+        if(val == LOW){
+            p ^= 0xff;
+        } 
+
+        switch(pin[0]){
+            case A: if(val == HIGH) LATA |= p;
+                    else LATA &= p;
+                    break;
+            case B: if(val == HIGH) LATB |= p;
+                    else LATB &= p;
+                    break;
+            case C: if(val == HIGH) LATC |= p;
+                    else LATC &= p;
+                    break;
+            case D: if(val == HIGH) LATD |= p;
+                    else LATD &= p;
+        }
     }
 }
 

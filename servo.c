@@ -12,34 +12,26 @@
 #include "iopin.h"
 #include "timer.h"
 
-int servo[4][2];
-long pulse[4];
+int n = 0; //number of servos
+int* servos[4]; //store pins for each servo
+unsigned int pulse[4]; //store the duration of pulse (angle) of the servos
+int curr = 0;
 
-//motor = {timer, port, pin}
+//motor = {port, pin}
 void initServo(int* motor, int angle){
-    int timer = motor[0];
-    int port = motor[1];
-    int pin = motor[2];
+    n++;
+    servos[n-1] = motor;
+    setAngle(motor, angle);
     
-    servo[timer][0] = port;
-    servo[timer][1]  = pin;
-    setAngle(&timer, angle); //initial angle
+    initTimer(0);
+    startTimer(0,0);
     
-    initTimer(timer);
-    startTimer(timer,0);
-}
-
-void stopServo(int timer){
-    switch(timer){
-        case 0: T0CON = 0; break;
-        case 1: T1CON = 0; break;
-        case 2: T2CON = 0; break;
-        case 3: T3CON = 0; break;
-    }
+    //lcdClear();
+    //printf("%u %u",pulse[0],pulse[1]);
 }
 
 long angleToPulse(int angle){
-    long offset = 0; //offset for tuning range
+    long offset = -600; //offset for tuning the range
     long a000 = 1250; // pulse for angle of 0
     long a180 = 6250; // pulse for angle of 180
     
@@ -47,36 +39,23 @@ long angleToPulse(int angle){
 }
 
 void setAngle(int* motor, int angle){
-    pulse[motor[0]] = 0xffff - angleToPulse(angle);
+    unsigned int period = 50000; //instruction cycles for 10MHz clock = 20ms
+    for(int i = 0; i < n; i++){
+        if(servos[i] == motor){
+            pulse[i] = angleToPulse(angle);
+        }
+        period-=pulse[i];
+    }
+    pulse[n] =  period; // the sum of all n+1 pulses should add up to 20ms
 }
 
 void servoInterruptService(){
     
-    int flags[4];
-    flags[0] = TMR0IF;
-    flags[1] = TMR1IF;
-    flags[2] = TMR2IF;
-    flags[3] = TMR3IF;
-    
-    for(int i = 0; i < 4; i++){
-        if(flags[i]){
-
-            if(digitalRead(servo[i])){ //if it was high
-                startTimer(i,15535); //20ms
-                digitalWrite(servo[i],LOW);
-            }
-            else{
-                startTimer(i, pulse[i]);
-                digitalWrite(servo[i],HIGH);
-            }
-            
-            //clear flag
-            switch(i){
-                case 0: TMR0IF = 0; break;
-                case 1: TMR1IF = 0; break;
-                case 2: TMR2IF = 0; break;
-                case 3: TMR3IF = 0; break;
-            }
-        }
+    if(TMR0IF){TMR0IF = 0;
+        digitalWrite(servos[curr],LOW); //clear previous one
+        digitalWrite(servos[ (curr+1)%(n+1) ],HIGH); //set new one
+        startTimer(0, 0xFFFF - pulse[ (curr+1)%(n+1) ]); //set new one for preset amount of time 
+        
+        curr = (curr+1)%(n+1);
     }
 }

@@ -54,7 +54,7 @@ void initTimer(int timer){
         case 0: //default 16bit timer
             T0CON = 0; //clear settings
             T0CON |= 1<<3; //turn off prescaler
-            //T0CON |= 0b111; // prescaler = 2^(0b110 + 1)) = 128
+            //T0CON |= 0b100; // prescaler = 2^(0b110 + 1)) = 128
             TMR0IE = 1; //enable timer0 interrupt
             break;
         case 1:
