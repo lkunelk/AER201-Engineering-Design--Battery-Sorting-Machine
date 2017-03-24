@@ -66,8 +66,8 @@ int     redirectAngle_C = 111;
 int    redirectAngle_9V = 64;
 int redirectAngle_OTHER = 89;
 
-int   padAngle_CLOSE = 60; //angles for voltage testing pads
-int padAngle_NEUTRAL = 90;
+int   padAngle_CLOSE = 30; //angles for voltage testing pads
+int padAngle_NEUTRAL = 70;
 int   padAngle_OPEN  = 180;
 
 int    cylinderMotor[2] = {C, 0}; //port C, pin 0
@@ -76,7 +76,7 @@ int         padServo[3] = {C, 2}; //port C, pin 2
 int redirectingServo[3] = {C, 3}; //port C, pin 3
 
 //pins for measuring voltage and determining battery type
-int AA_float[2] = {A,3}; //pin for helping differentiate AA from 9V, for some case
+int AA_float[2] = {C,5}; //pin for helping differentiate AA from 9V, for some case
 int  padPin1[2] = {C,6}; //digital port A, pin 1
 int  padPin2[2] = {C,7}; //digital port A, pin 2
 int  padPin3[2] = {A,0}; //analog 0 is the channel not the pin 
@@ -91,9 +91,6 @@ void main(){
     pinSetup();
     initLCD();
     
-    initServo(redirectingServo, 90);
-    
-    /*
     while(1){
         //showInterface();
 
@@ -101,7 +98,7 @@ void main(){
         digitalWrite(cylinderMotor, HIGH);
         initServo(conveyorServo,    0);
         initServo(padServo,         padAngle_NEUTRAL);
-        initServo(redirectingServo, 140);
+        initServo(redirectingServo, redirectAngle_AA);
         
         // poll the time if it exceeds some amount stop process
         while(1){
@@ -120,7 +117,7 @@ void main(){
         
         
     };//stop here
-    */
+    
     
     while(1); //stop here
 }
@@ -202,7 +199,7 @@ void pinSetup(){
     //set direction of pins
     TRISA = 0xFF; // Set Port A as all input
     TRISB = 0xFF; // input for keypads
-    TRISC = 0x00;
+    TRISC = 0b11000000;//
     TRISD = 0x00; //All output mode for LCD
     TRISE = 0x00;  
     
@@ -225,7 +222,7 @@ void pinSetup(){
     ADCON2 |= 1<<7; //set right justified result
     
     //interrupts
-    INT1IE = 1; // external interrupt for keypad
+    //INT1IE = 1; // external interrupt for keypad
     INT0IE = 1; // external interrupt on B0 for battery sensing switch
     ei();
 }
@@ -248,7 +245,7 @@ void interrupt service(void) {
         if(key == 1)angle-=1;
         lcdClear();
         printf("angle: %d",angle);
-        setAngle(redirectingServo, angle);
+        setAngle(padServo, angle);
     }
 }
 
