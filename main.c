@@ -199,7 +199,7 @@ void pinSetup(){
     //set direction of pins
     TRISA = 0xFF; // Set Port A as all input
     TRISB = 0xFF; // input for keypads
-    TRISC = 0b11000000;//
+    TRISC = 0b11000000;// set 7 6 as inputs 
     TRISD = 0x00; //All output mode for LCD
     TRISE = 0x00;  
     
