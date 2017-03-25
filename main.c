@@ -59,6 +59,7 @@ void pinSetup(void);
 void sortBattery(void);
 void pause(char* message);
 
+long time = 0; //duration of sorting process [centi-seconds]
 int batteryDetected = 0; //1 == contact switch activated on machine
 
 int    redirectAngle_AA = 74; //angles for the re-directing arm
@@ -94,6 +95,14 @@ void main(){
     while(1){
         //showInterface();
 
+        
+        //pause("start timer?");
+        //start timer
+        long prevTime = 0;
+        time = 0; //in centi-seconds
+        initTimer(1);
+        startTimer(1,0);
+        
         //start up motors
         digitalWrite(cylinderMotor, HIGH);
         initServo(conveyorServo,    0);
@@ -102,10 +111,17 @@ void main(){
         
         // poll the time if it exceeds some amount stop process
         while(1){
-            //lcdClear();
+            lcdClear();
             printf("running");
             
-            while(!batteryDetected){}
+            while(!batteryDetected){
+                //if(prevTime ^ time/10){
+                    lcdHome();
+                    printf("time %02ld:%02ld",time/600,(time/10)%60);
+                    __delay_ms(77);
+                    //}
+                //prevTime=time/10;
+            }
             
             sortBattery();
             
@@ -148,7 +164,7 @@ void sortBattery(){
     float V = analogRead(padPin3[1]) / resolution * Vcc; //voltage read
     
     lcdClear();
-    printf("signal: %d \nVoltage: %f",signal,V);
+    printf("sig: %d \nV: %f",signal,V);
     readKeypad();
     
     //set the angle for directing arm
@@ -222,14 +238,23 @@ void pinSetup(){
     ADCON2 |= 1<<7; //set right justified result
     
     //interrupts
-    //INT1IE = 1; // external interrupt for keypad
+    INT1IE = 1; // external interrupt for keypad
     INT0IE = 1; // external interrupt on B0 for battery sensing switch
     ei();
 }
 int angle = 90;
+//24400 for 10ms
+//30650 for 12.5ms
+int period = 31100; // 12.5*8 = 100ms, use 8 prescaler
 void interrupt service(void) {
     
     servoInterruptService(); //checks TMR0IF
+    
+    if(TMR1IF){
+        startTimer(1,0xffff - period);
+        time+=1;
+        TMR1IF = 0; // clear flag
+    }
     
     //Contact sensor - port B, pin 0 external interrupt
     if(INT0IF){ INT0IF = 0; //clear flag
@@ -241,11 +266,11 @@ void interrupt service(void) {
         //keyPressedInterruptService();
         
         char key = (PORTB & 0xF0) >> 4; //read the keypress
-        if(key == 0)angle+=1;
-        if(key == 1)angle-=1;
-        lcdClear();
-        printf("angle: %d",angle);
-        setAngle(padServo, angle);
+                 if(key == 0)time = 0; //reset time
+            else if(key == 1)period+=100; //increment time
+            else if(key == 2)period-=100; //decrement
+            lcdClear();
+            printf("period %ld",period);
     }
 }
 
