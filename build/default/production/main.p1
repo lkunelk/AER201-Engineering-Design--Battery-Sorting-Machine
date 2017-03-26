@@ -60,8 +60,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _ADCON1 `Vuc ~T0 @X0 0 e@4033 ]
 "4320
 [v _ADCON2 `Vuc ~T0 @X0 0 e@4032 ]
-"6896
-[v _INT1IE `Vb ~T0 @X0 0 e@32643 ]
 "6886
 [v _INT0IE `Vb ~T0 @X0 0 e@32660 ]
 "6272
@@ -86,6 +84,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _INT0IF `Vb ~T0 @X0 0 e@32657 ]
 "6898
 [v _INT1IF `Vb ~T0 @X0 0 e@32640 ]
+"6896
+[v _INT1IE `Vb ~T0 @X0 0 e@32643 ]
 "185
 [v _PORTB `Vuc ~T0 @X0 0 e@3969 ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
@@ -3397,9 +3397,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 240: ADCON2 |= 1<<7;
 "240
 [e =| _ADCON2 -> << -> 1 `i -> 7 `i `uc ]
-[; ;main.c: 243: INT1IE = 1;
-"243
-[e = _INT1IE -> -> 1 `i `b ]
 [; ;main.c: 244: INT0IE = 1;
 "244
 [e = _INT0IE -> -> 1 `i `b ]
@@ -3461,9 +3458,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 }
 [e :U 295 ]
 [; ;main.c: 264: }
-[; ;main.c: 267: if(0 && INT1IF && INT1IE){INT1IF = 0;
+[; ;main.c: 267: if(INT1IF && INT1IE){INT1IF = 0;
 "267
-[e $ ! && && != -> 0 `i -> 0 `i _INT1IF _INT1IE 296  ]
+[e $ ! && _INT1IF _INT1IE 296  ]
 {
 [e = _INT1IF -> -> 0 `i `b ]
 "270

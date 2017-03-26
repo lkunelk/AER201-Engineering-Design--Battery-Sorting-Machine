@@ -240,7 +240,7 @@ void pinSetup(){
     ADCON2 |= 1<<7; //set right justified result
     
     //interrupts
-    INT1IE = 1; // external interrupt for keypad
+    //INT1IE = 1; // external interrupt for keypad
     INT0IE = 1; // external interrupt on B0 for battery sensing switch
     ei();
 }
@@ -264,7 +264,7 @@ void interrupt service(void) {
     }
     
     //Keyboard - port B, pin 1 external interrupt
-    if(0 && INT1IF && INT1IE){INT1IF = 0;     //Clear flag bit
+    if(INT1IF && INT1IE){INT1IF = 0;     //Clear flag bit
         //keyPressedInterruptService();
         
         char key = (PORTB & 0xF0) >> 4; //read the keypress

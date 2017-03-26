@@ -4017,7 +4017,7 @@ ADCON2 |= 0b110<<3;
 ADCON2 |= 1<<7;
 
 
-INT1IE = 1;
+
 INT0IE = 1;
 (INTCONbits.GIE = 1);
 }
@@ -4041,7 +4041,7 @@ batteryDetected = 1;
 }
 
 
-if(0 && INT1IF && INT1IE){INT1IF = 0;
+if(INT1IF && INT1IE){INT1IF = 0;
 
 
 char key = (PORTB & 0xF0) >> 4;
