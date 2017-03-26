@@ -61,19 +61,19 @@ void pause(char* message);
 
 int batteryDetected = 0; //1 == contact switch activated on machine
 
-int    redirectAngle_AA = 74; //angles for the re-directing arm
-int     redirectAngle_C = 111;
-int    redirectAngle_9V = 64;
-int redirectAngle_OTHER = 89;
+int    redirectAngle_AA = 138; //angles for the re-directing arm
+int     redirectAngle_C = 166;
+int    redirectAngle_9V = 118;
+int redirectAngle_OTHER = 153;
 
 int   padAngle_CLOSE = 30; //angles for voltage testing pads
-int padAngle_NEUTRAL = 70;
+int padAngle_NEUTRAL = 60;
 int   padAngle_OPEN  = 180;
 
 int    cylinderMotor[2] = {C, 0}; //port C, pin 0
-int    conveyorServo[3] = {C, 1}; //port C, pin 1
-int         padServo[3] = {C, 2}; //port C, pin 2
-int redirectingServo[3] = {C, 3}; //port C, pin 3
+int    conveyorServo[2] = {C, 2}; //port C, pin 1
+int         padServo[2] = {C, 1}; //port C, pin 2
+int redirectingServo[2] = {D, 0}; //port D, pin 0
 
 //pins for measuring voltage and determining battery type
 int AA_float[2] = {C,5}; //pin for helping differentiate AA from 9V, for some case
@@ -83,9 +83,9 @@ int  padPin3[2] = {A,0}; //analog 0 is the channel not the pin
                      //(in this case channel 0 is pin 0),
                      //port value not needed only for reference
 
-float V_LIM_AA = 0; //Voltage limits (above => charged, below => discharged)
-float V_LIM_C  = 0;
-float V_LIM_9V = 0;
+float V_LIM_AA = .326; //Voltage limits (above => charged, below => discharged)
+float V_LIM_C  = 1.275;
+float V_LIM_9V = 1.96;
 
 void main(){
     pinSetup();
@@ -129,14 +129,15 @@ void sortBattery(){
     digitalWrite(cylinderMotor, LOW);
     
     //wait for battery to fall in
-    //__delay_ms(1000);
+    __delay_ms(1000);
     
     //compress battery
-    pause("interrupt!!!\nclose?");
+    //pause("interrupt!!!\nclose?");
     setAngle(padServo, padAngle_CLOSE);
+    __delay_ms(500);
     
     //measure voltage
-    pause("read voltage?");
+    //pause("read voltage?");
     float Vcc = 4.61; //voltage of vcc pin on pic
     float resolution = (1<<10) - 1;
     
@@ -152,7 +153,7 @@ void sortBattery(){
     readKeypad();
     
     //set the angle for directing arm
-    pause("set redirect angle?");
+    //pause("set redirect angle?");
     switch(signal){
         case 0b00: 
             //float pin to ground to differentiate AA from 9V
@@ -165,28 +166,30 @@ void sortBattery(){
                 break;
             }
             //else it's a 9V, fall through from case 0
-        case 0b01:
+        case 0b10:
             if(V > V_LIM_9V) targetAngle = redirectAngle_9V;
             else             targetAngle = redirectAngle_OTHER;
             break;
-        case 0b10:
-            if(V > V_LIM_C) targetAngle = redirectAngle_AA;
+        case 0b01:
+            if(V > V_LIM_C) targetAngle = redirectAngle_C;
             else             targetAngle = redirectAngle_OTHER;
             break;
     }
     
     setAngle(redirectingServo, targetAngle);
+    __delay_ms(500);
     
     //release battery
-    pause("release battery?");
+    //pause("release battery?");
     setAngle(padServo, padAngle_OPEN);
-        
+    __delay_ms(1000);
+    
     //set gate to the resting state
-    pause("reset the pad?");
+    //pause("reset the pad?");
     setAngle(padServo, padAngle_NEUTRAL);
     
     //turn on the conveyor belt and cylinder
-    pause("conveyor & \ncylinder on?");
+    //pause("conveyor & \ncylinder on?");
     setAngle(conveyorServo, 0);
     digitalWrite(cylinderMotor, HIGH);
 }
@@ -245,7 +248,7 @@ void interrupt service(void) {
         if(key == 1)angle-=1;
         lcdClear();
         printf("angle: %d",angle);
-        setAngle(padServo, angle);
+        setAngle(redirectingServo, angle);
     }
 }
 

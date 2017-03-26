@@ -3847,19 +3847,19 @@ void pause(char* message);
 
 int batteryDetected = 0;
 
-int redirectAngle_AA = 74;
-int redirectAngle_C = 111;
-int redirectAngle_9V = 64;
-int redirectAngle_OTHER = 89;
+int redirectAngle_AA = 138;
+int redirectAngle_C = 166;
+int redirectAngle_9V = 118;
+int redirectAngle_OTHER = 153;
 
 int padAngle_CLOSE = 30;
-int padAngle_NEUTRAL = 70;
+int padAngle_NEUTRAL = 60;
 int padAngle_OPEN = 180;
 
 int cylinderMotor[2] = {2, 0};
-int conveyorServo[3] = {2, 1};
-int padServo[3] = {2, 2};
-int redirectingServo[3] = {2, 3};
+int conveyorServo[2] = {2, 2};
+int padServo[2] = {2, 1};
+int redirectingServo[2] = {3, 0};
 
 
 int AA_float[2] = {2,5};
@@ -3869,9 +3869,9 @@ int padPin3[2] = {0,0};
 
 
 
-float V_LIM_AA = 0;
-float V_LIM_C = 0;
-float V_LIM_9V = 0;
+float V_LIM_AA = .326;
+float V_LIM_C = 1.275;
+float V_LIM_9V = 1.96;
 
 void main(){
 pinSetup();
@@ -3914,12 +3914,16 @@ void sortBattery(){
 setAngle(conveyorServo, 90);
 digitalWrite(cylinderMotor, 0);
 
-# 135
-pause("interrupt!!!\nclose?");
+
+_delay((unsigned long)((1000)*(10000000/4000.0)));
+
+
+
 setAngle(padServo, padAngle_CLOSE);
+_delay((unsigned long)((500)*(10000000/4000.0)));
 
 
-pause("read voltage?");
+
 float Vcc = 4.61;
 float resolution = (1<<10) - 1;
 
@@ -3935,7 +3939,7 @@ printf("signal: %d \nVoltage: %f",signal,V);
 readKeypad();
 
 
-pause("set redirect angle?");
+
 switch(signal){
 case 0b00:
 
@@ -3948,35 +3952,37 @@ else targetAngle = redirectAngle_OTHER;
 break;
 }
 
-case 0b01:
+case 0b10:
 if(V > V_LIM_9V) targetAngle = redirectAngle_9V;
 else targetAngle = redirectAngle_OTHER;
 break;
-case 0b10:
-if(V > V_LIM_C) targetAngle = redirectAngle_AA;
+case 0b01:
+if(V > V_LIM_C) targetAngle = redirectAngle_C;
 else targetAngle = redirectAngle_OTHER;
 break;
 }
 
 setAngle(redirectingServo, targetAngle);
+_delay((unsigned long)((500)*(10000000/4000.0)));
 
 
-pause("release battery?");
+
 setAngle(padServo, padAngle_OPEN);
+_delay((unsigned long)((1000)*(10000000/4000.0)));
 
 
-pause("reset the pad?");
+
 setAngle(padServo, padAngle_NEUTRAL);
 
 
-pause("conveyor & \ncylinder on?");
+
 setAngle(conveyorServo, 0);
 digitalWrite(cylinderMotor, 1);
 }
 
 void pinSetup(){
 
-# 200
+# 203
 TRISA = 0xFF;
 TRISB = 0xFF;
 TRISC = 0b11000000;
@@ -4025,7 +4031,7 @@ if(key == 0)angle+=1;
 if(key == 1)angle-=1;
 lcdClear();
 printf("angle: %d",angle);
-setAngle(padServo, angle);
+setAngle(redirectingServo, angle);
 }
 }
 

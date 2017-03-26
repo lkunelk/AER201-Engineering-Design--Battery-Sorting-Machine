@@ -130,12 +130,10 @@
 [v _main main `(v  1 e 1 0 ]
 "125
 [v _sortBattery sortBattery `(v  1 e 1 0 ]
-"194
+"197
 [v _pinSetup pinSetup `(v  1 e 1 0 ]
-"230
+"233
 [v _service service `II(v  1 e 1 0 ]
-"252
-[v _pause pause `(v  1 e 1 0 ]
 "21 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\servo.c
 [v _initServo initServo `(v  1 e 1 0 ]
 "33
@@ -155,7 +153,7 @@
 [v _PORTA PORTA `VEuc  1 e 1 @3968 ]
 "185
 [v _PORTB PORTB `VEuc  1 e 1 @3969 ]
-[s S287 . 1 `uc 1 RB0 1 0 :1:0 
+[s S276 . 1 `uc 1 RB0 1 0 :1:0 
 `uc 1 RB1 1 0 :1:1 
 `uc 1 RB2 1 0 :1:2 
 `uc 1 RB3 1 0 :1:3 
@@ -165,7 +163,7 @@
 `uc 1 RB7 1 0 :1:7 
 ]
 "226
-[s S296 . 1 `uc 1 INT0 1 0 :1:0 
+[s S285 . 1 `uc 1 INT0 1 0 :1:0 
 `uc 1 INT1 1 0 :1:1 
 `uc 1 INT2 1 0 :1:2 
 `uc 1 CCP2 1 0 :1:3 
@@ -174,7 +172,7 @@
 `uc 1 KBI2 1 0 :1:6 
 `uc 1 KBI3 1 0 :1:7 
 ]
-[s S305 . 1 `uc 1 AN12 1 0 :1:0 
+[s S294 . 1 `uc 1 AN12 1 0 :1:0 
 `uc 1 AN10 1 0 :1:1 
 `uc 1 AN8 1 0 :1:2 
 `uc 1 AN9 1 0 :1:3 
@@ -183,11 +181,11 @@
 `uc 1 PGC 1 0 :1:6 
 `uc 1 PGD 1 0 :1:7 
 ]
-[s S314 . 1 `uc 1 . 1 0 :3:0 
+[s S303 . 1 `uc 1 . 1 0 :3:0 
 `uc 1 CCP2_PA2 1 0 :1:3 
 ]
-[u S317 . 1 `S287 1 . 1 0 `S296 1 . 1 0 `S305 1 . 1 0 `S314 1 . 1 0 ]
-[v _PORTBbits PORTBbits `VES317  1 e 1 @3969 ]
+[u S306 . 1 `S276 1 . 1 0 `S285 1 . 1 0 `S294 1 . 1 0 `S303 1 . 1 0 ]
+[v _PORTBbits PORTBbits `VES306  1 e 1 @3969 ]
 "355
 [v _PORTC PORTC `VEuc  1 e 1 @3970 ]
 "529
@@ -200,7 +198,7 @@
 [v _LATC LATC `VEuc  1 e 1 @3979 ]
 "1205
 [v _LATD LATD `VEuc  1 e 1 @3980 ]
-[s S214 . 1 `uc 1 LATD0 1 0 :1:0 
+[s S203 . 1 `uc 1 LATD0 1 0 :1:0 
 `uc 1 LATD1 1 0 :1:1 
 `uc 1 LATD2 1 0 :1:2 
 `uc 1 LATD3 1 0 :1:3 
@@ -210,7 +208,7 @@
 `uc 1 LATD7 1 0 :1:7 
 ]
 "1232
-[s S223 . 1 `uc 1 LD0 1 0 :1:0 
+[s S212 . 1 `uc 1 LD0 1 0 :1:0 
 `uc 1 LD1 1 0 :1:1 
 `uc 1 LD2 1 0 :1:2 
 `uc 1 LD3 1 0 :1:3 
@@ -219,8 +217,8 @@
 `uc 1 LD6 1 0 :1:6 
 `uc 1 LD7 1 0 :1:7 
 ]
-[u S232 . 1 `S214 1 . 1 0 `S223 1 . 1 0 ]
-[v _LATDbits LATDbits `VES232  1 e 1 @3980 ]
+[u S221 . 1 `S203 1 . 1 0 `S212 1 . 1 0 ]
+[v _LATDbits LATDbits `VES221  1 e 1 @3980 ]
 "1316
 [v _LATE LATE `VEuc  1 e 1 @3981 ]
 "1367
@@ -281,7 +279,7 @@
 [v _TMR0L TMR0L `VEuc  1 e 1 @4054 ]
 "5869
 [v _TMR0H TMR0H `VEuc  1 e 1 @4055 ]
-[s S99 . 1 `uc 1 RBIF 1 0 :1:0 
+[s S94 . 1 `uc 1 RBIF 1 0 :1:0 
 `uc 1 INT0IF 1 0 :1:1 
 `uc 1 TMR0IF 1 0 :1:2 
 `uc 1 RBIE 1 0 :1:3 
@@ -291,7 +289,7 @@
 `uc 1 GIE_GIEH 1 0 :1:7 
 ]
 "6298
-[s S108 . 1 `uc 1 . 1 0 :1:0 
+[s S103 . 1 `uc 1 . 1 0 :1:0 
 `uc 1 INT0F 1 0 :1:1 
 `uc 1 T0IF 1 0 :1:2 
 `uc 1 . 1 0 :1:3 
@@ -300,12 +298,12 @@
 `uc 1 PEIE 1 0 :1:6 
 `uc 1 GIE 1 0 :1:7 
 ]
-[s S117 . 1 `uc 1 . 1 0 :6:0 
+[s S112 . 1 `uc 1 . 1 0 :6:0 
 `uc 1 GIEL 1 0 :1:6 
 `uc 1 GIEH 1 0 :1:7 
 ]
-[u S121 . 1 `S99 1 . 1 0 `S108 1 . 1 0 `S117 1 . 1 0 ]
-[v _INTCONbits INTCONbits `VES121  1 e 1 @4082 ]
+[u S116 . 1 `S94 1 . 1 0 `S103 1 . 1 0 `S112 1 . 1 0 ]
+[v _INTCONbits INTCONbits `VES116  1 e 1 @4082 ]
 "6604
 [v _ACKDT ACKDT `VEb  1 e 0 @32301 ]
 "6606
@@ -358,6 +356,8 @@
 [v _batteryDetected batteryDetected `i  1 e 2 0 ]
 "64
 [v _redirectAngle_AA redirectAngle_AA `i  1 e 2 0 ]
+"65
+[v _redirectAngle_C redirectAngle_C `i  1 e 2 0 ]
 "66
 [v _redirectAngle_9V redirectAngle_9V `i  1 e 2 0 ]
 "67
@@ -371,11 +371,11 @@
 "73
 [v _cylinderMotor cylinderMotor `[2]i  1 e 4 0 ]
 "74
-[v _conveyorServo conveyorServo `[3]i  1 e 6 0 ]
+[v _conveyorServo conveyorServo `[2]i  1 e 4 0 ]
 "75
-[v _padServo padServo `[3]i  1 e 6 0 ]
+[v _padServo padServo `[2]i  1 e 4 0 ]
 "76
-[v _redirectingServo redirectingServo `[3]i  1 e 6 0 ]
+[v _redirectingServo redirectingServo `[2]i  1 e 4 0 ]
 "79
 [v _AA_float AA_float `[2]i  1 e 4 0 ]
 "80
@@ -390,7 +390,7 @@
 [v _V_LIM_C V_LIM_C `f  1 e 3 0 ]
 "88
 [v _V_LIM_9V V_LIM_9V `f  1 e 3 0 ]
-"229
+"232
 [v _angle angle `i  1 e 2 0 ]
 "11 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\RTC.c
 [v _happynewyear happynewyear `C[7]uc  1 e 7 0 ]
@@ -410,25 +410,19 @@
 "125
 [v _sortBattery sortBattery `(v  1 e 1 0 ]
 {
-"161
-[v sortBattery@V_float V_float `f  1 a 3 34 ]
-"148
-[v sortBattery@V V `f  1 a 3 47 ]
+"162
+[v sortBattery@V_float V_float `f  1 a 3 32 ]
+"149
+[v sortBattery@V V `f  1 a 3 45 ]
+"142
+[v sortBattery@resolution resolution `f  1 a 3 38 ]
 "141
-[v sortBattery@resolution resolution `f  1 a 3 40 ]
-"140
-[v sortBattery@Vcc Vcc `f  1 a 3 37 ]
-"143
-[v sortBattery@targetAngle targetAngle `i  1 a 2 45 ]
+[v sortBattery@Vcc Vcc `f  1 a 3 35 ]
 "144
-[v sortBattery@signal signal `i  1 a 2 43 ]
-"192
-} 0
-"252
-[v _pause pause `(v  1 e 1 0 ]
-{
-[v pause@message message `*.25uc  1 p 2 30 ]
-"256
+[v sortBattery@targetAngle targetAngle `i  1 a 2 43 ]
+"145
+[v sortBattery@signal signal `i  1 a 2 41 ]
+"195
 } 0
 "36 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\keypad.c
 [v _readKeypad readKeypad `(uc  1 e 1 0 ]
@@ -444,9 +438,9 @@
 [v printf@idx idx `uc  1 a 1 9 ]
 "528
 [v printf@val val `ul  1 a 4 22 ]
-[u S706 . 4 `ul 1 vd 4 0 `d 1 integ 3 0 ]
+[u S695 . 4 `ul 1 vd 4 0 `d 1 integ 3 0 ]
 "526
-[v printf@tmpval tmpval `S706  1 a 4 18 ]
+[v printf@tmpval tmpval `S695  1 a 4 18 ]
 "516
 [v printf@fval fval `d  1 a 3 26 ]
 [v printf@exp exp `i  1 a 2 16 ]
@@ -631,10 +625,10 @@
 [v analogRead@channel channel `i  1 p 2 14 ]
 "98
 } 0
-"194 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
+"197 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
 [v _pinSetup pinSetup `(v  1 e 1 0 ]
 {
-"228
+"231
 } 0
 "21 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\servo.c
 [v _initServo initServo `(v  1 e 1 0 ]
@@ -785,12 +779,12 @@
 [v lcdNibble@data data `uc  1 a 1 15 ]
 "68
 } 0
-"230 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
+"233 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
 [v _service service `II(v  1 e 1 0 ]
 {
-"243
+"246
 [v service@key key `uc  1 a 1 113 ]
-"250
+"253
 } 0
 "41 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\servo.c
 [v i2_setAngle setAngle `(v  1 e 1 0 ]
@@ -840,8 +834,8 @@
 [v i2_printf printf `(i  1 e 2 0 ]
 {
 [v i2printf@val printf `ul  1 a 4 105 ]
-[u S706 . 4 `ul 1 vd 4 0 `d 1 integ 3 0 ]
-[v i2printf@tmpval printf `S706  1 a 4 101 ]
+[u S695 . 4 `ul 1 vd 4 0 `d 1 integ 3 0 ]
+[v i2printf@tmpval printf `S695  1 a 4 101 ]
 [v i2printf@fval printf `d  1 a 3 109 ]
 [v i2printf@exp printf `i  1 a 2 99 ]
 [v i2printf@prec printf `i  1 a 2 97 ]
