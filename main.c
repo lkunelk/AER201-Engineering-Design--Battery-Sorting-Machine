@@ -71,10 +71,12 @@ int   padAngle_CLOSE = 30; //angles for voltage testing pads
 int padAngle_NEUTRAL = 70;
 int   padAngle_OPEN  = 180;
 
+//pins
+//RTC uses C3 and C4
 int    cylinderMotor[2] = {C, 0}; //port C, pin 0
-int    conveyorServo[3] = {C, 1}; //port C, pin 1
-int         padServo[3] = {C, 2}; //port C, pin 2
-int redirectingServo[3] = {C, 3}; //port C, pin 3
+int    conveyorServo[2] = {C, 2}; //port C, pin 1
+int         padServo[2] = {C, 1}; //port C, pin 2
+int redirectingServo[2] = {D, 0}; //port D, pin 0
 
 //pins for measuring voltage and determining battery type
 int AA_float[2] = {C,5}; //pin for helping differentiate AA from 9V, for some case
@@ -262,7 +264,7 @@ void interrupt service(void) {
     }
     
     //Keyboard - port B, pin 1 external interrupt
-    if(INT1IF && INT1IE){INT1IF = 0;     //Clear flag bit
+    if(0 && INT1IF && INT1IE){INT1IF = 0;     //Clear flag bit
         //keyPressedInterruptService();
         
         char key = (PORTB & 0xF0) >> 4; //read the keypress
