@@ -73,10 +73,11 @@ int   padAngle_OPEN  = 180;
 
 //pins
 //RTC uses C3 and C4
-int    cylinderMotor[2] = {C, 0}; //port C, pin 0
-int    conveyorServo[2] = {C, 2}; //port C, pin 1
-int         padServo[2] = {C, 1}; //port C, pin 2
-int redirectingServo[2] = {D, 0}; //port D, pin 0
+int     cylinderMotor[2] = {C, 0}; //port C, pin 0
+int cylinderDirection[2] = {D, 1}  //port D, pin 1
+int     conveyorServo[2] = {C, 2}; //port C, pin 1
+int          padServo[2] = {C, 1}; //port C, pin 2
+int  redirectingServo[2] = {D, 0}; //port D, pin 0
 
 //pins for measuring voltage and determining battery type
 int AA_float[2] = {C,5}; //pin for helping differentiate AA from 9V, for some case
@@ -116,13 +117,13 @@ void main(){
             lcdClear();
             printf("running");
             
+            //int cylinderDir = 0;
+            //int cylinderForward = 10; //seconds
+            //int cylinderBackward = 1;
             while(!batteryDetected){
-                //if(prevTime ^ time/10){
-                    lcdHome();
-                    printf("time %02ld:%02ld",time/600,(time/10)%60);
-                    __delay_ms(77);
-                    //}
-                //prevTime=time/10;
+                lcdHome();
+                printf("time %02ld:%02ld",time/600,(time/10)%60);
+                __delay_ms(77);
             }
             
             sortBattery();
