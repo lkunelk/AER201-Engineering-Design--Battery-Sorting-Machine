@@ -59,7 +59,7 @@ void pinSetup(void);
 void sortBattery(void);
 void pause(char* message);
 
-long time = 0; //duration of sorting process [centi-seconds]
+long time = 0; //duration of sorting process [deci-seconds] (10 = 1 second)
 int batteryDetected = 0; //1 == contact switch activated on machine
 
 int    redirectAngle_AA = 138; //angles for the re-directing arm
@@ -74,7 +74,7 @@ int   padAngle_OPEN  = 180;
 //pins
 //RTC uses C3 and C4
 int     cylinderMotor[2] = {C, 0}; //port C, pin 0
-int cylinderDirection[2] = {D, 1}  //port D, pin 1
+int cylinderDir[2] = {D, 1};  //port D, pin 1
 int     conveyorServo[2] = {C, 2}; //port C, pin 1
 int          padServo[2] = {C, 1}; //port C, pin 2
 int  redirectingServo[2] = {D, 0}; //port D, pin 0
@@ -117,13 +117,23 @@ void main(){
             lcdClear();
             printf("running");
             
-            //int cylinderDir = 0;
-            //int cylinderForward = 10; //seconds
-            //int cylinderBackward = 1;
+            int cylinderStart = time;
+            int cylinderDur = 0;
+            int cylinderForward = 10; //deci-seconds
+            int cylinderBackward = 10; //deci-seconds
             while(!batteryDetected){
                 lcdHome();
                 printf("time %02ld:%02ld",time/600,(time/10)%60);
                 __delay_ms(77);
+                
+                if(time - cylinderStart >= cylinderDur)
+                {
+                    int prev = digitalRead(cylinderDir);
+                    digitalWrite(cylinderDir, !prev);
+                    if(prev)cylinderDur = cylinderBackward;
+                    else    cylinderDur = cylinderForward;
+                    cylinderStart = time;
+                }
             }
             
             sortBattery();

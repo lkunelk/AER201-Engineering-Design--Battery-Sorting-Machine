@@ -3860,6 +3860,7 @@ int padAngle_OPEN = 180;
 
 
 int cylinderMotor[2] = {2, 0};
+int cylinderDir[2] = {3, 1};
 int conveyorServo[2] = {2, 2};
 int padServo[2] = {2, 1};
 int redirectingServo[2] = {3, 0};
@@ -3882,7 +3883,7 @@ initLCD();
 
 while(1){
 
-# 103
+# 104
 long prevTime = 0;
 time = 0;
 initTimer(1);
@@ -3899,13 +3900,23 @@ while(1){
 lcdClear();
 printf("running");
 
+int cylinderStart = time;
+int cylinderDur = 0;
+int cylinderForward = 10;
+int cylinderBackward = 10;
 while(!batteryDetected){
-
 lcdHome();
 printf("time %02ld:%02ld",time/600,(time/10)%60);
 _delay((unsigned long)((77)*(10000000/4000.0)));
 
-
+if(time - cylinderStart >= cylinderDur)
+{
+int prev = digitalRead(cylinderDir);
+digitalWrite(cylinderDir, !prev);
+if(prev)cylinderDur = cylinderBackward;
+else cylinderDur = cylinderForward;
+cylinderStart = time;
+}
 }
 
 sortBattery();
@@ -3997,7 +4008,7 @@ digitalWrite(cylinderMotor, 1);
 
 void pinSetup(){
 
-# 221
+# 232
 TRISA = 0xFF;
 TRISB = 0xFF;
 TRISC = 0b11000000;
