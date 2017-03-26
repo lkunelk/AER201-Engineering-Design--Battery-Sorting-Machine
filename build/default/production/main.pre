@@ -3845,6 +3845,7 @@ void pinSetup(void);
 void sortBattery(void);
 void pause(char* message);
 
+long time = 0;
 int batteryDetected = 0;
 
 int redirectAngle_AA = 74;
@@ -3856,10 +3857,12 @@ int padAngle_CLOSE = 30;
 int padAngle_NEUTRAL = 70;
 int padAngle_OPEN = 180;
 
+
+
 int cylinderMotor[2] = {2, 0};
-int conveyorServo[3] = {2, 1};
-int padServo[3] = {2, 2};
-int redirectingServo[3] = {2, 3};
+int conveyorServo[2] = {2, 2};
+int padServo[2] = {2, 1};
+int redirectingServo[2] = {3, 0};
 
 
 int AA_float[2] = {2,5};
@@ -3879,6 +3882,11 @@ initLCD();
 
 while(1){
 
+# 103
+long prevTime = 0;
+time = 0;
+initTimer(1);
+startTimer(1,0);
 
 
 digitalWrite(cylinderMotor, 1);
@@ -3888,10 +3896,17 @@ initServo(redirectingServo, redirectAngle_AA);
 
 
 while(1){
-
+lcdClear();
 printf("running");
 
-while(!batteryDetected){}
+while(!batteryDetected){
+
+lcdHome();
+printf("time %02ld:%02ld",time/600,(time/10)%60);
+_delay((unsigned long)((77)*(10000000/4000.0)));
+
+
+}
 
 sortBattery();
 
@@ -3914,7 +3929,7 @@ void sortBattery(){
 setAngle(conveyorServo, 90);
 digitalWrite(cylinderMotor, 0);
 
-# 135
+# 153
 pause("interrupt!!!\nclose?");
 setAngle(padServo, padAngle_CLOSE);
 
@@ -3931,7 +3946,7 @@ digitalWrite(AA_float, 1);
 float V = analogRead(padPin3[1]) / resolution * Vcc;
 
 lcdClear();
-printf("signal: %d \nVoltage: %f",signal,V);
+printf("sig: %d \nV: %f",signal,V);
 readKeypad();
 
 
@@ -3976,7 +3991,7 @@ digitalWrite(cylinderMotor, 1);
 
 void pinSetup(){
 
-# 200
+# 218
 TRISA = 0xFF;
 TRISB = 0xFF;
 TRISC = 0b11000000;
@@ -4002,14 +4017,23 @@ ADCON2 |= 0b110<<3;
 ADCON2 |= 1<<7;
 
 
-
+INT1IE = 1;
 INT0IE = 1;
 (INTCONbits.GIE = 1);
 }
 int angle = 90;
+
+
+int period = 31100;
 void interrupt service(void) {
 
 servoInterruptService();
+
+if(TMR1IF){
+startTimer(1,0xffff - period);
+time+=1;
+TMR1IF = 0;
+}
 
 
 if(INT0IF){ INT0IF = 0;
@@ -4017,15 +4041,15 @@ batteryDetected = 1;
 }
 
 
-if(INT1IF && INT1IE){INT1IF = 0;
+if(0 && INT1IF && INT1IE){INT1IF = 0;
 
 
 char key = (PORTB & 0xF0) >> 4;
-if(key == 0)angle+=1;
-if(key == 1)angle-=1;
+if(key == 0)time = 0;
+else if(key == 1)period+=100;
+else if(key == 2)period-=100;
 lcdClear();
-printf("angle: %d",angle);
-setAngle(padServo, angle);
+printf("period %ld",period);
 }
 }
 

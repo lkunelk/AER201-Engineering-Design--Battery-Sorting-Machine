@@ -3725,6 +3725,7 @@ break;
 case 1:
 T1CON = 0;
 
+T1CON |= 0b11<<4;
 TMR1IE = 1;
 break;
 case 3:
@@ -3786,10 +3787,9 @@ I2C_Master_Write(0b11010001);
 time = I2C_Master_Read(0);
 I2C_Master_Stop();
 
+prev = time;
+
 if(time^prev){
-if(first)
-first = 0;
-else
 if(timerOff){
 printf("t1: %x ",time);
 initTimer(0);
@@ -3797,11 +3797,8 @@ startTimer(0,0);
 timerOff = 0;
 }
 else{
-(INTCONbits.GIE = 0);
-printf("[%x %x]\n",TMR0L, TMR0H);
 T0CON = 0;
-long count = TMR0L + (TMR0H<<8);
-return count*256*4 / 1000000.0;
+return TMR0L + (TMR0H<<8);
 }
 }
 

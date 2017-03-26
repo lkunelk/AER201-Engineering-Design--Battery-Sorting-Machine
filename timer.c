@@ -60,6 +60,7 @@ void initTimer(int timer){
         case 1:
             T1CON = 0; //clear settings
             //prescaler default = 1
+            T1CON |= 0b11<<4; //set prescaler to 8
             TMR1IE = 1; //enable timer0 interrupt
             break;
         case 3:
@@ -121,23 +122,19 @@ float testFrequency(){
         time = I2C_Master_Read(0);
         I2C_Master_Stop();
         
+        prev = time;
+        
         if(time^prev){ //if time changes (is different from prev value))
-            if(first) //ignore the first difference in time and prev
-                first = 0;
-            else
-                if(timerOff){
-                    printf("t1: %x ",time);
-                    initTimer(0);
-                    startTimer(0,0);
-                    timerOff = 0;
-                }
-                else{
-                    di();
-                    printf("[%x %x]\n",TMR0L, TMR0H);
-                    T0CON = 0; //stop timer
-                    long count = TMR0L + (TMR0H<<8);
-                    return count*256*4 / 1000000.0; //convert to MHz
-                }
+            if(timerOff){
+                printf("t1: %x ",time);
+                initTimer(0);
+                startTimer(0,0);
+                timerOff = 0;
+            }
+            else{
+                T0CON = 0; //stop timer
+                return TMR0L + (TMR0H<<8);
+            }
         }
         
         prev = time;
