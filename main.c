@@ -109,8 +109,8 @@ void main(){
         //start timer
         //terminate = 0;
         time = 0; //reset time
-        initTimer(1);
-        startTimer(1,0);
+        //initTimer(1);
+        //startTimer(1,0);
         
         //start up motors
         digitalWrite(cylinderMotor, HIGH);
@@ -163,7 +163,9 @@ void main(){
         }
         
         //display results
-        pause("finished");
+        printf("[AA,C,9V,OTHER]\n");
+        printf("[%d,%d,%d,%d]",n_AA,n_C,n_9V,n_OTHER);
+        readKeypad();
         
     };//stop here
     
@@ -191,7 +193,7 @@ void sortBattery(){
     //pause("interrupt!!!\nclose?");
     for(float i = (float)padAngle_NEUTRAL; i > padAngle_CLOSE; i -= 0.1) {
         setAngle(padServo, i);
-        __delay_ms(1);
+        __delay_us(100);
         digitalWrite(AA_float, HIGH); //set floating pin before reading
         float V = analogRead(padPin3[1]) / resolution * Vcc;
         
@@ -302,28 +304,28 @@ void interrupt service(void) {
     
     servoInterruptService(); //checks TMR0IF
     
-    if(TMR1IF){
-        startTimer(1,0xffff - period);
-        time+=1;
-        TMR1IF = 0; // clear flag
-    }
+//    if(TMR1IF){
+//        startTimer(1,0xffff - period);
+//        time+=1;
+//        TMR1IF = 0; // clear flag
+//    }
     
     //Contact sensor - port B, pin 0 external interrupt
-    if(INT0IF){ INT0IF = 0; //clear flag
-        batteryDetected = 1;
-    }
+//    if(INT0IF){ INT0IF = 0; //clear flag
+//        batteryDetected = 1;
+//    }
     
     //Keyboard - port B, pin 1 external interrupt
-    if(INT1IF && INT1IE){INT1IF = 0;     //Clear flag bit
-        //keyPressedInterruptService();
-        
-        char key = (PORTB & 0xF0) >> 4; //read the keypress
-                 if(key == 0)time = 0; //reset time
-            else if(key == 1)period+=100; //increment time
-            else if(key == 2)period-=100; //decrement
-            lcdClear();
-            printf("period %ld",period);
-    }
+//    if(INT1IF && INT1IE){INT1IF = 0;     //Clear flag bit
+//        //keyPressedInterruptService();
+//        
+//        char key = (PORTB & 0xF0) >> 4; //read the keypress
+//                 if(key == 0)time = 0; //reset time
+//            else if(key == 1)period+=100; //increment time
+//            else if(key == 2)period-=100; //decrement
+//            lcdClear();
+//            printf("period %ld",period);
+//    }
 }
 
 void pause(char* message){

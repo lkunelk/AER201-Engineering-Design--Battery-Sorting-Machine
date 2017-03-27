@@ -3895,8 +3895,8 @@ showInterface();
 
 
 time = 0;
-initTimer(1);
-startTimer(1,0);
+
+
 
 
 digitalWrite(cylinderMotor, 1);
@@ -3949,7 +3949,9 @@ batteryDetected = 0;
 }
 
 
-pause("finished");
+printf("[AA,C,9V,OTHER]\n");
+printf("[%d,%d,%d,%d]",n_AA,n_C,n_9V,n_OTHER);
+readKeypad();
 
 };
 
@@ -3977,7 +3979,7 @@ int signal = 0;
 
 for(float i = (float)padAngle_NEUTRAL; i > padAngle_CLOSE; i -= 0.1) {
 setAngle(padServo, i);
-_delay((unsigned long)((1)*(10000000/4000.0)));
+_delay((unsigned long)((100)*(10000000/4000000.0)));
 digitalWrite(AA_float, 1);
 float V = analogRead(padPin3[1]) / resolution * Vcc;
 
@@ -4046,7 +4048,7 @@ digitalWrite(cylinderMotor, 1);
 
 void pinSetup(){
 
-# 267
+# 269
 TRISA = 0xFF;
 TRISB = 0xFF;
 TRISC = 0b11000000;
@@ -4085,28 +4087,7 @@ void interrupt service(void) {
 
 servoInterruptService();
 
-if(TMR1IF){
-startTimer(1,0xffff - period);
-time+=1;
-TMR1IF = 0;
-}
-
-
-if(INT0IF){ INT0IF = 0;
-batteryDetected = 1;
-}
-
-
-if(INT1IF && INT1IE){INT1IF = 0;
-
-
-char key = (PORTB & 0xF0) >> 4;
-if(key == 0)time = 0;
-else if(key == 1)period+=100;
-else if(key == 2)period-=100;
-lcdClear();
-printf("period %ld",period);
-}
+# 329
 }
 
 void pause(char* message){
