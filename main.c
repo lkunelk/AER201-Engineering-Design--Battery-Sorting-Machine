@@ -61,6 +61,8 @@ void pause(char* message);
 
 long time = 0; //duration of sorting process [deci-seconds] (10 = 1 second)
 int batteryDetected = 0; //1 == contact switch activated on machine
+int terminate = 0; //flag to let program know if we neeed to terminate
+int stoppingTime = 100; //[centi-seconds]
 
 int    redirectAngle_AA = 138; //angles for the re-directing arm
 int     redirectAngle_C = 166;
@@ -98,9 +100,10 @@ void main(){
     while(1){
         //showInterface();
         
+        
         //start timer
-        long prevTime = 0;
-        time = 0; //in centi-seconds
+        //terminate = 0;
+        time = 0; //reset time
         initTimer(1);
         startTimer(1,0);
         
@@ -110,20 +113,25 @@ void main(){
         initServo(padServo,         padAngle_NEUTRAL);
         initServo(redirectingServo, redirectAngle_AA);
         
-        // poll the time if it exceeds some amount stop process
+        //spin cylinder and conveyor and if battery is detected sort it
         while(1){
             lcdClear();
             printf("running");
+            
+            int lastBatteryTime = time;// store when the last battery was seen
             
             int cylinderStart = time;
             int cylinderDur = 0;
             int cylinderForward = 10; //deci-seconds
             int cylinderBackward = 10; //deci-seconds
-            while(!batteryDetected){
+            
+            while(!batteryDetected){ //update screen and poll time
+                //print time
                 lcdHome();
                 printf("time %02ld:%02ld",time/600,(time/10)%60);
                 __delay_ms(77);
                 
+                //change direction of the cylinder motor
                 if(time - cylinderStart >= cylinderDur)
                 {
                     int prev = digitalRead(cylinderDir);
@@ -132,16 +140,25 @@ void main(){
                     else    cylinderDur = cylinderForward;
                     cylinderStart = time;
                 }
+                
+                if(time - lastBatteryTime > stoppingTime)
+                {
+                    terminate = 1;
+                    break;
+                }            
             }
+            
+            if(terminate)break; //exit the sorting process
             
             sortBattery();
             
             //reset flag after sorting
+            lastBatteryTime = time;
             batteryDetected = 0;
         }
         
         //display results
-        
+        pause("finished");
         
     };//stop here
     
@@ -285,7 +302,7 @@ void pinSetup(){
     ei();
 }
 int angle = 90;
-int nothingImportant = -1;
+
 //24400 for 10ms
 //30650 for 12.5ms
 int period = 31100; // 12.5*8 = 100ms, use 8 prescaler

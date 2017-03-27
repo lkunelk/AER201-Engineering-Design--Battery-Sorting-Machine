@@ -389,7 +389,25 @@ width += *f++ - '0';
 # 608
 }
 
-# 633
+
+if(*f == '.') {
+flag |= 0x4000;
+f++;
+
+# 620
+{
+prec = 0;
+while(isdigit((unsigned)*f))
+prec = prec*10 + *f++ - '0';
+}
+} else {
+prec = 0;
+
+flag |= 0x1000;
+
+}
+
+
 loop:
 
 switch(c = *f++) {
@@ -424,7 +442,11 @@ break;
 # 750
 dostring:
 
-# 757
+
+if(prec && prec < len)
+len = prec;
+
+
 if(width > len)
 width -= len;
 else
@@ -460,7 +482,8 @@ goto dostring;
 
 if(flag & (0x700)) {
 
-# 829
+if(flag & 0x1000)
+
 prec = 6;
 fval = (*(double *)__va_arg((*(double **)ap), (double)0));
 if(fval < 0.0) {
@@ -641,7 +664,11 @@ else
 val = (*(unsigned *)__va_arg((*(unsigned **)ap), (unsigned)0));
 }
 
-# 1294
+
+if(prec == 0 && val == 0)
+prec++;
+
+
 switch((unsigned char)(flag & 0x80)) {
 
 
@@ -670,9 +697,22 @@ break;
 # 1336
 }
 
-# 1345
+
+if(c < prec)
+c = prec;
+else if(prec < c)
+prec = c;
+
+
 if(width && flag & 0x03)
 width--;
+
+if(flag & 0x4000) {
+if(width > prec)
+width -= prec;
+else
+width = 0;
+}
 
 # 1381
 if(width > c)
@@ -714,9 +754,7 @@ if(flag & 0x03)
 # 1469
 }
 
-
-prec = c;
-
+# 1474
 while(prec--) {
 
 switch((unsigned char)(flag & 0x80))
