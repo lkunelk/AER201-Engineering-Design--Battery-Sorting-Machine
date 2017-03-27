@@ -64,6 +64,11 @@ int batteryDetected = 0; //1 == contact switch activated on machine
 int terminate = 0; //flag to let program know if we neeed to terminate
 int stoppingTime = 100; //[centi-seconds]
 
+int n_AA;
+int n_C;
+int n_9V;
+int n_OTHER;
+
 int    redirectAngle_AA = 138; //angles for the re-directing arm
 int     redirectAngle_C = 166;
 int    redirectAngle_9V = 118;
@@ -98,7 +103,7 @@ void main(){
     initLCD();
     
     while(1){
-        //showInterface();
+        showInterface();
         
         
         //start timer
@@ -177,70 +182,57 @@ void sortBattery(){
     
     float Vcc = 5.00;
     float resolution = (1<<10) - 1;
-    float Vs = 0.0f;
-    float V_max = 0.0f;
+    float V_max = 0;
+    float V_float = 0;
     int pos_v_counter = 1;
-    unsigned char signal = 0;
+    int signal = 0;
     
-    //compress battery
+    //compress battery and measure voltage
     //pause("interrupt!!!\nclose?");
     for(float i = (float)padAngle_NEUTRAL; i > padAngle_CLOSE; i -= 0.1) {
-        setAngle(padServo, (int)i);
+        setAngle(padServo, i);
         __delay_ms(1);
+        digitalWrite(AA_float, HIGH); //set floating pin before reading
         float V = analogRead(padPin3[1]) / resolution * Vcc;
-//        if(V > 0.5) {
-//            pos_v_counter++;
-//            Vs += V;
+        
         if(V > V_max) {
-            signal = digitalRead(padPin1)<<1; //combine 2 reads
-            signal    |= digitalRead(padPin2);
+            signal  = digitalRead(padPin1)<<1; //combine 2 reads
+            signal |= digitalRead(padPin2)<<0;
+            
             V_max = V;
+            
+            //read voltage when pin is floating
+            digitalWrite(AA_float, LOW); //float pin to ground to differentiate AA from 9V
+            __delay_ms(1); //let voltage changes occur
+            V_float = analogRead(padPin3[1]) / resolution * Vcc; //voltage read
+            
         }
-        // }
     }
-    __delay_ms(20);
-    
-    //measure voltage
-    //pause("read voltage?");
-//    float Vcc = 4.61; //voltage of vcc pin on pic
     
     int targetAngle;
+    int V = V_max;
     
-    digitalWrite(AA_float, HIGH); //set floating pin before reading
-    float Vf = (analogRead(padPin3[1]) / resolution * Vcc);
-    float V = V_max; //voltage read
-    if(Vf > V) {
-        V = Vf;
-        signal = digitalRead(padPin1)<<1; //combine 2 reads
-        signal    |= digitalRead(padPin2);
-    }
-    
-    lcdClear();
-    printf("N: %d, V_f: %.3f \nV: %.3f",pos_v_counter,Vf, V);
-//    __delay_ms(1000);
+    printf("N: %d,\nV: %.3f",pos_v_counter, V);
+//  __delay_ms(1000);
     readKeypad();
     
     //set the angle for directing arm
     //pause("set redirect angle?");
     switch(signal){
-        case 0b00: 
-            //float pin to ground to differentiate AA from 9V
-            digitalWrite(AA_float, LOW);
-            __delay_ms(1); //let voltage changes occur
-            float V_float = analogRead(padPin3[1]) / resolution * Vcc; //voltage read
+        case 0b00:
             if(V_float < 0.1){ //if below then it's AA battery
-                if(V > V_LIM_AA) targetAngle = redirectAngle_AA;
-                else             targetAngle = redirectAngle_OTHER;
+                if(V > V_LIM_AA){ targetAngle = redirectAngle_AA; n_AA+=1;}
+                else            { targetAngle = redirectAngle_OTHER; n_OTHER+=1;}
                 break;
             }
             //else it's a 9V, fall through from case 0
         case 0b10:
-            if(V > V_LIM_9V) targetAngle = redirectAngle_9V;
-            else             targetAngle = redirectAngle_OTHER;
+            if(V > V_LIM_9V) {targetAngle = redirectAngle_9V; n_9V+=1;}
+            else             {targetAngle = redirectAngle_OTHER; n_OTHER+=1;}
             break;
         case 0b01:
-            if(V > V_LIM_C) targetAngle = redirectAngle_C;
-            else             targetAngle = redirectAngle_OTHER;
+            if(V > V_LIM_C) {targetAngle = redirectAngle_C; n_C+=1;}
+            else            {targetAngle = redirectAngle_OTHER; n_OTHER+=1;}
             break;
     }
     
