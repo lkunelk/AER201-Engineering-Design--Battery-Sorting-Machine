@@ -68,7 +68,7 @@ int    redirectAngle_9V = 118;
 int redirectAngle_OTHER = 153;
 
 int   padAngle_CLOSE = 30; //angles for voltage testing pads
-int padAngle_NEUTRAL = 60;
+int padAngle_NEUTRAL = 76;
 int   padAngle_OPEN  = 180;
 
 //pins
@@ -87,9 +87,9 @@ int  padPin3[2] = {A,0}; //analog 0 is the channel not the pin
                      //(in this case channel 0 is pin 0),
                      //port value not needed only for reference
 
-float V_LIM_AA = .326; //Voltage limits (above => charged, below => discharged)
-float V_LIM_C  = 1.275;
-float V_LIM_9V = 1.96;
+float V_LIM_AA = .198; //Voltage limits (above => charged, below => discharged)
+float V_LIM_C  = 1.3254;
+float V_LIM_9V = 1.863;
 
 void main(){
     pinSetup();
@@ -108,7 +108,7 @@ void main(){
         
         //start up motors
         digitalWrite(cylinderMotor, HIGH);
-        initServo(conveyorServo,    0);
+        initServo(conveyorServo,    130);
         initServo(padServo,         padAngle_NEUTRAL);
         initServo(redirectingServo, redirectAngle_AA);
         
@@ -160,25 +160,49 @@ void sortBattery(){
     //wait for battery to fall in
     __delay_ms(1000);
     
+    float Vcc = 5.00;
+    float resolution = (1<<10) - 1;
+    float Vs = 0.0f;
+    float V_max = 0.0f;
+    int pos_v_counter = 1;
+    unsigned char signal = 0;
+    
     //compress battery
     //pause("interrupt!!!\nclose?");
-    setAngle(padServo, padAngle_CLOSE);
-    __delay_ms(500);
+    for(float i = (float)padAngle_NEUTRAL; i > padAngle_CLOSE; i -= 0.1) {
+        setAngle(padServo, (int)i);
+        __delay_ms(1);
+        float V = analogRead(padPin3[1]) / resolution * Vcc;
+//        if(V > 0.5) {
+//            pos_v_counter++;
+//            Vs += V;
+        if(V > V_max) {
+            signal = digitalRead(padPin1)<<1; //combine 2 reads
+            signal    |= digitalRead(padPin2);
+            V_max = V;
+        }
+        // }
+    }
+    __delay_ms(20);
     
     //measure voltage
     //pause("read voltage?");
-    float Vcc = 4.61; //voltage of vcc pin on pic
-    float resolution = (1<<10) - 1;
+//    float Vcc = 4.61; //voltage of vcc pin on pic
     
     int targetAngle;
-    int signal = digitalRead(padPin1)<<1; //combine 2 reads
-    signal    |= digitalRead(padPin2);
     
     digitalWrite(AA_float, HIGH); //set floating pin before reading
-    float V = analogRead(padPin3[1]) / resolution * Vcc; //voltage read
+    float Vf = (analogRead(padPin3[1]) / resolution * Vcc);
+    float V = V_max; //voltage read
+    if(Vf > V) {
+        V = Vf;
+        signal = digitalRead(padPin1)<<1; //combine 2 reads
+        signal    |= digitalRead(padPin2);
+    }
     
     lcdClear();
-    printf("sig: %d \nV: %f",signal,V);
+    printf("N: %d, V_f: %.3f \nV: %.3f",pos_v_counter,Vf, V);
+//    __delay_ms(1000);
     readKeypad();
     
     //set the angle for directing arm
@@ -210,7 +234,11 @@ void sortBattery(){
     
     //release battery
     //pause("release battery?");
-    setAngle(padServo, padAngle_OPEN);
+    for(int i = padAngle_CLOSE; i < padAngle_OPEN; i++) {
+        setAngle(padServo, i);
+        __delay_ms(3);
+    }
+//    setAngle(padServo, padAngle_OPEN);
     __delay_ms(1000);
     
     //set gate to the resting state
@@ -219,7 +247,7 @@ void sortBattery(){
     
     //turn on the conveyor belt and cylinder
     //pause("conveyor & \ncylinder on?");
-    setAngle(conveyorServo, 0);
+    setAngle(conveyorServo, 130);
     digitalWrite(cylinderMotor, HIGH);
 }
 
