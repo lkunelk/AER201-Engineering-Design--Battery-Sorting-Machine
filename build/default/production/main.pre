@@ -3848,7 +3848,7 @@ void pause(char* message);
 long time = 0;
 int batteryDetected = 0;
 int terminate = 0;
-int stoppingTime = 100;
+int stoppingTime = 10000;
 
 int n_AA;
 int n_C;
@@ -3895,8 +3895,8 @@ showInterface();
 
 
 time = 0;
-
-
+initTimer(1);
+startTimer(1,0);
 
 
 digitalWrite(cylinderMotor, 1);
@@ -3916,7 +3916,7 @@ int cylinderDur = 0;
 int cylinderForward = 10;
 int cylinderBackward = 10;
 
-while(!batteryDetected){
+while(!batteryDetected && !terminate){
 
 lcdHome();
 printf("time %02ld:%02ld",time/600,(time/10)%60);
@@ -3949,6 +3949,7 @@ batteryDetected = 0;
 }
 
 
+lcdClear();
 printf("[AA,C,9V,OTHER]\n");
 printf("[%d,%d,%d,%d]",n_AA,n_C,n_9V,n_OTHER);
 readKeypad();
@@ -3983,6 +3984,8 @@ _delay((unsigned long)((100)*(10000000/4000000.0)));
 digitalWrite(AA_float, 1);
 float V = analogRead(padPin3[1]) / resolution * Vcc;
 
+if(V > 0.1)pos_v_counter++;
+
 if(V > V_max) {
 signal = digitalRead(padPin1)<<1;
 signal |= digitalRead(padPin2)<<0;
@@ -3998,8 +4001,9 @@ V_float = analogRead(padPin3[1]) / resolution * Vcc;
 }
 
 int targetAngle;
-int V = V_max;
+float V = V_max;
 
+lcdClear();
 printf("N: %d,\nV: %.3f",pos_v_counter, V);
 
 readKeypad();
@@ -4048,7 +4052,7 @@ digitalWrite(cylinderMotor, 1);
 
 void pinSetup(){
 
-# 269
+# 273
 TRISA = 0xFF;
 TRISB = 0xFF;
 TRISC = 0b11000000;
@@ -4074,7 +4078,7 @@ ADCON2 |= 0b110<<3;
 ADCON2 |= 1<<7;
 
 
-
+INT1IE = 1;
 INT0IE = 1;
 (INTCONbits.GIE = 1);
 }
@@ -4087,7 +4091,22 @@ void interrupt service(void) {
 
 servoInterruptService();
 
-# 329
+if(TMR1IF){
+startTimer(1,0xffff - period);
+time+=1;
+TMR1IF = 0;
+}
+
+
+if(INT0IF){ INT0IF = 0;
+batteryDetected = 1;
+}
+
+
+if(INT1IF && INT1IE){INT1IF = 0;
+char key = (PORTB & 0xF0) >> 4;
+if(key == 12)terminate = 1;
+}
 }
 
 void pause(char* message){

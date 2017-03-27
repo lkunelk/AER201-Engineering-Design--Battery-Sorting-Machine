@@ -62,7 +62,7 @@ void pause(char* message);
 long time = 0; //duration of sorting process [deci-seconds] (10 = 1 second)
 int batteryDetected = 0; //1 == contact switch activated on machine
 int terminate = 0; //flag to let program know if we neeed to terminate
-int stoppingTime = 100; //[centi-seconds]
+int stoppingTime = 10000; //[centi-seconds]
 
 int n_AA;
 int n_C;
@@ -109,8 +109,8 @@ void main(){
         //start timer
         //terminate = 0;
         time = 0; //reset time
-        //initTimer(1);
-        //startTimer(1,0);
+        initTimer(1);
+        startTimer(1,0);
         
         //start up motors
         digitalWrite(cylinderMotor, HIGH);
@@ -130,7 +130,7 @@ void main(){
             int cylinderForward = 10; //deci-seconds
             int cylinderBackward = 10; //deci-seconds
             
-            while(!batteryDetected){ //update screen and poll time
+            while(!batteryDetected && !terminate){ //update screen and poll time
                 //print time
                 lcdHome();
                 printf("time %02ld:%02ld",time/600,(time/10)%60);
@@ -163,6 +163,7 @@ void main(){
         }
         
         //display results
+        lcdClear();
         printf("[AA,C,9V,OTHER]\n");
         printf("[%d,%d,%d,%d]",n_AA,n_C,n_9V,n_OTHER);
         readKeypad();
@@ -197,6 +198,8 @@ void sortBattery(){
         digitalWrite(AA_float, HIGH); //set floating pin before reading
         float V = analogRead(padPin3[1]) / resolution * Vcc;
         
+        if(V > 0.1)pos_v_counter++;
+        
         if(V > V_max) {
             signal  = digitalRead(padPin1)<<1; //combine 2 reads
             signal |= digitalRead(padPin2)<<0;
@@ -212,8 +215,9 @@ void sortBattery(){
     }
     
     int targetAngle;
-    int V = V_max;
+    float V = V_max;
     
+    lcdClear();
     printf("N: %d,\nV: %.3f",pos_v_counter, V);
 //  __delay_ms(1000);
     readKeypad();
@@ -291,7 +295,7 @@ void pinSetup(){
     ADCON2 |= 1<<7; //set right justified result
     
     //interrupts
-    //INT1IE = 1; // external interrupt for keypad
+    INT1IE = 1; // external interrupt for keypad
     INT0IE = 1; // external interrupt on B0 for battery sensing switch
     ei();
 }
@@ -304,28 +308,22 @@ void interrupt service(void) {
     
     servoInterruptService(); //checks TMR0IF
     
-//    if(TMR1IF){
-//        startTimer(1,0xffff - period);
-//        time+=1;
-//        TMR1IF = 0; // clear flag
-//    }
+    if(TMR1IF){
+        startTimer(1,0xffff - period);
+        time+=1;
+        TMR1IF = 0; // clear flag
+    }
     
     //Contact sensor - port B, pin 0 external interrupt
-//    if(INT0IF){ INT0IF = 0; //clear flag
-//        batteryDetected = 1;
-//    }
+    if(INT0IF){ INT0IF = 0; //clear flag
+        batteryDetected = 1;
+    }
     
     //Keyboard - port B, pin 1 external interrupt
-//    if(INT1IF && INT1IE){INT1IF = 0;     //Clear flag bit
-//        //keyPressedInterruptService();
-//        
-//        char key = (PORTB & 0xF0) >> 4; //read the keypress
-//                 if(key == 0)time = 0; //reset time
-//            else if(key == 1)period+=100; //increment time
-//            else if(key == 2)period-=100; //decrement
-//            lcdClear();
-//            printf("period %ld",period);
-//    }
+    if(INT1IF && INT1IE){INT1IF = 0;     //Clear flag bit
+        char key = (PORTB & 0xF0) >> 4; //read the keypress
+        if(key == 12)terminate = 1;
+    }
 }
 
 void pause(char* message){
