@@ -5,7 +5,7 @@ Linker command line:
 -W-3 --edf=C:\Program Files (x86)\Microchip\xc8\v1.40\dat\en_msgs.txt -cs \
   -h+dist/default/production\PIC18_LCD_LIB.X.production.sym \
   --cmf=dist/default/production\PIC18_LCD_LIB.X.production.cmf -z -Q18F4620 \
-  -oC:\Users\Nam\AppData\Local\Temp\seek.2 \
+  -oC:\Users\Nam\AppData\Local\Temp\s3rg.2 \
   -Mdist/default/production/PIC18_LCD_LIB.X.production.map -E1 -ver=XC8 \
   -ASTACK=01A4h-0f7fh -pstack=STACK -ACODE=00h-0FFFFh -ACONST=00h-0FFFFh \
   -ASMALLCONST=01000h-010FFhx240 -AMEDIUMCONST=01000h-0FFFFh \
@@ -25,7 +25,7 @@ Linker command line:
   -pfarbss=FARRAM,fardata=FARRAM,nvFARRAM=FARRAM \
   -pintsave_regs=BIGRAM,bigbss=BIGRAM,bigdata=BIGRAM -pbss=RAM \
   -pidata=CODE,irdata=CODE,ibigdata=CODE,ifardata=CODE -prparam=COMRAM \
-  C:\Users\Nam\AppData\Local\Temp\seek.obj \
+  C:\Users\Nam\AppData\Local\Temp\s3rg.obj \
   dist/default/production\PIC18_LCD_LIB.X.production.obj 
 
 Object code version is 3.11
@@ -38,7 +38,7 @@ Call graph: (short form)
 
 
                 Name                               Link     Load   Length Selector   Space Scale
-C:\Users\Nam\AppData\Local\Temp\seek.obj
+C:\Users\Nam\AppData\Local\Temp\s3rg.obj
                 init                                  E        E        4        4       0
                 reset_vec                             0        0        4        0       0
                 idloc                            200000   200000        8   200000       0
