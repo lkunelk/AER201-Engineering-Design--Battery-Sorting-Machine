@@ -74,7 +74,7 @@ int   padAngle_OPEN  = 180;
 //pins
 //RTC uses C3 and C4
 int     cylinderMotor[2] = {C, 0}; //port C, pin 0
-int cylinderDir[2] = {D, 1};  //port D, pin 1
+int       cylinderDir[2] = {D, 1};  //port D, pin 1
 int     conveyorServo[2] = {C, 2}; //port C, pin 1
 int          padServo[2] = {C, 1}; //port C, pin 2
 int  redirectingServo[2] = {D, 0}; //port D, pin 0
@@ -97,9 +97,7 @@ void main(){
     
     while(1){
         //showInterface();
-
         
-        //pause("start timer?");
         //start timer
         long prevTime = 0;
         time = 0; //in centi-seconds
