@@ -111,9 +111,7 @@
 [v _lcdClear lcdClear `(v  1 e 1 0 ]
 "78
 [v _lcdNewline lcdNewline `(v  1 e 1 0 ]
-"102 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
-[v _debug debug `(v  1 e 1 0 ]
-"113
+"113 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
 [v _main main `(v  1 e 1 0 ]
 "195
 [v _sortBattery sortBattery `(v  1 e 1 0 ]
@@ -138,7 +136,7 @@
 [v _PORTA PORTA `VEuc  1 e 1 @3968 ]
 "185
 [v _PORTB PORTB `VEuc  1 e 1 @3969 ]
-[s S320 . 1 `uc 1 RB0 1 0 :1:0 
+[s S318 . 1 `uc 1 RB0 1 0 :1:0 
 `uc 1 RB1 1 0 :1:1 
 `uc 1 RB2 1 0 :1:2 
 `uc 1 RB3 1 0 :1:3 
@@ -148,7 +146,7 @@
 `uc 1 RB7 1 0 :1:7 
 ]
 "226
-[s S329 . 1 `uc 1 INT0 1 0 :1:0 
+[s S327 . 1 `uc 1 INT0 1 0 :1:0 
 `uc 1 INT1 1 0 :1:1 
 `uc 1 INT2 1 0 :1:2 
 `uc 1 CCP2 1 0 :1:3 
@@ -157,7 +155,7 @@
 `uc 1 KBI2 1 0 :1:6 
 `uc 1 KBI3 1 0 :1:7 
 ]
-[s S338 . 1 `uc 1 AN12 1 0 :1:0 
+[s S336 . 1 `uc 1 AN12 1 0 :1:0 
 `uc 1 AN10 1 0 :1:1 
 `uc 1 AN8 1 0 :1:2 
 `uc 1 AN9 1 0 :1:3 
@@ -166,11 +164,11 @@
 `uc 1 PGC 1 0 :1:6 
 `uc 1 PGD 1 0 :1:7 
 ]
-[s S347 . 1 `uc 1 . 1 0 :3:0 
+[s S345 . 1 `uc 1 . 1 0 :3:0 
 `uc 1 CCP2_PA2 1 0 :1:3 
 ]
-[u S350 . 1 `S320 1 . 1 0 `S329 1 . 1 0 `S338 1 . 1 0 `S347 1 . 1 0 ]
-[v _PORTBbits PORTBbits `VES350  1 e 1 @3969 ]
+[u S348 . 1 `S318 1 . 1 0 `S327 1 . 1 0 `S336 1 . 1 0 `S345 1 . 1 0 ]
+[v _PORTBbits PORTBbits `VES348  1 e 1 @3969 ]
 "355
 [v _PORTC PORTC `VEuc  1 e 1 @3970 ]
 "529
@@ -183,7 +181,7 @@
 [v _LATC LATC `VEuc  1 e 1 @3979 ]
 "1205
 [v _LATD LATD `VEuc  1 e 1 @3980 ]
-[s S247 . 1 `uc 1 LATD0 1 0 :1:0 
+[s S245 . 1 `uc 1 LATD0 1 0 :1:0 
 `uc 1 LATD1 1 0 :1:1 
 `uc 1 LATD2 1 0 :1:2 
 `uc 1 LATD3 1 0 :1:3 
@@ -193,7 +191,7 @@
 `uc 1 LATD7 1 0 :1:7 
 ]
 "1232
-[s S256 . 1 `uc 1 LD0 1 0 :1:0 
+[s S254 . 1 `uc 1 LD0 1 0 :1:0 
 `uc 1 LD1 1 0 :1:1 
 `uc 1 LD2 1 0 :1:2 
 `uc 1 LD3 1 0 :1:3 
@@ -202,8 +200,8 @@
 `uc 1 LD6 1 0 :1:6 
 `uc 1 LD7 1 0 :1:7 
 ]
-[u S265 . 1 `S247 1 . 1 0 `S256 1 . 1 0 ]
-[v _LATDbits LATDbits `VES265  1 e 1 @3980 ]
+[u S263 . 1 `S245 1 . 1 0 `S254 1 . 1 0 ]
+[v _LATDbits LATDbits `VES263  1 e 1 @3980 ]
 "1316
 [v _LATE LATE `VEuc  1 e 1 @3981 ]
 "1367
@@ -393,8 +391,6 @@
 [v _V_LIM_C V_LIM_C `f  1 e 3 0 ]
 "99
 [v _V_LIM_9V V_LIM_9V `f  1 e 3 0 ]
-"324
-[v _period period `i  1 e 2 0 ]
 "11 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\RTC.c
 [v _happynewyear happynewyear `C[7]uc  1 e 7 0 ]
 "15 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\servo.c
@@ -428,11 +424,11 @@
 "217
 [v sortBattery@V V `f  1 a 3 22 ]
 "268
-[v sortBattery@i_223 i `i  1 a 2 18 ]
+[v sortBattery@i_222 i `i  1 a 2 18 ]
 "213
 [v sortBattery@i i `f  1 a 3 25 ]
 "236
-[v sortBattery@V_221 V `f  1 a 3 28 ]
+[v sortBattery@V_220 V `f  1 a 3 28 ]
 "206
 [v sortBattery@V_max V_max `f  1 a 3 15 ]
 "205
@@ -453,29 +449,29 @@
 [v _digitalWrite digitalWrite `(v  1 e 1 0 ]
 {
 "55
-[v digitalWrite@p p `i  1 a 2 45 ]
+[v digitalWrite@p p `i  1 a 2 41 ]
 "53
-[v digitalWrite@pin pin `*.39i  1 p 2 38 ]
-[v digitalWrite@val val `i  1 p 2 40 ]
+[v digitalWrite@pin pin `*.39i  1 p 2 34 ]
+[v digitalWrite@val val `i  1 p 2 36 ]
 "74
 } 0
 "43
 [v _digitalRead digitalRead `(i  1 e 2 0 ]
 {
-[v digitalRead@pin pin `*.39i  1 p 2 38 ]
+[v digitalRead@pin pin `*.39i  1 p 2 34 ]
 "51
 } 0
 "90
 [v _analogRead analogRead `(l  1 e 4 0 ]
 {
-[v analogRead@channel channel `i  1 p 2 38 ]
+[v analogRead@channel channel `i  1 p 2 34 ]
 "98
 } 0
 "16 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\interface.c
 [v _showInterface showInterface `(v  1 e 1 0 ]
 {
 "20
-[v showInterface@key key `uc  1 a 1 120 ]
+[v showInterface@key key `uc  1 a 1 108 ]
 "79
 } 0
 "117
@@ -498,10 +494,17 @@
 {
 [v runMenu@key key `uc  1 a 1 wreg ]
 [v runMenu@key key `uc  1 a 1 wreg ]
-[v runMenu@key key `uc  1 a 1 119 ]
+[v runMenu@key key `uc  1 a 1 107 ]
 "115
 } 0
-"99
+"36 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\keypad.c
+[v _readKeypad readKeypad `(uc  1 e 1 0 ]
+{
+"38
+[v readKeypad@key key `uc  1 a 1 34 ]
+"41
+} 0
+"99 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\interface.c
 [v _mainMenu mainMenu `(v  1 e 1 0 ]
 {
 "103
@@ -515,32 +518,32 @@
 [v _printf printf `(i  1 e 2 0 ]
 {
 "1500
-[v printf@idx idx `uc  1 a 1 92 ]
+[v printf@idx idx `uc  1 a 1 80 ]
 "528
-[v printf@val val `ul  1 a 4 108 ]
-[u S741 . 4 `ul 1 vd 4 0 `d 1 integ 3 0 ]
+[v printf@val val `ul  1 a 4 96 ]
+[u S739 . 4 `ul 1 vd 4 0 `d 1 integ 3 0 ]
 "526
-[v printf@tmpval tmpval `S741  1 a 4 99 ]
+[v printf@tmpval tmpval `S739  1 a 4 87 ]
 "516
-[v printf@fval fval `d  1 a 3 105 ]
+[v printf@fval fval `d  1 a 3 93 ]
 "504
-[v printf@prec prec `i  1 a 2 116 ]
+[v printf@prec prec `i  1 a 2 104 ]
 "508
-[v printf@flag flag `us  1 a 2 114 ]
+[v printf@flag flag `us  1 a 2 102 ]
 "501
-[v printf@width width `i  1 a 2 112 ]
+[v printf@width width `i  1 a 2 100 ]
 "516
-[v printf@exp exp `i  1 a 2 103 ]
+[v printf@exp exp `i  1 a 2 91 ]
 "466
-[v printf@ap ap `[1]*.39v  1 a 2 97 ]
+[v printf@ap ap `[1]*.39v  1 a 2 85 ]
 "529
-[v printf@len len `ui  1 a 2 95 ]
+[v printf@len len `ui  1 a 2 83 ]
 "530
-[v printf@cp cp `*.39Cuc  1 a 2 93 ]
+[v printf@cp cp `*.39Cuc  1 a 2 81 ]
 "499
-[v printf@c c `c  1 a 1 118 ]
+[v printf@c c `c  1 a 1 106 ]
 "464
-[v printf@f f `*.25Cuc  1 p 2 73 ]
+[v printf@f f `*.25Cuc  1 p 2 61 ]
 "1541
 } 0
 "425
@@ -549,7 +552,7 @@
 [v scale@scl scl `c  1 a 1 wreg ]
 [v scale@scl scl `c  1 a 1 wreg ]
 "428
-[v scale@scl scl `c  1 a 1 42 ]
+[v scale@scl scl `c  1 a 1 30 ]
 "441
 } 0
 "35 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
@@ -557,7 +560,7 @@
 {
 [v putch@data data `uc  1 a 1 wreg ]
 [v putch@data data `uc  1 a 1 wreg ]
-[v putch@data data `uc  1 a 1 42 ]
+[v putch@data data `uc  1 a 1 38 ]
 "43
 } 0
 "78
@@ -571,7 +574,7 @@
 [v isdigit@c c `uc  1 a 1 wreg ]
 [v isdigit@c c `uc  1 a 1 wreg ]
 "14
-[v isdigit@c c `uc  1 a 1 40 ]
+[v isdigit@c c `uc  1 a 1 36 ]
 "15
 } 0
 "409 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\doprnt.c
@@ -580,67 +583,67 @@
 [v fround@prec prec `uc  1 a 1 wreg ]
 [v fround@prec prec `uc  1 a 1 wreg ]
 "413
-[v fround@prec prec `uc  1 a 1 45 ]
+[v fround@prec prec `uc  1 a 1 33 ]
 "418
 } 0
 "15 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\Umul16.c
 [v ___wmul __wmul `(ui  1 e 2 0 ]
 {
 "17
-[v ___wmul@product product `ui  1 a 2 48 ]
+[v ___wmul@product product `ui  1 a 2 52 ]
 "15
-[v ___wmul@multiplier multiplier `ui  1 p 2 4 ]
-[v ___wmul@multiplicand multiplicand `ui  1 p 2 6 ]
+[v ___wmul@multiplier multiplier `ui  1 p 2 48 ]
+[v ___wmul@multiplicand multiplicand `ui  1 p 2 50 ]
 "53
 } 0
 "8 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\awmod.c
 [v ___awmod __awmod `(i  1 e 2 0 ]
 {
 "11
-[v ___awmod@sign sign `uc  1 a 1 43 ]
-[v ___awmod@counter counter `uc  1 a 1 42 ]
+[v ___awmod@sign sign `uc  1 a 1 39 ]
+[v ___awmod@counter counter `uc  1 a 1 38 ]
 "8
-[v ___awmod@dividend dividend `i  1 p 2 38 ]
-[v ___awmod@divisor divisor `i  1 p 2 40 ]
+[v ___awmod@dividend dividend `i  1 p 2 34 ]
+[v ___awmod@divisor divisor `i  1 p 2 36 ]
 "35
 } 0
 "8 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\awdiv.c
 [v ___awdiv __awdiv `(i  1 e 2 0 ]
 {
 "11
-[v ___awdiv@quotient quotient `i  1 a 2 2 ]
+[v ___awdiv@quotient quotient `i  1 a 2 46 ]
 "12
-[v ___awdiv@sign sign `uc  1 a 1 1 ]
-[v ___awdiv@counter counter `uc  1 a 1 0 ]
+[v ___awdiv@sign sign `uc  1 a 1 45 ]
+[v ___awdiv@counter counter `uc  1 a 1 44 ]
 "8
-[v ___awdiv@dividend dividend `i  1 p 2 44 ]
-[v ___awdiv@divisor divisor `i  1 p 2 46 ]
+[v ___awdiv@dividend dividend `i  1 p 2 40 ]
+[v ___awdiv@divisor divisor `i  1 p 2 42 ]
 "42
 } 0
 "60 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\ftdivl.c
 [v __tdiv_to_l_ _tdiv_to_l_ `(ul  1 e 4 0 ]
 {
 "63
-[v __tdiv_to_l_@quot quot `ul  1 a 4 0 ]
+[v __tdiv_to_l_@quot quot `ul  1 a 4 43 ]
 "62
-[v __tdiv_to_l_@exp1 exp1 `uc  1 a 1 5 ]
-[v __tdiv_to_l_@cntr cntr `uc  1 a 1 4 ]
+[v __tdiv_to_l_@exp1 exp1 `uc  1 a 1 48 ]
+[v __tdiv_to_l_@cntr cntr `uc  1 a 1 47 ]
 "60
-[v __tdiv_to_l_@f1 f1 `f  1 p 3 38 ]
-[v __tdiv_to_l_@f2 f2 `f  1 p 3 41 ]
+[v __tdiv_to_l_@f1 f1 `f  1 p 3 34 ]
+[v __tdiv_to_l_@f2 f2 `f  1 p 3 37 ]
 "101
 } 0
 "60 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\fldivl.c
 [v __div_to_l_ _div_to_l_ `(ul  1 e 4 0 ]
 {
 "63
-[v __div_to_l_@quot quot `ul  1 a 4 44 ]
+[v __div_to_l_@quot quot `ul  1 a 4 40 ]
 "62
-[v __div_to_l_@exp1 exp1 `uc  1 a 1 49 ]
-[v __div_to_l_@cntr cntr `uc  1 a 1 48 ]
+[v __div_to_l_@exp1 exp1 `uc  1 a 1 45 ]
+[v __div_to_l_@cntr cntr `uc  1 a 1 44 ]
 "60
-[v __div_to_l_@f1 f1 `d  1 p 3 38 ]
-[v __div_to_l_@f2 f2 `d  1 p 3 41 ]
+[v __div_to_l_@f1 f1 `d  1 p 3 34 ]
+[v __div_to_l_@f2 f2 `d  1 p 3 37 ]
 "101
 } 0
 "35 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\lltoft.c
@@ -649,49 +652,49 @@
 "37
 [v ___lltoft@exp exp `uc  1 a 1 50 ]
 "35
-[v ___lltoft@c c `ul  1 p 4 46 ]
+[v ___lltoft@c c `ul  1 p 4 42 ]
 "46
 } 0
 "8 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\llmod.c
 [v ___llmod __llmod `(ul  1 e 4 0 ]
 {
 "11
-[v ___llmod@counter counter `uc  1 a 1 8 ]
+[v ___llmod@counter counter `uc  1 a 1 55 ]
 "8
-[v ___llmod@dividend dividend `ul  1 p 4 0 ]
-[v ___llmod@divisor divisor `ul  1 p 4 4 ]
+[v ___llmod@dividend dividend `ul  1 p 4 47 ]
+[v ___llmod@divisor divisor `ul  1 p 4 51 ]
 "26
 } 0
 "8 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\lldiv.c
 [v ___lldiv __lldiv `(ul  1 e 4 0 ]
 {
 "11
-[v ___lldiv@quotient quotient `ul  1 a 4 46 ]
+[v ___lldiv@quotient quotient `ul  1 a 4 42 ]
 "12
-[v ___lldiv@counter counter `uc  1 a 1 50 ]
+[v ___lldiv@counter counter `uc  1 a 1 46 ]
 "8
-[v ___lldiv@dividend dividend `ul  1 p 4 38 ]
-[v ___lldiv@divisor divisor `ul  1 p 4 42 ]
+[v ___lldiv@dividend dividend `ul  1 p 4 34 ]
+[v ___lldiv@divisor divisor `ul  1 p 4 38 ]
 "31
 } 0
 "20 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\ftsub.c
 [v ___ftsub __ftsub `(f  1 e 3 0 ]
 {
-[v ___ftsub@f1 f1 `f  1 p 3 58 ]
-[v ___ftsub@f2 f2 `f  1 p 3 61 ]
+[v ___ftsub@f1 f1 `f  1 p 3 46 ]
+[v ___ftsub@f2 f2 `f  1 p 3 49 ]
 "27
 } 0
 "15 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\ftneg.c
 [v ___ftneg __ftneg `(f  1 e 3 0 ]
 {
-[v ___ftneg@f1 f1 `f  1 p 3 38 ]
+[v ___ftneg@f1 f1 `f  1 p 3 34 ]
 "20
 } 0
 "4 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\ftge.c
 [v ___ftge __ftge `(b  1 e 0 0 ]
 {
-[v ___ftge@ff1 ff1 `f  1 p 3 0 ]
-[v ___ftge@ff2 ff2 `f  1 p 3 3 ]
+[v ___ftge@ff1 ff1 `f  1 p 3 46 ]
+[v ___ftge@ff2 ff2 `f  1 p 3 49 ]
 "13
 } 0
 "74 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
@@ -699,12 +702,144 @@
 {
 "76
 } 0
-"70
+"285 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
+[v _pinSetup pinSetup `(v  1 e 1 0 ]
+{
+"319
+} 0
+"70 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
 [v _lcdHome lcdHome `(i  1 e 2 0 ]
 {
 "72
 } 0
-"15
+"21 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\servo.c
+[v _initServo initServo `(v  1 e 1 0 ]
+{
+"24
+[v initServo@i i `i  1 a 2 102 ]
+"21
+[v initServo@motor motor `*.39i  1 p 2 94 ]
+[v initServo@angle angle `i  1 p 2 96 ]
+"34
+} 0
+"76 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\timer.c
+[v _startTimer startTimer `(v  1 e 1 0 ]
+{
+[v startTimer@timer timer `i  1 p 2 34 ]
+[v startTimer@val val `l  1 p 4 36 ]
+"93
+} 0
+"44 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\servo.c
+[v _setAngle setAngle `(v  1 e 1 0 ]
+{
+"46
+[v setAngle@i i `i  1 a 2 92 ]
+"45
+[v setAngle@period period `ui  1 a 2 90 ]
+"44
+[v setAngle@motor motor `*.39i  1 p 2 84 ]
+[v setAngle@angle angle `i  1 p 2 86 ]
+"53
+} 0
+"36
+[v _angleToPulse angleToPulse `(l  1 e 4 0 ]
+{
+"38
+[v angleToPulse@a000 a000 `l  1 a 4 80 ]
+"39
+[v angleToPulse@a180 a180 `l  1 a 4 73 ]
+"37
+[v angleToPulse@offset offset `l  1 a 4 69 ]
+"36
+[v angleToPulse@angle angle `i  1 p 2 61 ]
+"42
+} 0
+"44 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\fttol.c
+[v ___fttol __fttol `(l  1 e 4 0 ]
+{
+"47
+[v ___fttol@lval lval `ul  1 a 4 56 ]
+"46
+[v ___fttol@exp1 exp1 `uc  1 a 1 60 ]
+[v ___fttol@sign1 sign1 `uc  1 a 1 55 ]
+"44
+[v ___fttol@f1 f1 `f  1 p 3 46 ]
+"73
+} 0
+"62 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\ftmul.c
+[v ___ftmul __ftmul `(f  1 e 3 0 ]
+{
+"65
+[v ___ftmul@f3_as_product f3_as_product `um  1 a 3 19 ]
+"64
+[v ___ftmul@sign sign `uc  1 a 1 23 ]
+[v ___ftmul@cntr cntr `uc  1 a 1 22 ]
+[v ___ftmul@exp exp `uc  1 a 1 18 ]
+"62
+[v ___ftmul@f1 f1 `f  1 p 3 9 ]
+[v ___ftmul@f2 f2 `f  1 p 3 12 ]
+"157
+} 0
+"54 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\ftdiv.c
+[v ___ftdiv __ftdiv `(f  1 e 3 0 ]
+{
+"60
+[v ___ftdiv@f3 f3 `f  1 a 3 4 ]
+"59
+[v ___ftdiv@sign sign `uc  1 a 1 8 ]
+[v ___ftdiv@exp exp `uc  1 a 1 7 ]
+[v ___ftdiv@cntr cntr `uc  1 a 1 3 ]
+"54
+[v ___ftdiv@f1 f1 `f  1 p 3 52 ]
+[v ___ftdiv@f2 f2 `f  1 p 3 55 ]
+"86
+} 0
+"86 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\ftadd.c
+[v ___ftadd __ftadd `(f  1 e 3 0 ]
+{
+"88
+[v ___ftadd@exp1 exp1 `uc  1 a 1 45 ]
+[v ___ftadd@exp2 exp2 `uc  1 a 1 44 ]
+[v ___ftadd@sign sign `uc  1 a 1 43 ]
+"86
+[v ___ftadd@f1 f1 `f  1 p 3 34 ]
+[v ___ftadd@f2 f2 `f  1 p 3 37 ]
+"148
+} 0
+"32 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\awtoft.c
+[v ___awtoft __awtoft `(f  1 e 3 0 ]
+{
+"34
+[v ___awtoft@sign sign `uc  1 a 1 45 ]
+"32
+[v ___awtoft@c c `i  1 p 2 42 ]
+"42
+} 0
+"42 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\altoft.c
+[v ___altoft __altoft `(f  1 e 3 0 ]
+{
+"44
+[v ___altoft@sign sign `uc  1 a 1 51 ]
+[v ___altoft@exp exp `uc  1 a 1 50 ]
+"42
+[v ___altoft@c c `l  1 p 4 42 ]
+"57
+} 0
+"62 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\float.c
+[v ___ftpack __ftpack `(f  1 e 3 0 ]
+{
+[v ___ftpack@arg arg `um  1 p 3 34 ]
+[v ___ftpack@exp exp `uc  1 p 1 37 ]
+[v ___ftpack@sign sign `uc  1 p 1 38 ]
+"86
+} 0
+"52 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\timer.c
+[v _initTimer initTimer `(v  1 e 1 0 ]
+{
+[v initTimer@timer timer `i  1 p 2 34 ]
+"73
+} 0
+"15 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
 [v _initLCD initLCD `(v  1 e 1 0 ]
 {
 "25
@@ -714,7 +849,7 @@
 {
 [v lcdInst@data data `uc  1 a 1 wreg ]
 [v lcdInst@data data `uc  1 a 1 wreg ]
-[v lcdInst@data data `uc  1 a 1 41 ]
+[v lcdInst@data data `uc  1 a 1 37 ]
 "32
 } 0
 "46
@@ -722,187 +857,43 @@
 {
 [v lcdNibble@data data `uc  1 a 1 wreg ]
 "48
-[v lcdNibble@temp temp `uc  1 a 1 38 ]
+[v lcdNibble@temp temp `uc  1 a 1 34 ]
 "46
 [v lcdNibble@data data `uc  1 a 1 wreg ]
 "48
-[v lcdNibble@data data `uc  1 a 1 39 ]
+[v lcdNibble@data data `uc  1 a 1 35 ]
 "68
-} 0
-"102 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
-[v _debug debug `(v  1 e 1 0 ]
-{
-"111
-} 0
-"36 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\keypad.c
-[v _readKeypad readKeypad `(uc  1 e 1 0 ]
-{
-"38
-[v readKeypad@key key `uc  1 a 1 38 ]
-"41
-} 0
-"285 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
-[v _pinSetup pinSetup `(v  1 e 1 0 ]
-{
-"319
-} 0
-"21 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\servo.c
-[v _initServo initServo `(v  1 e 1 0 ]
-{
-"24
-[v initServo@i i `i  1 a 2 114 ]
-"21
-[v initServo@motor motor `*.39i  1 p 2 106 ]
-[v initServo@angle angle `i  1 p 2 108 ]
-"34
-} 0
-"76 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\timer.c
-[v _startTimer startTimer `(v  1 e 1 0 ]
-{
-[v startTimer@timer timer `i  1 p 2 38 ]
-[v startTimer@val val `l  1 p 4 40 ]
-"93
-} 0
-"44 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\servo.c
-[v _setAngle setAngle `(v  1 e 1 0 ]
-{
-"46
-[v setAngle@i i `i  1 a 2 104 ]
-"45
-[v setAngle@period period `ui  1 a 2 102 ]
-"44
-[v setAngle@motor motor `*.39i  1 p 2 96 ]
-[v setAngle@angle angle `i  1 p 2 98 ]
-"53
-} 0
-"36
-[v _angleToPulse angleToPulse `(l  1 e 4 0 ]
-{
-"38
-[v angleToPulse@a000 a000 `l  1 a 4 92 ]
-"39
-[v angleToPulse@a180 a180 `l  1 a 4 85 ]
-"37
-[v angleToPulse@offset offset `l  1 a 4 81 ]
-"36
-[v angleToPulse@angle angle `i  1 p 2 73 ]
-"42
-} 0
-"44 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\fttol.c
-[v ___fttol __fttol `(l  1 e 4 0 ]
-{
-"47
-[v ___fttol@lval lval `ul  1 a 4 68 ]
-"46
-[v ___fttol@exp1 exp1 `uc  1 a 1 72 ]
-[v ___fttol@sign1 sign1 `uc  1 a 1 67 ]
-"44
-[v ___fttol@f1 f1 `f  1 p 3 58 ]
-"73
-} 0
-"62 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\ftmul.c
-[v ___ftmul __ftmul `(f  1 e 3 0 ]
-{
-"65
-[v ___ftmul@f3_as_product f3_as_product `um  1 a 3 31 ]
-"64
-[v ___ftmul@sign sign `uc  1 a 1 35 ]
-[v ___ftmul@cntr cntr `uc  1 a 1 34 ]
-[v ___ftmul@exp exp `uc  1 a 1 30 ]
-"62
-[v ___ftmul@f1 f1 `f  1 p 3 21 ]
-[v ___ftmul@f2 f2 `f  1 p 3 24 ]
-"157
-} 0
-"54 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\ftdiv.c
-[v ___ftdiv __ftdiv `(f  1 e 3 0 ]
-{
-"60
-[v ___ftdiv@f3 f3 `f  1 a 3 16 ]
-"59
-[v ___ftdiv@sign sign `uc  1 a 1 20 ]
-[v ___ftdiv@exp exp `uc  1 a 1 19 ]
-[v ___ftdiv@cntr cntr `uc  1 a 1 15 ]
-"54
-[v ___ftdiv@f1 f1 `f  1 p 3 6 ]
-[v ___ftdiv@f2 f2 `f  1 p 3 9 ]
-"86
-} 0
-"86 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\ftadd.c
-[v ___ftadd __ftadd `(f  1 e 3 0 ]
-{
-"88
-[v ___ftadd@exp1 exp1 `uc  1 a 1 57 ]
-[v ___ftadd@exp2 exp2 `uc  1 a 1 56 ]
-[v ___ftadd@sign sign `uc  1 a 1 55 ]
-"86
-[v ___ftadd@f1 f1 `f  1 p 3 46 ]
-[v ___ftadd@f2 f2 `f  1 p 3 49 ]
-"148
-} 0
-"32 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\awtoft.c
-[v ___awtoft __awtoft `(f  1 e 3 0 ]
-{
-"34
-[v ___awtoft@sign sign `uc  1 a 1 49 ]
-"32
-[v ___awtoft@c c `i  1 p 2 46 ]
-"42
-} 0
-"42 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\altoft.c
-[v ___altoft __altoft `(f  1 e 3 0 ]
-{
-"44
-[v ___altoft@sign sign `uc  1 a 1 5 ]
-[v ___altoft@exp exp `uc  1 a 1 4 ]
-"42
-[v ___altoft@c c `l  1 p 4 46 ]
-"57
-} 0
-"62 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\float.c
-[v ___ftpack __ftpack `(f  1 e 3 0 ]
-{
-[v ___ftpack@arg arg `um  1 p 3 38 ]
-[v ___ftpack@exp exp `uc  1 p 1 41 ]
-[v ___ftpack@sign sign `uc  1 p 1 42 ]
-"86
-} 0
-"52 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\timer.c
-[v _initTimer initTimer `(v  1 e 1 0 ]
-{
-[v initTimer@timer timer `i  1 p 2 38 ]
-"73
 } 0
 "8 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\almod.c
 [v ___almod __almod `(l  1 e 4 0 ]
 {
 "11
-[v ___almod@sign sign `uc  1 a 1 47 ]
-[v ___almod@counter counter `uc  1 a 1 46 ]
+[v ___almod@sign sign `uc  1 a 1 57 ]
+[v ___almod@counter counter `uc  1 a 1 56 ]
 "8
-[v ___almod@dividend dividend `l  1 p 4 6 ]
-[v ___almod@divisor divisor `l  1 p 4 10 ]
+[v ___almod@dividend dividend `l  1 p 4 48 ]
+[v ___almod@divisor divisor `l  1 p 4 52 ]
 "35
 } 0
 "8 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\aldiv.c
 [v ___aldiv __aldiv `(l  1 e 4 0 ]
 {
 "11
-[v ___aldiv@quotient quotient `l  1 a 4 2 ]
+[v ___aldiv@quotient quotient `l  1 a 4 44 ]
 "12
-[v ___aldiv@sign sign `uc  1 a 1 1 ]
-[v ___aldiv@counter counter `uc  1 a 1 0 ]
+[v ___aldiv@sign sign `uc  1 a 1 43 ]
+[v ___aldiv@counter counter `uc  1 a 1 42 ]
 "8
-[v ___aldiv@dividend dividend `l  1 p 4 38 ]
-[v ___aldiv@divisor divisor `l  1 p 4 42 ]
+[v ___aldiv@dividend dividend `l  1 p 4 34 ]
+[v ___aldiv@divisor divisor `l  1 p 4 38 ]
 "42
 } 0
 "325 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
 [v _service service `II(v  1 e 1 0 ]
 {
-"344
-[v service@key key `uc  1 a 1 37 ]
-"348
+"347
+[v service@key key `uc  1 a 1 33 ]
+"351
 } 0
 "55 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\servo.c
 [v _servoInterruptService servoInterruptService `(uc  1 e 1 0 ]

@@ -112,7 +112,7 @@ void debug(){
 
 void main(){
     
-    debug();
+    //debug();
     
     pinSetup();
     initLCD();
@@ -321,13 +321,16 @@ int angle = 90;
 
 //24400 for 10ms
 //30650 for 12.5ms
-int period = 31100; // 12.5*8 = 100ms, use 8 prescaler
+
 void interrupt service(void) {
     
     if( servoInterruptService() )return; //if interrupt was dealt with here return
     
     if(TMR1IF){
-        startTimer(1,0xffff - period);
+        // 0.1 second timer
+        // 12.5ms = 31100, 12.5ms * 8 = 100ms = 0.1s (prescaler = 8)
+        // 0xffff - 31100 = 0x8683
+        startTimer(1,0x8683);
         time+=1;
         TMR1IF = 0; // clear flag
         return;

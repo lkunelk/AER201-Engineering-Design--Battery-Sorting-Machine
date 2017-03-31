@@ -3141,9 +3141,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 113: void main(){
 [e :U _main ]
 [f ]
-[; ;main.c: 115: debug();
-"115
-[e ( _debug ..  ]
 [; ;main.c: 117: pinSetup();
 "117
 [e ( _pinSetup ..  ]
@@ -3654,15 +3651,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 90 `i
 ]
 [; ;main.c: 320: int angle = 90;
-"324
-[v _period `i ~T0 @X0 1 e ]
-[i _period
--> 31100 `i
-]
-[; ;main.c: 324: int period = 31100;
-[v F3162 `(v ~T0 @X0 1 tf ]
+[v F3161 `(v ~T0 @X0 1 tf ]
 "325
-[v _service `IF3162 ~T0 @X0 1 e ]
+[v _service `IF3161 ~T0 @X0 1 e ]
 {
 [; ;main.c: 325: void interrupt service(void) {
 [e :U _service ]
@@ -3676,80 +3667,80 @@ Version 3.2 HI-TECH Software Intermediate Code
 "329
 [e $ ! _TMR1IF 314  ]
 {
-[; ;main.c: 330: startTimer(1,0xffff - period);
-"330
-[e ( _startTimer (2 , -> 1 `i -> - -> 65535 `ui -> _period `ui `l ]
-[; ;main.c: 331: time+=1;
-"331
-[e =+ _time -> -> 1 `i `l ]
-[; ;main.c: 332: TMR1IF = 0;
-"332
-[e = _TMR1IF -> -> 0 `i `b ]
-[; ;main.c: 333: return;
+[; ;main.c: 333: startTimer(1,0x8683);
 "333
-[e $UE 312  ]
+[e ( _startTimer (2 , -> 1 `i -> -> 34435 `ui `l ]
+[; ;main.c: 334: time+=1;
 "334
+[e =+ _time -> -> 1 `i `l ]
+[; ;main.c: 335: TMR1IF = 0;
+"335
+[e = _TMR1IF -> -> 0 `i `b ]
+[; ;main.c: 336: return;
+"336
+[e $UE 312  ]
+"337
 }
 [e :U 314 ]
-[; ;main.c: 334: }
-[; ;main.c: 337: if(INT0IF){ INT0IF = 0;
-"337
+[; ;main.c: 337: }
+[; ;main.c: 340: if(INT0IF){ INT0IF = 0;
+"340
 [e $ ! _INT0IF 315  ]
 {
 [e = _INT0IF -> -> 0 `i `b ]
-[; ;main.c: 338: batteryDetected = 1;
-"338
+[; ;main.c: 341: batteryDetected = 1;
+"341
 [e = _batteryDetected -> 1 `i ]
-[; ;main.c: 339: return;
-"339
+[; ;main.c: 342: return;
+"342
 [e $UE 312  ]
-"340
+"343
 }
 [e :U 315 ]
-[; ;main.c: 340: }
-[; ;main.c: 343: if(INT1IF && INT1IE){INT1IF = 0;
-"343
+[; ;main.c: 343: }
+[; ;main.c: 346: if(INT1IF && INT1IE){INT1IF = 0;
+"346
 [e $ ! && _INT1IF _INT1IE 316  ]
 {
 [e = _INT1IF -> -> 0 `i `b ]
-"344
+"347
 [v _key `uc ~T0 @X0 1 a ]
-[; ;main.c: 344: char key = (PORTB & 0xF0) >> 4;
+[; ;main.c: 347: char key = (PORTB & 0xF0) >> 4;
 [e = _key -> >> & -> _PORTB `i -> 240 `i -> 4 `i `uc ]
-[; ;main.c: 345: if(key == 12)terminate = 1;
-"345
+[; ;main.c: 348: if(key == 12)terminate = 1;
+"348
 [e $ ! == -> _key `i -> 12 `i 317  ]
 [e = _terminate -> 1 `i ]
 [e :U 317 ]
-[; ;main.c: 346: return;
-"346
+[; ;main.c: 349: return;
+"349
 [e $UE 312  ]
-"347
+"350
 }
 [e :U 316 ]
-[; ;main.c: 347: }
-[; ;main.c: 348: }
-"348
+[; ;main.c: 350: }
+[; ;main.c: 351: }
+"351
 [e :UE 312 ]
 }
-"350
+"353
 [v _pause `(v ~T0 @X0 1 ef1`*uc ]
 {
-[; ;main.c: 350: void pause(char* message){
+[; ;main.c: 353: void pause(char* message){
 [e :U _pause ]
 [v _message `*uc ~T0 @X0 1 r1 ]
 [f ]
-[; ;main.c: 351: lcdClear();
-"351
-[e ( _lcdClear ..  ]
-[; ;main.c: 352: printf(message);
-"352
-[e ( _printf -> _message `*Cuc ]
-[; ;main.c: 353: readKeypad();
-"353
-[e ( _readKeypad ..  ]
-[; ;main.c: 354: }
+[; ;main.c: 354: lcdClear();
 "354
+[e ( _lcdClear ..  ]
+[; ;main.c: 355: printf(message);
+"355
+[e ( _printf -> _message `*Cuc ]
+[; ;main.c: 356: readKeypad();
+"356
+[e ( _readKeypad ..  ]
+[; ;main.c: 357: }
+"357
 [e :UE 318 ]
 }
 [p f _printf 9544340 ]

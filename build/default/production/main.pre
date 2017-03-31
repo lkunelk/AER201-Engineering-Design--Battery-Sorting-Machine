@@ -3898,7 +3898,7 @@ while(1);
 
 void main(){
 
-debug();
+
 
 pinSetup();
 initLCD();
@@ -4104,13 +4104,16 @@ int angle = 90;
 
 
 
-int period = 31100;
+
 void interrupt service(void) {
 
 if( servoInterruptService() )return;
 
 if(TMR1IF){
-startTimer(1,0xffff - period);
+
+
+
+startTimer(1,0x8683);
 time+=1;
 TMR1IF = 0;
 return;
