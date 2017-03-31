@@ -19,6 +19,25 @@
 #include <xc.h>
 #include "eeprom.h"
 
+//
+int* readPastRun(int run){
+    int data[7];
+    for(int i = 0; i < 7; i++){
+        data[i] = eepromRead((run*7+1) + i);
+    }
+    return data;
+}
+
+void saveNewRun(int* data){
+    //update total number of runs being stored
+    eepromWrite(eepromRead(0)+1,0);
+    int n = eepromRead(0);
+    
+    for(int i = 0; i < 7; i++){
+        eepromWrite(data[i], (n*7+1) + i);
+    }
+}
+
 void eepromWrite(int data, long address){
     
     while(EECON1 & 0b10); //wait for any previous procedure to finish

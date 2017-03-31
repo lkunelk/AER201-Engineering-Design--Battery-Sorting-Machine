@@ -102,17 +102,34 @@ void debug();
 void debug(){
     
     pinSetup();
+    initLCD();
     
-    initServo(padServo, 90);
-    readKeypad();
-    initServo(padServo, 0);
-    
+    while(1){
+        char key = readKeypad();
+        printf("s");
+        if(key == '1'){
+            int n = (eepromRead(0)+1)%0xffff;
+            int run[7];
+            for(int i = 0; i < 7; i++)run[i] = i+n;
+            saveNewRun(run);
+            lcdClear();
+            printf("n: %d",eepromRead(0));
+        }
+        if(key == '2'){
+            int* run = readPastRun(eepromRead(0));
+            lcdClear();
+            for(int i = 0; i < 7; i ++)
+                printf("%d,",run[i]);
+            
+        }
+        printf("f");
+    }
     while(1);
 }
 
 void main(){
     
-    //debug();
+    debug();
     
     pinSetup();
     initLCD();
@@ -122,7 +139,7 @@ void main(){
         
         
         //start timer
-        //terminate = 0;
+        terminate = 0;
         time = 0; //reset time
         initTimer(1);
         startTimer(1,0);
@@ -346,6 +363,7 @@ void interrupt service(void) {
     if(INT1IF && INT1IE){INT1IF = 0;     //Clear flag bit
         char key = (PORTB & 0xF0) >> 4; //read the keypress
         if(key == 12)terminate = 1;
+        while(PORTBbits.RB1);
         return;
     }
 }

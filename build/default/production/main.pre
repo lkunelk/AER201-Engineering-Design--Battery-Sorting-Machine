@@ -3809,6 +3809,8 @@ void analogPinMode(void);
 long analogRead(int channel);
 
 # 11 "eeprom.h"
+int* readPastRun(int run);
+void saveNewRun(int* data);
 void eepromWrite(int data, long address);
 int eepromRead(long address);
 
@@ -3833,12 +3835,12 @@ long angleToPulse(int angle);
 
 # 11 "interface.h"
 void showInterface();
-void dateTime();
-void mainMenu();
-void runSelect();
-void runMenu(char key);
-void runTime();
-void runStats();
+void showDateTime();
+char showMainMenu();
+char showRunSelect();
+char showRunMenu(char key);
+char showRunTime();
+char showRunStats();
 
 # 58 "main.c"
 void pinSetup(void);
@@ -3888,17 +3890,34 @@ void debug();
 void debug(){
 
 pinSetup();
+initLCD();
 
-initServo(padServo, 90);
-readKeypad();
-initServo(padServo, 0);
+while(1){
+char key = readKeypad();
+printf("s");
+if(key == '1'){
+int n = (eepromRead(0)+1)%0xffff;
+int run[7];
+for(int i = 0; i < 7; i++)run[i] = i+n;
+saveNewRun(run);
+lcdClear();
+printf("n: %d",eepromRead(0));
+}
+if(key == '2'){
+int* run = readPastRun(eepromRead(0));
+lcdClear();
+for(int i = 0; i < 7; i ++)
+printf("%d,",run[i]);
 
+}
+printf("f");
+}
 while(1);
 }
 
 void main(){
 
-
+debug();
 
 pinSetup();
 initLCD();
@@ -3908,7 +3927,7 @@ showInterface();
 
 
 
-
+terminate = 0;
 time = 0;
 initTimer(1);
 startTimer(1,0);
@@ -4070,7 +4089,7 @@ digitalWrite(cylinderMotor, 1);
 
 void pinSetup(){
 
-# 291
+# 308
 TRISA = 0xFF;
 TRISB = 0xFF;
 TRISC = 0b11000000;
@@ -4129,6 +4148,7 @@ return;
 if(INT1IF && INT1IE){INT1IF = 0;
 char key = (PORTB & 0xF0) >> 4;
 if(key == 12)terminate = 1;
+while(PORTBbits.RB1);
 return;
 }
 }

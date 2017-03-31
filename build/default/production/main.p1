@@ -1,13 +1,21 @@
 Version 3.2 HI-TECH Software Intermediate Code
 "58 main.c
 [v _pinSetup `(v ~T0 @X0 0 ef ]
-"11 servo.h
-[v _initServo `(v ~T0 @X0 0 ef2`*i`i ]
-"12 keypad.h
-[v _readKeypad `(uc ~T0 @X0 0 ef ]
-[p mainexit ]
 "18 lcd.h
 [v _initLCD `(v ~T0 @X0 0 ef ]
+"12 keypad.h
+[v _readKeypad `(uc ~T0 @X0 0 ef ]
+"195 C:\Program Files (x86)\Microchip\xc8\v1.40\include\stdio.h
+[v _printf `(i ~T0 @X0 0 ev`*Cuc ]
+"14 eeprom.h
+[v _eepromRead `(i ~T0 @X0 0 ef1`l ]
+"12
+[v _saveNewRun `(v ~T0 @X0 0 ef1`*i ]
+"19 lcd.h
+[v _lcdClear `(v ~T0 @X0 0 ef ]
+"11 eeprom.h
+[v _readPastRun `(*i ~T0 @X0 0 ef1`i ]
+[p mainexit ]
 "11 interface.h
 [v _showInterface `(v ~T0 @X0 0 ef ]
 "11 timer.h
@@ -16,11 +24,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _startTimer `(v ~T0 @X0 0 ef2`i`l ]
 "30 iopin.h
 [v _digitalWrite `(v ~T0 @X0 0 ef2`*i`i ]
-"19 lcd.h
-[v _lcdClear `(v ~T0 @X0 0 ef ]
-"195 C:\Program Files (x86)\Microchip\xc8\v1.40\include\stdio.h
-[v _printf `(i ~T0 @X0 0 ev`*Cuc ]
-"150 main.c
+"11 servo.h
+[v _initServo `(v ~T0 @X0 0 ef2`*i`i ]
+"167 main.c
 [v _lcdHome `(i ~T0 @X0 0 ef ]
 [v F2878 `(v ~T0 @X0 1 tf1`ul ]
 "159 C:\Program Files (x86)\Microchip\xc8\v1.40\include\pic18.h
@@ -88,6 +94,23 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _INT1IF `Vb ~T0 @X0 0 e@32640 ]
 "185
 [v _PORTB `Vuc ~T0 @X0 0 e@3969 ]
+"191
+[s S11 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S11 . RB0 RB1 RB2 RB3 RB4 RB5 RB6 RB7 ]
+"201
+[s S12 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S12 . INT0 INT1 INT2 CCP2 KBI0 KBI1 KBI2 KBI3 ]
+"211
+[s S13 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S13 . AN12 AN10 AN8 AN9 AN11 PGM PGC PGD ]
+"221
+[s S14 :3 `uc 1 :1 `uc 1 ]
+[n S14 . . CCP2_PA2 ]
+"190
+[u S10 `S11 1 `S12 1 `S13 1 `S14 1 ]
+[n S10 . . . . . ]
+"226
+[v _PORTBbits `VS10 ~T0 @X0 0 e@3969 ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -2905,8 +2928,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;iopin.h: 30: void digitalWrite(int* pin, int val);
 [; ;iopin.h: 31: void analogPinMode(void);
 [; ;iopin.h: 32: long analogRead(int channel);
-[; ;eeprom.h: 11: void eepromWrite(int data, long address);
-[; ;eeprom.h: 12: int eepromRead(long address);
+[; ;eeprom.h: 11: int* readPastRun(int run);
+[; ;eeprom.h: 12: void saveNewRun(int* data);
+[; ;eeprom.h: 13: void eepromWrite(int data, long address);
+[; ;eeprom.h: 14: int eepromRead(long address);
 [; ;I2C.h: 11: void I2C_Master_Init(const unsigned long c);
 [; ;I2C.h: 12: void I2C_Master_Write(unsigned d);
 [; ;I2C.h: 13: unsigned char I2C_Master_Read(unsigned char a);
@@ -2920,12 +2945,12 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;servo.h: 13: char servoInterruptService();
 [; ;servo.h: 14: long angleToPulse(int angle);
 [; ;interface.h: 11: void showInterface();
-[; ;interface.h: 12: void dateTime();
-[; ;interface.h: 13: void mainMenu();
-[; ;interface.h: 14: void runSelect();
-[; ;interface.h: 15: void runMenu(char key);
-[; ;interface.h: 16: void runTime();
-[; ;interface.h: 17: void runStats();
+[; ;interface.h: 12: void showDateTime();
+[; ;interface.h: 13: char showMainMenu();
+[; ;interface.h: 14: char showRunSelect();
+[; ;interface.h: 15: char showRunMenu(char key);
+[; ;interface.h: 16: char showRunTime();
+[; ;interface.h: 17: char showRunStats();
 [; ;main.c: 58: void pinSetup(void);
 [; ;main.c: 59: void sortBattery(void);
 [; ;main.c: 60: void pause(char* message);
@@ -3116,636 +3141,737 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 104: pinSetup();
 "104
 [e ( _pinSetup ..  ]
-[; ;main.c: 106: initServo(padServo, 90);
-"106
-[e ( _initServo (2 , &U _padServo -> 90 `i ]
-[; ;main.c: 107: readKeypad();
-"107
-[e ( _readKeypad ..  ]
-[; ;main.c: 108: initServo(padServo, 0);
-"108
-[e ( _initServo (2 , &U _padServo -> 0 `i ]
-[; ;main.c: 110: while(1);
-"110
-[e :U 268 ]
-[e :U 267 ]
-[e $U 268  ]
-[e :U 269 ]
-[; ;main.c: 111: }
-"111
-[e :UE 266 ]
-}
-"113
-[v _main `(v ~T0 @X0 1 ef ]
-{
-[; ;main.c: 113: void main(){
-[e :U _main ]
-[f ]
-[; ;main.c: 117: pinSetup();
-"117
-[e ( _pinSetup ..  ]
-[; ;main.c: 118: initLCD();
-"118
+[; ;main.c: 105: initLCD();
+"105
 [e ( _initLCD ..  ]
-[; ;main.c: 120: while(1){
-"120
-[e :U 272 ]
+[; ;main.c: 107: while(1){
+"107
+[e :U 268 ]
 {
-[; ;main.c: 121: showInterface();
-"121
-[e ( _showInterface ..  ]
-[; ;main.c: 126: time = 0;
-"126
-[e = _time -> -> 0 `i `l ]
-[; ;main.c: 127: initTimer(1);
-"127
-[e ( _initTimer (1 -> 1 `i ]
-[; ;main.c: 128: startTimer(1,0);
-"128
-[e ( _startTimer (2 , -> 1 `i -> -> 0 `i `l ]
-[; ;main.c: 131: digitalWrite(cylinderMotor, 1);
-"131
-[e ( _digitalWrite (2 , &U _cylinderMotor -> 1 `i ]
-[; ;main.c: 132: initServo(conveyorServo, 130);
-"132
-[e ( _initServo (2 , &U _conveyorServo -> 130 `i ]
-[; ;main.c: 133: initServo(padServo, padAngle_NEUTRAL);
-"133
-[e ( _initServo (2 , &U _padServo _padAngle_NEUTRAL ]
-[; ;main.c: 134: initServo(redirectingServo, redirectAngle_AA);
-"134
-[e ( _initServo (2 , &U _redirectingServo _redirectAngle_AA ]
-[; ;main.c: 137: while(1){
-"137
-[e :U 275 ]
-{
-[; ;main.c: 138: lcdClear();
-"138
-[e ( _lcdClear ..  ]
-[; ;main.c: 139: printf("running");
-"139
+"108
+[v _key `uc ~T0 @X0 1 a ]
+[; ;main.c: 108: char key = readKeypad();
+[e = _key ( _readKeypad ..  ]
+[; ;main.c: 109: printf("s");
+"109
 [e ( _printf :s 1C ]
-"141
-[v _lastBatteryTime `i ~T0 @X0 1 a ]
-[; ;main.c: 141: int lastBatteryTime = time;
-[e = _lastBatteryTime -> _time `i ]
-"143
-[v _cylinderStart `i ~T0 @X0 1 a ]
-[; ;main.c: 143: int cylinderStart = time;
-[e = _cylinderStart -> _time `i ]
-"144
-[v _cylinderDur `i ~T0 @X0 1 a ]
-[; ;main.c: 144: int cylinderDur = 0;
-[e = _cylinderDur -> 0 `i ]
-"145
-[v _cylinderForward `i ~T0 @X0 1 a ]
-[; ;main.c: 145: int cylinderForward = 10;
-[e = _cylinderForward -> 10 `i ]
-"146
-[v _cylinderBackward `i ~T0 @X0 1 a ]
-[; ;main.c: 146: int cylinderBackward = 10;
-[e = _cylinderBackward -> 10 `i ]
-[; ;main.c: 148: while(!batteryDetected && !terminate){
-"148
-[e $U 277  ]
-[e :U 278 ]
+[; ;main.c: 110: if(key == '1'){
+"110
+[e $ ! == -> _key `ui -> 49 `ui 270  ]
 {
-[; ;main.c: 150: lcdHome();
-"150
-[e ( _lcdHome ..  ]
-[; ;main.c: 151: printf("time %02ld:%02ld",time/600,(time/10)%60);
-"151
-[e ( _printf , , (. :s 2C / _time -> -> 600 `i `l % / _time -> -> 10 `i `l -> -> 60 `i `l ]
-[; ;main.c: 152: _delay((unsigned long)((77)*(10000000/4000.0)));
-"152
-[e ( __delay (1 -> * -> -> 77 `i `d / -> -> 10000000 `l `d .4000.0 `ul ]
-[; ;main.c: 155: if(time - cylinderStart >= cylinderDur)
-"155
-[e $ ! >= - _time -> _cylinderStart `l -> _cylinderDur `l 280  ]
-[; ;main.c: 156: {
-"156
+"111
+[v _n `i ~T0 @X0 1 a ]
+[; ;main.c: 111: int n = (eepromRead(0)+1)%0xffff;
+[e = _n -> % -> + ( _eepromRead (1 -> -> 0 `i `l -> 1 `i `ui -> 65535 `ui `i ]
+"112
+[v _run `i ~T0 @X0 -> 7 `i a ]
+[; ;main.c: 112: int run[7];
+[; ;main.c: 113: for(int i = 0; i < 7; i++)run[i] = i+n;
+"113
 {
-"157
-[v _prev `i ~T0 @X0 1 a ]
-[; ;main.c: 157: int prev = digitalRead(cylinderDir);
-[e = _prev ( _digitalRead (1 &U _cylinderDir ]
-[; ;main.c: 158: digitalWrite(cylinderDir, !prev);
-"158
-[e ( _digitalWrite (2 , &U _cylinderDir -> ! != _prev -> 0 `i `i ]
-[; ;main.c: 159: if(prev)cylinderDur = cylinderBackward;
-"159
-[e $ ! != _prev -> 0 `i 281  ]
-[e = _cylinderDur _cylinderBackward ]
-[e $U 282  ]
-"160
-[e :U 281 ]
-[; ;main.c: 160: else cylinderDur = cylinderForward;
-[e = _cylinderDur _cylinderForward ]
-[e :U 282 ]
-[; ;main.c: 161: cylinderStart = time;
-"161
-[e = _cylinderStart -> _time `i ]
-"162
+[v _i `i ~T0 @X0 1 a ]
+[e = _i -> 0 `i ]
+[e $ < _i -> 7 `i 271  ]
+[e $U 272  ]
+[e :U 271 ]
+[e = *U + &U _run * -> -> _i `ui `ux -> -> # *U &U _run `ui `ux + _i _n ]
+[e ++ _i -> 1 `i ]
+[e $ < _i -> 7 `i 271  ]
+[e :U 272 ]
 }
-[e :U 280 ]
-[; ;main.c: 162: }
-[; ;main.c: 164: if(time - lastBatteryTime > stoppingTime)
-"164
-[e $ ! > - _time -> _lastBatteryTime `l -> _stoppingTime `l 283  ]
-[; ;main.c: 165: {
-"165
+[; ;main.c: 114: saveNewRun(run);
+"114
+[e ( _saveNewRun (1 &U _run ]
+[; ;main.c: 115: lcdClear();
+"115
+[e ( _lcdClear ..  ]
+[; ;main.c: 116: printf("n: %d",eepromRead(0));
+"116
+[e ( _printf , (. :s 2C ( _eepromRead (1 -> -> 0 `i `l ]
+"117
+}
+[e :U 270 ]
+[; ;main.c: 117: }
+[; ;main.c: 118: if(key == '2'){
+"118
+[e $ ! == -> _key `ui -> 50 `ui 274  ]
 {
-[; ;main.c: 166: terminate = 1;
-"166
-[e = _terminate -> 1 `i ]
-[; ;main.c: 167: break;
-"167
-[e $U 279  ]
-"168
-}
-[e :U 283 ]
-"169
-}
-[e :U 277 ]
-"148
-[e $ && ! != _batteryDetected -> 0 `i ! != _terminate -> 0 `i 278  ]
-[e :U 279 ]
-[; ;main.c: 168: }
-[; ;main.c: 169: }
-[; ;main.c: 171: if(terminate)break;
-"171
-[e $ ! != _terminate -> 0 `i 284  ]
+"119
+[v _run `*i ~T0 @X0 1 a ]
+[; ;main.c: 119: int* run = readPastRun(eepromRead(0));
+[e = _run ( _readPastRun (1 ( _eepromRead (1 -> -> 0 `i `l ]
+[; ;main.c: 120: lcdClear();
+"120
+[e ( _lcdClear ..  ]
+[; ;main.c: 121: for(int i = 0; i < 7; i ++)
+"121
+{
+[v _i `i ~T0 @X0 1 a ]
+[e = _i -> 0 `i ]
+[e $ < _i -> 7 `i 275  ]
 [e $U 276  ]
-[e :U 284 ]
-[; ;main.c: 173: sortBattery();
-"173
-[e ( _sortBattery ..  ]
-[; ;main.c: 176: lastBatteryTime = time;
-"176
-[e = _lastBatteryTime -> _time `i ]
-[; ;main.c: 177: batteryDetected = 0;
-"177
-[e = _batteryDetected -> 0 `i ]
-"178
+"122
+[e :U 275 ]
+[; ;main.c: 122: printf("%d,",run[i]);
+[e ( _printf , (. :s 3C *U + _run * -> _i `x -> -> # *U _run `i `x ]
+"121
+[e ++ _i -> 1 `i ]
+[e $ < _i -> 7 `i 275  ]
+[e :U 276 ]
+"122
+}
+"124
 }
 [e :U 274 ]
-"137
-[e $U 275  ]
-[e :U 276 ]
-[; ;main.c: 178: }
-[; ;main.c: 181: digitalWrite(cylinderMotor, 0);
-"181
-[e ( _digitalWrite (2 , &U _cylinderMotor -> 0 `i ]
-[; ;main.c: 184: lcdClear();
-"184
-[e ( _lcdClear ..  ]
-[; ;main.c: 185: printf("[AA,C,9V,OTHER]\n");
-"185
-[e ( _printf :s 3C ]
-[; ;main.c: 186: printf("[%d,%d,%d,%d]",n_AA,n_C,n_9V,n_OTHER);
-"186
-[e ( _printf , , , , (. :s 4C _n_AA _n_C _n_9V _n_OTHER ]
-[; ;main.c: 187: readKeypad();
-"187
-[e ( _readKeypad ..  ]
-"189
+[; ;main.c: 124: }
+[; ;main.c: 125: printf("f");
+"125
+[e ( _printf :s 4C ]
+"126
 }
-[e :U 271 ]
-"120
-[e $U 272  ]
-[e :U 273 ]
-[; ;main.c: 189: };
-[; ;main.c: 192: while(1);
-"192
+[e :U 267 ]
+"107
+[e $U 268  ]
+[e :U 269 ]
+[; ;main.c: 126: }
+[; ;main.c: 127: while(1);
+"127
+[e :U 279 ]
+[e :U 278 ]
+[e $U 279  ]
+[e :U 280 ]
+[; ;main.c: 128: }
+"128
+[e :UE 266 ]
+}
+"130
+[v _main `(v ~T0 @X0 1 ef ]
+{
+[; ;main.c: 130: void main(){
+[e :U _main ]
+[f ]
+[; ;main.c: 132: debug();
+"132
+[e ( _debug ..  ]
+[; ;main.c: 134: pinSetup();
+"134
+[e ( _pinSetup ..  ]
+[; ;main.c: 135: initLCD();
+"135
+[e ( _initLCD ..  ]
+[; ;main.c: 137: while(1){
+"137
+[e :U 283 ]
+{
+[; ;main.c: 138: showInterface();
+"138
+[e ( _showInterface ..  ]
+[; ;main.c: 142: terminate = 0;
+"142
+[e = _terminate -> 0 `i ]
+[; ;main.c: 143: time = 0;
+"143
+[e = _time -> -> 0 `i `l ]
+[; ;main.c: 144: initTimer(1);
+"144
+[e ( _initTimer (1 -> 1 `i ]
+[; ;main.c: 145: startTimer(1,0);
+"145
+[e ( _startTimer (2 , -> 1 `i -> -> 0 `i `l ]
+[; ;main.c: 148: digitalWrite(cylinderMotor, 1);
+"148
+[e ( _digitalWrite (2 , &U _cylinderMotor -> 1 `i ]
+[; ;main.c: 149: initServo(conveyorServo, 130);
+"149
+[e ( _initServo (2 , &U _conveyorServo -> 130 `i ]
+[; ;main.c: 150: initServo(padServo, padAngle_NEUTRAL);
+"150
+[e ( _initServo (2 , &U _padServo _padAngle_NEUTRAL ]
+[; ;main.c: 151: initServo(redirectingServo, redirectAngle_AA);
+"151
+[e ( _initServo (2 , &U _redirectingServo _redirectAngle_AA ]
+[; ;main.c: 154: while(1){
+"154
 [e :U 286 ]
+{
+[; ;main.c: 155: lcdClear();
+"155
+[e ( _lcdClear ..  ]
+[; ;main.c: 156: printf("running");
+"156
+[e ( _printf :s 5C ]
+"158
+[v _lastBatteryTime `i ~T0 @X0 1 a ]
+[; ;main.c: 158: int lastBatteryTime = time;
+[e = _lastBatteryTime -> _time `i ]
+"160
+[v _cylinderStart `i ~T0 @X0 1 a ]
+[; ;main.c: 160: int cylinderStart = time;
+[e = _cylinderStart -> _time `i ]
+"161
+[v _cylinderDur `i ~T0 @X0 1 a ]
+[; ;main.c: 161: int cylinderDur = 0;
+[e = _cylinderDur -> 0 `i ]
+"162
+[v _cylinderForward `i ~T0 @X0 1 a ]
+[; ;main.c: 162: int cylinderForward = 10;
+[e = _cylinderForward -> 10 `i ]
+"163
+[v _cylinderBackward `i ~T0 @X0 1 a ]
+[; ;main.c: 163: int cylinderBackward = 10;
+[e = _cylinderBackward -> 10 `i ]
+[; ;main.c: 165: while(!batteryDetected && !terminate){
+"165
+[e $U 288  ]
+[e :U 289 ]
+{
+[; ;main.c: 167: lcdHome();
+"167
+[e ( _lcdHome ..  ]
+[; ;main.c: 168: printf("time %02ld:%02ld",time/600,(time/10)%60);
+"168
+[e ( _printf , , (. :s 6C / _time -> -> 600 `i `l % / _time -> -> 10 `i `l -> -> 60 `i `l ]
+[; ;main.c: 169: _delay((unsigned long)((77)*(10000000/4000.0)));
+"169
+[e ( __delay (1 -> * -> -> 77 `i `d / -> -> 10000000 `l `d .4000.0 `ul ]
+[; ;main.c: 172: if(time - cylinderStart >= cylinderDur)
+"172
+[e $ ! >= - _time -> _cylinderStart `l -> _cylinderDur `l 291  ]
+[; ;main.c: 173: {
+"173
+{
+"174
+[v _prev `i ~T0 @X0 1 a ]
+[; ;main.c: 174: int prev = digitalRead(cylinderDir);
+[e = _prev ( _digitalRead (1 &U _cylinderDir ]
+[; ;main.c: 175: digitalWrite(cylinderDir, !prev);
+"175
+[e ( _digitalWrite (2 , &U _cylinderDir -> ! != _prev -> 0 `i `i ]
+[; ;main.c: 176: if(prev)cylinderDur = cylinderBackward;
+"176
+[e $ ! != _prev -> 0 `i 292  ]
+[e = _cylinderDur _cylinderBackward ]
+[e $U 293  ]
+"177
+[e :U 292 ]
+[; ;main.c: 177: else cylinderDur = cylinderForward;
+[e = _cylinderDur _cylinderForward ]
+[e :U 293 ]
+[; ;main.c: 178: cylinderStart = time;
+"178
+[e = _cylinderStart -> _time `i ]
+"179
+}
+[e :U 291 ]
+[; ;main.c: 179: }
+[; ;main.c: 181: if(time - lastBatteryTime > stoppingTime)
+"181
+[e $ ! > - _time -> _lastBatteryTime `l -> _stoppingTime `l 294  ]
+[; ;main.c: 182: {
+"182
+{
+[; ;main.c: 183: terminate = 1;
+"183
+[e = _terminate -> 1 `i ]
+[; ;main.c: 184: break;
+"184
+[e $U 290  ]
+"185
+}
+[e :U 294 ]
+"186
+}
+[e :U 288 ]
+"165
+[e $ && ! != _batteryDetected -> 0 `i ! != _terminate -> 0 `i 289  ]
+[e :U 290 ]
+[; ;main.c: 185: }
+[; ;main.c: 186: }
+[; ;main.c: 188: if(terminate)break;
+"188
+[e $ ! != _terminate -> 0 `i 295  ]
+[e $U 287  ]
+[e :U 295 ]
+[; ;main.c: 190: sortBattery();
+"190
+[e ( _sortBattery ..  ]
+[; ;main.c: 193: lastBatteryTime = time;
+"193
+[e = _lastBatteryTime -> _time `i ]
+[; ;main.c: 194: batteryDetected = 0;
+"194
+[e = _batteryDetected -> 0 `i ]
+"195
+}
 [e :U 285 ]
+"154
 [e $U 286  ]
 [e :U 287 ]
-[; ;main.c: 193: }
-"193
-[e :UE 270 ]
+[; ;main.c: 195: }
+[; ;main.c: 198: digitalWrite(cylinderMotor, 0);
+"198
+[e ( _digitalWrite (2 , &U _cylinderMotor -> 0 `i ]
+[; ;main.c: 201: lcdClear();
+"201
+[e ( _lcdClear ..  ]
+[; ;main.c: 202: printf("[AA,C,9V,OTHER]\n");
+"202
+[e ( _printf :s 7C ]
+[; ;main.c: 203: printf("[%d,%d,%d,%d]",n_AA,n_C,n_9V,n_OTHER);
+"203
+[e ( _printf , , , , (. :s 8C _n_AA _n_C _n_9V _n_OTHER ]
+[; ;main.c: 204: readKeypad();
+"204
+[e ( _readKeypad ..  ]
+"206
 }
-"195
+[e :U 282 ]
+"137
+[e $U 283  ]
+[e :U 284 ]
+[; ;main.c: 206: };
+[; ;main.c: 209: while(1);
+"209
+[e :U 297 ]
+[e :U 296 ]
+[e $U 297  ]
+[e :U 298 ]
+[; ;main.c: 210: }
+"210
+[e :UE 281 ]
+}
+"212
 [v _sortBattery `(v ~T0 @X0 1 ef ]
 {
-[; ;main.c: 195: void sortBattery(){
+[; ;main.c: 212: void sortBattery(){
 [e :U _sortBattery ]
 [f ]
-[; ;main.c: 198: setAngle(conveyorServo, 90);
-"198
+[; ;main.c: 215: setAngle(conveyorServo, 90);
+"215
 [e ( _setAngle (2 , &U _conveyorServo -> 90 `i ]
-[; ;main.c: 199: digitalWrite(cylinderMotor, 0);
-"199
+[; ;main.c: 216: digitalWrite(cylinderMotor, 0);
+"216
 [e ( _digitalWrite (2 , &U _cylinderMotor -> 0 `i ]
-[; ;main.c: 202: _delay((unsigned long)((1000)*(10000000/4000.0)));
-"202
+[; ;main.c: 219: _delay((unsigned long)((1000)*(10000000/4000.0)));
+"219
 [e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 10000000 `l `d .4000.0 `ul ]
-"204
+"221
 [v _Vcc `f ~T0 @X0 1 a ]
-[; ;main.c: 204: float Vcc = 5.00;
+[; ;main.c: 221: float Vcc = 5.00;
 [e = _Vcc -> .5.00 `f ]
-"205
+"222
 [v _resolution `f ~T0 @X0 1 a ]
-[; ;main.c: 205: float resolution = (1<<10) - 1;
+[; ;main.c: 222: float resolution = (1<<10) - 1;
 [e = _resolution -> - << -> 1 `i -> 10 `i -> 1 `i `f ]
-"206
+"223
 [v _V_max `f ~T0 @X0 1 a ]
-[; ;main.c: 206: float V_max = 0;
+[; ;main.c: 223: float V_max = 0;
 [e = _V_max -> -> 0 `i `f ]
-"207
+"224
 [v _V_float `f ~T0 @X0 1 a ]
-[; ;main.c: 207: float V_float = 0;
+[; ;main.c: 224: float V_float = 0;
 [e = _V_float -> -> 0 `i `f ]
-"208
+"225
 [v _pos_v_counter `i ~T0 @X0 1 a ]
-[; ;main.c: 208: int pos_v_counter = 1;
+[; ;main.c: 225: int pos_v_counter = 1;
 [e = _pos_v_counter -> 1 `i ]
-"209
+"226
 [v _signal `i ~T0 @X0 1 a ]
-[; ;main.c: 209: int signal = 0;
+[; ;main.c: 226: int signal = 0;
 [e = _signal -> 0 `i ]
-[; ;main.c: 213: for(float i = (float)padAngle_NEUTRAL; i > padAngle_CLOSE; i -= 0.1) {
-"213
+[; ;main.c: 230: for(float i = (float)padAngle_NEUTRAL; i > padAngle_CLOSE; i -= 0.1) {
+"230
 {
 [v _i `f ~T0 @X0 1 a ]
 [e = _i -> _padAngle_NEUTRAL `f ]
-[e $U 292  ]
-[e :U 289 ]
+[e $U 303  ]
+[e :U 300 ]
 {
-[; ;main.c: 214: setAngle(padServo, i);
-"214
+[; ;main.c: 231: setAngle(padServo, i);
+"231
 [e ( _setAngle (2 , &U _padServo -> _i `i ]
-[; ;main.c: 215: _delay((unsigned long)((100)*(10000000/4000000.0)));
-"215
-[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 10000000 `l `d .4000000.0 `ul ]
-[; ;main.c: 216: digitalWrite(AA_float, 1);
-"216
-[e ( _digitalWrite (2 , &U _AA_float -> 1 `i ]
-"217
-[v _V `f ~T0 @X0 1 a ]
-[; ;main.c: 217: float V = analogRead(padPin3[1]) / resolution * Vcc;
-[e = _V * / -> ( _analogRead (1 *U + &U _padPin3 * -> -> -> 1 `i `ui `ux -> -> # *U &U _padPin3 `ui `ux `f _resolution _Vcc ]
-[; ;main.c: 219: if(V > 0.1)pos_v_counter++;
-"219
-[e $ ! > -> _V `d .0.1 293  ]
-[e ++ _pos_v_counter -> 1 `i ]
-[e :U 293 ]
-[; ;main.c: 221: if(V > V_max) {
-"221
-[e $ ! > _V _V_max 294  ]
-{
-[; ;main.c: 222: signal = digitalRead(padPin1)<<1;
-"222
-[e = _signal << ( _digitalRead (1 &U _padPin1 -> 1 `i ]
-[; ;main.c: 223: signal |= digitalRead(padPin2)<<0;
-"223
-[e =| _signal << ( _digitalRead (1 &U _padPin2 -> 0 `i ]
-[; ;main.c: 225: V_max = V;
-"225
-[e = _V_max _V ]
-[; ;main.c: 228: digitalWrite(AA_float, 0);
-"228
-[e ( _digitalWrite (2 , &U _AA_float -> 0 `i ]
-[; ;main.c: 229: _delay((unsigned long)((1)*(10000000/4000.0)));
-"229
-[e ( __delay (1 -> * -> -> 1 `i `d / -> -> 10000000 `l `d .4000.0 `ul ]
-[; ;main.c: 230: V_float = analogRead(padPin3[1]) / resolution * Vcc;
-"230
-[e = _V_float * / -> ( _analogRead (1 *U + &U _padPin3 * -> -> -> 1 `i `ui `ux -> -> # *U &U _padPin3 `ui `ux `f _resolution _Vcc ]
+[; ;main.c: 232: _delay((unsigned long)((100)*(10000000/4000000.0)));
 "232
-}
-[e :U 294 ]
+[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 10000000 `l `d .4000000.0 `ul ]
+[; ;main.c: 233: digitalWrite(AA_float, 1);
 "233
-}
-"213
-[e =- _i -> .0.1 `f ]
-[e :U 292 ]
-[e $ > _i -> _padAngle_CLOSE `f 289  ]
-[e :U 290 ]
-"233
-}
-"235
-[v _targetAngle `i ~T0 @X0 1 a ]
-"236
+[e ( _digitalWrite (2 , &U _AA_float -> 1 `i ]
+"234
 [v _V `f ~T0 @X0 1 a ]
-[; ;main.c: 232: }
-[; ;main.c: 233: }
-[; ;main.c: 235: int targetAngle;
-[; ;main.c: 236: float V = V_max;
-[e = _V _V_max ]
-[; ;main.c: 238: lcdClear();
+[; ;main.c: 234: float V = analogRead(padPin3[1]) / resolution * Vcc;
+[e = _V * / -> ( _analogRead (1 *U + &U _padPin3 * -> -> -> 1 `i `ui `ux -> -> # *U &U _padPin3 `ui `ux `f _resolution _Vcc ]
+[; ;main.c: 236: if(V > 0.1)pos_v_counter++;
+"236
+[e $ ! > -> _V `d .0.1 304  ]
+[e ++ _pos_v_counter -> 1 `i ]
+[e :U 304 ]
+[; ;main.c: 238: if(V > V_max) {
 "238
-[e ( _lcdClear ..  ]
-[; ;main.c: 239: printf("N: %d,\nV: %.3f",pos_v_counter, V);
+[e $ ! > _V _V_max 305  ]
+{
+[; ;main.c: 239: signal = digitalRead(padPin1)<<1;
 "239
-[e ( _printf , , (. :s 5C _pos_v_counter -> _V `d ]
-[; ;main.c: 241: readKeypad();
-"241
-[e ( _readKeypad ..  ]
-[; ;main.c: 245: switch(signal){
+[e = _signal << ( _digitalRead (1 &U _padPin1 -> 1 `i ]
+[; ;main.c: 240: signal |= digitalRead(padPin2)<<0;
+"240
+[e =| _signal << ( _digitalRead (1 &U _padPin2 -> 0 `i ]
+[; ;main.c: 242: V_max = V;
+"242
+[e = _V_max _V ]
+[; ;main.c: 245: digitalWrite(AA_float, 0);
 "245
-[e $U 296  ]
-{
-[; ;main.c: 246: case 0b00:
+[e ( _digitalWrite (2 , &U _AA_float -> 0 `i ]
+[; ;main.c: 246: _delay((unsigned long)((1)*(10000000/4000.0)));
 "246
-[e :U 297 ]
-[; ;main.c: 247: if(V_float < 0.1){
+[e ( __delay (1 -> * -> -> 1 `i `d / -> -> 10000000 `l `d .4000.0 `ul ]
+[; ;main.c: 247: V_float = analogRead(padPin3[1]) / resolution * Vcc;
 "247
-[e $ ! < -> _V_float `d .0.1 298  ]
+[e = _V_float * / -> ( _analogRead (1 *U + &U _padPin3 * -> -> -> 1 `i `ui `ux -> -> # *U &U _padPin3 `ui `ux `f _resolution _Vcc ]
+"249
+}
+[e :U 305 ]
+"250
+}
+"230
+[e =- _i -> .0.1 `f ]
+[e :U 303 ]
+[e $ > _i -> _padAngle_CLOSE `f 300  ]
+[e :U 301 ]
+"250
+}
+"252
+[v _targetAngle `i ~T0 @X0 1 a ]
+"253
+[v _V `f ~T0 @X0 1 a ]
+[; ;main.c: 249: }
+[; ;main.c: 250: }
+[; ;main.c: 252: int targetAngle;
+[; ;main.c: 253: float V = V_max;
+[e = _V _V_max ]
+[; ;main.c: 255: lcdClear();
+"255
+[e ( _lcdClear ..  ]
+[; ;main.c: 256: printf("N: %d,\nV: %.3f",pos_v_counter, V);
+"256
+[e ( _printf , , (. :s 9C _pos_v_counter -> _V `d ]
+[; ;main.c: 258: readKeypad();
+"258
+[e ( _readKeypad ..  ]
+[; ;main.c: 262: switch(signal){
+"262
+[e $U 307  ]
 {
-[; ;main.c: 248: if(V > V_LIM_AA){ targetAngle = redirectAngle_AA; n_AA+=1;}
-"248
-[e $ ! > _V _V_LIM_AA 299  ]
+[; ;main.c: 263: case 0b00:
+"263
+[e :U 308 ]
+[; ;main.c: 264: if(V_float < 0.1){
+"264
+[e $ ! < -> _V_float `d .0.1 309  ]
+{
+[; ;main.c: 265: if(V > V_LIM_AA){ targetAngle = redirectAngle_AA; n_AA+=1;}
+"265
+[e $ ! > _V _V_LIM_AA 310  ]
 {
 [e = _targetAngle _redirectAngle_AA ]
 [e =+ _n_AA -> 1 `i ]
 }
-[e $U 300  ]
-"249
-[e :U 299 ]
-[; ;main.c: 249: else { targetAngle = redirectAngle_OTHER; n_OTHER+=1;}
+[e $U 311  ]
+"266
+[e :U 310 ]
+[; ;main.c: 266: else { targetAngle = redirectAngle_OTHER; n_OTHER+=1;}
 {
 [e = _targetAngle _redirectAngle_OTHER ]
 [e =+ _n_OTHER -> 1 `i ]
 }
-[e :U 300 ]
-[; ;main.c: 250: break;
-"250
-[e $U 295  ]
-"251
+[e :U 311 ]
+[; ;main.c: 267: break;
+"267
+[e $U 306  ]
+"268
 }
-[e :U 298 ]
-[; ;main.c: 251: }
-[; ;main.c: 253: case 0b10:
-"253
-[e :U 301 ]
-[; ;main.c: 254: if(V > V_LIM_9V) {targetAngle = redirectAngle_9V; n_9V+=1;}
-"254
-[e $ ! > _V _V_LIM_9V 302  ]
+[e :U 309 ]
+[; ;main.c: 268: }
+[; ;main.c: 270: case 0b10:
+"270
+[e :U 312 ]
+[; ;main.c: 271: if(V > V_LIM_9V) {targetAngle = redirectAngle_9V; n_9V+=1;}
+"271
+[e $ ! > _V _V_LIM_9V 313  ]
 {
 [e = _targetAngle _redirectAngle_9V ]
 [e =+ _n_9V -> 1 `i ]
 }
-[e $U 303  ]
-"255
-[e :U 302 ]
-[; ;main.c: 255: else {targetAngle = redirectAngle_OTHER; n_OTHER+=1;}
+[e $U 314  ]
+"272
+[e :U 313 ]
+[; ;main.c: 272: else {targetAngle = redirectAngle_OTHER; n_OTHER+=1;}
 {
 [e = _targetAngle _redirectAngle_OTHER ]
 [e =+ _n_OTHER -> 1 `i ]
 }
-[e :U 303 ]
-[; ;main.c: 256: break;
-"256
-[e $U 295  ]
-[; ;main.c: 257: case 0b01:
-"257
-[e :U 304 ]
-[; ;main.c: 258: if(V > V_LIM_C) {targetAngle = redirectAngle_C; n_C+=1;}
-"258
-[e $ ! > _V _V_LIM_C 305  ]
+[e :U 314 ]
+[; ;main.c: 273: break;
+"273
+[e $U 306  ]
+[; ;main.c: 274: case 0b01:
+"274
+[e :U 315 ]
+[; ;main.c: 275: if(V > V_LIM_C) {targetAngle = redirectAngle_C; n_C+=1;}
+"275
+[e $ ! > _V _V_LIM_C 316  ]
 {
 [e = _targetAngle _redirectAngle_C ]
 [e =+ _n_C -> 1 `i ]
 }
-[e $U 306  ]
-"259
-[e :U 305 ]
-[; ;main.c: 259: else {targetAngle = redirectAngle_OTHER; n_OTHER+=1;}
+[e $U 317  ]
+"276
+[e :U 316 ]
+[; ;main.c: 276: else {targetAngle = redirectAngle_OTHER; n_OTHER+=1;}
 {
 [e = _targetAngle _redirectAngle_OTHER ]
 [e =+ _n_OTHER -> 1 `i ]
 }
-[e :U 306 ]
-[; ;main.c: 260: break;
-"260
-[e $U 295  ]
-"261
+[e :U 317 ]
+[; ;main.c: 277: break;
+"277
+[e $U 306  ]
+"278
 }
-[; ;main.c: 261: }
-[e $U 295  ]
-"245
-[e :U 296 ]
-[e [\ _signal , $ -> 0 `i 297
- , $ -> 2 `i 301
- , $ -> 1 `i 304
- 295 ]
-"261
-[e :U 295 ]
-[; ;main.c: 263: setAngle(redirectingServo, targetAngle);
-"263
+[; ;main.c: 278: }
+[e $U 306  ]
+"262
+[e :U 307 ]
+[e [\ _signal , $ -> 0 `i 308
+ , $ -> 2 `i 312
+ , $ -> 1 `i 315
+ 306 ]
+"278
+[e :U 306 ]
+[; ;main.c: 280: setAngle(redirectingServo, targetAngle);
+"280
 [e ( _setAngle (2 , &U _redirectingServo _targetAngle ]
-[; ;main.c: 264: _delay((unsigned long)((500)*(10000000/4000.0)));
-"264
+[; ;main.c: 281: _delay((unsigned long)((500)*(10000000/4000.0)));
+"281
 [e ( __delay (1 -> * -> -> 500 `i `d / -> -> 10000000 `l `d .4000.0 `ul ]
-[; ;main.c: 268: for(int i = padAngle_CLOSE; i < padAngle_OPEN; i++) {
-"268
+[; ;main.c: 285: for(int i = padAngle_CLOSE; i < padAngle_OPEN; i++) {
+"285
 {
 [v _i `i ~T0 @X0 1 a ]
 [e = _i _padAngle_CLOSE ]
-[e $U 310  ]
-[e :U 307 ]
+[e $U 321  ]
+[e :U 318 ]
 {
-[; ;main.c: 269: setAngle(padServo, i);
-"269
+[; ;main.c: 286: setAngle(padServo, i);
+"286
 [e ( _setAngle (2 , &U _padServo _i ]
-[; ;main.c: 270: _delay((unsigned long)((3)*(10000000/4000.0)));
-"270
+[; ;main.c: 287: _delay((unsigned long)((3)*(10000000/4000.0)));
+"287
 [e ( __delay (1 -> * -> -> 3 `i `d / -> -> 10000000 `l `d .4000.0 `ul ]
-"271
-}
-"268
-[e ++ _i -> 1 `i ]
-[e :U 310 ]
-[e $ < _i _padAngle_OPEN 307  ]
-[e :U 308 ]
-"271
-}
-[; ;main.c: 271: }
-[; ;main.c: 273: _delay((unsigned long)((1000)*(10000000/4000.0)));
-"273
-[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 10000000 `l `d .4000.0 `ul ]
-[; ;main.c: 277: setAngle(padServo, padAngle_NEUTRAL);
-"277
-[e ( _setAngle (2 , &U _padServo _padAngle_NEUTRAL ]
-[; ;main.c: 281: setAngle(conveyorServo, 130);
-"281
-[e ( _setAngle (2 , &U _conveyorServo -> 130 `i ]
-[; ;main.c: 282: digitalWrite(cylinderMotor, 1);
-"282
-[e ( _digitalWrite (2 , &U _cylinderMotor -> 1 `i ]
-[; ;main.c: 283: }
-"283
-[e :UE 288 ]
+"288
 }
 "285
+[e ++ _i -> 1 `i ]
+[e :U 321 ]
+[e $ < _i _padAngle_OPEN 318  ]
+[e :U 319 ]
+"288
+}
+[; ;main.c: 288: }
+[; ;main.c: 290: _delay((unsigned long)((1000)*(10000000/4000.0)));
+"290
+[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 10000000 `l `d .4000.0 `ul ]
+[; ;main.c: 294: setAngle(padServo, padAngle_NEUTRAL);
+"294
+[e ( _setAngle (2 , &U _padServo _padAngle_NEUTRAL ]
+[; ;main.c: 298: setAngle(conveyorServo, 130);
+"298
+[e ( _setAngle (2 , &U _conveyorServo -> 130 `i ]
+[; ;main.c: 299: digitalWrite(cylinderMotor, 1);
+"299
+[e ( _digitalWrite (2 , &U _cylinderMotor -> 1 `i ]
+[; ;main.c: 300: }
+"300
+[e :UE 299 ]
+}
+"302
 [v _pinSetup `(v ~T0 @X0 1 ef ]
 {
-[; ;main.c: 285: void pinSetup(){
+[; ;main.c: 302: void pinSetup(){
 [e :U _pinSetup ]
 [f ]
-[; ;main.c: 291: TRISA = 0xFF;
-"291
+[; ;main.c: 308: TRISA = 0xFF;
+"308
 [e = _TRISA -> -> 255 `i `uc ]
-[; ;main.c: 292: TRISB = 0xFF;
-"292
+[; ;main.c: 309: TRISB = 0xFF;
+"309
 [e = _TRISB -> -> 255 `i `uc ]
-[; ;main.c: 293: TRISC = 0b11000000;
-"293
-[e = _TRISC -> -> 192 `i `uc ]
-[; ;main.c: 294: TRISD = 0x00;
-"294
-[e = _TRISD -> -> 0 `i `uc ]
-[; ;main.c: 295: TRISE = 0x00;
-"295
-[e = _TRISE -> -> 0 `i `uc ]
-[; ;main.c: 297: LATA = 0x00;
-"297
-[e = _LATA -> -> 0 `i `uc ]
-[; ;main.c: 298: LATB = 0x00;
-"298
-[e = _LATB -> -> 0 `i `uc ]
-[; ;main.c: 299: LATC = 0x00;
-"299
-[e = _LATC -> -> 0 `i `uc ]
-[; ;main.c: 300: LATD = 0x00;
-"300
-[e = _LATD -> -> 0 `i `uc ]
-[; ;main.c: 301: LATE = 0x00;
-"301
-[e = _LATE -> -> 0 `i `uc ]
-[; ;main.c: 303: ADCON0 = 0x00;
-"303
-[e = _ADCON0 -> -> 0 `i `uc ]
-[; ;main.c: 305: ADCON1 |= 0x0B;
-"305
-[e =| _ADCON1 -> -> 11 `i `uc ]
-[; ;main.c: 310: ADCON2 = 0;
+[; ;main.c: 310: TRISC = 0b11000000;
 "310
-[e = _ADCON2 -> -> 0 `i `uc ]
-[; ;main.c: 311: ADCON2 |= 0b010;
+[e = _TRISC -> -> 192 `i `uc ]
+[; ;main.c: 311: TRISD = 0x00;
 "311
-[e =| _ADCON2 -> -> 2 `i `uc ]
-[; ;main.c: 312: ADCON2 |= 0b110<<3;
+[e = _TRISD -> -> 0 `i `uc ]
+[; ;main.c: 312: TRISE = 0x00;
 "312
-[e =| _ADCON2 -> << -> 6 `i -> 3 `i `uc ]
-[; ;main.c: 313: ADCON2 |= 1<<7;
-"313
-[e =| _ADCON2 -> << -> 1 `i -> 7 `i `uc ]
-[; ;main.c: 316: INT1IE = 1;
+[e = _TRISE -> -> 0 `i `uc ]
+[; ;main.c: 314: LATA = 0x00;
+"314
+[e = _LATA -> -> 0 `i `uc ]
+[; ;main.c: 315: LATB = 0x00;
+"315
+[e = _LATB -> -> 0 `i `uc ]
+[; ;main.c: 316: LATC = 0x00;
 "316
-[e = _INT1IE -> -> 1 `i `b ]
-[; ;main.c: 317: INT0IE = 1;
+[e = _LATC -> -> 0 `i `uc ]
+[; ;main.c: 317: LATD = 0x00;
 "317
-[e = _INT0IE -> -> 1 `i `b ]
-[; ;main.c: 318: (INTCONbits.GIE = 1);
+[e = _LATD -> -> 0 `i `uc ]
+[; ;main.c: 318: LATE = 0x00;
 "318
-[e = . . _INTCONbits 1 7 -> -> 1 `i `uc ]
-[; ;main.c: 319: }
-"319
-[e :UE 311 ]
-}
+[e = _LATE -> -> 0 `i `uc ]
+[; ;main.c: 320: ADCON0 = 0x00;
 "320
+[e = _ADCON0 -> -> 0 `i `uc ]
+[; ;main.c: 322: ADCON1 |= 0x0B;
+"322
+[e =| _ADCON1 -> -> 11 `i `uc ]
+[; ;main.c: 327: ADCON2 = 0;
+"327
+[e = _ADCON2 -> -> 0 `i `uc ]
+[; ;main.c: 328: ADCON2 |= 0b010;
+"328
+[e =| _ADCON2 -> -> 2 `i `uc ]
+[; ;main.c: 329: ADCON2 |= 0b110<<3;
+"329
+[e =| _ADCON2 -> << -> 6 `i -> 3 `i `uc ]
+[; ;main.c: 330: ADCON2 |= 1<<7;
+"330
+[e =| _ADCON2 -> << -> 1 `i -> 7 `i `uc ]
+[; ;main.c: 333: INT1IE = 1;
+"333
+[e = _INT1IE -> -> 1 `i `b ]
+[; ;main.c: 334: INT0IE = 1;
+"334
+[e = _INT0IE -> -> 1 `i `b ]
+[; ;main.c: 335: (INTCONbits.GIE = 1);
+"335
+[e = . . _INTCONbits 1 7 -> -> 1 `i `uc ]
+[; ;main.c: 336: }
+"336
+[e :UE 322 ]
+}
+"337
 [v _angle `i ~T0 @X0 1 e ]
 [i _angle
 -> 90 `i
 ]
-[; ;main.c: 320: int angle = 90;
-[v F3161 `(v ~T0 @X0 1 tf ]
-"325
-[v _service `IF3161 ~T0 @X0 1 e ]
+[; ;main.c: 337: int angle = 90;
+[v F3171 `(v ~T0 @X0 1 tf ]
+"342
+[v _service `IF3171 ~T0 @X0 1 e ]
 {
-[; ;main.c: 325: void interrupt service(void) {
+[; ;main.c: 342: void interrupt service(void) {
 [e :U _service ]
 [f ]
-[; ;main.c: 327: if( servoInterruptService() )return;
-"327
-[e $ ! != -> ( _servoInterruptService ..  `i -> -> -> 0 `i `uc `i 313  ]
-[e $UE 312  ]
-[e :U 313 ]
-[; ;main.c: 329: if(TMR1IF){
-"329
-[e $ ! _TMR1IF 314  ]
+[; ;main.c: 344: if( servoInterruptService() )return;
+"344
+[e $ ! != -> ( _servoInterruptService ..  `i -> -> -> 0 `i `uc `i 324  ]
+[e $UE 323  ]
+[e :U 324 ]
+[; ;main.c: 346: if(TMR1IF){
+"346
+[e $ ! _TMR1IF 325  ]
 {
-[; ;main.c: 333: startTimer(1,0x8683);
-"333
+[; ;main.c: 350: startTimer(1,0x8683);
+"350
 [e ( _startTimer (2 , -> 1 `i -> -> 34435 `ui `l ]
-[; ;main.c: 334: time+=1;
-"334
+[; ;main.c: 351: time+=1;
+"351
 [e =+ _time -> -> 1 `i `l ]
-[; ;main.c: 335: TMR1IF = 0;
-"335
+[; ;main.c: 352: TMR1IF = 0;
+"352
 [e = _TMR1IF -> -> 0 `i `b ]
-[; ;main.c: 336: return;
-"336
-[e $UE 312  ]
-"337
+[; ;main.c: 353: return;
+"353
+[e $UE 323  ]
+"354
 }
-[e :U 314 ]
-[; ;main.c: 337: }
-[; ;main.c: 340: if(INT0IF){ INT0IF = 0;
-"340
-[e $ ! _INT0IF 315  ]
+[e :U 325 ]
+[; ;main.c: 354: }
+[; ;main.c: 357: if(INT0IF){ INT0IF = 0;
+"357
+[e $ ! _INT0IF 326  ]
 {
 [e = _INT0IF -> -> 0 `i `b ]
-[; ;main.c: 341: batteryDetected = 1;
-"341
+[; ;main.c: 358: batteryDetected = 1;
+"358
 [e = _batteryDetected -> 1 `i ]
-[; ;main.c: 342: return;
-"342
-[e $UE 312  ]
-"343
+[; ;main.c: 359: return;
+"359
+[e $UE 323  ]
+"360
 }
-[e :U 315 ]
-[; ;main.c: 343: }
-[; ;main.c: 346: if(INT1IF && INT1IE){INT1IF = 0;
-"346
-[e $ ! && _INT1IF _INT1IE 316  ]
+[e :U 326 ]
+[; ;main.c: 360: }
+[; ;main.c: 363: if(INT1IF && INT1IE){INT1IF = 0;
+"363
+[e $ ! && _INT1IF _INT1IE 327  ]
 {
 [e = _INT1IF -> -> 0 `i `b ]
-"347
+"364
 [v _key `uc ~T0 @X0 1 a ]
-[; ;main.c: 347: char key = (PORTB & 0xF0) >> 4;
+[; ;main.c: 364: char key = (PORTB & 0xF0) >> 4;
 [e = _key -> >> & -> _PORTB `i -> 240 `i -> 4 `i `uc ]
-[; ;main.c: 348: if(key == 12)terminate = 1;
-"348
-[e $ ! == -> _key `i -> 12 `i 317  ]
+[; ;main.c: 365: if(key == 12)terminate = 1;
+"365
+[e $ ! == -> _key `i -> 12 `i 328  ]
 [e = _terminate -> 1 `i ]
-[e :U 317 ]
-[; ;main.c: 349: return;
-"349
-[e $UE 312  ]
-"350
+[e :U 328 ]
+[; ;main.c: 366: while(PORTBbits.RB1);
+"366
+[e $U 329  ]
+[e :U 330 ]
+[e :U 329 ]
+[e $ != -> . . _PORTBbits 0 1 `i -> -> -> 0 `i `Vuc `i 330  ]
+[e :U 331 ]
+[; ;main.c: 367: return;
+"367
+[e $UE 323  ]
+"368
 }
-[e :U 316 ]
-[; ;main.c: 350: }
-[; ;main.c: 351: }
-"351
-[e :UE 312 ]
+[e :U 327 ]
+[; ;main.c: 368: }
+[; ;main.c: 369: }
+"369
+[e :UE 323 ]
 }
-"353
+"371
 [v _pause `(v ~T0 @X0 1 ef1`*uc ]
 {
-[; ;main.c: 353: void pause(char* message){
+[; ;main.c: 371: void pause(char* message){
 [e :U _pause ]
 [v _message `*uc ~T0 @X0 1 r1 ]
 [f ]
-[; ;main.c: 354: lcdClear();
-"354
+[; ;main.c: 372: lcdClear();
+"372
 [e ( _lcdClear ..  ]
-[; ;main.c: 355: printf(message);
-"355
+[; ;main.c: 373: printf(message);
+"373
 [e ( _printf -> _message `*Cuc ]
-[; ;main.c: 356: readKeypad();
-"356
+[; ;main.c: 374: readKeypad();
+"374
 [e ( _readKeypad ..  ]
-[; ;main.c: 357: }
-"357
-[e :UE 318 ]
+[; ;main.c: 375: }
+"375
+[e :UE 332 ]
 }
 [p f _printf 9544340 ]
-[a 1C 114 117 110 110 105 110 103 0 ]
-[a 5C 78 58 32 37 100 44 10 86 58 32 37 46 51 102 0 ]
-[a 2C 116 105 109 101 32 37 48 50 108 100 58 37 48 50 108 100 0 ]
-[a 4C 91 37 100 44 37 100 44 37 100 44 37 100 93 0 ]
-[a 3C 91 65 65 44 67 44 57 86 44 79 84 72 69 82 93 10 0 ]
+[a 1C 115 0 ]
+[a 5C 114 117 110 110 105 110 103 0 ]
+[a 9C 78 58 32 37 100 44 10 86 58 32 37 46 51 102 0 ]
+[a 4C 102 0 ]
+[a 6C 116 105 109 101 32 37 48 50 108 100 58 37 48 50 108 100 0 ]
+[a 2C 110 58 32 37 100 0 ]
+[a 8C 91 37 100 44 37 100 44 37 100 44 37 100 93 0 ]
+[a 3C 37 100 44 0 ]
+[a 7C 91 65 65 44 67 44 57 86 44 79 84 72 69 82 93 10 0 ]

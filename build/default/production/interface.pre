@@ -3702,12 +3702,12 @@ extern int printf(const char *, ...);
 
 # 11 "interface.h"
 void showInterface();
-void dateTime();
-void mainMenu();
-void runSelect();
-void runMenu(char key);
-void runTime();
-void runStats();
+void showDateTime();
+char showMainMenu();
+char showRunSelect();
+char showRunMenu(char key);
+char showRunTime();
+char showRunStats();
 
 # 16 "lcd.h"
 void lcdInst(char data);
@@ -3734,61 +3734,31 @@ void showInterface(){
 
 char key;
 while(1){
-
-dateTime();
-while(readKeypad() != 'A');
+showDateTime();
 
 while(1){
-
-mainMenu();
-
-
-do{key = readKeypad();}
-while(key != 'B' && key != 'C' && key != '*');
+key = showMainMenu();
 
 if(key == 'C'){
 
-runSelect();
 
-
-
-
-do{key = readKeypad();}
-while(key != '1' && key != '2' && key != '3' && key != '4' && key != '*');
+key = showRunSelect();
 
 if(key == '*')continue;
 
 
 
 while(1){
+key = showRunMenu(key);
 
-runMenu(key);
-
-
-do{key = readKeypad();}
-while(key != 'A' && key != 'B' && key != '*');
-
-if(key == 'A'){
-
-runTime();
-
-}
-else if(key == 'B'){
-
-runStats();
-
-}
-else if(key == '*')break;
-
-while(readKeypad() != '*');
+if(key == 'A') showRunTime();
+else if(key == 'B') showRunStats();
+else if(key == '*') break;
 }
 
 }
-else if(key == 'B'){
-return;
-}
-else if(key == '*')
-break;
+else if(key == 'B') return;
+else if(key == '*') break;
 }
 }
 }
@@ -3796,40 +3766,62 @@ break;
 
 int prevTime = 0;
 int count = 0;
-void dateTime(){
 
-# 94
+void showDateTime(){
+
+# 65
 lcdClear();
 printf("  hh:mm:ss      \n");
 printf("  mm:dd:yy    A>");
+
+while(readKeypad() != 'A');
 }
 
-void mainMenu(){
+char showMainMenu(){
 lcdClear();
 printf("start   <B      \n");
 printf("history <C    *>");
+
+char k;
+do{k = readKeypad();}
+while(k != 'B' && k != 'C' && k != '*');
+return k;
 }
 
-void runSelect(){
+char showRunSelect(){
 lcdClear();
 printf("select run:     \n");
 printf("[1,2,3,4]     *>");
+
+char k;
+do{k = readKeypad();}
+while(k != '1' && k != '2' && k != '3' && k != '4' && k != '*');
+return k;
 }
 
-void runMenu(char key){
+char showRunMenu(char key){
 lcdClear();
 printf("%c) time  <A     \n",key);
 printf( "   stats <B   *>");
+
+char k;
+do{k = readKeypad();}
+while(k != 'A' && k != 'B' && k != '*');
+return k;
 }
 
-void runTime(){
+char showRunTime(){
 lcdClear();
 printf("time: nnn sec   \n");
 printf("              *>");
+
+while(readKeypad() != '*');
 }
 
-void runStats(){
+char showRunStats(){
 lcdClear();
 printf("[AA,9V,C,other] \n");
 printf("[nn,n,n,nn]   *>");
+
+while(readKeypad() != '*');
 }

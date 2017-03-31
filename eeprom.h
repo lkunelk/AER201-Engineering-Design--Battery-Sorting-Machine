@@ -8,6 +8,8 @@
 #ifndef EEPROM_H
 #define	EEPROM_H
 
+int* readPastRun(int run);
+void saveNewRun(int* data);
 void eepromWrite(int data, long address);
 int eepromRead(long address);
 

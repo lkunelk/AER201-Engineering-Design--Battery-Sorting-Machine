@@ -1,4 +1,8 @@
 Version 3.2 HI-TECH Software Intermediate Code
+"14 eeprom.h
+[v _eepromRead `(i ~T0 @X0 0 ef1`l ]
+"13
+[v _eepromWrite `(v ~T0 @X0 0 ef2`i`l ]
 "2901 C:\Program Files (x86)\Microchip\xc8\v1.40\include\pic18f4620.h
 [v _EECON1 `Vuc ~T0 @X0 0 e@4006 ]
 "6272
@@ -2706,95 +2710,175 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic18.h: 159: extern __nonreentrant void _delay(unsigned long);
 [; ;pic18.h: 161: extern __nonreentrant void _delaywdt(unsigned long);
 [; ;pic18.h: 163: extern __nonreentrant void _delay3(unsigned char);
-[; ;eeprom.h: 11: void eepromWrite(int data, long address);
-[; ;eeprom.h: 12: int eepromRead(long address);
-"22 eeprom.c
+[; ;eeprom.h: 11: int* readPastRun(int run);
+[; ;eeprom.h: 12: void saveNewRun(int* data);
+[; ;eeprom.h: 13: void eepromWrite(int data, long address);
+[; ;eeprom.h: 14: int eepromRead(long address);
+"23 eeprom.c
+[v _readPastRun `(*i ~T0 @X0 1 ef1`i ]
+{
+[; ;eeprom.c: 23: int* readPastRun(int run){
+[e :U _readPastRun ]
+[v _run `i ~T0 @X0 1 r1 ]
+[f ]
+"24
+[v _data `i ~T0 @X0 -> 7 `i a ]
+[; ;eeprom.c: 24: int data[7];
+[; ;eeprom.c: 25: for(int i = 0; i < 7; i++){
+"25
+{
+[v _i `i ~T0 @X0 1 a ]
+[e = _i -> 0 `i ]
+[e $ < _i -> 7 `i 266  ]
+[e $U 267  ]
+[e :U 266 ]
+{
+[; ;eeprom.c: 26: data[i] = eepromRead((run*7+1) + i);
+"26
+[e = *U + &U _data * -> -> _i `ui `ux -> -> # *U &U _data `ui `ux ( _eepromRead (1 -> + + * _run -> 7 `i -> 1 `i _i `l ]
+"27
+}
+"25
+[e ++ _i -> 1 `i ]
+[e $ < _i -> 7 `i 266  ]
+[e :U 267 ]
+"27
+}
+[; ;eeprom.c: 27: }
+[; ;eeprom.c: 28: return data;
+"28
+[e ) &U _data ]
+[e $UE 265  ]
+[; ;eeprom.c: 29: }
+"29
+[e :UE 265 ]
+}
+"31
+[v _saveNewRun `(v ~T0 @X0 1 ef1`*i ]
+{
+[; ;eeprom.c: 31: void saveNewRun(int* data){
+[e :U _saveNewRun ]
+[v _data `*i ~T0 @X0 1 r1 ]
+[f ]
+[; ;eeprom.c: 33: eepromWrite(eepromRead(0)+1,0);
+"33
+[e ( _eepromWrite (2 , + ( _eepromRead (1 -> -> 0 `i `l -> 1 `i -> -> 0 `i `l ]
+"34
+[v _n `i ~T0 @X0 1 a ]
+[; ;eeprom.c: 34: int n = eepromRead(0);
+[e = _n ( _eepromRead (1 -> -> 0 `i `l ]
+[; ;eeprom.c: 36: for(int i = 0; i < 7; i++){
+"36
+{
+[v _i `i ~T0 @X0 1 a ]
+[e = _i -> 0 `i ]
+[e $ < _i -> 7 `i 270  ]
+[e $U 271  ]
+[e :U 270 ]
+{
+[; ;eeprom.c: 37: eepromWrite(data[i], (n*7+1) + i);
+"37
+[e ( _eepromWrite (2 , *U + _data * -> _i `x -> -> # *U _data `i `x -> + + * _n -> 7 `i -> 1 `i _i `l ]
+"38
+}
+"36
+[e ++ _i -> 1 `i ]
+[e $ < _i -> 7 `i 270  ]
+[e :U 271 ]
+"38
+}
+[; ;eeprom.c: 38: }
+[; ;eeprom.c: 39: }
+"39
+[e :UE 269 ]
+}
+"41
 [v _eepromWrite `(v ~T0 @X0 1 ef2`i`l ]
 {
-[; ;eeprom.c: 22: void eepromWrite(int data, long address){
+[; ;eeprom.c: 41: void eepromWrite(int data, long address){
 [e :U _eepromWrite ]
 [v _data `i ~T0 @X0 1 r1 ]
 [v _address `l ~T0 @X0 1 r2 ]
 [f ]
-[; ;eeprom.c: 24: while(EECON1 & 0b10);
-"24
-[e $U 266  ]
-[e :U 267 ]
-[e :U 266 ]
-[e $ != & -> _EECON1 `i -> 2 `i -> 0 `i 267  ]
-[e :U 268 ]
-"26
-[v _ien `i ~T0 @X0 1 a ]
-[; ;eeprom.c: 26: int ien = INTCONbits.GIE;
-[e = _ien -> . . _INTCONbits 1 7 `i ]
-[; ;eeprom.c: 27: (INTCONbits.GIE = 0);
-"27
-[e = . . _INTCONbits 1 7 -> -> 0 `i `uc ]
-[; ;eeprom.c: 28: EEADR = address;
-"28
-[e = _EEADR -> _address `uc ]
-[; ;eeprom.c: 29: EEADRH = (address>>8) & 0b11;
-"29
-[e = _EEADRH -> & >> _address -> 8 `i -> -> 3 `i `l `uc ]
-[; ;eeprom.c: 30: EEDATA = data;
-"30
-[e = _EEDATA -> _data `uc ]
-[; ;eeprom.c: 31: EECON1 = 0b100;
-"31
-[e = _EECON1 -> -> 4 `i `uc ]
-[; ;eeprom.c: 33: EECON2 = 0x55;
-"33
-[e = _EECON2 -> -> 85 `i `uc ]
-[; ;eeprom.c: 34: EECON2 = 0xaa;
-"34
-[e = _EECON2 -> -> 170 `i `uc ]
-[; ;eeprom.c: 38: EECON1 |= 0b10;
-"38
-[e =| _EECON1 -> -> 2 `i `uc ]
-[; ;eeprom.c: 40: while(EECON1 & 0b10);
-"40
-[e $U 269  ]
-[e :U 270 ]
-[e :U 269 ]
-[e $ != & -> _EECON1 `i -> 2 `i -> 0 `i 270  ]
-[e :U 271 ]
-[; ;eeprom.c: 41: EEIF = 0;
-"41
-[e = _EEIF -> -> 0 `i `b ]
-[; ;eeprom.c: 43: EECON1 = 0;
+[; ;eeprom.c: 43: while(EECON1 & 0b10);
 "43
-[e = _EECON1 -> -> 0 `i `uc ]
-[; ;eeprom.c: 44: INTCONbits.GIE = ien;
-"44
-[e = . . _INTCONbits 1 7 -> _ien `uc ]
-[; ;eeprom.c: 45: }
+[e $U 274  ]
+[e :U 275 ]
+[e :U 274 ]
+[e $ != & -> _EECON1 `i -> 2 `i -> 0 `i 275  ]
+[e :U 276 ]
 "45
-[e :UE 265 ]
-}
+[v _ien `i ~T0 @X0 1 a ]
+[; ;eeprom.c: 45: int ien = INTCONbits.GIE;
+[e = _ien -> . . _INTCONbits 1 7 `i ]
+[; ;eeprom.c: 46: (INTCONbits.GIE = 0);
+"46
+[e = . . _INTCONbits 1 7 -> -> 0 `i `uc ]
+[; ;eeprom.c: 47: EEADR = address;
 "47
+[e = _EEADR -> _address `uc ]
+[; ;eeprom.c: 48: EEADRH = (address>>8) & 0b11;
+"48
+[e = _EEADRH -> & >> _address -> 8 `i -> -> 3 `i `l `uc ]
+[; ;eeprom.c: 49: EEDATA = data;
+"49
+[e = _EEDATA -> _data `uc ]
+[; ;eeprom.c: 50: EECON1 = 0b100;
+"50
+[e = _EECON1 -> -> 4 `i `uc ]
+[; ;eeprom.c: 52: EECON2 = 0x55;
+"52
+[e = _EECON2 -> -> 85 `i `uc ]
+[; ;eeprom.c: 53: EECON2 = 0xaa;
+"53
+[e = _EECON2 -> -> 170 `i `uc ]
+[; ;eeprom.c: 57: EECON1 |= 0b10;
+"57
+[e =| _EECON1 -> -> 2 `i `uc ]
+[; ;eeprom.c: 59: while(EECON1 & 0b10);
+"59
+[e $U 277  ]
+[e :U 278 ]
+[e :U 277 ]
+[e $ != & -> _EECON1 `i -> 2 `i -> 0 `i 278  ]
+[e :U 279 ]
+[; ;eeprom.c: 60: EEIF = 0;
+"60
+[e = _EEIF -> -> 0 `i `b ]
+[; ;eeprom.c: 62: EECON1 = 0;
+"62
+[e = _EECON1 -> -> 0 `i `uc ]
+[; ;eeprom.c: 63: INTCONbits.GIE = ien;
+"63
+[e = . . _INTCONbits 1 7 -> _ien `uc ]
+[; ;eeprom.c: 64: }
+"64
+[e :UE 273 ]
+}
+"66
 [v _eepromRead `(i ~T0 @X0 1 ef1`l ]
 {
-[; ;eeprom.c: 47: int eepromRead(long address){
+[; ;eeprom.c: 66: int eepromRead(long address){
 [e :U _eepromRead ]
 [v _address `l ~T0 @X0 1 r1 ]
 [f ]
-[; ;eeprom.c: 48: EEADR = address;
-"48
+[; ;eeprom.c: 67: EEADR = address;
+"67
 [e = _EEADR -> _address `uc ]
-[; ;eeprom.c: 49: EEADRH = (address>>8) & 0b11;
-"49
+[; ;eeprom.c: 68: EEADRH = (address>>8) & 0b11;
+"68
 [e = _EEADRH -> & >> _address -> 8 `i -> -> 3 `i `l `uc ]
-[; ;eeprom.c: 50: EECON1 = 0;
-"50
+[; ;eeprom.c: 69: EECON1 = 0;
+"69
 [e = _EECON1 -> -> 0 `i `uc ]
-[; ;eeprom.c: 51: EECON1 = 1;
-"51
+[; ;eeprom.c: 70: EECON1 = 1;
+"70
 [e = _EECON1 -> -> 1 `i `uc ]
-[; ;eeprom.c: 52: return EEDATA;
-"52
+[; ;eeprom.c: 71: return EEDATA;
+"71
 [e ) -> _EEDATA `i ]
-[e $UE 272  ]
-[; ;eeprom.c: 53: }
-"53
-[e :UE 272 ]
+[e $UE 280  ]
+[; ;eeprom.c: 72: }
+"72
+[e :UE 280 ]
 }
