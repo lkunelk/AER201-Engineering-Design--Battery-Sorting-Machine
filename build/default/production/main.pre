@@ -3949,6 +3949,9 @@ batteryDetected = 0;
 }
 
 
+digitalWrite(cylinderMotor, 0);
+
+
 lcdClear();
 printf("[AA,C,9V,OTHER]\n");
 printf("[%d,%d,%d,%d]",n_AA,n_C,n_9V,n_OTHER);
@@ -4052,7 +4055,7 @@ digitalWrite(cylinderMotor, 1);
 
 void pinSetup(){
 
-# 273
+# 276
 TRISA = 0xFF;
 TRISB = 0xFF;
 TRISC = 0b11000000;

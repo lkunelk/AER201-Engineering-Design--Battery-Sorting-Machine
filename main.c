@@ -162,6 +162,9 @@ void main(){
             batteryDetected = 0;
         }
         
+        //stop motor
+        digitalWrite(cylinderMotor, LOW);
+        
         //display results
         lcdClear();
         printf("[AA,C,9V,OTHER]\n");

@@ -1,4 +1,4 @@
-/* 
+/* h
  * File:   servo.c
  * Author: Nam
  *
@@ -19,15 +19,18 @@ int curr = 0;
 
 //motor = {port, pin}
 void initServo(int* motor, int angle){
+    
+    //check that we haven't initialized servo yet
+    for(int i = 0; i < n; i++){
+        if(servos[i] == motor)return; //if we did then do nothing and return
+    }
+    
     n++;
     servos[n-1] = motor;
     setAngle(motor, angle);
     
     initTimer(0);
     startTimer(0,0);
-    
-    //lcdClear();
-    //printf("%u %u",pulse[0],pulse[1]);
 }
 
 long angleToPulse(int angle){
