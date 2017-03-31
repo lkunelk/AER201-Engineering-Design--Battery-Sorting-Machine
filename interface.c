@@ -7,6 +7,7 @@
 
 #include <xc.h>
 #include <stdio.h>
+#include "eeprom.h"
 #include "interface.h"
 #include "lcd.h"
 #include "keypad.h"
@@ -25,19 +26,19 @@ void showInterface(){
             key = showMainMenu();
                 
             if(key == 'C'){ // history of runs
-                //read eeprom for past runs
                 
-                key = showRunSelect();
+                int n = showRunSelect();
                 
                 if(key == '*')continue;
                 
-                //check that there's something in memory
+                int* run = readPastRun( n - '1');
+                //if(run[6] == 0xffff)continue; //empty
                 
-                while(1){ 
-                    key = showRunMenu(key);
+                while(1){
+                    key = showRunMenu(n);
 
-                         if(key == 'A') showRunTime();
-                    else if(key == 'B') showRunStats();
+                         if(key == 'A') showRunTime(run);
+                    else if(key == 'B') showRunStats(run);
                     else if(key == '*') break;
                 }
                         
@@ -102,18 +103,20 @@ char showRunMenu(char key){
     return k;
 }
 
-char showRunTime(){
+char showRunTime(int* run){
+    float time = (float)(run[0]<<8 + run[1])/10.0;
+    
     lcdClear();
-    printf("time: nnn sec   \n");
+    printf("time: %.1f sec   \n",time);
     printf("              *>");
     
     while(readKeypad() != '*');
 }
 
-char showRunStats(){
+char showRunStats(int* run){
     lcdClear();
     printf("[AA,9V,C,other] \n");
-    printf("[nn,n,n,nn]   *>");
+    printf("[%d,%d,%d,%d]   *>",run[2],run[3],run[4],run[5]);
     
     while(readKeypad() != '*');
 }

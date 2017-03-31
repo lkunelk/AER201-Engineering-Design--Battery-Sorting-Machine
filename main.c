@@ -122,8 +122,11 @@ void debug(){
                 printf("%d,",run[i]);
             
         }
+        if(key == '3')break;
         printf("f");
     }
+    
+    showInterface();
     while(1);
 }
 

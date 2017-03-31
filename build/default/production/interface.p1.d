@@ -4,4 +4,5 @@
 RTC.h  \
 lcd.h  \
 keypad.h  \
+eeprom.h  \
 interface.h 

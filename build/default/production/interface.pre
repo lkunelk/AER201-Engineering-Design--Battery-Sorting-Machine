@@ -3700,14 +3700,20 @@ extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupport
 extern int sprintf(char *, const char *, ...);
 extern int printf(const char *, ...);
 
+# 11 "eeprom.h"
+int* readPastRun(int run);
+void saveNewRun(int* data);
+void eepromWrite(int data, long address);
+int eepromRead(long address);
+
 # 11 "interface.h"
 void showInterface();
 void showDateTime();
 char showMainMenu();
 char showRunSelect();
 char showRunMenu(char key);
-char showRunTime();
-char showRunStats();
+char showRunTime(int* run);
+char showRunStats(int* run);
 
 # 16 "lcd.h"
 void lcdInst(char data);
@@ -3727,7 +3733,7 @@ int* getTime();
 void setTime(void);
 void initRTC();
 
-# 16 "interface.c"
+# 17 "interface.c"
 void showInterface(){
 
 
@@ -3741,18 +3747,18 @@ key = showMainMenu();
 
 if(key == 'C'){
 
-
-key = showRunSelect();
+int n = showRunSelect();
 
 if(key == '*')continue;
 
+int* run = readPastRun( n - '1');
 
 
 while(1){
-key = showRunMenu(key);
+key = showRunMenu(n);
 
-if(key == 'A') showRunTime();
-else if(key == 'B') showRunStats();
+if(key == 'A') showRunTime(run);
+else if(key == 'B') showRunStats(run);
 else if(key == '*') break;
 }
 
@@ -3769,7 +3775,7 @@ int count = 0;
 
 void showDateTime(){
 
-# 65
+# 66
 lcdClear();
 printf("  hh:mm:ss      \n");
 printf("  mm:dd:yy    A>");
@@ -3810,18 +3816,20 @@ while(k != 'A' && k != 'B' && k != '*');
 return k;
 }
 
-char showRunTime(){
+char showRunTime(int* run){
+float time = (float)(run[0]<<8 + run[1])/10.0;
+
 lcdClear();
-printf("time: nnn sec   \n");
+printf("time: %.1f sec   \n",time);
 printf("              *>");
 
 while(readKeypad() != '*');
 }
 
-char showRunStats(){
+char showRunStats(int* run){
 lcdClear();
 printf("[AA,9V,C,other] \n");
-printf("[nn,n,n,nn]   *>");
+printf("[%d,%d,%d,%d]   *>",run[2],run[3],run[4],run[5]);
 
 while(readKeypad() != '*');
 }

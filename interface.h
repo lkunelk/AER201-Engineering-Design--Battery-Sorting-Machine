@@ -13,8 +13,8 @@ void showDateTime();
 char showMainMenu();
 char showRunSelect();
 char showRunMenu(char key);
-char showRunTime();
-char showRunStats();
+char showRunTime(int* run);
+char showRunStats(int* run);
 
 #endif	/* INTERFACE_H */
 

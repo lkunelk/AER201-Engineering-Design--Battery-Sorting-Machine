@@ -3839,8 +3839,8 @@ void showDateTime();
 char showMainMenu();
 char showRunSelect();
 char showRunMenu(char key);
-char showRunTime();
-char showRunStats();
+char showRunTime(int* run);
+char showRunStats(int* run);
 
 # 58 "main.c"
 void pinSetup(void);
@@ -3910,8 +3910,11 @@ for(int i = 0; i < 7; i ++)
 printf("%d,",run[i]);
 
 }
+if(key == '3')break;
 printf("f");
 }
+
+showInterface();
 while(1);
 }
 
@@ -4089,7 +4092,7 @@ digitalWrite(cylinderMotor, 1);
 
 void pinSetup(){
 
-# 308
+# 311
 TRISA = 0xFF;
 TRISB = 0xFF;
 TRISC = 0b11000000;

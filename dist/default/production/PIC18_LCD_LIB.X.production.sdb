@@ -84,19 +84,19 @@
 [v _I2C_Master_Write I2C_Master_Write `(v  1 e 1 0 ]
 "53
 [v _I2C_Master_Read I2C_Master_Read `(uc  1 e 1 0 ]
-"16 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\interface.c
+"17 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\interface.c
 [v _showInterface showInterface `(v  1 e 1 0 ]
-"55
+"56
 [v _showDateTime showDateTime `(v  1 e 1 0 ]
-"72
+"73
 [v _showMainMenu showMainMenu `(uc  1 e 1 0 ]
-"83
+"84
 [v _showRunSelect showRunSelect `(uc  1 e 1 0 ]
-"94
+"95
 [v _showRunMenu showRunMenu `(uc  1 e 1 0 ]
-"105
+"106
 [v _showRunTime showRunTime `(uc  1 e 1 0 ]
-"113
+"116
 [v _showRunStats showRunStats `(uc  1 e 1 0 ]
 "43 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\iopin.c
 [v _digitalRead digitalRead `(i  1 e 2 0 ]
@@ -123,13 +123,13 @@
 [v _lcdNewline lcdNewline `(v  1 e 1 0 ]
 "102 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
 [v _debug debug `(v  1 e 1 0 ]
-"130
+"133
 [v _main main `(v  1 e 1 0 ]
-"212
+"215
 [v _sortBattery sortBattery `(v  1 e 1 0 ]
-"302
+"305
 [v _pinSetup pinSetup `(v  1 e 1 0 ]
-"342
+"345
 [v _service service `II(v  1 e 1 0 ]
 "21 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\servo.c
 [v _initServo initServo `(v  1 e 1 0 ]
@@ -413,49 +413,49 @@
 [v _pulse pulse `[4]ui  1 e 8 0 ]
 "18
 [v _curr curr `i  1 e 2 0 ]
-"130 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
+"133 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
 [v _main main `(v  1 e 1 0 ]
 {
-"174
+"177
 [v main@prev prev `i  1 a 2 54 ]
-"161
+"164
 [v main@cylinderDur cylinderDur `i  1 a 2 52 ]
-"160
-[v main@cylinderStart cylinderStart `i  1 a 2 50 ]
-"158
-[v main@lastBatteryTime lastBatteryTime `i  1 a 2 48 ]
 "163
+[v main@cylinderStart cylinderStart `i  1 a 2 50 ]
+"161
+[v main@lastBatteryTime lastBatteryTime `i  1 a 2 48 ]
+"166
 [v main@cylinderBackward cylinderBackward `i  1 a 2 46 ]
-"162
+"165
 [v main@cylinderForward cylinderForward `i  1 a 2 44 ]
-"210
+"213
 } 0
-"212
+"215
 [v _sortBattery sortBattery `(v  1 e 1 0 ]
 {
-"234
+"237
 [v sortBattery@V V `f  1 a 3 22 ]
-"285
+"288
 [v sortBattery@i_314 i `i  1 a 2 18 ]
-"230
+"233
 [v sortBattery@i i `f  1 a 3 25 ]
-"253
+"256
 [v sortBattery@V_312 V `f  1 a 3 28 ]
-"223
-[v sortBattery@V_max V_max `f  1 a 3 15 ]
-"222
-[v sortBattery@resolution resolution `f  1 a 3 12 ]
-"221
-[v sortBattery@Vcc Vcc `f  1 a 3 9 ]
-"224
-[v sortBattery@V_float V_float `f  1 a 3 2 ]
-"252
-[v sortBattery@targetAngle targetAngle `i  1 a 2 20 ]
 "226
-[v sortBattery@signal signal `i  1 a 2 7 ]
+[v sortBattery@V_max V_max `f  1 a 3 15 ]
 "225
+[v sortBattery@resolution resolution `f  1 a 3 12 ]
+"224
+[v sortBattery@Vcc Vcc `f  1 a 3 9 ]
+"227
+[v sortBattery@V_float V_float `f  1 a 3 2 ]
+"255
+[v sortBattery@targetAngle targetAngle `i  1 a 2 20 ]
+"229
+[v sortBattery@signal signal `i  1 a 2 7 ]
+"228
 [v sortBattery@pos_v_counter pos_v_counter `i  1 a 2 5 ]
-"300
+"303
 } 0
 "53 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\iopin.c
 [v _digitalWrite digitalWrite `(v  1 e 1 0 ]
@@ -478,53 +478,6 @@
 {
 [v analogRead@channel channel `i  1 p 2 34 ]
 "98
-} 0
-"16 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\interface.c
-[v _showInterface showInterface `(v  1 e 1 0 ]
-{
-"20
-[v showInterface@key key `uc  1 a 1 109 ]
-"49
-} 0
-"105
-[v _showRunTime showRunTime `(uc  1 e 1 0 ]
-{
-"111
-} 0
-"113
-[v _showRunStats showRunStats `(uc  1 e 1 0 ]
-{
-"119
-} 0
-"83
-[v _showRunSelect showRunSelect `(uc  1 e 1 0 ]
-{
-"88
-[v showRunSelect@k k `uc  1 a 1 107 ]
-"92
-} 0
-"94
-[v _showRunMenu showRunMenu `(uc  1 e 1 0 ]
-{
-[v showRunMenu@key key `uc  1 a 1 wreg ]
-"99
-[v showRunMenu@k k `uc  1 a 1 108 ]
-"94
-[v showRunMenu@key key `uc  1 a 1 wreg ]
-[v showRunMenu@key key `uc  1 a 1 107 ]
-"103
-} 0
-"72
-[v _showMainMenu showMainMenu `(uc  1 e 1 0 ]
-{
-"77
-[v showMainMenu@k k `uc  1 a 1 107 ]
-"81
-} 0
-"55
-[v _showDateTime showDateTime `(v  1 e 1 0 ]
-{
-"70
 } 0
 "70 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
 [v _lcdHome lcdHome `(i  1 e 2 0 ]
@@ -573,29 +526,6 @@
 [v angleToPulse@angle angle `i  1 p 2 61 ]
 "42
 } 0
-"54 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\ftdiv.c
-[v ___ftdiv __ftdiv `(f  1 e 3 0 ]
-{
-"60
-[v ___ftdiv@f3 f3 `f  1 a 3 4 ]
-"59
-[v ___ftdiv@sign sign `uc  1 a 1 8 ]
-[v ___ftdiv@exp exp `uc  1 a 1 7 ]
-[v ___ftdiv@cntr cntr `uc  1 a 1 3 ]
-"54
-[v ___ftdiv@f1 f1 `f  1 p 3 52 ]
-[v ___ftdiv@f2 f2 `f  1 p 3 55 ]
-"86
-} 0
-"32 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\awtoft.c
-[v ___awtoft __awtoft `(f  1 e 3 0 ]
-{
-"34
-[v ___awtoft@sign sign `uc  1 a 1 45 ]
-"32
-[v ___awtoft@c c `i  1 p 2 42 ]
-"42
-} 0
 "42 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\altoft.c
 [v ___altoft __altoft `(f  1 e 3 0 ]
 {
@@ -627,45 +557,86 @@
 [v debug@n n `i  1 a 2 14 ]
 "108
 [v debug@key key `uc  1 a 1 20 ]
-"128
+"131
 } 0
-"31 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\eeprom.c
-[v _saveNewRun saveNewRun `(v  1 e 1 0 ]
+"17 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\interface.c
+[v _showInterface showInterface `(v  1 e 1 0 ]
 {
-"36
-[v saveNewRun@i i `i  1 a 2 13 ]
 "34
-[v saveNewRun@n n `i  1 a 2 11 ]
-"31
-[v saveNewRun@data data `*.39i  1 p 2 9 ]
-"39
+[v showInterface@run run `*.39i  1 a 2 118 ]
+"30
+[v showInterface@n n `i  1 a 2 116 ]
+"21
+[v showInterface@key key `uc  1 a 1 120 ]
+"50
 } 0
-"41
-[v _eepromWrite eepromWrite `(v  1 e 1 0 ]
+"106
+[v _showRunTime showRunTime `(uc  1 e 1 0 ]
 {
-"45
-[v eepromWrite@ien ien `i  1 a 2 7 ]
-"41
-[v eepromWrite@data data `i  1 p 2 0 ]
-[v eepromWrite@address address `l  1 p 4 2 ]
-"64
+"107
+[v showRunTime@time time `f  1 a 3 112 ]
+"106
+[v showRunTime@run run `*.39i  1 p 2 107 ]
+"114
 } 0
-"23
-[v _readPastRun readPastRun `(*.39i  1 e 2 0 ]
+"54 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\ftdiv.c
+[v ___ftdiv __ftdiv `(f  1 e 3 0 ]
 {
-"25
-[v readPastRun@i i `i  1 a 2 16 ]
-"24
-[v readPastRun@data data `[7]i  1 a 14 2 ]
-"23
-[v readPastRun@run run `i  1 p 2 0 ]
-"29
+"60
+[v ___ftdiv@f3 f3 `f  1 a 3 4 ]
+"59
+[v ___ftdiv@sign sign `uc  1 a 1 8 ]
+[v ___ftdiv@exp exp `uc  1 a 1 7 ]
+[v ___ftdiv@cntr cntr `uc  1 a 1 3 ]
+"54
+[v ___ftdiv@f1 f1 `f  1 p 3 52 ]
+[v ___ftdiv@f2 f2 `f  1 p 3 55 ]
+"86
 } 0
-"66
-[v _eepromRead eepromRead `(i  1 e 2 0 ]
+"32 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\awtoft.c
+[v ___awtoft __awtoft `(f  1 e 3 0 ]
 {
-[v eepromRead@address address `l  1 p 4 54 ]
-"72
+"34
+[v ___awtoft@sign sign `uc  1 a 1 45 ]
+"32
+[v ___awtoft@c c `i  1 p 2 42 ]
+"42
+} 0
+"116 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\interface.c
+[v _showRunStats showRunStats `(uc  1 e 1 0 ]
+{
+[v showRunStats@run run `*.39i  1 p 2 107 ]
+"122
+} 0
+"84
+[v _showRunSelect showRunSelect `(uc  1 e 1 0 ]
+{
+"89
+[v showRunSelect@k k `uc  1 a 1 107 ]
+"93
+} 0
+"95
+[v _showRunMenu showRunMenu `(uc  1 e 1 0 ]
+{
+[v showRunMenu@key key `uc  1 a 1 wreg ]
+"100
+[v showRunMenu@k k `uc  1 a 1 108 ]
+"95
+[v showRunMenu@key key `uc  1 a 1 wreg ]
+[v showRunMenu@key key `uc  1 a 1 107 ]
+"104
+} 0
+"73
+[v _showMainMenu showMainMenu `(uc  1 e 1 0 ]
+{
+"78
+[v showMainMenu@k k `uc  1 a 1 107 ]
+"82
+} 0
+"56
+[v _showDateTime showDateTime `(v  1 e 1 0 ]
+{
+"71
 } 0
 "36 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\keypad.c
 [v _readKeypad readKeypad `(uc  1 e 1 0 ]
@@ -681,9 +652,9 @@
 [v printf@idx idx `uc  1 a 1 80 ]
 "528
 [v printf@val val `ul  1 a 4 96 ]
-[u S819 . 4 `ul 1 vd 4 0 `d 1 integ 3 0 ]
+[u S827 . 4 `ul 1 vd 4 0 `d 1 integ 3 0 ]
 "526
-[v printf@tmpval tmpval `S819  1 a 4 87 ]
+[v printf@tmpval tmpval `S827  1 a 4 87 ]
 "516
 [v printf@fval fval `d  1 a 3 93 ]
 "504
@@ -745,16 +716,6 @@
 "413
 [v fround@prec prec `uc  1 a 1 33 ]
 "418
-} 0
-"15 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\Umul16.c
-[v ___wmul __wmul `(ui  1 e 2 0 ]
-{
-"17
-[v ___wmul@product product `ui  1 a 2 52 ]
-"15
-[v ___wmul@multiplier multiplier `ui  1 p 2 48 ]
-[v ___wmul@multiplicand multiplicand `ui  1 p 2 50 ]
-"53
 } 0
 "62 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\ftmul.c
 [v ___ftmul __ftmul `(f  1 e 3 0 ]
@@ -903,17 +864,65 @@
 [v ___ftge@ff2 ff2 `f  1 p 3 49 ]
 "13
 } 0
-"302 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
-[v _pinSetup pinSetup `(v  1 e 1 0 ]
-{
-"336
-} 0
 "74 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
 [v _lcdClear lcdClear `(v  1 e 1 0 ]
 {
 "76
 } 0
+"23 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\eeprom.c
+[v _readPastRun readPastRun `(*.39i  1 e 2 0 ]
+{
+"25
+[v readPastRun@i i `i  1 a 2 16 ]
+"24
+[v readPastRun@data data `[7]i  1 a 14 2 ]
+"23
+[v readPastRun@run run `i  1 p 2 0 ]
+"29
+} 0
+"31
+[v _saveNewRun saveNewRun `(v  1 e 1 0 ]
+{
+"36
+[v saveNewRun@i i `i  1 a 2 13 ]
+"34
+[v saveNewRun@n n `i  1 a 2 11 ]
+"31
+[v saveNewRun@data data `*.39i  1 p 2 9 ]
+"39
+} 0
+"41
+[v _eepromWrite eepromWrite `(v  1 e 1 0 ]
+{
+"45
+[v eepromWrite@ien ien `i  1 a 2 7 ]
+"41
+[v eepromWrite@data data `i  1 p 2 0 ]
+[v eepromWrite@address address `l  1 p 4 2 ]
+"64
+} 0
+"66
+[v _eepromRead eepromRead `(i  1 e 2 0 ]
+{
+[v eepromRead@address address `l  1 p 4 54 ]
+"72
+} 0
+"15 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\Umul16.c
+[v ___wmul __wmul `(ui  1 e 2 0 ]
+{
+"17
+[v ___wmul@product product `ui  1 a 2 52 ]
 "15
+[v ___wmul@multiplier multiplier `ui  1 p 2 48 ]
+[v ___wmul@multiplicand multiplicand `ui  1 p 2 50 ]
+"53
+} 0
+"305 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
+[v _pinSetup pinSetup `(v  1 e 1 0 ]
+{
+"339
+} 0
+"15 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
 [v _initLCD initLCD `(v  1 e 1 0 ]
 {
 "25
@@ -972,12 +981,12 @@
 [v ___aldiv@divisor divisor `l  1 p 4 38 ]
 "42
 } 0
-"342 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
+"345 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
 [v _service service `II(v  1 e 1 0 ]
 {
-"364
+"367
 [v service@key key `uc  1 a 1 33 ]
-"369
+"372
 } 0
 "55 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\servo.c
 [v _servoInterruptService servoInterruptService `(uc  1 e 1 0 ]
