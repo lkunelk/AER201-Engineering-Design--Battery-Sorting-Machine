@@ -9,12 +9,12 @@
 #define	INTERFACE_H
 
 void showInterface();
-void dateTime();
-void mainMenu();
-void runSelect();
-void runMenu(char key);
-void runTime();
-void runStats();
+void showDateTime();
+char showMainMenu();
+char showRunSelect();
+char showRunMenu(char key);
+char showRunTime();
+char showRunStats();
 
 #endif	/* INTERFACE_H */
 

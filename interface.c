@@ -19,61 +19,31 @@ void showInterface(){
     //setTime();
     char key; //for storing keypad input
     while(1){
-        
-            dateTime();
-            while(readKeypad() != 'A');
+        showDateTime();
         
         while(1){
-            //---------
-            mainMenu();
-            //---------
-            
-            do{key = readKeypad();} //proceed only if 
-            while(key != 'B' && key != 'C' && key != '*');
+            key = showMainMenu();
                 
             if(key == 'C'){ // history of runs
-                //---------
-                runSelect();
-                //---------
-                
                 //read eeprom for past runs
                 
-                do{key = readKeypad();}
-                while(key != '1' && key != '2' && key != '3' && key != '4' && key != '*');
+                key = showRunSelect();
                 
                 if(key == '*')continue;
                 
                 //check that there's something in memory
                 
                 while(1){ 
-                    //---------
-                    runMenu(key);
-                    //---------
+                    key = showRunMenu(key);
 
-                    do{key = readKeypad();}
-                    while(key != 'A' && key != 'B' && key != '*');
-
-                    if(key == 'A'){ //how long the process ran
-                        //---------
-                        runTime();
-                        //---------
-                    }
-                    else if(key == 'B'){ //how  many batteries for each category
-                        //---------
-                        runStats();
-                        //---------
-                    }
-                    else if(key == '*')break;
-                    
-                    while(readKeypad() != '*');
+                         if(key == 'A') showRunTime();
+                    else if(key == 'B') showRunStats();
+                    else if(key == '*') break;
                 }
                         
             }
-            else if(key == 'B'){ //start
-                return; //begin the process
-            }
-            else if(key == '*')//go back
-                break;
+            else if(key == 'B') return; //begin sorting process
+            else if(key == '*') break; //go back
         }
     }
 }
@@ -81,7 +51,8 @@ void showInterface(){
 
 int prevTime = 0; //stores last second on RTC
 int count = 0;
-void dateTime(){
+
+void showDateTime(){
     /*int* time = getTime();
     if(prevTime^time[0]){ //if seconds change update screen
         
@@ -94,34 +65,55 @@ void dateTime(){
     lcdClear();
     printf("  hh:mm:ss      \n");
     printf("  mm:dd:yy    A>");
+    
+    while(readKeypad() != 'A');
 }
 
-void mainMenu(){
+char showMainMenu(){
     lcdClear();
     printf("start   <B      \n");
     printf("history <C    *>");
+    
+    char k;
+    do{k = readKeypad();} //proceed only if 
+    while(k != 'B' && k != 'C' && k != '*');
+    return k;
 }
 
-void runSelect(){
+char showRunSelect(){
     lcdClear();
     printf("select run:     \n");
     printf("[1,2,3,4]     *>");
+    
+    char k;
+    do{k = readKeypad();}
+    while(k != '1' && k != '2' && k != '3' && k != '4' && k != '*');
+    return k;
 }
 
-void runMenu(char key){
+char showRunMenu(char key){
     lcdClear();
     printf("%c) time  <A     \n",key);
     printf( "   stats <B   *>");
+    
+    char k;
+    do{k = readKeypad();}
+    while(k != 'A' && k != 'B' && k != '*');
+    return k;
 }
 
-void runTime(){
+char showRunTime(){
     lcdClear();
     printf("time: nnn sec   \n");
     printf("              *>");
+    
+    while(readKeypad() != '*');
 }
 
-void runStats(){
+char showRunStats(){
     lcdClear();
     printf("[AA,9V,C,other] \n");
     printf("[nn,n,n,nn]   *>");
+    
+    while(readKeypad() != '*');
 }
