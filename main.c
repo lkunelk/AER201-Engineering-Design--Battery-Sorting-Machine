@@ -98,7 +98,22 @@ float V_LIM_AA = .198; //Voltage limits (above => charged, below => discharged)
 float V_LIM_C  = 1.3254;
 float V_LIM_9V = 1.863;
 
+void debug();
+void debug(){
+    
+    pinSetup();
+    
+    initServo(padServo, 90);
+    readKeypad();
+    initServo(padServo, 0);
+    
+    while(1);
+}
+
 void main(){
+    
+    debug();
+    
     pinSetup();
     initLCD();
     
@@ -309,23 +324,26 @@ int angle = 90;
 int period = 31100; // 12.5*8 = 100ms, use 8 prescaler
 void interrupt service(void) {
     
-    servoInterruptService(); //checks TMR0IF
+    if( servoInterruptService() )return; //if interrupt was dealt with here return
     
     if(TMR1IF){
         startTimer(1,0xffff - period);
         time+=1;
         TMR1IF = 0; // clear flag
+        return;
     }
     
     //Contact sensor - port B, pin 0 external interrupt
     if(INT0IF){ INT0IF = 0; //clear flag
         batteryDetected = 1;
+        return;
     }
     
     //Keyboard - port B, pin 1 external interrupt
     if(INT1IF && INT1IE){INT1IF = 0;     //Clear flag bit
         char key = (PORTB & 0xF0) >> 4; //read the keypress
         if(key == 12)terminate = 1;
+        return;
     }
 }
 

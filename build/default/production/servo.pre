@@ -3710,7 +3710,7 @@ void lcdNewline(void);
 # 11 "servo.h"
 void initServo(int* motor, int angle);
 void setAngle(int* motor, int angle);
-void servoInterruptService();
+char servoInterruptService();
 long angleToPulse(int angle);
 
 # 28 "iopin.h"
@@ -3736,15 +3736,18 @@ int curr = 0;
 
 
 void initServo(int* motor, int angle){
+
+
+for(int i = 0; i < n; i++){
+if(servos[i] == motor)return;
+}
+
 n++;
 servos[n-1] = motor;
 setAngle(motor, angle);
 
 initTimer(0);
 startTimer(0,0);
-
-
-
 }
 
 long angleToPulse(int angle){
@@ -3766,7 +3769,7 @@ period-=pulse[i];
 pulse[n] = period;
 }
 
-void servoInterruptService(){
+char servoInterruptService(){
 
 if(TMR0IF){TMR0IF = 0;
 digitalWrite(servos[curr],0);
@@ -3774,5 +3777,7 @@ digitalWrite(servos[ (curr+1)%(n+1) ],1);
 startTimer(0, 0xFFFF - pulse[ (curr+1)%(n+1) ]);
 
 curr = (curr+1)%(n+1);
+return 1;
 }
+return 0;
 }

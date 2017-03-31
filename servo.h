@@ -10,7 +10,7 @@
 
 void initServo(int* motor, int angle);
 void setAngle(int* motor, int angle);
-void servoInterruptService();
+char servoInterruptService();
 long angleToPulse(int angle);
 
 #endif	/* SERVO_H */

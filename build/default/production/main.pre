@@ -3828,7 +3828,7 @@ void angleToPulseLength(float mill, int prescaler);
 # 11 "servo.h"
 void initServo(int* motor, int angle);
 void setAngle(int* motor, int angle);
-void servoInterruptService();
+char servoInterruptService();
 long angleToPulse(int angle);
 
 # 11 "interface.h"
@@ -3884,7 +3884,22 @@ float V_LIM_AA = .198;
 float V_LIM_C = 1.3254;
 float V_LIM_9V = 1.863;
 
+void debug();
+void debug(){
+
+pinSetup();
+
+initServo(padServo, 90);
+readKeypad();
+initServo(padServo, 0);
+
+while(1);
+}
+
 void main(){
+
+debug();
+
 pinSetup();
 initLCD();
 
@@ -4055,7 +4070,7 @@ digitalWrite(cylinderMotor, 1);
 
 void pinSetup(){
 
-# 276
+# 291
 TRISA = 0xFF;
 TRISB = 0xFF;
 TRISC = 0b11000000;
@@ -4092,23 +4107,26 @@ int angle = 90;
 int period = 31100;
 void interrupt service(void) {
 
-servoInterruptService();
+if( servoInterruptService() )return;
 
 if(TMR1IF){
 startTimer(1,0xffff - period);
 time+=1;
 TMR1IF = 0;
+return;
 }
 
 
 if(INT0IF){ INT0IF = 0;
 batteryDetected = 1;
+return;
 }
 
 
 if(INT1IF && INT1IE){INT1IF = 0;
 char key = (PORTB & 0xF0) >> 4;
 if(key == 12)terminate = 1;
+return;
 }
 }
 

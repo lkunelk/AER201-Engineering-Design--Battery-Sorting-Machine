@@ -52,7 +52,7 @@ void setAngle(int* motor, int angle){
     pulse[n] =  period; // the sum of all n+1 pulses should add up to 20ms
 }
 
-void servoInterruptService(){
+char servoInterruptService(){
     
     if(TMR0IF){TMR0IF = 0;
         digitalWrite(servos[curr],LOW); //clear previous one
@@ -60,5 +60,7 @@ void servoInterruptService(){
         startTimer(0, 0xFFFF - pulse[ (curr+1)%(n+1) ]); //set new one for preset amount of time 
         
         curr = (curr+1)%(n+1);
+        return 1;
     }
+    return 0;
 }
