@@ -237,7 +237,7 @@ void sortBattery(){
     float V = V_max;
     
     lcdClear();
-    printf("V: %d, N: %.3f",V,pos_v_counter);
+    printf("V: %.3f, N: %d\n",V,pos_v_counter);
 //  __delay_ms(1000);
     
     //set the angle for directing arm

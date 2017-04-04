@@ -3413,7 +3413,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 239: lcdClear();
 "239
 [e ( _lcdClear ..  ]
-[; ;main.c: 240: printf("V: %d, N: %.3f",V,pos_v_counter);
+[; ;main.c: 240: printf("V: %.3f, N: %d",V,pos_v_counter);
 "240
 [e ( _printf , , (. :s 5C -> _V `d _pos_v_counter ]
 [; ;main.c: 245: switch(signal){
@@ -3728,10 +3728,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 }
 [p f _printf 9544340 ]
 [a 1C 114 117 110 110 105 110 103 0 ]
-[a 5C 86 58 32 37 100 44 32 78 58 32 37 46 51 102 0 ]
 [a 7C 57 86 32 108 105 109 58 32 37 102 0 ]
 [a 6C 65 65 32 108 105 109 58 32 37 102 0 ]
 [a 8C 67 32 32 108 105 109 58 32 37 102 0 ]
 [a 2C 116 105 109 101 32 37 48 50 108 100 58 37 48 50 108 100 0 ]
+[a 5C 86 58 32 37 46 51 102 44 32 78 58 32 37 100 0 ]
 [a 4C 91 37 100 44 37 100 44 37 100 44 37 100 93 0 ]
 [a 3C 91 65 65 44 67 44 57 86 44 79 84 72 69 82 93 10 0 ]

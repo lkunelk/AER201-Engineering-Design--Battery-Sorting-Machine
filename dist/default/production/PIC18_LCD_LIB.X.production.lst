@@ -1,7 +1,7 @@
 
 
 Microchip Technology PIC18 LITE Macro Assembler V1.40 build -251452761 
-                                                                                               Tue Apr 04 15:23:59 2017
+                                                                                               Tue Apr 04 15:45:25 2017
 
 Microchip Technology Omniscient Code Generator v1.40 (Free mode) build 201612010151
      1                           	processor	18F4620
@@ -683,16 +683,16 @@ Microchip Technology Omniscient Code Generator v1.40 (Free mode) build 201612010
    669  00FF9E  3A                 	db	58	;':'
    670  00FF9F  20                 	db	32
    671  00FFA0  25                 	db	37
-   672  00FFA1  64                 	db	100	;'d'
-   673  00FFA2  2C                 	db	44
-   674  00FFA3  20                 	db	32
-   675  00FFA4  4E                 	db	78	;'N'
-   676  00FFA5  3A                 	db	58	;':'
-   677  00FFA6  20                 	db	32
-   678  00FFA7  25                 	db	37
-   679  00FFA8  2E                 	db	46
-   680  00FFA9  33                 	db	51	;'3'
-   681  00FFAA  66                 	db	102	;'f'
+   672  00FFA1  2E                 	db	46
+   673  00FFA2  33                 	db	51	;'3'
+   674  00FFA3  66                 	db	102	;'f'
+   675  00FFA4  2C                 	db	44
+   676  00FFA5  20                 	db	32
+   677  00FFA6  4E                 	db	78	;'N'
+   678  00FFA7  3A                 	db	58	;':'
+   679  00FFA8  20                 	db	32
+   680  00FFA9  25                 	db	37
+   681  00FFAA  64                 	db	100	;'d'
    682  00FFAB  00                 	db	0
    683  00FFAC                     STR_4:
    684  00FFAC  5B                 	db	91	;'['
@@ -2679,7 +2679,7 @@ Microchip Technology Omniscient Code Generator v1.40 (Free mode) build 201612010
   2655                           ;main.c: 239: lcdClear();
   2656  0010EE  EC36  F01D         	call	_lcdClear	;wreg free
   2657                           
-  2658                           ;main.c: 240: printf("V: %d, N: %.3f",V,pos_v_counter);
+  2658                           ;main.c: 240: printf("V: %.3f, N: %d",V,pos_v_counter);
   2659  0010F2  0E9D               	movlw	low STR_5
   2660  0010F4  0100               	movlb	0	; () banked
   2661  0010F6  6FBD               	movwf	printf@f& (0+255),b
@@ -18486,7 +18486,7 @@ CODE                 0      0       0       0        0.0%
 
 
 Microchip Technology PIC18 Macro Assembler V1.40 build -251452761 
-Symbol Table                                                                                   Tue Apr 04 15:23:59 2017
+Symbol Table                                                                                   Tue Apr 04 15:45:25 2017
 
                        ___altoft@exp 0033                                    _n 00F9  
                   main@cylinderStart 0129                 main@cylinderBackward 012F  
