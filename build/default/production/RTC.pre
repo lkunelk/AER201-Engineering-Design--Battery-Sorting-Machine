@@ -3643,11 +3643,11 @@ void I2C_Master_Write(unsigned d);
 unsigned char I2C_Master_Read(unsigned char a);
 
 # 11 "RTC.c"
-const char happynewyear[7] = { 0x00,
+const char happynewyear[7] = { 0x50,
 0x59,
-0x03,
+0x23,
 0x01,
-0x13,
+0x02,
 0x04,
 0x17};
 
@@ -3658,7 +3658,7 @@ I2C_Master_Init(10000);
 int* getTime(){
 int time[7];
 
-
+(INTCONbits.GIE = 0);
 
 
 I2C_Master_Start();
@@ -3669,13 +3669,13 @@ I2C_Master_Stop();
 
 I2C_Master_Start();
 I2C_Master_Write(0b11010001);
-for(unsigned char i=0;i<0x06;i++){
+for(unsigned char i=0;i<7;i++){
 time[i] = I2C_Master_Read(1);
 }
 time[6] = I2C_Master_Read(0);
 I2C_Master_Stop();
 
-
+(INTCONbits.GIE = 1);
 
 return time;
 }

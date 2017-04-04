@@ -7,6 +7,7 @@
 
 #include <xc.h>
 #include <stdio.h>
+#include "configBits.h"
 #include "eeprom.h"
 #include "interface.h"
 #include "lcd.h"
@@ -16,11 +17,10 @@
 
 void showInterface(){
     
-    //initRTC();
-    //setTime();
+    initRTC();
     char key; //for storing keypad input
     while(1){
-        showDateTime();
+        //showDateTime();
         
         while(1){
             key = showMainMenu();
@@ -54,20 +54,16 @@ int prevTime = 0; //stores last second on RTC
 int count = 0;
 
 void showDateTime(){
-    /*int* time = getTime();
-    if(prevTime^time[0]){ //if seconds change update screen
-        
-        lcdClear();
-        printf("  %02x:%02x:%02x      \n",time[2],time[1],time[0]);
-        printf("  %02x/%02x/%02x A>",time[6],time[5],time[4]);
-        
-        prevTime = getTime()[0];
-    }*/
-    lcdClear();
-    printf("  hh:mm:ss      \n");
-    printf("  mm:dd:yy    A>");
     
-    while(readKeypad() != 'A');
+    initRTC();
+    setTime();
+    while(1){
+        int* t = getTime();
+        lcdClear();
+        printf("%x:%x:%x\n",t[2],t[1],t[0]);
+        printf("%x/%x/%x",t[6],t[5],t[4]);
+        __delay_ms(77);
+    }
 }
 
 char showMainMenu(){

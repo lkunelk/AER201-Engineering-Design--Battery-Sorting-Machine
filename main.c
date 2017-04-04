@@ -104,35 +104,23 @@ void debug(){
     pinSetup();
     initLCD();
     
+    initRTC();
+    //setTime();
     while(1){
-        char key = readKeypad();
-        printf("s");
-        if(key == '1'){
-            int n = (eepromRead(0)+1)%0xffff;
-            int run[7];
-            for(int i = 0; i < 7; i++)run[i] = i+n;
-            saveNewRun(run);
-            lcdClear();
-            printf("n: %d",eepromRead(0));
-        }
-        if(key == '2'){
-            int* run = readPastRun(eepromRead(0));
-            lcdClear();
-            for(int i = 0; i < 7; i ++)
-                printf("%d,",run[i]);
-            
-        }
-        if(key == '3')break;
-        printf("f");
+     
+        int* t = getTime();
+        lcdClear();
+        printf("%x:%x:%x\n",t[2],t[1],t[0]);
+        printf("%x/%x/%x",t[6],t[5],t[4]);
+        __delay_ms(77);
     }
     
-    showInterface();
     while(1);
 }
 
 void main(){
     
-    debug();
+    //debug();
     
     pinSetup();
     initLCD();
@@ -162,8 +150,8 @@ void main(){
             
             int cylinderStart = time;
             int cylinderDur = 0;
-            int cylinderForward = 10; //deci-seconds
-            int cylinderBackward = 10; //deci-seconds
+            int cylinderForward = 70; //deci-seconds
+            int cylinderBackward = 30; //deci-seconds
             
             while(!batteryDetected && !terminate){ //update screen and poll time
                 //print time
@@ -346,10 +334,10 @@ void interrupt service(void) {
     
     if( servoInterruptService() )return; //if interrupt was dealt with here return
     
+    // 0.1 second timer
+    // 12.5ms = 31100, 12.5ms * 8 = 100ms = 0.1s (prescaler = 8)
+    // 0xffff - 31100 = 0x8683
     if(TMR1IF){
-        // 0.1 second timer
-        // 12.5ms = 31100, 12.5ms * 8 = 100ms = 0.1s (prescaler = 8)
-        // 0xffff - 31100 = 0x8683
         startTimer(1,0x8683);
         time+=1;
         TMR1IF = 0; // clear flag
@@ -364,9 +352,9 @@ void interrupt service(void) {
     
     //Keyboard - port B, pin 1 external interrupt
     if(INT1IF && INT1IE){INT1IF = 0;     //Clear flag bit
+        keyPressedInterruptService();
         char key = (PORTB & 0xF0) >> 4; //read the keypress
         if(key == 12)terminate = 1;
-        while(PORTBbits.RB1);
         return;
     }
 }

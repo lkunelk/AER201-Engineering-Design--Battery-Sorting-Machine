@@ -5,4 +5,5 @@ RTC.h  \
 lcd.h  \
 keypad.h  \
 eeprom.h  \
+configBits.h  \
 interface.h 

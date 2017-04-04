@@ -1,14 +1,6 @@
 Version 3.2 HI-TECH Software Intermediate Code
 "11 I2C.h
 [v _I2C_Master_Init `(v ~T0 @X0 0 ef1`Cul ]
-"29 RTC.c
-[v _I2C_Master_Start `(i ~T0 @X0 0 ef ]
-"12 I2C.h
-[v _I2C_Master_Write `(v ~T0 @X0 0 ef1`ui ]
-"32 RTC.c
-[v _I2C_Master_Stop `(i ~T0 @X0 0 ef ]
-"13 I2C.h
-[v _I2C_Master_Read `(uc ~T0 @X0 0 ef1`uc ]
 "6272 C:\Program Files (x86)\Microchip\xc8\v1.40\include\pic18f4620.h
 [s S258 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
 [n S258 . RBIF INT0IF TMR0IF RBIE INT0IE TMR0IE PEIE_GIEL GIE_GIEH ]
@@ -23,6 +15,14 @@ Version 3.2 HI-TECH Software Intermediate Code
 [n S257 . . . . ]
 "6298
 [v _INTCONbits `VS257 ~T0 @X0 0 e@4082 ]
+"29 RTC.c
+[v _I2C_Master_Start `(i ~T0 @X0 0 ef ]
+"12 I2C.h
+[v _I2C_Master_Write `(v ~T0 @X0 0 ef1`ui ]
+"32 RTC.c
+[v _I2C_Master_Stop `(i ~T0 @X0 0 ef ]
+"13 I2C.h
+[v _I2C_Master_Read `(uc ~T0 @X0 0 ef1`uc ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -2711,26 +2711,26 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _happynewyear `Cuc ~T0 @X0 -> 7 `i e ]
 [i _happynewyear
 :U ..
--> -> 0 `i `uc
+-> -> 80 `i `uc
 "12
 -> -> 89 `i `uc
 "13
--> -> 3 `i `uc
+-> -> 35 `i `uc
 "14
 -> -> 1 `i `uc
 "15
--> -> 19 `i `uc
+-> -> 2 `i `uc
 "16
 -> -> 4 `i `uc
 "17
 -> -> 23 `i `uc
 ..
 ]
-[; ;RTC.c: 11: const char happynewyear[7] = { 0x00,
+[; ;RTC.c: 11: const char happynewyear[7] = { 0x50,
 [; ;RTC.c: 12: 0x59,
-[; ;RTC.c: 13: 0x03,
+[; ;RTC.c: 13: 0x23,
 [; ;RTC.c: 14: 0x01,
-[; ;RTC.c: 15: 0x13,
+[; ;RTC.c: 15: 0x02,
 [; ;RTC.c: 16: 0x04,
 [; ;RTC.c: 17: 0x17};
 "19
@@ -2755,6 +2755,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 "24
 [v _time `i ~T0 @X0 -> 7 `i a ]
 [; ;RTC.c: 24: int time[7];
+[; ;RTC.c: 26: (INTCONbits.GIE = 0);
+"26
+[e = . . _INTCONbits 1 7 -> -> 0 `i `uc ]
 [; ;RTC.c: 29: I2C_Master_Start();
 "29
 [e ( _I2C_Master_Start ..  ]
@@ -2773,12 +2776,12 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;RTC.c: 36: I2C_Master_Write(0b11010001);
 "36
 [e ( _I2C_Master_Write (1 -> -> 209 `i `ui ]
-[; ;RTC.c: 37: for(unsigned char i=0;i<0x06;i++){
+[; ;RTC.c: 37: for(unsigned char i=0;i<7;i++){
 "37
 {
 [v _i `uc ~T0 @X0 1 a ]
 [e = _i -> -> 0 `i `uc ]
-[e $ < -> _i `i -> 6 `i 267  ]
+[e $ < -> _i `i -> 7 `i 267  ]
 [e $U 268  ]
 [e :U 267 ]
 {
@@ -2789,7 +2792,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 }
 "37
 [e ++ _i -> -> 1 `i `uc ]
-[e $ < -> _i `i -> 6 `i 267  ]
+[e $ < -> _i `i -> 7 `i 267  ]
 [e :U 268 ]
 "39
 }
@@ -2800,6 +2803,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;RTC.c: 41: I2C_Master_Stop();
 "41
 [e ( _I2C_Master_Stop ..  ]
+[; ;RTC.c: 43: (INTCONbits.GIE = 1);
+"43
+[e = . . _INTCONbits 1 7 -> -> 1 `i `uc ]
 [; ;RTC.c: 45: return time;
 "45
 [e ) &U _time ]

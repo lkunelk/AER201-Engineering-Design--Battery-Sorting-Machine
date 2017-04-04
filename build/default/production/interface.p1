@@ -1,4 +1,6 @@
 Version 3.2 HI-TECH Software Intermediate Code
+"13 RTC.h
+[v _initRTC `(v ~T0 @X0 0 ef ]
 "12 interface.h
 [v _showDateTime `(v ~T0 @X0 0 ef ]
 "13
@@ -13,10 +15,18 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _showRunTime `(uc ~T0 @X0 0 ef1`*i ]
 "17
 [v _showRunStats `(uc ~T0 @X0 0 ef1`*i ]
+"12 RTC.h
+[v _setTime `(v ~T0 @X0 0 ef ]
+"11
+[v _getTime `(*i ~T0 @X0 0 ef ]
 "19 lcd.h
 [v _lcdClear `(v ~T0 @X0 0 ef ]
 "195 C:\Program Files (x86)\Microchip\xc8\v1.40\include\stdio.h
 [v _printf `(i ~T0 @X0 0 ev`*Cuc ]
+[v F2878 `(v ~T0 @X0 1 tf1`ul ]
+"159 C:\Program Files (x86)\Microchip\xc8\v1.40\include\pic18.h
+[v __delay `JF2878 ~T0 @X0 0 e ]
+[p i __delay ]
 "12 keypad.h
 [v _readKeypad `(uc ~T0 @X0 0 ef ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
@@ -2730,6 +2740,98 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdio.h: 190: extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupported("vsscanf() is not supported by this compiler")));
 [; ;stdio.h: 194: extern int sprintf(char *, const char *, ...);
 [; ;stdio.h: 195: extern int printf(const char *, ...);
+"9 configBits.h
+[p x OSC=HS ]
+"10
+[p x FCMEN=OFF ]
+"11
+[p x IESO=OFF ]
+"14
+[p x PWRT=OFF ]
+"15
+[p x BOREN=SBORDIS ]
+"16
+[p x BORV=3 ]
+"19
+[p x WDT=OFF ]
+"20
+[p x WDTPS=32768 ]
+"23
+[p x CCP2MX=PORTC ]
+"24
+[p x PBADEN=ON ]
+"25
+[p x LPT1OSC=OFF ]
+"26
+[p x MCLRE=ON ]
+"29
+[p x STVREN=ON ]
+"30
+[p x LVP=OFF ]
+"31
+[p x XINST=OFF ]
+"34
+[p x CP0=OFF ]
+"35
+[p x CP1=OFF ]
+"36
+[p x CP2=OFF ]
+"37
+[p x CP3=OFF ]
+"40
+[p x CPB=OFF ]
+"41
+[p x CPD=OFF ]
+"44
+[p x WRT0=OFF ]
+"45
+[p x WRT1=OFF ]
+"46
+[p x WRT2=OFF ]
+"47
+[p x WRT3=OFF ]
+"50
+[p x WRTC=OFF ]
+"51
+[p x WRTB=OFF ]
+"52
+[p x WRTD=OFF ]
+"55
+[p x EBTR0=OFF ]
+"56
+[p x EBTR1=OFF ]
+"57
+[p x EBTR2=OFF ]
+"58
+[p x EBTR3=OFF ]
+"61
+[p x EBTRB=OFF ]
+[; ;string.h: 14: extern void * memcpy(void *, const void *, size_t);
+[; ;string.h: 15: extern void * memmove(void *, const void *, size_t);
+[; ;string.h: 16: extern void * memset(void *, int, size_t);
+[; ;string.h: 34: extern char * strcat(char *, const char *);
+[; ;string.h: 35: extern char * strcpy(char *, const char *);
+[; ;string.h: 36: extern char * strncat(char *, const char *, size_t);
+[; ;string.h: 37: extern char * strncpy(char *, const char *, size_t);
+[; ;string.h: 38: extern char * strdup(const char *);
+[; ;string.h: 39: extern char * strtok(char *, const char *);
+[; ;string.h: 42: extern int memcmp(const void *, const void *, size_t);
+[; ;string.h: 43: extern int strcmp(const char *, const char *);
+[; ;string.h: 44: extern int stricmp(const char *, const char *);
+[; ;string.h: 45: extern int strncmp(const char *, const char *, size_t);
+[; ;string.h: 46: extern int strnicmp(const char *, const char *, size_t);
+[; ;string.h: 47: extern void * memchr(const void *, int, size_t);
+[; ;string.h: 48: extern size_t strcspn(const char *, const char *);
+[; ;string.h: 49: extern char * strpbrk(const char *, const char *);
+[; ;string.h: 50: extern size_t strspn(const char *, const char *);
+[; ;string.h: 51: extern char * strstr(const char *, const char *);
+[; ;string.h: 52: extern char * stristr(const char *, const char *);
+[; ;string.h: 53: extern char * strerror(int);
+[; ;string.h: 54: extern size_t strlen(const char *);
+[; ;string.h: 55: extern char * strchr(const char *, int);
+[; ;string.h: 56: extern char * strichr(const char *, int);
+[; ;string.h: 57: extern char * strrchr(const char *, int);
+[; ;string.h: 58: extern char * strrichr(const char *, int);
 [; ;eeprom.h: 11: int* readPastRun(int run);
 [; ;eeprom.h: 12: void saveNewRun(int* data);
 [; ;eeprom.h: 13: void eepromWrite(int data, long address);
@@ -2753,12 +2855,15 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;RTC.h: 11: int* getTime();
 [; ;RTC.h: 12: void setTime(void);
 [; ;RTC.h: 13: void initRTC();
-"17 interface.c
+"18 interface.c
 [v _showInterface `(v ~T0 @X0 1 ef ]
 {
-[; ;interface.c: 17: void showInterface(){
+[; ;interface.c: 18: void showInterface(){
 [e :U _showInterface ]
 [f ]
+[; ;interface.c: 20: initRTC();
+"20
+[e ( _initRTC ..  ]
 "21
 [v _key `uc ~T0 @X0 1 a ]
 [; ;interface.c: 21: char key;
@@ -2880,203 +2985,220 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;interface.c: 56: void showDateTime(){
 [e :U _showDateTime ]
 [f ]
-[; ;interface.c: 66: lcdClear();
-"66
-[e ( _lcdClear ..  ]
-[; ;interface.c: 67: printf("  hh:mm:ss      \n");
-"67
-[e ( _printf :s 1C ]
-[; ;interface.c: 68: printf("  mm:dd:yy    A>");
-"68
-[e ( _printf :s 2C ]
-[; ;interface.c: 70: while(readKeypad() != 'A');
-"70
-[e $U 288  ]
+[; ;interface.c: 58: initRTC();
+"58
+[e ( _initRTC ..  ]
+[; ;interface.c: 59: setTime();
+"59
+[e ( _setTime ..  ]
+[; ;interface.c: 60: while(1){
+"60
 [e :U 289 ]
+{
+"61
+[v _t `*i ~T0 @X0 1 a ]
+[; ;interface.c: 61: int* t = getTime();
+[e = _t ( _getTime ..  ]
+[; ;interface.c: 62: lcdClear();
+"62
+[e ( _lcdClear ..  ]
+[; ;interface.c: 63: printf("%x:%x:%x\n",t[2],t[1],t[0]);
+"63
+[e ( _printf , , , (. :s 1C *U + _t * -> -> 2 `i `x -> -> # *U _t `i `x *U + _t * -> -> 1 `i `x -> -> # *U _t `i `x *U + _t * -> -> 0 `i `x -> -> # *U _t `i `x ]
+[; ;interface.c: 64: printf("%x/%x/%x",t[6],t[5],t[4]);
+"64
+[e ( _printf , , , (. :s 2C *U + _t * -> -> 6 `i `x -> -> # *U _t `i `x *U + _t * -> -> 5 `i `x -> -> # *U _t `i `x *U + _t * -> -> 4 `i `x -> -> # *U _t `i `x ]
+[; ;interface.c: 65: _delay((unsigned long)((77)*(10000000/4000.0)));
+"65
+[e ( __delay (1 -> * -> -> 77 `i `d / -> -> 10000000 `l `d .4000.0 `ul ]
+"66
+}
 [e :U 288 ]
-[e $ != -> ( _readKeypad ..  `ui -> 65 `ui 289  ]
+"60
+[e $U 289  ]
 [e :U 290 ]
-[; ;interface.c: 71: }
-"71
+[; ;interface.c: 66: }
+[; ;interface.c: 67: }
+"67
 [e :UE 287 ]
 }
-"73
+"69
 [v _showMainMenu `(uc ~T0 @X0 1 ef ]
 {
-[; ;interface.c: 73: char showMainMenu(){
+[; ;interface.c: 69: char showMainMenu(){
 [e :U _showMainMenu ]
 [f ]
-[; ;interface.c: 74: lcdClear();
-"74
+[; ;interface.c: 70: lcdClear();
+"70
 [e ( _lcdClear ..  ]
-[; ;interface.c: 75: printf("start   <B      \n");
-"75
+[; ;interface.c: 71: printf("start   <B      \n");
+"71
 [e ( _printf :s 3C ]
-[; ;interface.c: 76: printf("history <C    *>");
-"76
+[; ;interface.c: 72: printf("history <C    *>");
+"72
 [e ( _printf :s 4C ]
-"78
+"74
 [v _k `uc ~T0 @X0 1 a ]
-[; ;interface.c: 78: char k;
-[; ;interface.c: 79: do{k = readKeypad();}
-"79
+[; ;interface.c: 74: char k;
+[; ;interface.c: 75: do{k = readKeypad();}
+"75
 [e :U 294 ]
 {
 [e = _k ( _readKeypad ..  ]
 }
-[; ;interface.c: 80: while(k != 'B' && k != 'C' && k != '*');
-"80
+[; ;interface.c: 76: while(k != 'B' && k != 'C' && k != '*');
+"76
 [e $ && && != -> _k `ui -> 66 `ui != -> _k `ui -> 67 `ui != -> _k `ui -> 42 `ui 294  ]
 [e :U 293 ]
-[; ;interface.c: 81: return k;
-"81
+[; ;interface.c: 77: return k;
+"77
 [e ) _k ]
 [e $UE 291  ]
-[; ;interface.c: 82: }
-"82
+[; ;interface.c: 78: }
+"78
 [e :UE 291 ]
 }
-"84
+"80
 [v _showRunSelect `(uc ~T0 @X0 1 ef ]
 {
-[; ;interface.c: 84: char showRunSelect(){
+[; ;interface.c: 80: char showRunSelect(){
 [e :U _showRunSelect ]
 [f ]
-[; ;interface.c: 85: lcdClear();
-"85
+[; ;interface.c: 81: lcdClear();
+"81
 [e ( _lcdClear ..  ]
-[; ;interface.c: 86: printf("select run:     \n");
-"86
+[; ;interface.c: 82: printf("select run:     \n");
+"82
 [e ( _printf :s 5C ]
-[; ;interface.c: 87: printf("[1,2,3,4]     *>");
-"87
+[; ;interface.c: 83: printf("[1,2,3,4]     *>");
+"83
 [e ( _printf :s 6C ]
-"89
+"85
 [v _k `uc ~T0 @X0 1 a ]
-[; ;interface.c: 89: char k;
-[; ;interface.c: 90: do{k = readKeypad();}
-"90
+[; ;interface.c: 85: char k;
+[; ;interface.c: 86: do{k = readKeypad();}
+"86
 [e :U 298 ]
 {
 [e = _k ( _readKeypad ..  ]
 }
-[; ;interface.c: 91: while(k != '1' && k != '2' && k != '3' && k != '4' && k != '*');
-"91
+[; ;interface.c: 87: while(k != '1' && k != '2' && k != '3' && k != '4' && k != '*');
+"87
 [e $ && && && && != -> _k `ui -> 49 `ui != -> _k `ui -> 50 `ui != -> _k `ui -> 51 `ui != -> _k `ui -> 52 `ui != -> _k `ui -> 42 `ui 298  ]
 [e :U 297 ]
-[; ;interface.c: 92: return k;
-"92
+[; ;interface.c: 88: return k;
+"88
 [e ) _k ]
 [e $UE 295  ]
-[; ;interface.c: 93: }
-"93
+[; ;interface.c: 89: }
+"89
 [e :UE 295 ]
 }
-"95
+"91
 [v _showRunMenu `(uc ~T0 @X0 1 ef1`uc ]
 {
-[; ;interface.c: 95: char showRunMenu(char key){
+[; ;interface.c: 91: char showRunMenu(char key){
 [e :U _showRunMenu ]
 [v _key `uc ~T0 @X0 1 r1 ]
 [f ]
-[; ;interface.c: 96: lcdClear();
-"96
+[; ;interface.c: 92: lcdClear();
+"92
 [e ( _lcdClear ..  ]
-[; ;interface.c: 97: printf("%c) time  <A     \n",key);
-"97
+[; ;interface.c: 93: printf("%c) time  <A     \n",key);
+"93
 [e ( _printf , (. :s 7C -> _key `i ]
-[; ;interface.c: 98: printf( "   stats <B   *>");
-"98
+[; ;interface.c: 94: printf( "   stats <B   *>");
+"94
 [e ( _printf :s 8C ]
-"100
+"96
 [v _k `uc ~T0 @X0 1 a ]
-[; ;interface.c: 100: char k;
-[; ;interface.c: 101: do{k = readKeypad();}
-"101
+[; ;interface.c: 96: char k;
+[; ;interface.c: 97: do{k = readKeypad();}
+"97
 [e :U 302 ]
 {
 [e = _k ( _readKeypad ..  ]
 }
-[; ;interface.c: 102: while(k != 'A' && k != 'B' && k != '*');
-"102
+[; ;interface.c: 98: while(k != 'A' && k != 'B' && k != '*');
+"98
 [e $ && && != -> _k `ui -> 65 `ui != -> _k `ui -> 66 `ui != -> _k `ui -> 42 `ui 302  ]
 [e :U 301 ]
-[; ;interface.c: 103: return k;
-"103
+[; ;interface.c: 99: return k;
+"99
 [e ) _k ]
 [e $UE 299  ]
-[; ;interface.c: 104: }
-"104
+[; ;interface.c: 100: }
+"100
 [e :UE 299 ]
 }
-"106
+"102
 [v _showRunTime `(uc ~T0 @X0 1 ef1`*i ]
 {
-[; ;interface.c: 106: char showRunTime(int* run){
+[; ;interface.c: 102: char showRunTime(int* run){
 [e :U _showRunTime ]
 [v _run `*i ~T0 @X0 1 r1 ]
 [f ]
-"107
+"103
 [v _time `f ~T0 @X0 1 a ]
-[; ;interface.c: 107: float time = (float)(run[0]<<8 + run[1])/10.0;
+[; ;interface.c: 103: float time = (float)(run[0]<<8 + run[1])/10.0;
 [e = _time -> / -> -> << *U + _run * -> -> 0 `i `x -> -> # *U _run `i `x + -> 8 `i *U + _run * -> -> 1 `i `x -> -> # *U _run `i `x `f `d .10.0 `f ]
-[; ;interface.c: 109: lcdClear();
-"109
+[; ;interface.c: 105: lcdClear();
+"105
 [e ( _lcdClear ..  ]
-[; ;interface.c: 110: printf("time: %.1f sec   \n",time);
-"110
+[; ;interface.c: 106: printf("time: %.1f sec   \n",time);
+"106
 [e ( _printf , (. :s 9C -> _time `d ]
-[; ;interface.c: 111: printf("              *>");
-"111
+[; ;interface.c: 107: printf("              *>");
+"107
 [e ( _printf :s 10C ]
-[; ;interface.c: 113: while(readKeypad() != '*');
-"113
+[; ;interface.c: 109: while(readKeypad() != '*');
+"109
 [e $U 304  ]
 [e :U 305 ]
 [e :U 304 ]
 [e $ != -> ( _readKeypad ..  `ui -> 42 `ui 305  ]
 [e :U 306 ]
-[; ;interface.c: 114: }
-"114
+[; ;interface.c: 110: }
+"110
 [e :UE 303 ]
 }
-"116
+"112
 [v _showRunStats `(uc ~T0 @X0 1 ef1`*i ]
 {
-[; ;interface.c: 116: char showRunStats(int* run){
+[; ;interface.c: 112: char showRunStats(int* run){
 [e :U _showRunStats ]
 [v _run `*i ~T0 @X0 1 r1 ]
 [f ]
-[; ;interface.c: 117: lcdClear();
-"117
+[; ;interface.c: 113: lcdClear();
+"113
 [e ( _lcdClear ..  ]
-[; ;interface.c: 118: printf("[AA,9V,C,other] \n");
-"118
+[; ;interface.c: 114: printf("[AA,9V,C,other] \n");
+"114
 [e ( _printf :s 11C ]
-[; ;interface.c: 119: printf("[%d,%d,%d,%d]   *>",run[2],run[3],run[4],run[5]);
-"119
+[; ;interface.c: 115: printf("[%d,%d,%d,%d]   *>",run[2],run[3],run[4],run[5]);
+"115
 [e ( _printf , , , , (. :s 12C *U + _run * -> -> 2 `i `x -> -> # *U _run `i `x *U + _run * -> -> 3 `i `x -> -> # *U _run `i `x *U + _run * -> -> 4 `i `x -> -> # *U _run `i `x *U + _run * -> -> 5 `i `x -> -> # *U _run `i `x ]
-[; ;interface.c: 121: while(readKeypad() != '*');
-"121
+[; ;interface.c: 117: while(readKeypad() != '*');
+"117
 [e $U 308  ]
 [e :U 309 ]
 [e :U 308 ]
 [e $ != -> ( _readKeypad ..  `ui -> 42 `ui 309  ]
 [e :U 310 ]
-[; ;interface.c: 122: }
-"122
+[; ;interface.c: 118: }
+"118
 [e :UE 307 ]
 }
-[p f _printf 8986752 ]
-[a 2C 32 32 109 109 58 100 100 58 121 121 32 32 32 32 65 62 0 ]
+[p f _printf 13181056 ]
+[a 2C 37 120 47 37 120 47 37 120 0 ]
 [a 12C 91 37 100 44 37 100 44 37 100 44 37 100 93 32 32 32 42 62 0 ]
 [a 8C 32 32 32 115 116 97 116 115 32 60 66 32 32 32 42 62 0 ]
 [a 4C 104 105 115 116 111 114 121 32 60 67 32 32 32 32 42 62 0 ]
 [a 6C 91 49 44 50 44 51 44 52 93 32 32 32 32 32 42 62 0 ]
 [a 10C 32 32 32 32 32 32 32 32 32 32 32 32 32 32 42 62 0 ]
+[a 1C 37 120 58 37 120 58 37 120 10 0 ]
 [a 11C 91 65 65 44 57 86 44 67 44 111 116 104 101 114 93 32 10 0 ]
 [a 9C 116 105 109 101 58 32 37 46 49 102 32 115 101 99 32 32 32 10 0 ]
 [a 7C 37 99 41 32 116 105 109 101 32 32 60 65 32 32 32 32 32 10 0 ]
 [a 5C 115 101 108 101 99 116 32 114 117 110 58 32 32 32 32 32 10 0 ]
-[a 1C 32 32 104 104 58 109 109 58 115 115 32 32 32 32 32 32 10 0 ]
 [a 3C 115 116 97 114 116 32 32 32 60 66 32 32 32 32 32 32 10 0 ]

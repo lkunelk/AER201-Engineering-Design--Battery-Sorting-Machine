@@ -3892,35 +3892,23 @@ void debug(){
 pinSetup();
 initLCD();
 
+initRTC();
+
 while(1){
-char key = readKeypad();
-printf("s");
-if(key == '1'){
-int n = (eepromRead(0)+1)%0xffff;
-int run[7];
-for(int i = 0; i < 7; i++)run[i] = i+n;
-saveNewRun(run);
-lcdClear();
-printf("n: %d",eepromRead(0));
-}
-if(key == '2'){
-int* run = readPastRun(eepromRead(0));
-lcdClear();
-for(int i = 0; i < 7; i ++)
-printf("%d,",run[i]);
 
-}
-if(key == '3')break;
-printf("f");
+int* t = getTime();
+lcdClear();
+printf("%x:%x:%x\n",t[2],t[1],t[0]);
+printf("%x/%x/%x",t[6],t[5],t[4]);
+_delay((unsigned long)((77)*(10000000/4000.0)));
 }
 
-showInterface();
 while(1);
 }
 
 void main(){
 
-debug();
+
 
 pinSetup();
 initLCD();
@@ -3950,8 +3938,8 @@ int lastBatteryTime = time;
 
 int cylinderStart = time;
 int cylinderDur = 0;
-int cylinderForward = 10;
-int cylinderBackward = 10;
+int cylinderForward = 70;
+int cylinderBackward = 30;
 
 while(!batteryDetected && !terminate){
 
@@ -4092,7 +4080,7 @@ digitalWrite(cylinderMotor, 1);
 
 void pinSetup(){
 
-# 311
+# 299
 TRISA = 0xFF;
 TRISB = 0xFF;
 TRISC = 0b11000000;
@@ -4131,10 +4119,10 @@ void interrupt service(void) {
 
 if( servoInterruptService() )return;
 
+
+
+
 if(TMR1IF){
-
-
-
 startTimer(1,0x8683);
 time+=1;
 TMR1IF = 0;
@@ -4149,9 +4137,9 @@ return;
 
 
 if(INT1IF && INT1IE){INT1IF = 0;
+keyPressedInterruptService();
 char key = (PORTB & 0xF0) >> 4;
 if(key == 12)terminate = 1;
-while(PORTBbits.RB1);
 return;
 }
 }
