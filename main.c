@@ -74,8 +74,8 @@ int     redirectAngle_C = 166;
 int    redirectAngle_9V = 118;
 int redirectAngle_OTHER = 153;
 
-int   padAngle_CLOSE = 30; //angles for voltage testing pads
-int padAngle_NEUTRAL = 76;
+int   padAngle_CLOSE = 70; //angles for voltage testing pads
+int padAngle_NEUTRAL = 130;
 int   padAngle_OPEN  = 180;
 
 //pins
@@ -104,16 +104,9 @@ void debug(){
     pinSetup();
     initLCD();
     
-    initRTC();
-    //setTime();
-    while(1){
-     
-        int* t = getTime();
-        lcdClear();
-        printf("%x:%x:%x\n",t[2],t[1],t[0]);
-        printf("%x/%x/%x",t[6],t[5],t[4]);
-        __delay_ms(77);
-    }
+    //digitalWrite(cylinderMotor, HIGH);
+    initServo(conveyorServo, 130);
+    initServo(padServo, 90);
     
     while(1);
 }
@@ -160,14 +153,14 @@ void main(){
                 __delay_ms(77);
                 
                 //change direction of the cylinder motor
-                if(time - cylinderStart >= cylinderDur)
-                {
-                    int prev = digitalRead(cylinderDir);
-                    digitalWrite(cylinderDir, !prev);
-                    if(prev)cylinderDur = cylinderBackward;
-                    else    cylinderDur = cylinderForward;
-                    cylinderStart = time;
-                }
+//                if(time - cylinderStart >= cylinderDur)
+//                {
+//                    int prev = digitalRead(cylinderDir);
+//                    digitalWrite(cylinderDir, !prev);
+//                    if(prev)cylinderDur = cylinderBackward;
+//                    else    cylinderDur = cylinderForward;
+//                    cylinderStart = time;
+//                }
                 
                 if(time - lastBatteryTime > stoppingTime)
                 {
@@ -244,30 +237,31 @@ void sortBattery(){
     float V = V_max;
     
     lcdClear();
-    printf("N: %d,\nV: %.3f",pos_v_counter, V);
+    printf("V: %d, N: %.3f",V,pos_v_counter);
 //  __delay_ms(1000);
-    readKeypad();
     
     //set the angle for directing arm
     //pause("set redirect angle?");
     switch(signal){
         case 0b00:
             if(V_float < 0.1){ //if below then it's AA battery
-                if(V > V_LIM_AA){ targetAngle = redirectAngle_AA; n_AA+=1;}
+                if(V > V_LIM_AA){ targetAngle = redirectAngle_AA; n_AA+=1;printf("AA lim: %f",V_LIM_AA);}
                 else            { targetAngle = redirectAngle_OTHER; n_OTHER+=1;}
                 break;
             }
             //else it's a 9V, fall through from case 0
         case 0b10:
-            if(V > V_LIM_9V) {targetAngle = redirectAngle_9V; n_9V+=1;}
+            if(V > V_LIM_9V) {targetAngle = redirectAngle_9V; n_9V+=1;printf("9V lim: %f",V_LIM_9V);}
             else             {targetAngle = redirectAngle_OTHER; n_OTHER+=1;}
             break;
         case 0b01:
-            if(V > V_LIM_C) {targetAngle = redirectAngle_C; n_C+=1;}
+            if(V > V_LIM_C) {targetAngle = redirectAngle_C; n_C+=1;printf("C  lim: %f",V_LIM_C);}
             else            {targetAngle = redirectAngle_OTHER; n_OTHER+=1;}
             break;
     }
     
+    
+    readKeypad();
     setAngle(redirectingServo, targetAngle);
     __delay_ms(500);
     
@@ -325,11 +319,11 @@ void pinSetup(){
     INT0IE = 1; // external interrupt on B0 for battery sensing switch
     ei();
 }
-int angle = 90;
 
 //24400 for 10ms
 //30650 for 12.5ms
 
+int angle = 90;
 void interrupt service(void) {
     
     if( servoInterruptService() )return; //if interrupt was dealt with here return
@@ -355,6 +349,12 @@ void interrupt service(void) {
         keyPressedInterruptService();
         char key = (PORTB & 0xF0) >> 4; //read the keypress
         if(key == 12)terminate = 1;
+//        if(key == 0)angle+=5;
+//        if(key == 1)angle-=5;
+//        setAngle(padServo, angle);
+//        
+//        lcdClear();
+//        printf("angle: %d",angle);
         return;
     }
 }

@@ -3827,7 +3827,7 @@ void showInterface(){
 initRTC();
 char key;
 while(1){
-showDateTime();
+
 
 while(1){
 key = showMainMenu();

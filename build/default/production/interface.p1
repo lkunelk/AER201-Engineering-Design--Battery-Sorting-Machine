@@ -1,9 +1,7 @@
 Version 3.2 HI-TECH Software Intermediate Code
 "13 RTC.h
 [v _initRTC `(v ~T0 @X0 0 ef ]
-"12 interface.h
-[v _showDateTime `(v ~T0 @X0 0 ef ]
-"13
+"13 interface.h
 [v _showMainMenu `(uc ~T0 @X0 0 ef ]
 "14
 [v _showRunSelect `(uc ~T0 @X0 0 ef ]
@@ -2871,9 +2869,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 "22
 [e :U 268 ]
 {
-[; ;interface.c: 23: showDateTime();
-"23
-[e ( _showDateTime ..  ]
 [; ;interface.c: 25: while(1){
 "25
 [e :U 271 ]

@@ -3862,8 +3862,8 @@ int redirectAngle_C = 166;
 int redirectAngle_9V = 118;
 int redirectAngle_OTHER = 153;
 
-int padAngle_CLOSE = 30;
-int padAngle_NEUTRAL = 76;
+int padAngle_CLOSE = 70;
+int padAngle_NEUTRAL = 130;
 int padAngle_OPEN = 180;
 
 
@@ -3892,16 +3892,9 @@ void debug(){
 pinSetup();
 initLCD();
 
-initRTC();
 
-while(1){
-
-int* t = getTime();
-lcdClear();
-printf("%x:%x:%x\n",t[2],t[1],t[0]);
-printf("%x/%x/%x",t[6],t[5],t[4]);
-_delay((unsigned long)((77)*(10000000/4000.0)));
-}
+initServo(conveyorServo, 130);
+initServo(padServo, 90);
 
 while(1);
 }
@@ -3947,16 +3940,7 @@ lcdHome();
 printf("time %02ld:%02ld",time/600,(time/10)%60);
 _delay((unsigned long)((77)*(10000000/4000.0)));
 
-
-if(time - cylinderStart >= cylinderDur)
-{
-int prev = digitalRead(cylinderDir);
-digitalWrite(cylinderDir, !prev);
-if(prev)cylinderDur = cylinderBackward;
-else cylinderDur = cylinderForward;
-cylinderStart = time;
-}
-
+# 165
 if(time - lastBatteryTime > stoppingTime)
 {
 terminate = 1;
@@ -4032,30 +4016,31 @@ int targetAngle;
 float V = V_max;
 
 lcdClear();
-printf("N: %d,\nV: %.3f",pos_v_counter, V);
+printf("V: %d, N: %.3f",V,pos_v_counter);
 
-readKeypad();
 
 
 
 switch(signal){
 case 0b00:
 if(V_float < 0.1){
-if(V > V_LIM_AA){ targetAngle = redirectAngle_AA; n_AA+=1;}
+if(V > V_LIM_AA){ targetAngle = redirectAngle_AA; n_AA+=1;printf("AA lim: %f",V_LIM_AA);}
 else { targetAngle = redirectAngle_OTHER; n_OTHER+=1;}
 break;
 }
 
 case 0b10:
-if(V > V_LIM_9V) {targetAngle = redirectAngle_9V; n_9V+=1;}
+if(V > V_LIM_9V) {targetAngle = redirectAngle_9V; n_9V+=1;printf("9V lim: %f",V_LIM_9V);}
 else {targetAngle = redirectAngle_OTHER; n_OTHER+=1;}
 break;
 case 0b01:
-if(V > V_LIM_C) {targetAngle = redirectAngle_C; n_C+=1;}
+if(V > V_LIM_C) {targetAngle = redirectAngle_C; n_C+=1;printf("C  lim: %f",V_LIM_C);}
 else {targetAngle = redirectAngle_OTHER; n_OTHER+=1;}
 break;
 }
 
+
+readKeypad();
 setAngle(redirectingServo, targetAngle);
 _delay((unsigned long)((500)*(10000000/4000.0)));
 
@@ -4080,7 +4065,7 @@ digitalWrite(cylinderMotor, 1);
 
 void pinSetup(){
 
-# 299
+# 293
 TRISA = 0xFF;
 TRISB = 0xFF;
 TRISC = 0b11000000;
@@ -4110,11 +4095,11 @@ INT1IE = 1;
 INT0IE = 1;
 (INTCONbits.GIE = 1);
 }
+
+
+
+
 int angle = 90;
-
-
-
-
 void interrupt service(void) {
 
 if( servoInterruptService() )return;
@@ -4140,6 +4125,8 @@ if(INT1IF && INT1IE){INT1IF = 0;
 keyPressedInterruptService();
 char key = (PORTB & 0xF0) >> 4;
 if(key == 12)terminate = 1;
+
+# 358
 return;
 }
 }
