@@ -245,18 +245,21 @@ void sortBattery(){
     switch(signal){
         case 0b00:
             if(V_float < 0.1){ //if below then it's AA battery
-                if(V > V_LIM_AA){ targetAngle = redirectAngle_AA; n_AA+=1;printf("AA lim: %f",V_LIM_AA);}
+                if(V > V_LIM_AA){ targetAngle = redirectAngle_AA; n_AA+=1;}
                 else            { targetAngle = redirectAngle_OTHER; n_OTHER+=1;}
+                printf("AA lim: %f",V_LIM_AA);
                 break;
             }
             //else it's a 9V, fall through from case 0
         case 0b10:
-            if(V > V_LIM_9V) {targetAngle = redirectAngle_9V; n_9V+=1;printf("9V lim: %f",V_LIM_9V);}
+            if(V > V_LIM_9V) {targetAngle = redirectAngle_9V; n_9V+=1;}
             else             {targetAngle = redirectAngle_OTHER; n_OTHER+=1;}
+            printf("9V lim: %f",V_LIM_9V);
             break;
         case 0b01:
-            if(V > V_LIM_C) {targetAngle = redirectAngle_C; n_C+=1;printf("C  lim: %f",V_LIM_C);}
+            if(V > V_LIM_C) {targetAngle = redirectAngle_C; n_C+=1;}
             else            {targetAngle = redirectAngle_OTHER; n_OTHER+=1;}
+            printf("C  lim: %f",V_LIM_C);
             break;
     }
     
