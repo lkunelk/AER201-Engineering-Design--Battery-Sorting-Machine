@@ -15,27 +15,27 @@
 #include "iopin.h"
 
 //pin is chosen from constants
-void digitalPinMode(int port, int pin, int type){
-    pin = 1 << pin;
+void digitalPinMode(int* pin, int type){
+    int p = 1 << pin[1];
     if(type == OUTPUT){
-        pin ^= 0xff;
+        p ^= 0xff;
     } 
     
-    switch(port){
-        case A: if(type == INPUT)TRISA |= pin;
-                else TRISA &= pin;
+    switch(pin[0]){
+        case A: if(type == INPUT)TRISA |= p;
+                else TRISA &= p;
                 break;
         
-        case B: if(type == INPUT)TRISB |= pin;
-                else TRISB &= pin;
+        case B: if(type == INPUT)TRISB |= p;
+                else TRISB &= p;
                 break;
               
-        case C: if(type == INPUT)TRISC |= pin;
-                else TRISC &= pin;
+        case C: if(type == INPUT)TRISC |= p;
+                else TRISC &= p;
                 break;
                 
-        case D: if(type == INPUT)TRISD |= pin;
-                else TRISD &= pin;
+        case D: if(type == INPUT)TRISD |= p;
+                else TRISD &= p;
                 break;
     }
 }
