@@ -3801,8 +3801,8 @@ void initLCD(void);
 void lcdClear(void);
 void lcdNewline(void);
 
-# 28 "iopin.h"
-void digitalPinMode(int port, int pin, int type);
+# 29 "iopin.h"
+void digitalPinMode(int * pin, int type);
 int digitalRead(int* pin);
 void digitalWrite(int* pin, int val);
 void analogPinMode(void);
@@ -3892,10 +3892,7 @@ void debug(){
 pinSetup();
 initLCD();
 
-
-initServo(conveyorServo, 130);
-initServo(padServo, 90);
-
+# 111
 while(1);
 }
 
@@ -4016,7 +4013,7 @@ int targetAngle;
 float V = V_max;
 
 lcdClear();
-printf("V: %.3f, N: %d",V,pos_v_counter);
+printf("V: %.3f, N: %d\n",V,pos_v_counter);
 
 
 
@@ -4024,18 +4021,21 @@ printf("V: %.3f, N: %d",V,pos_v_counter);
 switch(signal){
 case 0b00:
 if(V_float < 0.1){
-if(V > V_LIM_AA){ targetAngle = redirectAngle_AA; n_AA+=1;printf("AA lim: %f",V_LIM_AA);}
+if(V > V_LIM_AA){ targetAngle = redirectAngle_AA; n_AA+=1;}
 else { targetAngle = redirectAngle_OTHER; n_OTHER+=1;}
+printf("AA lim: %f",V_LIM_AA);
 break;
 }
 
 case 0b10:
-if(V > V_LIM_9V) {targetAngle = redirectAngle_9V; n_9V+=1;printf("9V lim: %f",V_LIM_9V);}
+if(V > V_LIM_9V) {targetAngle = redirectAngle_9V; n_9V+=1;}
 else {targetAngle = redirectAngle_OTHER; n_OTHER+=1;}
+printf("9V lim: %f",V_LIM_9V);
 break;
 case 0b01:
-if(V > V_LIM_C) {targetAngle = redirectAngle_C; n_C+=1;printf("C  lim: %f",V_LIM_C);}
+if(V > V_LIM_C) {targetAngle = redirectAngle_C; n_C+=1;}
 else {targetAngle = redirectAngle_OTHER; n_OTHER+=1;}
+printf("C  lim: %f",V_LIM_C);
 break;
 }
 
@@ -4065,7 +4065,7 @@ digitalWrite(cylinderMotor, 1);
 
 void pinSetup(){
 
-# 293
+# 296
 TRISA = 0xFF;
 TRISB = 0xFF;
 TRISC = 0b11000000;
@@ -4126,7 +4126,7 @@ keyPressedInterruptService();
 char key = (PORTB & 0xF0) >> 4;
 if(key == 12)terminate = 1;
 
-# 358
+# 361
 return;
 }
 }

@@ -3637,35 +3637,35 @@ extern __nonreentrant void _delaywdt(unsigned long);
 #pragma intrinsic(_delay3)
 extern __nonreentrant void _delay3(unsigned char);
 
-# 28 "iopin.h"
-void digitalPinMode(int port, int pin, int type);
+# 29 "iopin.h"
+void digitalPinMode(int * pin, int type);
 int digitalRead(int* pin);
 void digitalWrite(int* pin, int val);
 void analogPinMode(void);
 long analogRead(int channel);
 
 # 18 "iopin.c"
-void digitalPinMode(int port, int pin, int type){
-pin = 1 << pin;
+void digitalPinMode(int* pin, int type){
+int p = 1 << pin[1];
 if(type == 0){
-pin ^= 0xff;
+p ^= 0xff;
 }
 
-switch(port){
-case 0: if(type == 1)TRISA |= pin;
-else TRISA &= pin;
+switch(pin[0]){
+case 0: if(type == 1)TRISA |= p;
+else TRISA &= p;
 break;
 
-case 1: if(type == 1)TRISB |= pin;
-else TRISB &= pin;
+case 1: if(type == 1)TRISB |= p;
+else TRISB &= p;
 break;
 
-case 2: if(type == 1)TRISC |= pin;
-else TRISC &= pin;
+case 2: if(type == 1)TRISC |= p;
+else TRISC &= p;
 break;
 
-case 3: if(type == 1)TRISD |= pin;
-else TRISD &= pin;
+case 3: if(type == 1)TRISD |= p;
+else TRISD &= p;
 break;
 }
 }

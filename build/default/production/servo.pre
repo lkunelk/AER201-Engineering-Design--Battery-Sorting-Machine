@@ -3713,8 +3713,8 @@ void setAngle(int* motor, int angle);
 char servoInterruptService();
 long angleToPulse(int angle);
 
-# 28 "iopin.h"
-void digitalPinMode(int port, int pin, int type);
+# 29 "iopin.h"
+void digitalPinMode(int * pin, int type);
 int digitalRead(int* pin);
 void digitalWrite(int* pin, int val);
 void analogPinMode(void);

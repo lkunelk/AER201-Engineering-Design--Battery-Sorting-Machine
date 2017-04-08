@@ -18,6 +18,7 @@
 #define B 1
 #define C 2
 #define D 3
+#define E 4
 
 #define OUTPUT 0
 #define INPUT 1
@@ -25,7 +26,7 @@
 #define HIGH 1
 #define LOW 0
 
-void digitalPinMode(int port, int pin, int type);
+void digitalPinMode(int * pin, int type);
 int digitalRead(int* pin);
 void digitalWrite(int* pin, int val);
 void analogPinMode(void);

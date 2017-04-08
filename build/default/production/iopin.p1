@@ -2714,90 +2714,90 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic18.h: 159: extern __nonreentrant void _delay(unsigned long);
 [; ;pic18.h: 161: extern __nonreentrant void _delaywdt(unsigned long);
 [; ;pic18.h: 163: extern __nonreentrant void _delay3(unsigned char);
-[; ;iopin.h: 28: void digitalPinMode(int port, int pin, int type);
-[; ;iopin.h: 29: int digitalRead(int* pin);
-[; ;iopin.h: 30: void digitalWrite(int* pin, int val);
-[; ;iopin.h: 31: void analogPinMode(void);
-[; ;iopin.h: 32: long analogRead(int channel);
+[; ;iopin.h: 29: void digitalPinMode(int * pin, int type);
+[; ;iopin.h: 30: int digitalRead(int* pin);
+[; ;iopin.h: 31: void digitalWrite(int* pin, int val);
+[; ;iopin.h: 32: void analogPinMode(void);
+[; ;iopin.h: 33: long analogRead(int channel);
 "18 iopin.c
-[v _digitalPinMode `(v ~T0 @X0 1 ef3`i`i`i ]
+[v _digitalPinMode `(v ~T0 @X0 1 ef2`*i`i ]
 {
-[; ;iopin.c: 18: void digitalPinMode(int port, int pin, int type){
+[; ;iopin.c: 18: void digitalPinMode(int* pin, int type){
 [e :U _digitalPinMode ]
-[v _port `i ~T0 @X0 1 r1 ]
-[v _pin `i ~T0 @X0 1 r2 ]
-[v _type `i ~T0 @X0 1 r3 ]
+[v _pin `*i ~T0 @X0 1 r1 ]
+[v _type `i ~T0 @X0 1 r2 ]
 [f ]
-[; ;iopin.c: 19: pin = 1 << pin;
 "19
-[e = _pin << -> 1 `i _pin ]
+[v _p `i ~T0 @X0 1 a ]
+[; ;iopin.c: 19: int p = 1 << pin[1];
+[e = _p << -> 1 `i *U + _pin * -> -> 1 `i `x -> -> # *U _pin `i `x ]
 [; ;iopin.c: 20: if(type == 0){
 "20
 [e $ ! == _type -> 0 `i 266  ]
 {
-[; ;iopin.c: 21: pin ^= 0xff;
+[; ;iopin.c: 21: p ^= 0xff;
 "21
-[e =^ _pin -> 255 `i ]
+[e =^ _p -> 255 `i ]
 "22
 }
 [e :U 266 ]
 [; ;iopin.c: 22: }
-[; ;iopin.c: 24: switch(port){
+[; ;iopin.c: 24: switch(pin[0]){
 "24
 [e $U 268  ]
 {
-[; ;iopin.c: 25: case 0: if(type == 1)TRISA |= pin;
+[; ;iopin.c: 25: case 0: if(type == 1)TRISA |= p;
 "25
 [e :U 269 ]
 [e $ ! == _type -> 1 `i 270  ]
-[e =| _TRISA -> _pin `uc ]
+[e =| _TRISA -> _p `uc ]
 [e $U 271  ]
 "26
 [e :U 270 ]
-[; ;iopin.c: 26: else TRISA &= pin;
-[e =& _TRISA -> _pin `uc ]
+[; ;iopin.c: 26: else TRISA &= p;
+[e =& _TRISA -> _p `uc ]
 [e :U 271 ]
 [; ;iopin.c: 27: break;
 "27
 [e $U 267  ]
-[; ;iopin.c: 29: case 1: if(type == 1)TRISB |= pin;
+[; ;iopin.c: 29: case 1: if(type == 1)TRISB |= p;
 "29
 [e :U 272 ]
 [e $ ! == _type -> 1 `i 273  ]
-[e =| _TRISB -> _pin `uc ]
+[e =| _TRISB -> _p `uc ]
 [e $U 274  ]
 "30
 [e :U 273 ]
-[; ;iopin.c: 30: else TRISB &= pin;
-[e =& _TRISB -> _pin `uc ]
+[; ;iopin.c: 30: else TRISB &= p;
+[e =& _TRISB -> _p `uc ]
 [e :U 274 ]
 [; ;iopin.c: 31: break;
 "31
 [e $U 267  ]
-[; ;iopin.c: 33: case 2: if(type == 1)TRISC |= pin;
+[; ;iopin.c: 33: case 2: if(type == 1)TRISC |= p;
 "33
 [e :U 275 ]
 [e $ ! == _type -> 1 `i 276  ]
-[e =| _TRISC -> _pin `uc ]
+[e =| _TRISC -> _p `uc ]
 [e $U 277  ]
 "34
 [e :U 276 ]
-[; ;iopin.c: 34: else TRISC &= pin;
-[e =& _TRISC -> _pin `uc ]
+[; ;iopin.c: 34: else TRISC &= p;
+[e =& _TRISC -> _p `uc ]
 [e :U 277 ]
 [; ;iopin.c: 35: break;
 "35
 [e $U 267  ]
-[; ;iopin.c: 37: case 3: if(type == 1)TRISD |= pin;
+[; ;iopin.c: 37: case 3: if(type == 1)TRISD |= p;
 "37
 [e :U 278 ]
 [e $ ! == _type -> 1 `i 279  ]
-[e =| _TRISD -> _pin `uc ]
+[e =| _TRISD -> _p `uc ]
 [e $U 280  ]
 "38
 [e :U 279 ]
-[; ;iopin.c: 38: else TRISD &= pin;
-[e =& _TRISD -> _pin `uc ]
+[; ;iopin.c: 38: else TRISD &= p;
+[e =& _TRISD -> _p `uc ]
 [e :U 280 ]
 [; ;iopin.c: 39: break;
 "39
@@ -2808,7 +2808,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e $U 267  ]
 "24
 [e :U 268 ]
-[e [\ _port , $ -> 0 `i 269
+[e [\ *U + _pin * -> -> 0 `i `x -> -> # *U _pin `i `x , $ -> 0 `i 269
  , $ -> 1 `i 272
  , $ -> 2 `i 275
  , $ -> 3 `i 278

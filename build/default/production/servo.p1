@@ -7,7 +7,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _startTimer `(v ~T0 @X0 0 ef2`i`l ]
 "7564 C:\Program Files (x86)\Microchip\xc8\v1.40\include\pic18f4620.h
 [v _TMR0IF `Vb ~T0 @X0 0 e@32658 ]
-"30 iopin.h
+"31 iopin.h
 [v _digitalWrite `(v ~T0 @X0 0 ef2`*i`i ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
@@ -2729,11 +2729,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;servo.h: 12: void setAngle(int* motor, int angle);
 [; ;servo.h: 13: char servoInterruptService();
 [; ;servo.h: 14: long angleToPulse(int angle);
-[; ;iopin.h: 28: void digitalPinMode(int port, int pin, int type);
-[; ;iopin.h: 29: int digitalRead(int* pin);
-[; ;iopin.h: 30: void digitalWrite(int* pin, int val);
-[; ;iopin.h: 31: void analogPinMode(void);
-[; ;iopin.h: 32: long analogRead(int channel);
+[; ;iopin.h: 29: void digitalPinMode(int * pin, int type);
+[; ;iopin.h: 30: int digitalRead(int* pin);
+[; ;iopin.h: 31: void digitalWrite(int* pin, int val);
+[; ;iopin.h: 32: void analogPinMode(void);
+[; ;iopin.h: 33: long analogRead(int channel);
 [; ;timer.h: 11: void initTimer(int timer);
 [; ;timer.h: 12: void startTimer(int timer, long val);
 [; ;timer.h: 13: long getTimerCount(int timer);

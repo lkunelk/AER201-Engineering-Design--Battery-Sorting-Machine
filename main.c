@@ -105,8 +105,8 @@ void debug(){
     initLCD();
     
     //digitalWrite(cylinderMotor, HIGH);
-    initServo(conveyorServo, 130);
-    initServo(padServo, 90);
+    //initServo(conveyorServo, 130);
+    //initServo(padServo, 90);
     
     while(1);
 }

@@ -8,11 +8,11 @@
 #include <xc.h>
 #include "I2C.h"
 
-const char happynewyear[7] = {  0x50, //45 Seconds 
-                            0x59, //59 Minutes
-                            0x23, //24 hour mode, set to 23:00
+const char happynewyear[7] = {  0x00, //45 Seconds 
+                            0x00, //59 Minutes
+                            0x00, //24 hour mode, set to 23:00
                             0x01, //Saturday
-                            0x02, //31st
+                            0x08, //31st
                             0x04, //December
                             0x17};//2016
 
@@ -34,7 +34,7 @@ int* getTime(){
     //Read Current Time
     I2C_Master_Start();
     I2C_Master_Write(0b11010001); //7 bit RTC address + Read
-    for(unsigned char i=0;i<7;i++){
+    for(unsigned char i=0;i<6;i++){
         time[i] = I2C_Master_Read(1);
     }
     time[6] = I2C_Master_Read(0);       //Final Read without ack

@@ -20,7 +20,7 @@ void showInterface(){
     initRTC();
     char key; //for storing keypad input
     while(1){
-        //showDateTime();
+        showDateTime();
         
         while(1){
             key = showMainMenu();
@@ -57,12 +57,15 @@ void showDateTime(){
     
     initRTC();
     setTime();
-    while(1){
+    while(keyPressed() != 'A'){
         int* t = getTime();
         lcdClear();
-        printf("%x:%x:%x\n",t[2],t[1],t[0]);
-        printf("%x/%x/%x",t[6],t[5],t[4]);
-        __delay_ms(77);
+        int sec = t[0], min = t[1], hour = t[2];
+        int day = t[4], mon = t[5], year = t[6];
+        
+        printf("  20%02x/%02x/%02x\n",year,mon,day);
+        printf("   %02x:%02x:%02x   A>",hour,min,sec);
+        __delay_ms(100);
     }
 }
 
