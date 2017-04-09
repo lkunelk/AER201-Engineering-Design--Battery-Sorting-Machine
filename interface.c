@@ -29,7 +29,7 @@ void showInterface(){
                 
                 int n = showRunSelect();
                 
-                if(key == '*')continue;
+                if(n == '*')continue;
                 
                 int* run = readPastRun( n - '1');
                 if(run[0] == 0xff){ // 0xff is default value of the memory
