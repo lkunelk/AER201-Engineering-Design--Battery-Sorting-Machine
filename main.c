@@ -63,6 +63,8 @@ long time = 0; //duration of sorting process [deci-seconds] (10 = 1 second)
 int batteryDetected = 0; //1 == contact switch activated on machine
 int terminate = 0; //flag to let program know if we neeed to terminate
 int stoppingTime = 10000; //[centi-seconds]
+int cylinderForward = 70; //deci-seconds
+int cylinderBackward = 30; //deci-seconds
 
 int n_AA;
 int n_C;
@@ -80,11 +82,12 @@ int   padAngle_OPEN  = 180;
 
 //pins
 //RTC uses C3 and C4
-int     cylinderMotor[2] = {C, 0}; //port C, pin 0
-int       cylinderDir[2] = {D, 1};  //port D, pin 1
-int     conveyorServo[2] = {C, 2}; //port C, pin 1
+int    cylinderMotor1[2] = {D, 0}; //port D, pin 0 (01 spins one direction, never set 11!)
+int    cylinderMotor2[2] = {D, 1}; //port D, pin 1 (10 spins the other direction, 00 stops)
+
+int     conveyorServo[2] = {C, 0}; //port C, pin 1
 int          padServo[2] = {C, 1}; //port C, pin 2
-int  redirectingServo[2] = {D, 0}; //port D, pin 0
+int  redirectingServo[2] = {C, 2}; //port D, pin 0
 
 //pins for measuring voltage and determining battery type
 int AA_float[2] = {C,5}; //pin for helping differentiate AA from 9V, for some case
@@ -125,7 +128,6 @@ void main(){
     while(1){
         showInterface();
         
-        
         //start timer
         terminate = 0;
         time = 0; //reset time
@@ -133,7 +135,7 @@ void main(){
         startTimer(1,0);
         
         //start up motors
-        digitalWrite(cylinderMotor, HIGH);
+        digitalWrite(cylinderMotor1, HIGH);
         initServo(conveyorServo,    130);
         initServo(padServo,         padAngle_NEUTRAL);
         initServo(redirectingServo, redirectAngle_AA);
@@ -146,9 +148,7 @@ void main(){
             int lastBatteryTime = time;// store when the last battery was seen
             
             int cylinderStart = time;
-            int cylinderDur = 0;
-            int cylinderForward = 70; //deci-seconds
-            int cylinderBackward = 30; //deci-seconds
+            int duration = 0;
             
             while(!batteryDetected && !terminate){ //update screen and poll time
                 //print time
@@ -157,14 +157,20 @@ void main(){
                 __delay_ms(77);
                 
                 //change direction of the cylinder motor
-//                if(time - cylinderStart >= cylinderDur)
-//                {
-//                    int prev = digitalRead(cylinderDir);
-//                    digitalWrite(cylinderDir, !prev);
-//                    if(prev)cylinderDur = cylinderBackward;
-//                    else    cylinderDur = cylinderForward;
-//                    cylinderStart = time;
-//                }
+                if(time - cylinderStart >= duration)
+                {
+                    if(digitalRead(cylinderMotor1)){
+                        digitalWrite(cylinderMotor2, LOW); //important first set low
+                        digitalWrite(cylinderMotor1, HIGH); // then set high
+                        duration = cylinderForward;
+                    }else{
+                        digitalWrite(cylinderMotor1, LOW);
+                        digitalWrite(cylinderMotor2, HIGH);
+                        duration = cylinderBackward;
+                    }
+                    
+                    cylinderStart = time;
+                }
                 
                 if(time - lastBatteryTime > stoppingTime)
                 {
@@ -183,7 +189,9 @@ void main(){
         }
         
         //stop motor
-        digitalWrite(cylinderMotor, LOW);
+        setAngle(conveyorServo, 90);
+        digitalWrite(cylinderMotor1, LOW);
+        digitalWrite(cylinderMotor2, LOW);
         
         //display results
         int run[7];
@@ -208,7 +216,8 @@ void sortBattery(){
     
     //stop cylinder and conveyor belt
     setAngle(conveyorServo, 90);
-    digitalWrite(cylinderMotor, LOW);
+    digitalWrite(cylinderMotor1, LOW);
+    digitalWrite(cylinderMotor2, LOW);
     
     //wait for battery to fall in
     __delay_ms(1000);
@@ -295,7 +304,7 @@ void sortBattery(){
     //turn on the conveyor belt and cylinder
     //pause("conveyor & \ncylinder on?");
     setAngle(conveyorServo, 130);
-    digitalWrite(cylinderMotor, HIGH);
+    digitalWrite(cylinderMotor1, HIGH);
 }
 
 void pinSetup(){
