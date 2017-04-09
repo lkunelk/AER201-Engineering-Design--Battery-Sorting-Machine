@@ -57,16 +57,16 @@ int prevTime = 0; //stores last second on RTC
 int count = 0;
 
 void showDateTime(){
-    
+    lcdClear();
     initRTC();
     //setTime();
     while(keyPressed() != 'A'){
         int* t = getTime();
-        lcdClear();
         int sec = t[0], min = t[1], hour = t[2];
         int day = t[4], mon = t[5], year = t[6];
         
         printf("  20%02x/%02x/%02x\n",year,mon,day);
+        lcdHome();
         printf("   %02x:%02x:%02x   A>",hour,min,sec);
         __delay_ms(100);
     }
@@ -106,7 +106,7 @@ char showRunMenu(char key){
 }
 
 char showRunTime(int* run){
-    int time = run[1];
+    int time = (run[0]<<8) + run[1];
     time/=10;
     
     lcdClear();
