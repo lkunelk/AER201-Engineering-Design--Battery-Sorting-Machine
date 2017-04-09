@@ -3802,6 +3802,7 @@ char showRunSelect();
 char showRunMenu(char key);
 char showRunTime(int* run);
 char showRunStats(int* run);
+void showErrorMessage();
 
 # 16 "lcd.h"
 void lcdInst(char data);
@@ -3839,7 +3840,10 @@ int n = showRunSelect();
 if(key == '*')continue;
 
 int* run = readPastRun( n - '1');
-
+if(run[6] == 0xff){
+showErrorMessage();
+continue;
+}
 
 while(1){
 key = showRunMenu(n);
@@ -3863,7 +3867,7 @@ int count = 0;
 void showDateTime(){
 
 initRTC();
-setTime();
+
 while(keyPressed() != 'A'){
 int* t = getTime();
 lcdClear();
@@ -3872,7 +3876,7 @@ int day = t[4], mon = t[5], year = t[6];
 
 printf("  20%02x/%02x/%02x\n",year,mon,day);
 printf("   %02x:%02x:%02x   A>",hour,min,sec);
-_delay((unsigned long)((111)*(10000000/4000.0)));
+_delay((unsigned long)((100)*(10000000/4000.0)));
 }
 }
 
@@ -3910,10 +3914,11 @@ return k;
 }
 
 char showRunTime(int* run){
-float time = (float)(run[0]<<8 + run[1])/10.0;
+int time = run[1];
+time/=10;
 
 lcdClear();
-printf("time: %.1f sec   \n",time);
+printf("time: %d sec   \n",time);
 printf("              *>");
 
 while(readKeypad() != '*');
@@ -3921,8 +3926,18 @@ while(readKeypad() != '*');
 
 char showRunStats(int* run){
 lcdClear();
-printf("[AA,9V,C,other] \n");
-printf("[%d,%d,%d,%d]   *>",run[2],run[3],run[4],run[5]);
 
+int n_AA = run[2], n_9V = run[3], n_C = run[4], n_OTHER = run[5];
+
+printf("[AA,9V,C,other] \n");
+if(run)printf("[%d,%d,%d,%d]   *>",n_AA,n_9V,n_C,n_OTHER);
+else printf("[na,na,na,na]   *>");
+while(readKeypad() != '*');
+}
+
+void showErrorMessage(){
+lcdClear();
+printf(" run not \n");
+printf("  available   *>");
 while(readKeypad() != '*');
 }

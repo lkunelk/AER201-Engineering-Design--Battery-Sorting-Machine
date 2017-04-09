@@ -32,7 +32,10 @@ void showInterface(){
                 if(key == '*')continue;
                 
                 int* run = readPastRun( n - '1');
-                //if(run[6] == 0xffff)continue; //empty
+                if(run[0] == 0xff){ // 0xff is default value of the memory
+                    showErrorMessage();
+                    continue;
+                }
                 
                 while(1){
                     key = showRunMenu(n);
@@ -56,7 +59,7 @@ int count = 0;
 void showDateTime(){
     
     initRTC();
-    setTime();
+    //setTime();
     while(keyPressed() != 'A'){
         int* t = getTime();
         lcdClear();
@@ -103,19 +106,31 @@ char showRunMenu(char key){
 }
 
 char showRunTime(int* run){
-    float time = (float)(run[0]<<8 + run[1])/10.0;
+    int time = run[1];
+    time/=10;
     
     lcdClear();
-    printf("time: %.1f sec   \n",time);
+    printf("time: %d sec   \n",time);
     printf("              *>");
     
     while(readKeypad() != '*');
 }
 
 char showRunStats(int* run){
+    int n_AA = run[2], n_9V = run[3], n_C = run[4], n_OTHER = run[5]; 
+    
     lcdClear();
     printf("[AA,9V,C,other] \n");
-    printf("[%d,%d,%d,%d]   *>",run[2],run[3],run[4],run[5]);
+    printf("[%d,%d,%d,%d]   *>",n_AA,n_9V,n_C,n_OTHER);
+    
+    while(readKeypad() != '*');
+}
+
+void showErrorMessage(){
+    lcdClear();
+    
+    printf(" run not \n");
+    printf("  available   *>");
     
     while(readKeypad() != '*');
 }

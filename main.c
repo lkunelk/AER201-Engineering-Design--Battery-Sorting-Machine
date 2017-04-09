@@ -104,9 +104,13 @@ void debug(){
     pinSetup();
     initLCD();
     
-    //digitalWrite(cylinderMotor, HIGH);
-    //initServo(conveyorServo, 130);
-    //initServo(padServo, 90);
+    int i = 0;
+    while(1){
+        lcdClear();
+        printf("%d, %02x",i,eepromRead(i));
+        i++;
+        readKeypad();
+    }
     
     while(1);
 }
@@ -182,10 +186,17 @@ void main(){
         digitalWrite(cylinderMotor, LOW);
         
         //display results
-        lcdClear();
-        printf("[AA,C,9V,OTHER]\n");
-        printf("[%d,%d,%d,%d]",n_AA,n_C,n_9V,n_OTHER);
-        readKeypad();
+        int run[7];
+        run[0] = time>>8;
+        run[1] = time;
+        run[2] = n_AA;
+        run[3] = n_9V;
+        run[4] = n_C;
+        run[5] = n_OTHER;
+        
+        saveNewRun(run);
+        showRunTime(run);
+        showRunStats(run);
         
     };//stop here
     

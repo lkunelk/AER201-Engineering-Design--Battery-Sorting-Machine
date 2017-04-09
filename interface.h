@@ -15,6 +15,7 @@ char showRunSelect();
 char showRunMenu(char key);
 char showRunTime(int* run);
 char showRunStats(int* run);
+void showErrorMessage();
 
 #endif	/* INTERFACE_H */
 

@@ -3841,6 +3841,7 @@ char showRunSelect();
 char showRunMenu(char key);
 char showRunTime(int* run);
 char showRunStats(int* run);
+void showErrorMessage();
 
 # 58 "main.c"
 void pinSetup(void);
@@ -3892,7 +3893,14 @@ void debug(){
 pinSetup();
 initLCD();
 
-# 111
+int i = 0;
+while(1){
+lcdClear();
+printf("%d, %02x",i,eepromRead(i));
+i++;
+readKeypad();
+}
+
 while(1);
 }
 
@@ -3937,7 +3945,7 @@ lcdHome();
 printf("time %02ld:%02ld",time/600,(time/10)%60);
 _delay((unsigned long)((77)*(10000000/4000.0)));
 
-# 165
+# 169
 if(time - lastBatteryTime > stoppingTime)
 {
 terminate = 1;
@@ -3958,10 +3966,17 @@ batteryDetected = 0;
 digitalWrite(cylinderMotor, 0);
 
 
-lcdClear();
-printf("[AA,C,9V,OTHER]\n");
-printf("[%d,%d,%d,%d]",n_AA,n_C,n_9V,n_OTHER);
-readKeypad();
+int run[7];
+run[0] = time>>8;
+run[1] = time;
+run[2] = n_AA;
+run[3] = n_9V;
+run[4] = n_C;
+run[5] = n_OTHER;
+
+saveNewRun(run);
+showRunTime(run);
+showRunStats(run);
 
 };
 
@@ -4065,7 +4080,7 @@ digitalWrite(cylinderMotor, 1);
 
 void pinSetup(){
 
-# 296
+# 307
 TRISA = 0xFF;
 TRISB = 0xFF;
 TRISC = 0b11000000;
@@ -4126,7 +4141,7 @@ keyPressedInterruptService();
 char key = (PORTB & 0xF0) >> 4;
 if(key == 12)terminate = 1;
 
-# 361
+# 372
 return;
 }
 }
