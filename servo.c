@@ -13,9 +13,9 @@
 #include "timer.h"
 
 int n = 0; //number of servos
-int* servos[4]; //store pins for each servo
+int* servos[4]; //store pins of each servo
 unsigned int pulse[4]; //store the duration of pulse (angle) of the servos
-int curr = 0;
+int curr = 0; //current servo for which a high signal is being sent
 
 //motor = {port, pin}
 void initServo(int* motor, int angle){
@@ -35,8 +35,8 @@ void initServo(int* motor, int angle){
 
 long angleToPulse(int angle){
     long offset = -600; //offset for tuning the range
-    long a000 = 1250; // pulse for angle of 0
-    long a180 = 6250; // pulse for angle of 180
+    long a000 = 1250; // pulse length for angle of 0
+    long a180 = 6250; // pulse length for angle of 180
     
     return a000 + angle/180.0*(a180-a000) + offset;
 }

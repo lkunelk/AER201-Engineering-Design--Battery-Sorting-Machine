@@ -4,8 +4,9 @@
  *
  * Created on February 25, 2017, 12:25 PM
  * 
- * pic18 has 4 timer modules
- * timer0 
+ * pic18 has 4 timer modules: timer0, timer1, timer2, timer3
+ *
+ * timer0
  * - can be configured to be 8or16 bit timer/counter
  * - 8 bit mode set T0CON<6> (6th bit)
  * - has 3 registers:
@@ -30,7 +31,7 @@
  * from 0xff t0 0x00 (8bit)
  * from 0xffff to 0x0000 (16bit)
  * 
- * interrup is set by setting INTCON<5>
+ * interrupt is set by setting INTCON<5>
  * overflow sets flag INTCON<2>
  *
  * the external oscillator in use ~10MHz

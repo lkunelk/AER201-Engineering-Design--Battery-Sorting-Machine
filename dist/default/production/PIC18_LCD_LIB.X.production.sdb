@@ -125,13 +125,13 @@
 [v _lcdClear lcdClear `(v  1 e 1 0 ]
 "78
 [v _lcdNewline lcdNewline `(v  1 e 1 0 ]
-"118 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
+"121 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
 [v _main main `(v  1 e 1 0 ]
-"207
+"215
 [v _sortBattery sortBattery `(v  1 e 1 0 ]
-"301
+"310
 [v _pinSetup pinSetup `(v  1 e 1 0 ]
-"341
+"350
 [v _service service `II(v  1 e 1 0 ]
 "19 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\RTC.c
 [v _initRTC initRTC `(v  1 e 1 0 ]
@@ -145,9 +145,9 @@
 [v _setAngle setAngle `(v  1 e 1 0 ]
 "55
 [v _servoInterruptService servoInterruptService `(uc  1 e 1 0 ]
-"52 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\timer.c
+"53 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\timer.c
 [v _initTimer initTimer `(v  1 e 1 0 ]
-"76
+"77
 [v _startTimer startTimer `(v  1 e 1 0 ]
 [v i2_startTimer startTimer `(v  1 e 1 0 ]
 "49 C:\Program Files (x86)\Microchip\xc8\v1.40\include\pic18f4620.h
@@ -363,49 +363,55 @@
 [v _terminate terminate `i  1 e 2 0 ]
 "65
 [v _stoppingTime stoppingTime `i  1 e 2 0 ]
+"66
+[v _cylinderForward cylinderForward `i  1 e 2 0 ]
 "67
-[v _n_AA n_AA `i  1 e 2 0 ]
-"68
-[v _n_C n_C `i  1 e 2 0 ]
+[v _cylinderBackward cylinderBackward `i  1 e 2 0 ]
 "69
-[v _n_9V n_9V `i  1 e 2 0 ]
+[v _n_AA n_AA `i  1 e 2 0 ]
 "70
-[v _n_OTHER n_OTHER `i  1 e 2 0 ]
+[v _n_C n_C `i  1 e 2 0 ]
+"71
+[v _n_9V n_9V `i  1 e 2 0 ]
 "72
-[v _redirectAngle_AA redirectAngle_AA `i  1 e 2 0 ]
-"73
-[v _redirectAngle_C redirectAngle_C `i  1 e 2 0 ]
+[v _n_OTHER n_OTHER `i  1 e 2 0 ]
 "74
-[v _redirectAngle_9V redirectAngle_9V `i  1 e 2 0 ]
+[v _redirectAngle_AA redirectAngle_AA `i  1 e 2 0 ]
 "75
-[v _redirectAngle_OTHER redirectAngle_OTHER `i  1 e 2 0 ]
+[v _redirectAngle_C redirectAngle_C `i  1 e 2 0 ]
+"76
+[v _redirectAngle_9V redirectAngle_9V `i  1 e 2 0 ]
 "77
-[v _padAngle_CLOSE padAngle_CLOSE `i  1 e 2 0 ]
-"78
-[v _padAngle_NEUTRAL padAngle_NEUTRAL `i  1 e 2 0 ]
+[v _redirectAngle_OTHER redirectAngle_OTHER `i  1 e 2 0 ]
 "79
+[v _padAngle_CLOSE padAngle_CLOSE `i  1 e 2 0 ]
+"80
+[v _padAngle_NEUTRAL padAngle_NEUTRAL `i  1 e 2 0 ]
+"81
 [v _padAngle_OPEN padAngle_OPEN `i  1 e 2 0 ]
-"83
-[v _cylinderMotor cylinderMotor `[2]i  1 e 4 0 ]
 "85
-[v _conveyorServo conveyorServo `[2]i  1 e 4 0 ]
+[v _cylinderMotor1 cylinderMotor1 `[2]i  1 e 4 0 ]
 "86
+[v _cylinderMotor2 cylinderMotor2 `[2]i  1 e 4 0 ]
+"88
+[v _conveyorServo conveyorServo `[2]i  1 e 4 0 ]
+"89
 [v _padServo padServo `[2]i  1 e 4 0 ]
-"87
-[v _redirectingServo redirectingServo `[2]i  1 e 4 0 ]
 "90
-[v _AA_float AA_float `[2]i  1 e 4 0 ]
-"91
-[v _padPin1 padPin1 `[2]i  1 e 4 0 ]
-"92
-[v _padPin2 padPin2 `[2]i  1 e 4 0 ]
+[v _redirectingServo redirectingServo `[2]i  1 e 4 0 ]
 "93
+[v _AA_float AA_float `[2]i  1 e 4 0 ]
+"94
+[v _padPin1 padPin1 `[2]i  1 e 4 0 ]
+"95
+[v _padPin2 padPin2 `[2]i  1 e 4 0 ]
+"96
 [v _padPin3 padPin3 `[2]i  1 e 4 0 ]
-"97
+"100
 [v _V_LIM_AA V_LIM_AA `f  1 e 3 0 ]
-"98
+"101
 [v _V_LIM_C V_LIM_C `f  1 e 3 0 ]
-"99
+"102
 [v _V_LIM_9V V_LIM_9V `f  1 e 3 0 ]
 "11 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\RTC.c
 [v _happynewyear happynewyear `C[7]uc  1 e 7 0 ]
@@ -417,49 +423,45 @@
 [v _pulse pulse `[4]ui  1 e 8 0 ]
 "18
 [v _curr curr `i  1 e 2 0 ]
-"118 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
+"121 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
 [v _main main `(v  1 e 1 0 ]
 {
-"146
-[v main@lastBatteryTime lastBatteryTime `i  1 a 2 53 ]
 "151
-[v main@cylinderBackward cylinderBackward `i  1 a 2 47 ]
+[v main@duration duration `i  1 a 2 66 ]
 "150
-[v main@cylinderForward cylinderForward `i  1 a 2 45 ]
-"149
-[v main@cylinderDur cylinderDur `i  1 a 2 43 ]
+[v main@cylinderStart cylinderStart `i  1 a 2 50 ]
 "148
-[v main@cylinderStart cylinderStart `i  1 a 2 41 ]
-"189
-[v main@run run `[7]i  1 a 14 55 ]
-"205
+[v main@lastBatteryTime lastBatteryTime `i  1 a 2 48 ]
+"197
+[v main@run run `[7]i  1 a 14 52 ]
+"213
 } 0
-"207
+"215
 [v _sortBattery sortBattery `(v  1 e 1 0 ]
 {
-"229
+"238
 [v sortBattery@V V `f  1 a 3 22 ]
-"284
+"293
 [v sortBattery@i_249 i `i  1 a 2 18 ]
-"225
+"234
 [v sortBattery@i i `f  1 a 3 25 ]
-"248
+"257
 [v sortBattery@V_244 V `f  1 a 3 28 ]
-"218
+"227
 [v sortBattery@V_max V_max `f  1 a 3 15 ]
-"217
+"226
 [v sortBattery@resolution resolution `f  1 a 3 12 ]
-"216
+"225
 [v sortBattery@Vcc Vcc `f  1 a 3 9 ]
-"219
+"228
 [v sortBattery@V_float V_float `f  1 a 3 2 ]
-"247
+"256
 [v sortBattery@targetAngle targetAngle `i  1 a 2 20 ]
-"221
+"230
 [v sortBattery@signal signal `i  1 a 2 7 ]
-"220
+"229
 [v sortBattery@pos_v_counter pos_v_counter `i  1 a 2 5 ]
-"299
+"308
 } 0
 "53 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\iopin.c
 [v _digitalWrite digitalWrite `(v  1 e 1 0 ]
@@ -534,10 +536,10 @@
 [v _showRunStats showRunStats `(uc  1 e 1 0 ]
 {
 "120
-[v showRunStats@n_OTHER n_OTHER `i  1 a 2 6 ]
-[v showRunStats@n_C n_C `i  1 a 2 4 ]
-[v showRunStats@n_9V n_9V `i  1 a 2 2 ]
-[v showRunStats@n_AA n_AA `i  1 a 2 0 ]
+[v showRunStats@n_OTHER n_OTHER `i  1 a 2 119 ]
+[v showRunStats@n_C n_C `i  1 a 2 117 ]
+[v showRunStats@n_9V n_9V `i  1 a 2 115 ]
+[v showRunStats@n_AA n_AA `i  1 a 2 113 ]
 "119
 [v showRunStats@run run `*.39i  1 p 2 111 ]
 "127
@@ -885,10 +887,10 @@
 [v ___wmul@multiplicand multiplicand `ui  1 p 2 50 ]
 "53
 } 0
-"301 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
+"310 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
 [v _pinSetup pinSetup `(v  1 e 1 0 ]
 {
-"335
+"344
 } 0
 "21 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\servo.c
 [v _initServo initServo `(v  1 e 1 0 ]
@@ -900,12 +902,12 @@
 [v initServo@angle angle `i  1 p 2 96 ]
 "34
 } 0
-"76 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\timer.c
+"77 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\timer.c
 [v _startTimer startTimer `(v  1 e 1 0 ]
 {
 [v startTimer@timer timer `i  1 p 2 34 ]
 [v startTimer@val val `l  1 p 4 36 ]
-"93
+"94
 } 0
 "44 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\servo.c
 [v _setAngle setAngle `(v  1 e 1 0 ]
@@ -1011,11 +1013,11 @@
 [v ___ftpack@sign sign `uc  1 p 1 38 ]
 "86
 } 0
-"52 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\timer.c
+"53 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\timer.c
 [v _initTimer initTimer `(v  1 e 1 0 ]
 {
 [v initTimer@timer timer `i  1 p 2 34 ]
-"73
+"74
 } 0
 "15 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
 [v _initLCD initLCD `(v  1 e 1 0 ]
@@ -1042,24 +1044,24 @@
 [v lcdNibble@data data `uc  1 a 1 35 ]
 "68
 } 0
-"341 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
+"350 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
 [v _service service `II(v  1 e 1 0 ]
 {
-"364
+"373
 [v service@key key `uc  1 a 1 33 ]
-"374
+"383
 } 0
 "55 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\servo.c
 [v _servoInterruptService servoInterruptService `(uc  1 e 1 0 ]
 {
 "66
 } 0
-"76 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\timer.c
+"77 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\timer.c
 [v i2_startTimer startTimer `(v  1 e 1 0 ]
 {
 [v i2startTimer@timer timer `i  1 p 2 6 ]
 [v i2startTimer@val val `l  1 p 4 8 ]
-"93
+"94
 } 0
 "53 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\iopin.c
 [v i2_digitalWrite digitalWrite `(v  1 e 1 0 ]
