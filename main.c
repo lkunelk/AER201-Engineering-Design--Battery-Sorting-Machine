@@ -153,7 +153,7 @@ void main(){
             while(!batteryDetected && !terminate){ //update screen and poll time
                 //print time
                 lcdHome();
-                printf("time %02ld:%0.1f",time/600,(time%600)/10.0);
+                printf("time %02ld:%02ld.%01ld",time/600,(time%600)/10,(time%600)%10);
                 __delay_ms(77);
                 
                 //change direction of the cylinder motor
@@ -188,7 +188,7 @@ void main(){
         //display results
         int run[7];
         run[0] = time>>8;
-        run[1] = time;
+        run[1] = time&0xff;
         run[2] = n_AA;
         run[3] = n_9V;
         run[4] = n_C;

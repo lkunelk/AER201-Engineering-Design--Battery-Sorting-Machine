@@ -3250,9 +3250,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 155: lcdHome();
 "155
 [e ( _lcdHome ..  ]
-[; ;main.c: 156: printf("time %02ld:%02ld",time/600,(time/10)%60);
+[; ;main.c: 156: printf("time %02ld:%02ld.%01ld",time/600,(time%600)/10,(time%600)%10);
 "156
-[e ( _printf , , (. :s 3C / _time -> -> 600 `i `l % / _time -> -> 10 `i `l -> -> 60 `i `l ]
+[e ( _printf , , , (. :s 3C / _time -> -> 600 `i `l / % _time -> -> 600 `i `l -> -> 10 `i `l % % _time -> -> 600 `i `l -> -> 10 `i `l ]
 [; ;main.c: 157: _delay((unsigned long)((77)*(10000000/4000.0)));
 "157
 [e ( __delay (1 -> * -> -> 77 `i `d / -> -> 10000000 `l `d .4000.0 `ul ]
@@ -3309,9 +3309,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 190: run[0] = time>>8;
 "190
 [e = *U + &U _run * -> -> -> 0 `i `ui `ux -> -> # *U &U _run `ui `ux -> >> _time -> 8 `i `i ]
-[; ;main.c: 191: run[1] = time;
+[; ;main.c: 191: run[1] = time&0xff;
 "191
-[e = *U + &U _run * -> -> -> 1 `i `ui `ux -> -> # *U &U _run `ui `ux -> _time `i ]
+[e = *U + &U _run * -> -> -> 1 `i `ui `ux -> -> # *U &U _run `ui `ux -> & _time -> -> 255 `i `l `i ]
 [; ;main.c: 192: run[2] = n_AA;
 "192
 [e = *U + &U _run * -> -> -> 2 `i `ui `ux -> -> # *U &U _run `ui `ux _n_AA ]
@@ -3786,5 +3786,5 @@ Version 3.2 HI-TECH Software Intermediate Code
 [a 6C 57 86 32 108 105 109 58 32 37 102 0 ]
 [a 5C 65 65 32 108 105 109 58 32 37 102 0 ]
 [a 7C 67 32 32 108 105 109 58 32 37 102 0 ]
-[a 3C 116 105 109 101 32 37 48 50 108 100 58 37 48 50 108 100 0 ]
+[a 3C 116 105 109 101 32 37 48 50 108 100 58 37 48 50 108 100 46 37 48 49 108 100 0 ]
 [a 4C 86 58 32 37 46 51 102 44 32 78 58 32 37 100 10 0 ]

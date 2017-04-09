@@ -106,11 +106,11 @@ char showRunMenu(char key){
 }
 
 char showRunTime(int* run){
-    int time = (run[0]<<8) + run[1];
-    time/=10;
+    int t1 = run[0], t2 = run[1];
+    long time = (t1<<8) + t2;
     
     lcdClear();
-    printf("time: %d sec   \n",time);
+    printf("time %02ld:%02ld.%01ld\n",time/600,(time%600)/10,(time%600)%10);
     printf("              *>");
     
     while(readKeypad() != '*');

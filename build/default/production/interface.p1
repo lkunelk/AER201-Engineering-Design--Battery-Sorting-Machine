@@ -17,12 +17,14 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _showRunTime `(uc ~T0 @X0 0 ef1`*i ]
 "17
 [v _showRunStats `(uc ~T0 @X0 0 ef1`*i ]
-"11 RTC.h
-[v _getTime `(*i ~T0 @X0 0 ef ]
 "19 lcd.h
 [v _lcdClear `(v ~T0 @X0 0 ef ]
+"11 RTC.h
+[v _getTime `(*i ~T0 @X0 0 ef ]
 "195 C:\Program Files (x86)\Microchip\xc8\v1.40\include\stdio.h
 [v _printf `(i ~T0 @X0 0 ev`*Cuc ]
+"69 interface.c
+[v _lcdHome `(i ~T0 @X0 0 ef ]
 [v F2878 `(v ~T0 @X0 1 tf1`ul ]
 "159 C:\Program Files (x86)\Microchip\xc8\v1.40\include\pic18.h
 [v __delay `JF2878 ~T0 @X0 0 e ]
@@ -2892,18 +2894,18 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _n `i ~T0 @X0 1 a ]
 [; ;interface.c: 30: int n = showRunSelect();
 [e = _n -> ( _showRunSelect ..  `i ]
-[; ;interface.c: 32: if(key == '*')continue;
+[; ;interface.c: 32: if(n == '*')continue;
 "32
-[e $ ! == -> _key `ui -> 42 `ui 274  ]
+[e $ ! == -> _n `ui -> 42 `ui 274  ]
 [e $U 270  ]
 [e :U 274 ]
 "34
 [v _run `*i ~T0 @X0 1 a ]
 [; ;interface.c: 34: int* run = readPastRun( n - '1');
 [e = _run ( _readPastRun (1 -> - -> _n `ui -> 49 `ui `i ]
-[; ;interface.c: 35: if(run[6] == 0xff){
+[; ;interface.c: 35: if(run[0] == 0xff){
 "35
-[e $ ! == *U + _run * -> -> 6 `i `x -> -> # *U _run `i `x -> 255 `i 275  ]
+[e $ ! == *U + _run * -> -> 0 `i `x -> -> # *U _run `i `x -> 255 `i 275  ]
 {
 [; ;interface.c: 36: showErrorMessage();
 "36
@@ -3002,6 +3004,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;interface.c: 59: void showDateTime(){
 [e :U _showDateTime ]
 [f ]
+[; ;interface.c: 60: lcdClear();
+"60
+[e ( _lcdClear ..  ]
 [; ;interface.c: 61: initRTC();
 "61
 [e ( _initRTC ..  ]
@@ -3014,28 +3019,28 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _t `*i ~T0 @X0 1 a ]
 [; ;interface.c: 64: int* t = getTime();
 [e = _t ( _getTime ..  ]
-[; ;interface.c: 65: lcdClear();
 "65
-[e ( _lcdClear ..  ]
-"66
 [v _sec `i ~T0 @X0 1 a ]
-[; ;interface.c: 66: int sec = t[0], min = t[1], hour = t[2];
+[; ;interface.c: 65: int sec = t[0], min = t[1], hour = t[2];
 [e = _sec *U + _t * -> -> 0 `i `x -> -> # *U _t `i `x ]
 [v _min `i ~T0 @X0 1 a ]
 [e = _min *U + _t * -> -> 1 `i `x -> -> # *U _t `i `x ]
 [v _hour `i ~T0 @X0 1 a ]
 [e = _hour *U + _t * -> -> 2 `i `x -> -> # *U _t `i `x ]
-"67
+"66
 [v _day `i ~T0 @X0 1 a ]
-[; ;interface.c: 67: int day = t[4], mon = t[5], year = t[6];
+[; ;interface.c: 66: int day = t[4], mon = t[5], year = t[6];
 [e = _day *U + _t * -> -> 4 `i `x -> -> # *U _t `i `x ]
 [v _mon `i ~T0 @X0 1 a ]
 [e = _mon *U + _t * -> -> 5 `i `x -> -> # *U _t `i `x ]
 [v _year `i ~T0 @X0 1 a ]
 [e = _year *U + _t * -> -> 6 `i `x -> -> # *U _t `i `x ]
-[; ;interface.c: 69: printf("  20%02x/%02x/%02x\n",year,mon,day);
-"69
+[; ;interface.c: 68: printf("  20%02x/%02x/%02x\n",year,mon,day);
+"68
 [e ( _printf , , , (. :s 1C _year _mon _day ]
+[; ;interface.c: 69: lcdHome();
+"69
+[e ( _lcdHome ..  ]
 [; ;interface.c: 70: printf("   %02x:%02x:%02x   A>",hour,min,sec);
 "70
 [e ( _printf , , , (. :s 2C _hour _min _sec ]
@@ -3170,18 +3175,21 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _run `*i ~T0 @X0 1 r1 ]
 [f ]
 "109
-[v _time `i ~T0 @X0 1 a ]
-[; ;interface.c: 109: int time = run[1];
-[e = _time *U + _run * -> -> 1 `i `x -> -> # *U _run `i `x ]
-[; ;interface.c: 110: time/=10;
+[v _t1 `i ~T0 @X0 1 a ]
+[; ;interface.c: 109: int t1 = run[0], t2 = run[1];
+[e = _t1 *U + _run * -> -> 0 `i `x -> -> # *U _run `i `x ]
+[v _t2 `i ~T0 @X0 1 a ]
+[e = _t2 *U + _run * -> -> 1 `i `x -> -> # *U _run `i `x ]
 "110
-[e =/ _time -> -> 10 `uc `i ]
+[v _time `l ~T0 @X0 1 a ]
+[; ;interface.c: 110: long time = (t1<<8) + t2;
+[e = _time -> + << _t1 -> 8 `i _t2 `l ]
 [; ;interface.c: 112: lcdClear();
 "112
 [e ( _lcdClear ..  ]
-[; ;interface.c: 113: printf("time: %d sec   \n",time);
+[; ;interface.c: 113: printf("time %02ld:%02ld.%01ld\n",time/600,(time%600)/10,(time%600)%10);
 "113
-[e ( _printf , (. :s 9C _time ]
+[e ( _printf , , , (. :s 9C / _time -> -> 600 `i `l / % _time -> -> 600 `i `l -> -> 10 `i `l % % _time -> -> 600 `i `l -> -> 10 `i `l ]
 [; ;interface.c: 114: printf("              *>");
 "114
 [e ( _printf :s 10C ]
@@ -3203,12 +3211,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :U _showRunStats ]
 [v _run `*i ~T0 @X0 1 r1 ]
 [f ]
-[; ;interface.c: 120: lcdClear();
 "120
-[e ( _lcdClear ..  ]
-"122
 [v _n_AA `i ~T0 @X0 1 a ]
-[; ;interface.c: 122: int n_AA = run[2], n_9V = run[3], n_C = run[4], n_OTHER = run[5];
+[; ;interface.c: 120: int n_AA = run[2], n_9V = run[3], n_C = run[4], n_OTHER = run[5];
 [e = _n_AA *U + _run * -> -> 2 `i `x -> -> # *U _run `i `x ]
 [v _n_9V `i ~T0 @X0 1 a ]
 [e = _n_9V *U + _run * -> -> 3 `i `x -> -> # *U _run `i `x ]
@@ -3216,69 +3221,64 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = _n_C *U + _run * -> -> 4 `i `x -> -> # *U _run `i `x ]
 [v _n_OTHER `i ~T0 @X0 1 a ]
 [e = _n_OTHER *U + _run * -> -> 5 `i `x -> -> # *U _run `i `x ]
-[; ;interface.c: 124: printf("[AA,9V,C,other] \n");
-"124
+[; ;interface.c: 122: lcdClear();
+"122
+[e ( _lcdClear ..  ]
+[; ;interface.c: 123: printf("[AA,9V,C,other] \n");
+"123
 [e ( _printf :s 11C ]
-[; ;interface.c: 125: if(run)printf("[%d,%d,%d,%d]   *>",n_AA,n_9V,n_C,n_OTHER);
-"125
-[e $ ! != _run -> -> 0 `i `*i 309  ]
+[; ;interface.c: 124: printf("[%d,%d,%d,%d]   *>",n_AA,n_9V,n_C,n_OTHER);
+"124
 [e ( _printf , , , , (. :s 12C _n_AA _n_9V _n_C _n_OTHER ]
-[e $U 310  ]
+[; ;interface.c: 126: while(readKeypad() != '*');
 "126
-[e :U 309 ]
-[; ;interface.c: 126: else printf("[na,na,na,na]   *>");
-[e ( _printf :s 13C ]
+[e $U 309  ]
 [e :U 310 ]
-[; ;interface.c: 127: while(readKeypad() != '*');
-"127
-[e $U 311  ]
-[e :U 312 ]
+[e :U 309 ]
+[e $ != -> ( _readKeypad ..  `ui -> 42 `ui 310  ]
 [e :U 311 ]
-[e $ != -> ( _readKeypad ..  `ui -> 42 `ui 312  ]
-[e :U 313 ]
-[; ;interface.c: 128: }
-"128
+[; ;interface.c: 127: }
+"127
 [e :UE 308 ]
 }
-"130
+"129
 [v _showErrorMessage `(v ~T0 @X0 1 ef ]
 {
-[; ;interface.c: 130: void showErrorMessage(){
+[; ;interface.c: 129: void showErrorMessage(){
 [e :U _showErrorMessage ]
 [f ]
-[; ;interface.c: 131: lcdClear();
-"131
+[; ;interface.c: 130: lcdClear();
+"130
 [e ( _lcdClear ..  ]
 [; ;interface.c: 132: printf(" run not \n");
 "132
-[e ( _printf :s 14C ]
+[e ( _printf :s 13C ]
 [; ;interface.c: 133: printf("  available   *>");
 "133
-[e ( _printf :s 15C ]
-[; ;interface.c: 134: while(readKeypad() != '*');
-"134
-[e $U 315  ]
-[e :U 316 ]
-[e :U 315 ]
-[e $ != -> ( _readKeypad ..  `ui -> 42 `ui 316  ]
-[e :U 317 ]
-[; ;interface.c: 135: }
+[e ( _printf :s 14C ]
+[; ;interface.c: 135: while(readKeypad() != '*');
 "135
-[e :UE 314 ]
+[e $U 313  ]
+[e :U 314 ]
+[e :U 313 ]
+[e $ != -> ( _readKeypad ..  `ui -> 42 `ui 314  ]
+[e :U 315 ]
+[; ;interface.c: 136: }
+"136
+[e :UE 312 ]
 }
-[p f _printf 13140100 ]
+[p f _printf 13140116 ]
 [a 2C 32 32 32 37 48 50 120 58 37 48 50 120 58 37 48 50 120 32 32 32 65 62 0 ]
-[a 15C 32 32 97 118 97 105 108 97 98 108 101 32 32 32 42 62 0 ]
+[a 14C 32 32 97 118 97 105 108 97 98 108 101 32 32 32 42 62 0 ]
 [a 12C 91 37 100 44 37 100 44 37 100 44 37 100 93 32 32 32 42 62 0 ]
-[a 13C 91 110 97 44 110 97 44 110 97 44 110 97 93 32 32 32 42 62 0 ]
 [a 8C 32 32 32 115 116 97 116 115 32 60 66 32 32 32 42 62 0 ]
 [a 4C 104 105 115 116 111 114 121 32 60 67 32 32 32 32 42 62 0 ]
 [a 6C 91 49 44 50 44 51 44 52 93 32 32 32 32 32 42 62 0 ]
 [a 10C 32 32 32 32 32 32 32 32 32 32 32 32 32 32 42 62 0 ]
 [a 1C 32 32 50 48 37 48 50 120 47 37 48 50 120 47 37 48 50 120 10 0 ]
-[a 14C 32 114 117 110 32 110 111 116 32 10 0 ]
+[a 9C 116 105 109 101 32 37 48 50 108 100 58 37 48 50 108 100 46 37 48 49 108 100 10 0 ]
+[a 13C 32 114 117 110 32 110 111 116 32 10 0 ]
 [a 11C 91 65 65 44 57 86 44 67 44 111 116 104 101 114 93 32 10 0 ]
-[a 9C 116 105 109 101 58 32 37 100 32 115 101 99 32 32 32 10 0 ]
 [a 7C 37 99 41 32 116 105 109 101 32 32 60 65 32 32 32 32 32 10 0 ]
 [a 5C 115 101 108 101 99 116 32 114 117 110 58 32 32 32 32 32 10 0 ]
 [a 3C 115 116 97 114 116 32 32 32 60 66 32 32 32 32 32 32 10 0 ]

@@ -3942,7 +3942,7 @@ int cylinderBackward = 30;
 while(!batteryDetected && !terminate){
 
 lcdHome();
-printf("time %02ld:%02ld",time/600,(time/10)%60);
+printf("time %02ld:%02ld.%01ld",time/600,(time%600)/10,(time%600)%10);
 _delay((unsigned long)((77)*(10000000/4000.0)));
 
 # 169
@@ -3968,7 +3968,7 @@ digitalWrite(cylinderMotor, 0);
 
 int run[7];
 run[0] = time>>8;
-run[1] = time;
+run[1] = time&0xff;
 run[2] = n_AA;
 run[3] = n_9V;
 run[4] = n_C;

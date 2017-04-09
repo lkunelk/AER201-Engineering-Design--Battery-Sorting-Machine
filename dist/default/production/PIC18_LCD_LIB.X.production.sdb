@@ -96,7 +96,7 @@
 [v _showRunTime showRunTime `(uc  1 e 1 0 ]
 "119
 [v _showRunStats showRunStats `(uc  1 e 1 0 ]
-"130
+"129
 [v _showErrorMessage showErrorMessage `(v  1 e 1 0 ]
 "43 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\iopin.c
 [v _digitalRead digitalRead `(i  1 e 2 0 ]
@@ -421,7 +421,7 @@
 [v _main main `(v  1 e 1 0 ]
 {
 "146
-[v main@lastBatteryTime lastBatteryTime `i  1 a 2 49 ]
+[v main@lastBatteryTime lastBatteryTime `i  1 a 2 53 ]
 "151
 [v main@cylinderBackward cylinderBackward `i  1 a 2 47 ]
 "150
@@ -431,7 +431,7 @@
 "148
 [v main@cylinderStart cylinderStart `i  1 a 2 41 ]
 "189
-[v main@run run `[7]i  1 a 14 51 ]
+[v main@run run `[7]i  1 a 14 55 ]
 "205
 } 0
 "207
@@ -497,29 +497,56 @@
 "108
 [v _showRunTime showRunTime `(uc  1 e 1 0 ]
 {
+"110
+[v showRunTime@time time `l  1 a 4 8 ]
 "109
-[v showRunTime@time time `i  1 a 2 109 ]
+[v showRunTime@t2 t2 `i  1 a 2 6 ]
+[v showRunTime@t1 t1 `i  1 a 2 4 ]
 "108
-[v showRunTime@run run `*.39i  1 p 2 107 ]
+[v showRunTime@run run `*.39i  1 p 2 111 ]
 "117
 } 0
-"119
+"8 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\almod.c
+[v ___almod __almod `(l  1 e 4 0 ]
+{
+"11
+[v ___almod@sign sign `uc  1 a 1 43 ]
+[v ___almod@counter counter `uc  1 a 1 42 ]
+"8
+[v ___almod@dividend dividend `l  1 p 4 34 ]
+[v ___almod@divisor divisor `l  1 p 4 38 ]
+"35
+} 0
+"8 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\aldiv.c
+[v ___aldiv __aldiv `(l  1 e 4 0 ]
+{
+"11
+[v ___aldiv@quotient quotient `l  1 a 4 54 ]
+"12
+[v ___aldiv@sign sign `uc  1 a 1 53 ]
+[v ___aldiv@counter counter `uc  1 a 1 52 ]
+"8
+[v ___aldiv@dividend dividend `l  1 p 4 44 ]
+[v ___aldiv@divisor divisor `l  1 p 4 48 ]
+"42
+} 0
+"119 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\interface.c
 [v _showRunStats showRunStats `(uc  1 e 1 0 ]
 {
-"122
+"120
 [v showRunStats@n_OTHER n_OTHER `i  1 a 2 6 ]
 [v showRunStats@n_C n_C `i  1 a 2 4 ]
 [v showRunStats@n_9V n_9V `i  1 a 2 2 ]
 [v showRunStats@n_AA n_AA `i  1 a 2 0 ]
 "119
-[v showRunStats@run run `*.39i  1 p 2 107 ]
-"128
+[v showRunStats@run run `*.39i  1 p 2 111 ]
+"127
 } 0
 "86
 [v _showRunSelect showRunSelect `(uc  1 e 1 0 ]
 {
 "91
-[v showRunSelect@k k `uc  1 a 1 107 ]
+[v showRunSelect@k k `uc  1 a 1 111 ]
 "95
 } 0
 "97
@@ -527,23 +554,23 @@
 {
 [v showRunMenu@key key `uc  1 a 1 wreg ]
 "102
-[v showRunMenu@k k `uc  1 a 1 108 ]
+[v showRunMenu@k k `uc  1 a 1 112 ]
 "97
 [v showRunMenu@key key `uc  1 a 1 wreg ]
-[v showRunMenu@key key `uc  1 a 1 107 ]
+[v showRunMenu@key key `uc  1 a 1 111 ]
 "106
 } 0
 "75
 [v _showMainMenu showMainMenu `(uc  1 e 1 0 ]
 {
 "80
-[v showMainMenu@k k `uc  1 a 1 107 ]
+[v showMainMenu@k k `uc  1 a 1 111 ]
 "84
 } 0
-"130
+"129
 [v _showErrorMessage showErrorMessage `(v  1 e 1 0 ]
 {
-"135
+"136
 } 0
 "36 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\keypad.c
 [v _readKeypad readKeypad `(uc  1 e 1 0 ]
@@ -557,11 +584,11 @@
 {
 "64
 [v showDateTime@t t `*.39i  1 a 2 12 ]
-"67
+"66
 [v showDateTime@year year `i  1 a 2 10 ]
 [v showDateTime@mon mon `i  1 a 2 8 ]
 [v showDateTime@day day `i  1 a 2 6 ]
-"66
+"65
 [v showDateTime@hour hour `i  1 a 2 4 ]
 [v showDateTime@min min `i  1 a 2 2 ]
 [v showDateTime@sec sec `i  1 a 2 0 ]
@@ -571,30 +598,30 @@
 [v _printf printf `(i  1 e 2 0 ]
 {
 "1500
-[v printf@idx idx `uc  1 a 1 80 ]
+[v printf@idx idx `uc  1 a 1 84 ]
 "528
-[v printf@val val `ul  1 a 4 96 ]
-[u S811 . 4 `ul 1 vd 4 0 `d 1 integ 3 0 ]
+[v printf@val val `ul  1 a 4 100 ]
+[u S813 . 4 `ul 1 vd 4 0 `d 1 integ 3 0 ]
 "526
-[v printf@tmpval tmpval `S811  1 a 4 87 ]
+[v printf@tmpval tmpval `S813  1 a 4 91 ]
 "516
-[v printf@fval fval `d  1 a 3 93 ]
+[v printf@fval fval `d  1 a 3 97 ]
 "504
-[v printf@prec prec `i  1 a 2 104 ]
+[v printf@prec prec `i  1 a 2 108 ]
 "508
-[v printf@flag flag `us  1 a 2 102 ]
+[v printf@flag flag `us  1 a 2 106 ]
 "501
-[v printf@width width `i  1 a 2 100 ]
+[v printf@width width `i  1 a 2 104 ]
 "516
-[v printf@exp exp `i  1 a 2 91 ]
+[v printf@exp exp `i  1 a 2 95 ]
 "466
-[v printf@ap ap `[1]*.39v  1 a 2 85 ]
+[v printf@ap ap `[1]*.39v  1 a 2 89 ]
 "529
-[v printf@len len `ui  1 a 2 83 ]
+[v printf@len len `ui  1 a 2 87 ]
 "530
-[v printf@cp cp `*.39Cuc  1 a 2 81 ]
+[v printf@cp cp `*.39Cuc  1 a 2 85 ]
 "499
-[v printf@c c `c  1 a 1 106 ]
+[v printf@c c `c  1 a 1 110 ]
 "464
 [v printf@f f `*.25Cuc  1 p 2 61 ]
 "1541
@@ -728,7 +755,12 @@
 [v ___ftge@ff2 ff2 `f  1 p 3 49 ]
 "13
 } 0
-"74 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
+"70 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
+[v _lcdHome lcdHome `(i  1 e 2 0 ]
+{
+"72
+} 0
+"74
 [v _lcdClear lcdClear `(v  1 e 1 0 ]
 {
 "76
@@ -857,11 +889,6 @@
 [v _pinSetup pinSetup `(v  1 e 1 0 ]
 {
 "335
-} 0
-"70 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\lcd.c
-[v _lcdHome lcdHome `(i  1 e 2 0 ]
-{
-"72
 } 0
 "21 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\servo.c
 [v _initServo initServo `(v  1 e 1 0 ]
@@ -1014,30 +1041,6 @@
 "48
 [v lcdNibble@data data `uc  1 a 1 35 ]
 "68
-} 0
-"8 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\almod.c
-[v ___almod __almod `(l  1 e 4 0 ]
-{
-"11
-[v ___almod@sign sign `uc  1 a 1 57 ]
-[v ___almod@counter counter `uc  1 a 1 56 ]
-"8
-[v ___almod@dividend dividend `l  1 p 4 48 ]
-[v ___almod@divisor divisor `l  1 p 4 52 ]
-"35
-} 0
-"8 C:\Program Files (x86)\Microchip\xc8\v1.40\sources\common\aldiv.c
-[v ___aldiv __aldiv `(l  1 e 4 0 ]
-{
-"11
-[v ___aldiv@quotient quotient `l  1 a 4 44 ]
-"12
-[v ___aldiv@sign sign `uc  1 a 1 43 ]
-[v ___aldiv@counter counter `uc  1 a 1 42 ]
-"8
-[v ___aldiv@dividend dividend `l  1 p 4 34 ]
-[v ___aldiv@divisor divisor `l  1 p 4 38 ]
-"42
 } 0
 "341 C:\Users\Nam\Documents\Uni\year 2\term 2\AER 201 - design\code\test\PIC18_LCD_LIB.X\main.c
 [v _service service `II(v  1 e 1 0 ]
