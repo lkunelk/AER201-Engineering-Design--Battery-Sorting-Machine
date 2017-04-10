@@ -72,10 +72,10 @@ int n_C;
 int n_9V;
 int n_OTHER;
 
-const int    redirectAngle_AA = 138; //angles for the re-directing arm
-const int     redirectAngle_C = 166;
-const int    redirectAngle_9V = 118;
-const int redirectAngle_OTHER = 153;
+const int    redirectAngle_AA = 105; //angles for the re-directing arm
+const int     redirectAngle_C = 140;
+const int    redirectAngle_9V = 90;
+const int redirectAngle_OTHER = 117;
 
 const int   padAngle_CLOSE = 70; //angles for voltage testing pads
 const int padAngle_NEUTRAL = 130;
@@ -112,15 +112,18 @@ void debug(){
     pinSetup();
     initLCD();
     
-    int i = 0;
-    while(1){
-        lcdClear();
-        printf("%d, %02x",i,eepromRead(i));
-        i++;
-        readKeypad();
-    }
     
-    while(1);
+        int angle = 90;
+        initServo(redirectingServo, angle);
+    do{
+        char k = readKeypad();
+        if(k == '0')angle+=5;
+        if(k == '1')angle-=5;
+        lcdHome();
+        printf("angle: %d",angle);
+        setAngle(redirectingServo, angle);
+    
+    }while(1);
 }
 
 void main(){
@@ -154,7 +157,8 @@ void main(){
             int cylinderStart = time;
             int duration = 0;
             
-            stoppingTime = 200 + 300 * (float)(15 - (n_AA + n_9V + n_C + n_OTHER))/15;
+            //set stopping time based on how many batteries we have seen
+            stoppingTime = 300 + 300 * (float)(15 - (n_AA + n_9V + n_C + n_OTHER))/15;
             
             while(!batteryDetected && !terminate){ //update screen and poll time
                 //print current time and remaining time
@@ -190,6 +194,9 @@ void main(){
             
             sortBattery();
             
+            //check for esge case of 15 batteries sorted
+            if((n_AA + n_9V + n_C + n_OTHER) == 15)break;
+            
             //reset flag after sorting
             lastBatteryTime = time;
             batteryDetected = 0;
@@ -199,6 +206,8 @@ void main(){
         setAngle(conveyorServo, 90);
         digitalWrite(cylinderMotor1, LOW);
         digitalWrite(cylinderMotor2, LOW);
+        
+        di();
         
         //display results
         int run[7];
@@ -213,6 +222,7 @@ void main(){
         showRunTime(run);
         showRunStats(run);
         
+        ei();
     };//stop here
     
     
@@ -232,7 +242,7 @@ void sortBattery(){
     float V_max = 0;
     float V_sum = 0;
     float V_float = 0;
-    int pos_v_counter = 1;
+    int pos_v_counter = 0;
     int signal = 0;
     
     //compress battery and measure voltage
@@ -258,13 +268,13 @@ void sortBattery(){
             V_float = analogRead(padPin3[1]) / resolution * Vcc; //voltage read
             
             //update sum
-            if(pos_v_counter == 0)V_sum = V;
+            if(pos_v_counter == 1)V_sum = V;
             else V_sum = V_sum * 0.7 + V * 0.3;
         }
     }
     
     int targetAngle;
-    float V = V_sum / pos_v_counter;
+    float V = V_sum;
     
     lcdClear();
     printf("V: %.3f, N: %d\n",V,pos_v_counter);
@@ -297,7 +307,7 @@ void sortBattery(){
     }
     
     
-    readKeypad();
+//    readKeypad();
     setAngle(redirectingServo, targetAngle);
     __delay_ms(500);
     
