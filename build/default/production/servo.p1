@@ -2773,154 +2773,163 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e $U 270  ]
 [e :U 267 ]
 {
-[; ;servo.c: 25: if(servos[i] == motor)return;
+[; ;servo.c: 25: if(servos[i] == motor){
 "25
 [e $ ! == *U + &U _servos * -> -> _i `ui `ux -> -> # *U &U _servos `ui `ux _motor 271  ]
-[e $UE 266  ]
-[e :U 271 ]
+{
+[; ;servo.c: 26: setAngle(motor, angle);
 "26
+[e ( _setAngle (2 , _motor _angle ]
+[; ;servo.c: 27: return;
+"27
+[e $UE 266  ]
+"28
+}
+[e :U 271 ]
+[; ;servo.c: 28: };
+"29
 }
 "24
 [e ++ _i -> 1 `i ]
 [e :U 270 ]
 [e $ < _i _n 267  ]
 [e :U 268 ]
-"26
-}
-[; ;servo.c: 26: }
-[; ;servo.c: 28: n++;
-"28
-[e ++ _n -> 1 `i ]
-[; ;servo.c: 29: servos[n-1] = motor;
 "29
-[e = *U + &U _servos * -> -> - _n -> 1 `i `ui `ux -> -> # *U &U _servos `ui `ux _motor ]
-[; ;servo.c: 30: setAngle(motor, angle);
-"30
-[e ( _setAngle (2 , _motor _angle ]
-[; ;servo.c: 32: initTimer(0);
+}
+[; ;servo.c: 29: }
+[; ;servo.c: 31: n++;
+"31
+[e ++ _n -> 1 `i ]
+[; ;servo.c: 32: servos[n-1] = motor;
 "32
-[e ( _initTimer (1 -> 0 `i ]
-[; ;servo.c: 33: startTimer(0,0);
+[e = *U + &U _servos * -> -> - _n -> 1 `i `ui `ux -> -> # *U &U _servos `ui `ux _motor ]
+[; ;servo.c: 33: setAngle(motor, angle);
 "33
+[e ( _setAngle (2 , _motor _angle ]
+[; ;servo.c: 35: initTimer(0);
+"35
+[e ( _initTimer (1 -> 0 `i ]
+[; ;servo.c: 36: startTimer(0,0);
+"36
 [e ( _startTimer (2 , -> 0 `i -> -> 0 `i `l ]
-[; ;servo.c: 34: }
-"34
+[; ;servo.c: 37: }
+"37
 [e :UE 266 ]
 }
-"36
+"39
 [v _angleToPulse `(l ~T0 @X0 1 ef1`i ]
 {
-[; ;servo.c: 36: long angleToPulse(int angle){
+[; ;servo.c: 39: long angleToPulse(int angle){
 [e :U _angleToPulse ]
 [v _angle `i ~T0 @X0 1 r1 ]
 [f ]
-"37
+"40
 [v _offset `l ~T0 @X0 1 a ]
-[; ;servo.c: 37: long offset = -600;
+[; ;servo.c: 40: long offset = -600;
 [e = _offset -> -U -> 600 `i `l ]
-"38
-[v _a000 `l ~T0 @X0 1 a ]
-[; ;servo.c: 38: long a000 = 1250;
-[e = _a000 -> -> 1250 `i `l ]
-"39
-[v _a180 `l ~T0 @X0 1 a ]
-[; ;servo.c: 39: long a180 = 6250;
-[e = _a180 -> -> 6250 `i `l ]
-[; ;servo.c: 41: return a000 + angle/180.0*(a180-a000) + offset;
 "41
+[v _a000 `l ~T0 @X0 1 a ]
+[; ;servo.c: 41: long a000 = 1250;
+[e = _a000 -> -> 1250 `i `l ]
+"42
+[v _a180 `l ~T0 @X0 1 a ]
+[; ;servo.c: 42: long a180 = 6250;
+[e = _a180 -> -> 6250 `i `l ]
+[; ;servo.c: 44: return a000 + angle/180.0*(a180-a000) + offset;
+"44
 [e ) -> + + -> _a000 `d * / -> _angle `d .180.0 -> - _a180 _a000 `d -> _offset `d `l ]
 [e $UE 272  ]
-[; ;servo.c: 42: }
-"42
+[; ;servo.c: 45: }
+"45
 [e :UE 272 ]
 }
-"44
+"47
 [v _setAngle `(v ~T0 @X0 1 ef2`*i`i ]
 {
-[; ;servo.c: 44: void setAngle(int* motor, int angle){
+[; ;servo.c: 47: void setAngle(int* motor, int angle){
 [e :U _setAngle ]
 [v _motor `*i ~T0 @X0 1 r1 ]
 [v _angle `i ~T0 @X0 1 r2 ]
 [f ]
-"45
+"48
 [v _period `ui ~T0 @X0 1 a ]
-[; ;servo.c: 45: unsigned int period = 50000;
+[; ;servo.c: 48: unsigned int period = 50000;
 [e = _period -> -> 50000 `l `ui ]
-[; ;servo.c: 46: for(int i = 0; i < n; i++){
-"46
+[; ;servo.c: 49: for(int i = 0; i < n; i++){
+"49
 {
 [v _i `i ~T0 @X0 1 a ]
 [e = _i -> 0 `i ]
 [e $U 277  ]
 [e :U 274 ]
 {
-[; ;servo.c: 47: if(servos[i] == motor){
-"47
+[; ;servo.c: 50: if(servos[i] == motor){
+"50
 [e $ ! == *U + &U _servos * -> -> _i `ui `ux -> -> # *U &U _servos `ui `ux _motor 278  ]
 {
-[; ;servo.c: 48: pulse[i] = angleToPulse(angle);
-"48
+[; ;servo.c: 51: pulse[i] = angleToPulse(angle);
+"51
 [e = *U + &U _pulse * -> -> _i `ui `ux -> -> # *U &U _pulse `ui `ux -> ( _angleToPulse (1 _angle `ui ]
-"49
+"52
 }
 [e :U 278 ]
-[; ;servo.c: 49: }
-[; ;servo.c: 50: period-=pulse[i];
-"50
+[; ;servo.c: 52: }
+[; ;servo.c: 53: period-=pulse[i];
+"53
 [e =- _period *U + &U _pulse * -> -> _i `ui `ux -> -> # *U &U _pulse `ui `ux ]
-"51
+"54
 }
-"46
+"49
 [e ++ _i -> 1 `i ]
 [e :U 277 ]
 [e $ < _i _n 274  ]
 [e :U 275 ]
-"51
+"54
 }
-[; ;servo.c: 51: }
-[; ;servo.c: 52: pulse[n] = period;
-"52
+[; ;servo.c: 54: }
+[; ;servo.c: 55: pulse[n] = period;
+"55
 [e = *U + &U _pulse * -> -> _n `ui `ux -> -> # *U &U _pulse `ui `ux _period ]
-[; ;servo.c: 53: }
-"53
+[; ;servo.c: 56: }
+"56
 [e :UE 273 ]
 }
-"55
+"58
 [v _servoInterruptService `(uc ~T0 @X0 1 ef ]
 {
-[; ;servo.c: 55: char servoInterruptService(){
+[; ;servo.c: 58: char servoInterruptService(){
 [e :U _servoInterruptService ]
 [f ]
-[; ;servo.c: 57: if(TMR0IF){TMR0IF = 0;
-"57
+[; ;servo.c: 60: if(TMR0IF){TMR0IF = 0;
+"60
 [e $ ! _TMR0IF 280  ]
 {
 [e = _TMR0IF -> -> 0 `i `b ]
-[; ;servo.c: 58: digitalWrite(servos[curr],0);
-"58
+[; ;servo.c: 61: digitalWrite(servos[curr],0);
+"61
 [e ( _digitalWrite (2 , *U + &U _servos * -> -> _curr `ui `ux -> -> # *U &U _servos `ui `ux -> 0 `i ]
-[; ;servo.c: 59: digitalWrite(servos[ (curr+1)%(n+1) ],1);
-"59
-[e ( _digitalWrite (2 , *U + &U _servos * -> -> % + _curr -> 1 `i + _n -> 1 `i `ui `ux -> -> # *U &U _servos `ui `ux -> 1 `i ]
-[; ;servo.c: 60: startTimer(0, 0xFFFF - pulse[ (curr+1)%(n+1) ]);
-"60
-[e ( _startTimer (2 , -> 0 `i -> - -> 65535 `ui *U + &U _pulse * -> -> % + _curr -> 1 `i + _n -> 1 `i `ui `ux -> -> # *U &U _pulse `ui `ux `l ]
-[; ;servo.c: 62: curr = (curr+1)%(n+1);
+[; ;servo.c: 62: digitalWrite(servos[ (curr+1)%(n+1) ],1);
 "62
-[e = _curr % + _curr -> 1 `i + _n -> 1 `i ]
-[; ;servo.c: 63: return 1;
+[e ( _digitalWrite (2 , *U + &U _servos * -> -> % + _curr -> 1 `i + _n -> 1 `i `ui `ux -> -> # *U &U _servos `ui `ux -> 1 `i ]
+[; ;servo.c: 63: startTimer(0, 0xFFFF - pulse[ (curr+1)%(n+1) ]);
 "63
+[e ( _startTimer (2 , -> 0 `i -> - -> 65535 `ui *U + &U _pulse * -> -> % + _curr -> 1 `i + _n -> 1 `i `ui `ux -> -> # *U &U _pulse `ui `ux `l ]
+[; ;servo.c: 65: curr = (curr+1)%(n+1);
+"65
+[e = _curr % + _curr -> 1 `i + _n -> 1 `i ]
+[; ;servo.c: 66: return 1;
+"66
 [e ) -> -> 1 `i `uc ]
 [e $UE 279  ]
-"64
+"67
 }
 [e :U 280 ]
-[; ;servo.c: 64: }
-[; ;servo.c: 65: return 0;
-"65
+[; ;servo.c: 67: }
+[; ;servo.c: 68: return 0;
+"68
 [e ) -> -> 0 `i `uc ]
 [e $UE 279  ]
-[; ;servo.c: 66: }
-"66
+[; ;servo.c: 69: }
+"69
 [e :UE 279 ]
 }

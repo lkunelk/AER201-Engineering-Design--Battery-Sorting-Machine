@@ -9,10 +9,10 @@
 #include "I2C.h"
 
 const char happynewyear[7] = {  0x00, //45 Seconds 
-                            0x00, //59 Minutes
-                            0x00, //24 hour mode, set to 23:00
+                            0x50, //59 Minutes
+                            0x10, //24 hour mode, set to 23:00
                             0x01, //Saturday
-                            0x08, //31st
+                            0x10, //31st
                             0x04, //December
                             0x17};//2016
 

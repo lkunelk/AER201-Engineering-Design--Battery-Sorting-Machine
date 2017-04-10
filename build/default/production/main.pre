@@ -3851,32 +3851,37 @@ void pause(char* message);
 long time = 0;
 int batteryDetected = 0;
 int terminate = 0;
-int stoppingTime = 200;
-int cylinderForward = 70;
-int cylinderBackward = 30;
+
+int stoppingTime = 300;
+const int cylinderForward = 100;
+const int cylinderBackward = 30;
 
 int n_AA;
 int n_C;
 int n_9V;
 int n_OTHER;
 
-int redirectAngle_AA = 138;
-int redirectAngle_C = 166;
-int redirectAngle_9V = 118;
-int redirectAngle_OTHER = 153;
+const int redirectAngle_AA = 138;
+const int redirectAngle_C = 166;
+const int redirectAngle_9V = 118;
+const int redirectAngle_OTHER = 153;
 
-int padAngle_CLOSE = 70;
-int padAngle_NEUTRAL = 130;
-int padAngle_OPEN = 180;
+const int padAngle_CLOSE = 70;
+const int padAngle_NEUTRAL = 130;
+const int padAngle_OPEN = 180;
 
 
 
-int cylinderMotor1[2] = {3, 0};
-int cylinderMotor2[2] = {3, 1};
+const int cylinderMotor1[2] = {3, 0};
+const int cylinderMotor2[2] = {3, 1};
 
-int conveyorServo[2] = {2, 0};
-int padServo[2] = {2, 1};
-int redirectingServo[2] = {2, 2};
+const int conveyorServo[2] = {2, 0};
+const int padServo[2] = {2, 1};
+const int redirectingServo[2] = {2, 2};
+
+
+const float Vcc = 5.00;
+const float resolution = (1<<10) - 1;
 
 
 int AA_float[2] = {2,5};
@@ -3887,7 +3892,7 @@ int padPin3[2] = {0,0};
 
 
 float V_LIM_AA = 0.410;
-float V_LIM_C = 2.300;
+float V_LIM_C = 1.300;
 float V_LIM_9V = 1.275;
 
 void debug();
@@ -3924,6 +3929,7 @@ initTimer(1);
 startTimer(1,0);
 
 
+digitalWrite(cylinderMotor1, 0);
 digitalWrite(cylinderMotor1, 1);
 initServo(conveyorServo, 130);
 initServo(padServo, padAngle_NEUTRAL);
@@ -3931,13 +3937,13 @@ initServo(redirectingServo, redirectAngle_AA);
 
 
 while(1){
-lcdClear();
-printf("running");
 
 int lastBatteryTime = time;
 
 int cylinderStart = time;
 int duration = 0;
+
+stoppingTime = 200 + 300 * (float)(15 - (n_AA + n_9V + n_C + n_OTHER))/15;
 
 while(!batteryDetected && !terminate){
 
@@ -3950,12 +3956,12 @@ _delay((unsigned long)((45)*(10000000/4000.0)));
 if(time - cylinderStart >= duration)
 {
 if(digitalRead(cylinderMotor1)){
-digitalWrite(cylinderMotor2, 0);
-digitalWrite(cylinderMotor1, 1);
-duration = cylinderForward;
-}else{
 digitalWrite(cylinderMotor1, 0);
 digitalWrite(cylinderMotor2, 1);
+duration = cylinderForward;
+}else{
+digitalWrite(cylinderMotor2, 0);
+digitalWrite(cylinderMotor1, 1);
 duration = cylinderBackward;
 }
 
@@ -4012,48 +4018,54 @@ digitalWrite(cylinderMotor2, 0);
 
 _delay((unsigned long)((1000)*(10000000/4000.0)));
 
-float Vcc = 5.00;
-float resolution = (1<<10) - 1;
 float V_max = 0;
+float V_sum = 0;
 float V_float = 0;
 int pos_v_counter = 1;
 int signal = 0;
 
 
 
-for(float i = (float)padAngle_NEUTRAL; i > padAngle_CLOSE; i -= 0.1) {
+for(float i = (float)padAngle_NEUTRAL; i > padAngle_CLOSE; i -= 0.2) {
 setAngle(padServo, i);
 _delay((unsigned long)((100)*(10000000/4000000.0)));
+
 digitalWrite(AA_float, 1);
 float V = analogRead(padPin3[1]) / resolution * Vcc;
 
-if(V > 0.1)pos_v_counter++;
-
-if(V > V_max) {
+if(V > 0.1)
+{
+pos_v_counter++;
 signal = digitalRead(padPin1)<<1;
 signal |= digitalRead(padPin2)<<0;
 
-V_max = V;
+if(V > V_max)V_max = V;
 
 
 digitalWrite(AA_float, 0);
 _delay((unsigned long)((1)*(10000000/4000.0)));
 V_float = analogRead(padPin3[1]) / resolution * Vcc;
 
+
+if(pos_v_counter == 0)V_sum = V;
+else V_sum = V_sum * 0.7 + V * 0.3;
 }
 }
 
 int targetAngle;
-float V = V_max;
+float V = V_sum / pos_v_counter;
 
 lcdClear();
 printf("V: %.3f, N: %d\n",V,pos_v_counter);
+printf("V_max: %.3f",V_max);
+readKeypad();
+lcdHome();
 
 
 
 
 switch(signal){
-case 0b10:
+case 0b01:
 if(V_float < 0.1){
 if(V > V_LIM_AA){ targetAngle = redirectAngle_AA; n_AA+=1;}
 else { targetAngle = redirectAngle_OTHER; n_OTHER+=1;}
@@ -4066,7 +4078,7 @@ if(V > V_LIM_9V) {targetAngle = redirectAngle_9V; n_9V+=1;}
 else {targetAngle = redirectAngle_OTHER; n_OTHER+=1;}
 printf("9V lim: %f",V_LIM_9V);
 break;
-case 0b01:
+case 0b10:
 if(V > V_LIM_C) {targetAngle = redirectAngle_C; n_C+=1;}
 else {targetAngle = redirectAngle_OTHER; n_OTHER+=1;}
 printf("C  lim: %f",V_LIM_C);
@@ -4078,13 +4090,8 @@ readKeypad();
 setAngle(redirectingServo, targetAngle);
 _delay((unsigned long)((500)*(10000000/4000.0)));
 
-
-
-for(int i = padAngle_CLOSE; i < padAngle_OPEN; i++) {
-setAngle(padServo, i);
-_delay((unsigned long)((3)*(10000000/4000.0)));
-}
-
+# 311
+setAngle(padServo, padAngle_OPEN);
 _delay((unsigned long)((1000)*(10000000/4000.0)));
 
 
@@ -4094,12 +4101,13 @@ setAngle(padServo, padAngle_NEUTRAL);
 
 
 setAngle(conveyorServo, 130);
+digitalWrite(cylinderMotor2, 0);
 digitalWrite(cylinderMotor1, 1);
 }
 
 void pinSetup(){
 
-# 317
+# 331
 TRISA = 0xFF;
 TRISB = 0xFF;
 TRISC = 0b11000000;
@@ -4160,7 +4168,7 @@ keyPressedInterruptService();
 char key = (PORTB & 0xF0) >> 4;
 if(key == 12)terminate = 1;
 
-# 382
+# 396
 return;
 }
 }

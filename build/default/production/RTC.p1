@@ -2713,13 +2713,13 @@ Version 3.2 HI-TECH Software Intermediate Code
 :U ..
 -> -> 0 `i `uc
 "12
--> -> 0 `i `uc
+-> -> 80 `i `uc
 "13
--> -> 0 `i `uc
+-> -> 16 `i `uc
 "14
 -> -> 1 `i `uc
 "15
--> -> 8 `i `uc
+-> -> 16 `i `uc
 "16
 -> -> 4 `i `uc
 "17
@@ -2727,10 +2727,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 ..
 ]
 [; ;RTC.c: 11: const char happynewyear[7] = { 0x00,
-[; ;RTC.c: 12: 0x00,
-[; ;RTC.c: 13: 0x00,
+[; ;RTC.c: 12: 0x50,
+[; ;RTC.c: 13: 0x10,
 [; ;RTC.c: 14: 0x01,
-[; ;RTC.c: 15: 0x08,
+[; ;RTC.c: 15: 0x10,
 [; ;RTC.c: 16: 0x04,
 [; ;RTC.c: 17: 0x17};
 "19

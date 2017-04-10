@@ -22,7 +22,10 @@ void initServo(int* motor, int angle){
     
     //check that we haven't initialized servo yet
     for(int i = 0; i < n; i++){
-        if(servos[i] == motor)return; //if we did then do nothing and return
+        if(servos[i] == motor){  //if we did then do nothing and return
+            setAngle(motor, angle);
+            return;
+        };
     }
     
     n++;
