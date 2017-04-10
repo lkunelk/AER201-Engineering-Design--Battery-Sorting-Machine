@@ -3792,7 +3792,7 @@ _delay((unsigned long)((600)*(10000000/4000000.0)));
 }
 
 void lcdHome(void){
-lcdInst(0b11000000);
+lcdInst(0b00000010);
 }
 
 void lcdClear(void){

@@ -3851,7 +3851,7 @@ void pause(char* message);
 long time = 0;
 int batteryDetected = 0;
 int terminate = 0;
-int stoppingTime = 10000;
+int stoppingTime = 200;
 int cylinderForward = 70;
 int cylinderBackward = 30;
 
@@ -3886,9 +3886,9 @@ int padPin3[2] = {0,0};
 
 
 
-float V_LIM_AA = .198;
-float V_LIM_C = 1.3254;
-float V_LIM_9V = 1.863;
+float V_LIM_AA = 0.410;
+float V_LIM_C = 2.300;
+float V_LIM_9V = 1.275;
 
 void debug();
 void debug(){
@@ -3942,8 +3942,9 @@ int duration = 0;
 while(!batteryDetected && !terminate){
 
 lcdHome();
-printf("time %02ld:%02ld.%01ld",time/600,(time%600)/10,(time%600)%10);
-_delay((unsigned long)((77)*(10000000/4000.0)));
+printf("time %02ld:%02ld.%01ld     \n",time/600,(time%600)/10,(time%600)%10);
+printf("stop in: %d                  ",(1+stoppingTime - (time-lastBatteryTime) )%600/10);
+_delay((unsigned long)((45)*(10000000/4000.0)));
 
 
 if(time - cylinderStart >= duration)
@@ -4052,7 +4053,7 @@ printf("V: %.3f, N: %d\n",V,pos_v_counter);
 
 
 switch(signal){
-case 0b00:
+case 0b10:
 if(V_float < 0.1){
 if(V > V_LIM_AA){ targetAngle = redirectAngle_AA; n_AA+=1;}
 else { targetAngle = redirectAngle_OTHER; n_OTHER+=1;}
@@ -4060,7 +4061,7 @@ printf("AA lim: %f",V_LIM_AA);
 break;
 }
 
-case 0b10:
+case 0b00:
 if(V > V_LIM_9V) {targetAngle = redirectAngle_9V; n_9V+=1;}
 else {targetAngle = redirectAngle_OTHER; n_OTHER+=1;}
 printf("9V lim: %f",V_LIM_9V);
@@ -4098,7 +4099,7 @@ digitalWrite(cylinderMotor1, 1);
 
 void pinSetup(){
 
-# 316
+# 317
 TRISA = 0xFF;
 TRISB = 0xFF;
 TRISC = 0b11000000;
@@ -4159,7 +4160,7 @@ keyPressedInterruptService();
 char key = (PORTB & 0xF0) >> 4;
 if(key == 12)terminate = 1;
 
-# 381
+# 382
 return;
 }
 }

@@ -2956,9 +2956,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;lcd.c: 70: void lcdHome(void){
 [e :U _lcdHome ]
 [f ]
-[; ;lcd.c: 71: lcdInst(0b11000000);
+[; ;lcd.c: 71: lcdInst(0b00000010);
 "71
-[e ( _lcdInst (1 -> -> 192 `i `uc ]
+[e ( _lcdInst (1 -> -> 2 `i `uc ]
 [; ;lcd.c: 72: }
 "72
 [e :UE 271 ]

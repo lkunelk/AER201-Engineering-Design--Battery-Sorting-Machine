@@ -62,7 +62,7 @@ void pause(char* message);
 long time = 0; //duration of sorting process [deci-seconds] (10 = 1 second)
 int batteryDetected = 0; //1 == contact switch activated on machine
 int terminate = 0; //flag to let program know if we neeed to terminate
-int stoppingTime = 10000; //[centi-seconds]
+int stoppingTime = 200; //[centi-seconds]
 int cylinderForward = 70; //deci-seconds
 int cylinderBackward = 30; //deci-seconds
 
@@ -97,9 +97,9 @@ int  padPin3[2] = {A,0}; //analog 0 is the channel not the pin
                      //(in this case channel 0 is pin 0),
                      //port value not needed only for reference
 
-float V_LIM_AA = .198; //Voltage limits (above => charged, below => discharged)
-float V_LIM_C  = 1.3254;
-float V_LIM_9V = 1.863;
+float V_LIM_AA = 0.410; //Voltage limits (above => charged, below => discharged)
+float V_LIM_C  = 2.300; 
+float V_LIM_9V = 1.275; 
 
 void debug();
 void debug(){
@@ -151,10 +151,11 @@ void main(){
             int duration = 0;
             
             while(!batteryDetected && !terminate){ //update screen and poll time
-                //print time
+                //print current time and remaining time
                 lcdHome();
-                printf("time %02ld:%02ld.%01ld",time/600,(time%600)/10,(time%600)%10);
-                __delay_ms(77);
+                printf("time %02ld:%02ld.%01ld     \n",time/600,(time%600)/10,(time%600)%10);
+                printf("stop in: %d                  ",(1+stoppingTime - (time-lastBatteryTime) )%600/10);
+                __delay_ms(45);
                 
                 //change direction of the cylinder motor
                 if(time - cylinderStart >= duration)
@@ -263,7 +264,7 @@ void sortBattery(){
     //set the angle for directing arm
     //pause("set redirect angle?");
     switch(signal){
-        case 0b00:
+        case 0b10:
             if(V_float < 0.1){ //if below then it's AA battery
                 if(V > V_LIM_AA){ targetAngle = redirectAngle_AA; n_AA+=1;}
                 else            { targetAngle = redirectAngle_OTHER; n_OTHER+=1;}
@@ -271,7 +272,7 @@ void sortBattery(){
                 break;
             }
             //else it's a 9V, fall through from case 0
-        case 0b10:
+        case 0b00:
             if(V > V_LIM_9V) {targetAngle = redirectAngle_9V; n_9V+=1;}
             else             {targetAngle = redirectAngle_OTHER; n_OTHER+=1;}
             printf("9V lim: %f",V_LIM_9V);

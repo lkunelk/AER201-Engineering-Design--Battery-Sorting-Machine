@@ -65,8 +65,8 @@ void showDateTime(){
         int sec = t[0], min = t[1], hour = t[2];
         int day = t[4], mon = t[5], year = t[6];
         
-        printf("  20%02x/%02x/%02x\n",year,mon,day);
         lcdHome();
+        printf("  20%02x/%02x/%02x\n",year,mon,day);
         printf("   %02x:%02x:%02x   A>",hour,min,sec);
         __delay_ms(100);
     }

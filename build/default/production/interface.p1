@@ -21,10 +21,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _lcdClear `(v ~T0 @X0 0 ef ]
 "11 RTC.h
 [v _getTime `(*i ~T0 @X0 0 ef ]
+"68 interface.c
+[v _lcdHome `(i ~T0 @X0 0 ef ]
 "195 C:\Program Files (x86)\Microchip\xc8\v1.40\include\stdio.h
 [v _printf `(i ~T0 @X0 0 ev`*Cuc ]
-"69 interface.c
-[v _lcdHome `(i ~T0 @X0 0 ef ]
 [v F2878 `(v ~T0 @X0 1 tf1`ul ]
 "159 C:\Program Files (x86)\Microchip\xc8\v1.40\include\pic18.h
 [v __delay `JF2878 ~T0 @X0 0 e ]
@@ -3035,12 +3035,12 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = _mon *U + _t * -> -> 5 `i `x -> -> # *U _t `i `x ]
 [v _year `i ~T0 @X0 1 a ]
 [e = _year *U + _t * -> -> 6 `i `x -> -> # *U _t `i `x ]
-[; ;interface.c: 68: printf("  20%02x/%02x/%02x\n",year,mon,day);
+[; ;interface.c: 68: lcdHome();
 "68
-[e ( _printf , , , (. :s 1C _year _mon _day ]
-[; ;interface.c: 69: lcdHome();
-"69
 [e ( _lcdHome ..  ]
+[; ;interface.c: 69: printf("  20%02x/%02x/%02x\n",year,mon,day);
+"69
+[e ( _printf , , , (. :s 1C _year _mon _day ]
 [; ;interface.c: 70: printf("   %02x:%02x:%02x   A>",hour,min,sec);
 "70
 [e ( _printf , , , (. :s 2C _hour _min _sec ]
