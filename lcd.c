@@ -68,7 +68,7 @@ void lcdNibble(char data){
 }
 
 void lcdHome(void){
-    lcdInst(0b11000000);
+    lcdInst(0b00000010);
 }
 
 void lcdClear(void){
