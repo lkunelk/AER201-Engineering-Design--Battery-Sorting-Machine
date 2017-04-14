@@ -247,11 +247,11 @@ void sortBattery(){
     
     //compress battery and measure voltage
     //pause("interrupt!!!\nclose?");
+    digitalWrite(AA_float, HIGH); //set floating pin before reading
     for(float i = (float)padAngle_NEUTRAL; i > padAngle_CLOSE; i -= 0.2) {
         setAngle(padServo, i);
         __delay_us(100);
         
-        digitalWrite(AA_float, HIGH); //set floating pin before reading
         float V = analogRead(padPin3[1]) / resolution * Vcc;
         
         if(V > 0.1)
@@ -262,11 +262,6 @@ void sortBattery(){
             
             if(V > V_max)V_max = V;
             
-            //read floating voltage
-            digitalWrite(AA_float, LOW); //float pin to ground to differentiate AA from 9V
-            __delay_ms(1); //let voltage changes occur
-            V_float = analogRead(padPin3[1]) / resolution * Vcc; //voltage read
-            
             //update sum
             if(pos_v_counter == 1)V_sum = V;
             else V_sum = V_sum * 0.7 + V * 0.3;
@@ -275,12 +270,17 @@ void sortBattery(){
     
     int targetAngle;
     float V = V_sum;
+            
+    //read floating voltage
+    digitalWrite(AA_float, LOW); //float pin to ground to differentiate AA from 9V
+    __delay_ms(100); //let voltage changes occur
+    V_float = analogRead(padPin3[1]) / resolution * Vcc; //voltage read
     
-    lcdClear();
-    printf("V: %.3f, N: %d\n",V,pos_v_counter);
-    printf("V_max: %.3f",V_max);
-    readKeypad();
-    lcdHome();
+//    lcdClear();
+//    printf("V: %.3f, N: %d\n",V,pos_v_counter);
+//    printf("V_FLOAT: %.3f",V_float);
+//    readKeypad();
+//    lcdHome();
 //  __delay_ms(1000);
     
     //set the angle for directing arm
@@ -346,7 +346,7 @@ void pinSetup(){
     
     LATA = 0x00;
     LATB = 0x00;
-    LATC = 0x00;
+    LATC = 0b00;
     LATD = 0x00;
     LATE = 0x00;
     
